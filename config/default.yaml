@@ -1,0 +1,35 @@
+trading:
+  mode: PAPER
+  allow_live_orders: false
+  max_order_value_krw: 30000
+  max_daily_loss_krw: 10000
+  max_open_positions: 1
+  max_trades_per_day: 3
+  force_exit_before_close: true
+
+strategy:
+  major_supply_contract:
+    enabled: true
+    min_contract_to_revenue_ratio: 0.08
+    min_llm_confidence: 0.80
+    max_price_move_after_disclosure_pct: 0.08
+    stop_loss_pct: 0.02
+    take_profit_pct: 0.04
+
+market:
+  max_spread_pct: 0.004
+  min_avg_daily_trading_value_krw: 3000000000
+  max_disclosure_age_minutes: 30
+
+llm:
+  provider: anthropic
+  model: claude-3-5-sonnet-latest
+  temperature: 0
+  max_tokens: 1500
+
+storage:
+  sqlite_path: data/kdtb.db
+
+logging:
+  level: INFO
+  json_format: false

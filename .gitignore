@@ -1,0 +1,40 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+config/local.yaml
+config/secrets.yaml
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs and raw data
+logs/
+data/raw/
+data/cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

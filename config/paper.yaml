@@ -1,0 +1,3 @@
+trading:
+  mode: PAPER
+  allow_live_orders: false
