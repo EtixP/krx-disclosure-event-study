@@ -1,19 +1,130 @@
 from __future__ import annotations
 
+import logging
+import time
 from datetime import date
+from typing import Iterator, Optional
+
+import httpx
+
+logger = logging.getLogger(__name__)
+
+DART_BASE_URL = "https://opendart.fss.or.kr/api"
+
+CORP_CLS_TO_MARKET = {
+    "Y": "KOSPI",
+    "K": "KOSDAQ",
+    "N": "KONEX",
+    "E": "OTHER",
+}
+
+
+class DartApiError(RuntimeError):
+    """Non-success status returned by OPEN DART (e.g. invalid key, rate limit)."""
+
+    def __init__(self, status: str, message: str) -> None:
+        super().__init__(f"DART API status={status}: {message}")
+        self.status = status
+        self.message = message
 
 
 class DartClient:
-    """Placeholder for OPEN DART API client (Milestone 2)."""
+    """OPEN DART API client.
 
-    def __init__(self, api_key: str, base_url: str = "https://opendart.fss.or.kr/api") -> None:
+    Endpoints used:
+    - list.json    — disclosure list by date
+    - document.xml — full disclosure document (zipped XML)
+    """
+
+    def __init__(
+        self,
+        api_key: str,
+        base_url: str = DART_BASE_URL,
+        timeout: float = 30.0,
+        client: Optional[httpx.Client] = None,
+        max_retries: int = 3,
+        retry_backoff: float = 0.5,
+    ) -> None:
         if not api_key:
             raise ValueError("DART API key is required")
         self.api_key = api_key
-        self.base_url = base_url
+        self.base_url = base_url.rstrip("/")
+        self.max_retries = max_retries
+        self.retry_backoff = retry_backoff
+        self._client = client or httpx.Client(timeout=timeout)
+        self._owns_client = client is None
 
-    def list_disclosures(self, target_date: date, market: str | None = None) -> list[dict]:
-        raise NotImplementedError("Implemented in Milestone 2")
+    def close(self) -> None:
+        if self._owns_client:
+            self._client.close()
 
-    def fetch_document(self, receipt_no: str) -> dict:
-        raise NotImplementedError("Implemented in Milestone 2")
+    def __enter__(self) -> "DartClient":
+        return self
+
+    def __exit__(self, *_exc) -> None:
+        self.close()
+
+    def _get(self, endpoint: str, params: dict) -> httpx.Response:
+        url = f"{self.base_url}/{endpoint}"
+        last_exc: Optional[Exception] = None
+        for attempt in range(self.max_retries):
+            try:
+                r = self._client.get(url, params=params)
+                if r.status_code >= 500:
+                    raise httpx.HTTPStatusError(
+                        f"server {r.status_code}", request=r.request, response=r
+                    )
+                return r
+            except (httpx.TransportError, httpx.HTTPStatusError) as e:
+                last_exc = e
+                sleep = self.retry_backoff * (2 ** attempt)
+                logger.warning(
+                    "DART %s retry %d/%d after %.1fs: %s",
+                    endpoint, attempt + 1, self.max_retries, sleep, e,
+                )
+                time.sleep(sleep)
+        raise RuntimeError(f"DART {endpoint} failed after {self.max_retries} retries") from last_exc
+
+    def list_disclosures(
+        self,
+        target_date: date,
+        corp_cls: Optional[str] = None,
+        page_count: int = 100,
+    ) -> Iterator[dict]:
+        """Yields raw disclosure records for the given date (DART field names preserved).
+
+        corp_cls: Y=KOSPI, K=KOSDAQ, N=KONEX, E=other. None = all.
+        """
+        date_str = target_date.strftime("%Y%m%d")
+        page_no = 1
+        while True:
+            params: dict = {
+                "crtfc_key": self.api_key,
+                "bgn_de": date_str,
+                "end_de": date_str,
+                "page_no": page_no,
+                "page_count": page_count,
+            }
+            if corp_cls:
+                params["corp_cls"] = corp_cls
+            r = self._get("list.json", params)
+            r.raise_for_status()
+            data = r.json()
+            status = data.get("status")
+            if status == "013":  # no results
+                return
+            if status != "000":
+                raise DartApiError(status, data.get("message", ""))
+            for item in data.get("list", []):
+                yield item
+            total_page = int(data.get("total_page", 1))
+            if page_no >= total_page:
+                return
+            page_no += 1
+
+    def fetch_document(self, rcept_no: str) -> bytes:
+        """Returns raw bytes of the disclosure document (zipped XML). Parsing is deferred."""
+        params = {"crtfc_key": self.api_key, "rcept_no": rcept_no}
+        r = self._get("document.xml", params)
+        r.raise_for_status()
+        return r.content
