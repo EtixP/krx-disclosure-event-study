@@ -91,30 +91,31 @@ def build(doc_path: Path) -> None:
     story.append(_kv_table([
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
-        ("Milestones done", "M1 (skeleton), M2 (DART ingestion), M4 (naive event study), M5 (strategy engine)"),
-        ("Tests passing", "43 / 43"),
+        ("Milestones done", "M1 (skeleton), M2 (DART ingestion), M4 (event study + cost model), M5 (strategy engine), M6/M7 paper-broker scaffolding"),
+        ("Tests passing", "68 / 68"),
         ("Disclosures in DB", "111,622 across 60 trading days (Feb 27 – May 27, 2026)"),
         ("Supply-contract events", "533 “new contract” candidates (title-filtered)"),
         ("Price data source", "pykrx (free, no auth)"),
-        ("LLM extraction", "Not yet wired — requires your API key"),
-        ("Broker integration", "Not yet wired — requires your KIS credentials"),
+        ("LLM extraction", "Code complete (prompts + validator + client) — waiting on your API key to actually run"),
+        ("Broker integration", "PaperBroker (historical fills) ready; KIS broker needs your credentials"),
     ]))
 
     # === Event study results ===
-    story.append(Paragraph("Naive event study result (M4 first pass)", s["h2"]))
+    story.append(Paragraph("Naive event study, gross and net of costs", s["h2"]))
     story.append(Paragraph(
-        "Computed event-time returns for all 533 title-filtered supply-contract disclosures. "
-        "Returns measured from event-day close to T+1/T+2/T+5 close.",
+        "533 title-filtered supply-contract disclosures, returns measured from event-day "
+        "close to T+1/T+2/T+5 close. Cost model: 0.015%/side broker commission + 10% VAT, "
+        "0.18% sale tax, 5bps slippage &rarr; <b>0.313% roundtrip drag</b>.",
         s["body"]
     ))
     es_table = Table(
         [
-            ["Horizon", "n", "Mean", "Median", "Std", "Win%", "P25", "P75"],
-            ["1-day", "533", "+0.66%", "−0.32%", "6.60%", "45.6%", "−2.89%", "+2.82%"],
-            ["2-day", "533", "+0.88%", "−0.39%", "10.60%", "44.5%", "−4.65%", "+4.24%"],
-            ["5-day", "533", "+1.28%", "−0.41%", "14.11%", "44.8%", "−7.24%", "+6.61%"],
+            ["Horizon", "n", "Gross mean", "Net mean", "Gross win%", "Net win%", "Profit factor"],
+            ["1-day", "533", "+0.66%", "+0.35%", "45.6%", "42.8%", "1.17"],
+            ["2-day", "533", "+0.88%", "+0.57%", "44.5%", "43.3%", "1.19"],
+            ["5-day", "533", "+1.28%", "+0.96%", "44.8%", "44.1%", "1.22"],
         ],
-        colWidths=[0.7 * inch] + [0.55 * inch] + [0.85 * inch] * 6,
+        colWidths=[0.7 * inch, 0.5 * inch, 0.9 * inch, 0.9 * inch, 0.95 * inch, 0.85 * inch, 1.0 * inch],
     )
     es_table.setStyle(TableStyle([
         ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
@@ -129,12 +130,13 @@ def build(doc_path: Path) -> None:
     story.append(es_table)
     story.append(Spacer(1, 0.1 * inch))
     story.append(Paragraph(
-        "<b>Honest read:</b> mean is positive but median is negative across all horizons, "
-        "and the win rate is below 50%. A few large winners drag the mean up &mdash; the "
-        "naive title filter does not appear to have a clean edge. This is the expected "
-        "result: per CLAUDE.md, the real test is filtering to contracts where "
-        "<i>contract_value / prior_year_revenue &ge; 8%</i>, which requires LLM "
-        "extraction (Milestone 3).",
+        "<b>Honest read:</b> after costs the naive filter is barely above breakeven. "
+        "Profit factor 1.17 means &#8361;1.17 won per &#8361;1.00 lost &mdash; mathematically positive "
+        "but well within noise on 533 events. Win rate is &lt; 50% across all horizons. "
+        "Median return is negative gross (a few large winners drag the mean up). "
+        "<b>This is the expected result.</b> Per CLAUDE.md, the real test is filtering to "
+        "contracts where <i>contract_value / prior_year_revenue &ge; 8%</i>, which requires "
+        "LLM extraction (M3). The infrastructure is now ready to drop a key in.",
         s["body"]
     ))
     story.append(Paragraph(
@@ -160,12 +162,12 @@ def build(doc_path: Path) -> None:
          "opendart.fss.or.kr → 관리자 → API Key 재발급. Replace DART_API_KEY in .env."),
         ("P1",
          "Get an LLM API key (Anthropic or OpenAI)",
-         "Required for Milestone 3 (LLM extraction). Without it, we can't get contract_value or prior_year_revenue, so the strategy engine has nothing to evaluate.",
-         "console.anthropic.com or platform.openai.com. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env and set LLM_PROVIDER accordingly."),
+         "Code is now complete (prompts + validator + client abstraction). Drop a key in .env and the M3 extraction pipeline runs end-to-end. Without it we can't filter to economically meaningful contracts.",
+         "console.anthropic.com → API Keys, or platform.openai.com → API keys. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env and set LLM_PROVIDER=anthropic|openai. Install the SDK: pip install anthropic (or openai)."),
         ("P1",
          "Decide M3 vs more backfill first",
-         "M3 needs the LLM key above. Backfill 6–12 more months of disclosures so the event study has more statistical power before spending tokens.",
-         "Tell Claude which to do first. Backfill is a one-line CLI loop; M3 is a multi-day build."),
+         "M3 needs the LLM key above; tokens are not free (~$0.003/extraction with Claude Sonnet). Backfill 6–12 more months of disclosures so the post-extraction event study has more events before spending the tokens.",
+         "Tell Claude which to do first. Backfill is a one-line CLI loop and free. M3 over 533 events would be ~$1.50 with Sonnet, ~$0.10 with Haiku."),
         ("P2",
          "Set up GitHub branch protection on main",
          "Once live trading code exists, you don't want a stray push to main to enable LIVE_TINY by accident.",
@@ -229,19 +231,27 @@ def build(doc_path: Path) -> None:
     story.append(Paragraph(".venv/bin/python -m kdtb.main", s["code"]))
     story.append(Paragraph(".venv/bin/python scripts/ingest_disclosures.py --date $(date +%Y-%m-%d)", s["code"]))
 
-    story.append(Paragraph("What Claude implemented in this loop", s["h2"]))
-    story.append(Paragraph("Modules added or completed:", s["body"]))
+    story.append(Paragraph("What Claude built across the autonomous loops", s["h2"]))
+    story.append(Paragraph("<b>Loop 1</b> (M4 + M5):", s["body"]))
     story.append(Paragraph(
-        "&bull; <b>src/kdtb/data/market_data_client.py</b> &mdash; pykrx wrapper for OHLCV fetching and event-time return calculation<br/>"
-        "&bull; <b>scripts/run_event_study.py</b> &mdash; batched event study CLI with per-stock fetch optimization<br/>"
-        "&bull; <b>src/kdtb/strategy/major_supply_contract.py</b> &mdash; Milestone 5 strategy engine (was placeholder)<br/>"
-        "&bull; <b>tests/test_market_data_client.py</b> &mdash; 5 new test cases<br/>"
-        "&bull; <b>tests/test_strategy.py</b> &mdash; 10 new test cases<br/>"
-        "&bull; <b>scripts/generate_next_steps_pdf.py</b> &mdash; this PDF generator",
+        "&bull; <b>data/market_data_client.py</b> &mdash; pykrx wrapper for OHLCV + event-time returns<br/>"
+        "&bull; <b>scripts/run_event_study.py</b> &mdash; batched event study CLI<br/>"
+        "&bull; <b>strategy/major_supply_contract.py</b> &mdash; M5 strategy engine (was placeholder)",
+        s["body"]
+    ))
+    story.append(Paragraph("<b>Loop 2</b> (cost model + M3 prep + paper broker):", s["body"]))
+    story.append(Paragraph(
+        "&bull; <b>backtest/cost_model.py</b> &mdash; Korean equity costs (commission, VAT, sale tax, slippage)<br/>"
+        "&bull; <b>backtest/metrics.py</b> &mdash; per-trade metrics (win rate, profit factor, sharpe-ish, max drawdown)<br/>"
+        "&bull; <b>interpretation/llm_prompts.py</b> &mdash; versioned extraction prompt template<br/>"
+        "&bull; <b>interpretation/extraction_validator.py</b> &mdash; LLM JSON &rarr; Extraction with hard/soft validation<br/>"
+        "&bull; <b>interpretation/llm_client.py</b> &mdash; Anthropic + OpenAI + Stub clients (no calls until key added)<br/>"
+        "&bull; <b>broker/base.py</b> + <b>broker/paper_broker.py</b> &mdash; abstract Broker + HistoricalPaperBroker<br/>"
+        "&bull; 4 new test files (25 new test cases)",
         s["body"]
     ))
     story.append(Paragraph(
-        "Suite went from 28 to 43 passing tests. No regressions.",
+        "Suite: 28 &rarr; 43 &rarr; <b>68</b> passing tests. Zero regressions across both loops.",
         s["note"]
     ))
 
