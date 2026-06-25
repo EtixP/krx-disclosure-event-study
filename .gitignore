@@ -14,6 +14,8 @@ config/secrets.yaml
 logs/
 data/raw/
 data/cache/
+data/*.csv
+data/*.log
 
 # Python
 __pycache__/
