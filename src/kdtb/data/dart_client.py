@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import io
 import logging
+import re
 import time
+import zipfile
 from datetime import date
 from typing import Iterator, Optional
 
@@ -123,8 +126,38 @@ class DartClient:
             page_no += 1
 
     def fetch_document(self, rcept_no: str) -> bytes:
-        """Returns raw bytes of the disclosure document (zipped XML). Parsing is deferred."""
+        """Returns raw bytes of the disclosure document (ZIP containing HTML masquerading as XML)."""
         params = {"crtfc_key": self.api_key, "rcept_no": rcept_no}
         r = self._get("document.xml", params)
         r.raise_for_status()
         return r.content
+
+    def fetch_document_text(self, rcept_no: str) -> str:
+        """Fetches the document and returns plain text (HTML tags stripped, UTF-8 decoded).
+
+        DART returns a ZIP containing an HTML file. Despite the endpoint name 'document.xml'
+        and the inner file's .xml extension, the content is HTML. Encoding is UTF-8.
+        """
+        return extract_text_from_document_zip(self.fetch_document(rcept_no))
+
+
+def extract_text_from_document_zip(zip_bytes: bytes) -> str:
+    """Decode the DART document ZIP into plain readable text."""
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as z:
+        names = z.namelist()
+        if not names:
+            return ""
+        raw = z.read(names[0])
+    for enc in ("utf-8", "cp949", "euc-kr"):
+        try:
+            html = raw.decode(enc)
+            break
+        except UnicodeDecodeError:
+            continue
+    else:
+        html = raw.decode("utf-8", errors="replace")
+    no_style = re.sub(r"<style[^>]*>.*?</style>", " ", html, flags=re.DOTALL | re.IGNORECASE)
+    no_script = re.sub(r"<script[^>]*>.*?</script>", " ", no_style, flags=re.DOTALL | re.IGNORECASE)
+    stripped = re.sub(r"<[^>]+>", " ", no_script)
+    collapsed = re.sub(r"\s+", " ", stripped).strip()
+    return collapsed

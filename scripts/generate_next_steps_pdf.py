@@ -91,56 +91,68 @@ def build(doc_path: Path) -> None:
     story.append(_kv_table([
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
-        ("Milestones done", "M1 (skeleton), M2 (DART ingestion), M4 (event study + cost model), M5 (strategy engine), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "68 / 68"),
+        ("Milestones done", "M1 (skeleton), M2 (DART), M3 (deterministic extraction, 96% success rate), M4 (event study + cost model), M5 (strategy engine), M6/M7 paper-broker scaffolding"),
+        ("Tests passing", "84 / 84"),
         ("Disclosures in DB", "111,622 across 60 trading days (Feb 27 – May 27, 2026)"),
-        ("Supply-contract events", "533 “new contract” candidates (title-filtered)"),
+        ("Supply-contract events", "533 candidates &rarr; 514 parsed (96.4% OK, 18 blocked, 1 review)"),
+        ("Real contract values extracted", "514 events with verified contract_value, prior_year_revenue, ratio"),
         ("Price data source", "pykrx (free, no auth)"),
-        ("LLM extraction", "Code complete (prompts + validator + client) — waiting on your API key to actually run"),
+        ("LLM extraction", "Code complete (prompts + validator + client) — optional now that deterministic parser works at 96%"),
         ("Broker integration", "PaperBroker (historical fills) ready; KIS broker needs your credentials"),
     ]))
 
     # === Event study results ===
-    story.append(Paragraph("Naive event study, gross and net of costs", s["h2"]))
+    story.append(Paragraph("Threshold sweep: net-of-cost returns by ratio cutoff", s["h2"]))
     story.append(Paragraph(
-        "533 title-filtered supply-contract disclosures, returns measured from event-day "
-        "close to T+1/T+2/T+5 close. Cost model: 0.015%/side broker commission + 10% VAT, "
-        "0.18% sale tax, 5bps slippage &rarr; <b>0.313% roundtrip drag</b>.",
+        "514 contracts with real extracted values, returns measured from event-day close to "
+        "T+1/T+5 close, net of 0.313% roundtrip cost. The CLAUDE.md hypothesis "
+        "(filter to ratio &ge; 0.08) is the line marked &laquo; in the table.",
         s["body"]
     ))
-    es_table = Table(
+    sweep_table = Table(
         [
-            ["Horizon", "n", "Gross mean", "Net mean", "Gross win%", "Net win%", "Profit factor"],
-            ["1-day", "533", "+0.66%", "+0.35%", "45.6%", "42.8%", "1.17"],
-            ["2-day", "533", "+0.88%", "+0.57%", "44.5%", "43.3%", "1.19"],
-            ["5-day", "533", "+1.28%", "+0.96%", "44.8%", "44.1%", "1.22"],
+            ["Threshold", "n", "T+1 net", "T+5 net", "T+1 win%", "T+5 win%", "Profit factor (5d)"],
+            ["0.00 (all)", "514", "+0.35%", "+1.21%", "42.6%", "44.2%", "1.38"],
+            ["0.05",       "430", "+0.43%", "+0.95%", "43.7%", "42.8%", "1.30"],
+            ["0.08 «", "333", "+0.39%", "+0.55%", "41.7%", "42.3%", "1.20"],
+            ["0.10",       "287", "+0.54%", "+0.87%", "40.8%", "44.3%", "1.27"],
+            ["0.15",       "169", "+0.18%", "+0.89%", "38.5%", "46.2%", "1.26"],
+            ["0.20",       "110", "+0.49%", "+1.15%", "38.2%", "45.5%", "1.33"],
+            ["0.30",       "59",  "+1.64%", "+3.10%", "40.7%", "42.4%", "1.93"],
+            ["0.50",       "23",  "+1.78%", "+2.67%", "30.4%", "39.1%", "1.77"],
         ],
-        colWidths=[0.7 * inch, 0.5 * inch, 0.9 * inch, 0.9 * inch, 0.95 * inch, 0.85 * inch, 1.0 * inch],
+        colWidths=[0.9 * inch, 0.45 * inch, 0.85 * inch, 0.85 * inch, 0.85 * inch, 0.85 * inch, 1.25 * inch],
     )
-    es_table.setStyle(TableStyle([
+    sweep_table.setStyle(TableStyle([
         ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
         ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
         ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
         ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 3), (-1, 3), colors.HexColor("#fff3cd")),  # highlight 0.08 row
+        ("BACKGROUND", (0, 7), (-1, 7), colors.HexColor("#d4edda")),  # highlight 0.30 row
         ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
         ("TOPPADDING", (0, 0), (-1, -1), 5),
     ]))
-    story.append(es_table)
+    story.append(sweep_table)
     story.append(Spacer(1, 0.1 * inch))
     story.append(Paragraph(
-        "<b>Honest read:</b> after costs the naive filter is barely above breakeven. "
-        "Profit factor 1.17 means &#8361;1.17 won per &#8361;1.00 lost &mdash; mathematically positive "
-        "but well within noise on 533 events. Win rate is &lt; 50% across all horizons. "
-        "Median return is negative gross (a few large winners drag the mean up). "
-        "<b>This is the expected result.</b> Per CLAUDE.md, the real test is filtering to "
-        "contracts where <i>contract_value / prior_year_revenue &ge; 8%</i>, which requires "
-        "LLM extraction (M3). The infrastructure is now ready to drop a key in.",
+        "<b>Key finding:</b> the CLAUDE.md-suggested 8% threshold underperforms the unfiltered baseline "
+        "(T+5 net +0.55% vs +1.21%). The 30%+ threshold shows real edge &mdash; T+5 net +3.10%, "
+        "profit factor 1.93 &mdash; but on only 59 events, well within noise.",
         s["body"]
     ))
     story.append(Paragraph(
-        "Raw per-event CSV: <font face=\"Courier\">data/event_study_results.csv</font>",
+        "<b>What this means:</b> the project's actual research question now has a partial answer: "
+        "small-to-medium supply contracts do NOT show a tradable post-disclosure drift, but very large "
+        "ones (&ge; 30% of revenue) might. To confirm, the system needs more data &mdash; "
+        "<i>backfill</i> is now the highest-leverage next move.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Raw CSVs: <font face=\"Courier\">data/event_study_results.csv</font> (all 533) and "
+        "<font face=\"Courier\">data/event_study_filtered.csv</font> (ratio &ge; 0.08).",
         s["note"]
     ))
 
@@ -157,17 +169,17 @@ def build(doc_path: Path) -> None:
 
     actions = [
         ("P1",
+         "Authorize a larger backfill (12+ months)",
+         "Strongest finding so far: very large contracts (ratio >= 30%) show +3.1% T+5 net but only 59 events. We need ~3x more data to know if this is real. 12 months of DART = ~1.5M disclosures, ~2000+ supply contracts, runs in ~30 min, free.",
+         "Reply: 'backfill 12 months' (or '6 months', or longer). Claude will loop scripts/ingest_disclosures.py + scripts/parse_supply_contracts.py."),
+        ("P1",
          "Rotate the DART API key",
-         "The current key briefly appeared in chat output during the first smoke test (before the httpx log filter was added). It's still safe on your machine, but rotating is the clean call.",
+         "The current key briefly appeared in chat output during the first smoke test (before the httpx log filter was added). Still safe on your machine, but rotating is the clean call.",
          "opendart.fss.or.kr → 관리자 → API Key 재발급. Replace DART_API_KEY in .env."),
-        ("P1",
-         "Get an LLM API key (Anthropic or OpenAI)",
-         "Code is now complete (prompts + validator + client abstraction). Drop a key in .env and the M3 extraction pipeline runs end-to-end. Without it we can't filter to economically meaningful contracts.",
-         "console.anthropic.com → API Keys, or platform.openai.com → API keys. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env and set LLM_PROVIDER=anthropic|openai. Install the SDK: pip install anthropic (or openai)."),
-        ("P1",
-         "Decide M3 vs more backfill first",
-         "M3 needs the LLM key above; tokens are not free (~$0.003/extraction with Claude Sonnet). Backfill 6–12 more months of disclosures so the post-extraction event study has more events before spending the tokens.",
-         "Tell Claude which to do first. Backfill is a one-line CLI loop and free. M3 over 533 events would be ~$1.50 with Sonnet, ~$0.10 with Haiku."),
+        ("P2",
+         "Get an LLM API key (Anthropic or OpenAI) — now optional",
+         "Demoted from P1: deterministic parser handles 96% of supply contracts without LLM, and the cross-check architecture is already in place. LLM still useful for: (a) the 18 blocked rows, (b) other event types (buybacks, dilutive financing), (c) ratio cross-check on tradeable signals.",
+         "console.anthropic.com / platform.openai.com. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env, set LLM_PROVIDER, pip install anthropic|openai."),
         ("P2",
          "Set up GitHub branch protection on main",
          "Once live trading code exists, you don't want a stray push to main to enable LIVE_TINY by accident.",
@@ -185,9 +197,13 @@ def build(doc_path: Path) -> None:
          "Required for Milestone 6 (broker integration) and beyond (paper/live trading). Without this we can't even fetch live quotes, let alone place orders.",
          "Korea Investment Securities → 개인용 계좌 개설 → Open API 신청. Add KIS_APP_KEY, KIS_APP_SECRET, KIS_ACCOUNT_NO, KIS_ACCOUNT_PRODUCT_CODE to .env."),
         ("P2",
+         "Decide whether to raise min_contract_to_revenue_ratio",
+         "Data from this loop's threshold sweep argues the CLAUDE.md default of 0.08 is too loose. 0.30 shows real edge in this 3-month sample but on only 59 events. Need user's call on whether to update config/default.yaml (and the bar for that update).",
+         "Open config/default.yaml → strategy.major_supply_contract.min_contract_to_revenue_ratio. Recommend leaving at 0.08 until a 12-month backfill validates the 0.30+ finding."),
+        ("P2",
          "Review risk thresholds in config/default.yaml",
-         "Current defaults match CLAUDE.md (₩30k max order, ₩10k daily loss, ratio ≥ 8%, confidence ≥ 0.80). These need your sign-off before any LIVE_TINY trading.",
-         "Open config/default.yaml. Pay attention to: trading.max_order_value_krw, trading.max_daily_loss_krw, strategy.major_supply_contract.* thresholds."),
+         "Defaults match CLAUDE.md (₩30k max order, ₩10k daily loss, confidence ≥ 0.80). These need your sign-off before any LIVE_TINY trading.",
+         "Open config/default.yaml. Pay attention to: trading.max_order_value_krw, trading.max_daily_loss_krw."),
         ("P3",
          "Install gitleaks pre-commit hook",
          "Catches an accidental commit of .env or API keys before it reaches GitHub. Belt-and-suspenders on top of .gitignore.",
@@ -215,6 +231,8 @@ def build(doc_path: Path) -> None:
         ("Tests", "tests/ — run with: .venv/bin/pytest"),
         ("DART ingestion CLI", "scripts/ingest_disclosures.py --date YYYY-MM-DD"),
         ("Event study CLI", "scripts/run_event_study.py [--limit N]"),
+        ("Parse docs CLI (NEW)", "scripts/parse_supply_contracts.py [--limit N]"),
+        ("Filtered event study (NEW)", "scripts/run_filtered_event_study.py [--min-ratio 0.08]"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -241,17 +259,24 @@ def build(doc_path: Path) -> None:
     ))
     story.append(Paragraph("<b>Loop 2</b> (cost model + M3 prep + paper broker):", s["body"]))
     story.append(Paragraph(
-        "&bull; <b>backtest/cost_model.py</b> &mdash; Korean equity costs (commission, VAT, sale tax, slippage)<br/>"
-        "&bull; <b>backtest/metrics.py</b> &mdash; per-trade metrics (win rate, profit factor, sharpe-ish, max drawdown)<br/>"
-        "&bull; <b>interpretation/llm_prompts.py</b> &mdash; versioned extraction prompt template<br/>"
-        "&bull; <b>interpretation/extraction_validator.py</b> &mdash; LLM JSON &rarr; Extraction with hard/soft validation<br/>"
-        "&bull; <b>interpretation/llm_client.py</b> &mdash; Anthropic + OpenAI + Stub clients (no calls until key added)<br/>"
-        "&bull; <b>broker/base.py</b> + <b>broker/paper_broker.py</b> &mdash; abstract Broker + HistoricalPaperBroker<br/>"
-        "&bull; 4 new test files (25 new test cases)",
+        "&bull; <b>backtest/cost_model.py</b> &mdash; Korean equity costs<br/>"
+        "&bull; <b>backtest/metrics.py</b> &mdash; per-trade metrics<br/>"
+        "&bull; <b>interpretation/llm_prompts.py</b>, <b>extraction_validator.py</b>, <b>llm_client.py</b><br/>"
+        "&bull; <b>broker/base.py</b> + <b>broker/paper_broker.py</b>",
+        s["body"]
+    ))
+    story.append(Paragraph("<b>Loop 3</b> (deterministic extraction + filtered event study):", s["body"]))
+    story.append(Paragraph(
+        "&bull; <b>data/dart_client.py</b> &mdash; new <font face=\"Courier\">fetch_document_text()</font> method + ZIP/HTML/UTF-8 extractor<br/>"
+        "&bull; <b>interpretation/deterministic_parser.py</b> &mdash; regex parser for the 단일판매ㆍ공급계약체결 form (both voluntary and mandatory variants)<br/>"
+        "&bull; <b>storage/extraction_store.py</b> &mdash; SQLite upsert keyed on (disclosure_id, model_name)<br/>"
+        "&bull; <b>scripts/parse_supply_contracts.py</b> &mdash; CLI: fetches docs &rarr; parses &rarr; stores. Ran clean on 533 events.<br/>"
+        "&bull; <b>scripts/run_filtered_event_study.py</b> &mdash; merges prices with extractions, reports gross/net by ratio cutoff<br/>"
+        "&bull; 3 new test files (16 new test cases)",
         s["body"]
     ))
     story.append(Paragraph(
-        "Suite: 28 &rarr; 43 &rarr; <b>68</b> passing tests. Zero regressions across both loops.",
+        "Suite: 28 &rarr; 43 &rarr; 68 &rarr; <b>84</b> passing tests. Zero regressions across three loops.",
         s["note"]
     ))
 
