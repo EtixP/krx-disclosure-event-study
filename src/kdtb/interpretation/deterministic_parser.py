@@ -24,19 +24,22 @@ logger = logging.getLogger(__name__)
 
 PARSER_VERSION = "deterministic_supply_contract_v1"
 
-# Numbers with comma separators, optionally with leading/trailing whitespace.
+# `[\-\d,]+` matches either a literal dash (undisclosed) or digits+commas.
+# Keeping them in one capture group lets us tell "value undisclosed" apart
+# from "field not present at all" downstream.
+NUM_OR_DASH = r"([\-\d,]+)"
 NUM = r"([\d,]+)"
-RATIO_NUM = r"([\d.]+)"
+RATIO_NUM = r"([\-\d.]+)"
 
 # Field patterns — order matters because we use the FIRST match for revenue
 # (counterparty revenue appears later in the form).
 CONTRACT_VALUE_PATTERNS = [
-    r"계약금액\s*총액\s*\(\s*원\s*\)\s*" + NUM,  # voluntary disclosure form
-    r"계약금액\s*\(\s*원\s*\)\s*" + NUM,         # mandatory disclosure form
-    r"확정\s*계약금액\s*" + NUM,
+    r"계약금액\s*총액\s*\(\s*원\s*\)\s*" + NUM_OR_DASH,  # voluntary disclosure form
+    r"계약금액\s*\(\s*원\s*\)\s*" + NUM_OR_DASH,         # mandatory disclosure form
+    r"확정\s*계약금액\s*" + NUM_OR_DASH,
 ]
 PRIOR_REVENUE_PATTERNS = [
-    r"최근\s*매출액\s*\(\s*원\s*\)\s*" + NUM,
+    r"최근\s*매출액\s*\(\s*원\s*\)\s*" + NUM_OR_DASH,
 ]
 RATIO_PATTERNS = [
     r"매출액\s*대비\s*\(\s*%\s*\)\s*" + RATIO_NUM,
@@ -72,6 +75,12 @@ def _to_int_krw(s: Optional[str]) -> Optional[int]:
         return None
 
 
+def _is_explicit_dash(s: Optional[str]) -> bool:
+    if s is None:
+        return False
+    return s.replace(",", "").strip() == "-"
+
+
 def _to_ratio(s: Optional[str]) -> Optional[float]:
     if s is None:
         return None
@@ -97,8 +106,11 @@ def parse_supply_contract(
     is_cancellation = "해지" in report_name or "해제" in text[:500]
     is_revision = "정정" in report_name or "기재정정" in report_name
 
-    contract_value = _to_int_krw(_first_match(CONTRACT_VALUE_PATTERNS, text))
-    prior_revenue = _to_int_krw(_first_match(PRIOR_REVENUE_PATTERNS, text))
+    raw_value_str = _first_match(CONTRACT_VALUE_PATTERNS, text)
+    raw_revenue_str = _first_match(PRIOR_REVENUE_PATTERNS, text)
+    contract_value = _to_int_krw(raw_value_str)
+    prior_revenue = _to_int_krw(raw_revenue_str)
+    value_undisclosed = _is_explicit_dash(raw_value_str)  # field present but redacted
     reported_ratio = _to_ratio(_first_match(RATIO_PATTERNS, text))
     counterparty = _first_match(COUNTERPARTY_PATTERNS, text)
     start_date = _first_match(CONTRACT_START_PATTERNS, text)
@@ -112,7 +124,9 @@ def parse_supply_contract(
     ratio = reported_ratio if reported_ratio is not None else computed_ratio
 
     red_flags: list[str] = []
-    if contract_value is None:
+    if value_undisclosed:
+        red_flags.append("value_undisclosed_by_company")
+    elif contract_value is None:
         red_flags.append("missing_contract_value")
     if prior_revenue is None:
         red_flags.append("missing_revenue")
@@ -123,8 +137,14 @@ def parse_supply_contract(
     ):
         red_flags.append("ratio_inconsistent")
 
-    if contract_value is None:
-        status: str = "blocked"
+    if value_undisclosed:
+        # Real supply contract, company chose not to disclose the value.
+        # Strategy will skip (ratio is None) but the row is informative, not garbage.
+        status: str = "needs_manual_review"
+        confidence = 0.5
+        is_new = not (is_revision or is_cancellation)
+    elif contract_value is None:
+        status = "blocked"
         confidence = 0.0
         is_new = None
     elif red_flags:

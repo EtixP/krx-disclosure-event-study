@@ -91,11 +91,12 @@ def build(doc_path: Path) -> None:
     story.append(_kv_table([
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
-        ("Milestones done", "M1 (skeleton), M2 (DART), M3 (deterministic extraction, 96% success rate), M4 (event study + cost model), M5 (strategy engine), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "84 / 84"),
+        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.2% OK), M4, M5 (signals stored), M6/M7 paper-broker scaffolding"),
+        ("Tests passing", "88 / 88"),
         ("Disclosures in DB", "111,622 across 60 trading days (Feb 27 – May 27, 2026)"),
-        ("Supply-contract events", "533 candidates &rarr; 514 parsed (96.4% OK, 18 blocked, 1 review)"),
-        ("Real contract values extracted", "514 events with verified contract_value, prior_year_revenue, ratio"),
+        ("Supply-contract events", "533 candidates &rarr; 513 OK + 20 manual-review (19 value-undisclosed, 1 ratio-inconsistent), 0 blocked"),
+        ("Real contract values extracted", "513 events with verified contract_value, prior_year_revenue, ratio"),
+        ("Candidate signals stored", "331 at default threshold (ratio &ge; 0.08); 58 at strict threshold (ratio &ge; 0.30)"),
         ("Price data source", "pykrx (free, no auth)"),
         ("LLM extraction", "Code complete (prompts + validator + client) — optional now that deterministic parser works at 96%"),
         ("Broker integration", "PaperBroker (historical fills) ready; KIS broker needs your credentials"),
@@ -231,8 +232,9 @@ def build(doc_path: Path) -> None:
         ("Tests", "tests/ — run with: .venv/bin/pytest"),
         ("DART ingestion CLI", "scripts/ingest_disclosures.py --date YYYY-MM-DD"),
         ("Event study CLI", "scripts/run_event_study.py [--limit N]"),
-        ("Parse docs CLI (NEW)", "scripts/parse_supply_contracts.py [--limit N]"),
-        ("Filtered event study (NEW)", "scripts/run_filtered_event_study.py [--min-ratio 0.08]"),
+        ("Parse docs CLI", "scripts/parse_supply_contracts.py [--limit N]"),
+        ("Filtered event study", "scripts/run_filtered_event_study.py [--min-ratio 0.08]"),
+        ("Strategy runner (NEW)", "scripts/run_strategy.py [--min-ratio 0.30] [--dry-run]"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -267,16 +269,27 @@ def build(doc_path: Path) -> None:
     ))
     story.append(Paragraph("<b>Loop 3</b> (deterministic extraction + filtered event study):", s["body"]))
     story.append(Paragraph(
-        "&bull; <b>data/dart_client.py</b> &mdash; new <font face=\"Courier\">fetch_document_text()</font> method + ZIP/HTML/UTF-8 extractor<br/>"
-        "&bull; <b>interpretation/deterministic_parser.py</b> &mdash; regex parser for the 단일판매ㆍ공급계약체결 form (both voluntary and mandatory variants)<br/>"
-        "&bull; <b>storage/extraction_store.py</b> &mdash; SQLite upsert keyed on (disclosure_id, model_name)<br/>"
-        "&bull; <b>scripts/parse_supply_contracts.py</b> &mdash; CLI: fetches docs &rarr; parses &rarr; stores. Ran clean on 533 events.<br/>"
-        "&bull; <b>scripts/run_filtered_event_study.py</b> &mdash; merges prices with extractions, reports gross/net by ratio cutoff<br/>"
-        "&bull; 3 new test files (16 new test cases)",
+        "&bull; <b>data/dart_client.py</b> &mdash; new <font face=\"Courier\">fetch_document_text()</font> + ZIP/HTML/UTF-8 extractor<br/>"
+        "&bull; <b>interpretation/deterministic_parser.py</b> &mdash; regex parser for 단일판매ㆍ공급계약체결 (voluntary + mandatory variants)<br/>"
+        "&bull; <b>storage/extraction_store.py</b>, <b>scripts/parse_supply_contracts.py</b>, <b>scripts/run_filtered_event_study.py</b><br/>"
+        "&bull; 16 new test cases",
+        s["body"]
+    ))
+    story.append(Paragraph("<b>Loop 4</b> (end-to-end signal generation + parser refinement):", s["body"]))
+    story.append(Paragraph(
+        "&bull; Parser refinement: distinguishes 'value undisclosed by company' (literal dash in form) from 'value missing entirely'. "
+        "Previously 18 rows were marked 'blocked'; now 0 blocked and 19 are correctly flagged "
+        "<font face=\"Courier\">value_undisclosed_by_company</font> in needs_manual_review.<br/>"
+        "&bull; <b>storage/signal_store.py</b> &mdash; upsert keyed on signal_id (UNIQUE), plus clear-by-strategy<br/>"
+        "&bull; <b>scripts/run_strategy.py</b> &mdash; runs strategy engine across all extractions, tallies rejections by reason, "
+        "stores Signal rows. <font face=\"Courier\">--min-ratio</font> override and <font face=\"Courier\">--dry-run</font> flags.<br/>"
+        "&bull; End-to-end pipeline now operational: <b>331 candidate signals stored in DB</b> at default threshold (0.08), "
+        "58 at the empirically-better 0.30 threshold. Mean strength 0.76, range 0.40&ndash;1.00.<br/>"
+        "&bull; 4 new test cases (signal store + value-undisclosed parser test)",
         s["body"]
     ))
     story.append(Paragraph(
-        "Suite: 28 &rarr; 43 &rarr; 68 &rarr; <b>84</b> passing tests. Zero regressions across three loops.",
+        "Suite: 28 &rarr; 43 &rarr; 68 &rarr; 84 &rarr; <b>88</b> passing tests. Zero regressions across four loops.",
         s["note"]
     ))
 

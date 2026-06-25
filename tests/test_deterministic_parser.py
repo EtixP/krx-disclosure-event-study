@@ -68,6 +68,20 @@ def test_returns_blocked_when_no_value():
     assert "missing_contract_value" in ext.red_flags
 
 
+def test_value_explicitly_undisclosed_is_review_not_blocked():
+    """When the company prints a dash for the contract value (defense/pharma deals),
+    we should classify the row as 'needs_manual_review' not 'blocked' — the field
+    is present, the company simply redacted the number."""
+    text = """단일판매ㆍ공급계약체결 2. 계약내역 계약금액(원) - 최근매출액(원) 16,233,054,771,559
+    매출액대비(%) - 대규모법인여부 해당 3. 계약상대 미국 정부"""
+    ext = parse_supply_contract(text, disclosure_id=7, report_name="단일판매ㆍ공급계약체결")
+    assert ext.validation_status == "needs_manual_review"
+    assert ext.contract_value_krw is None
+    assert ext.prior_year_revenue_krw == 16_233_054_771_559
+    assert "value_undisclosed_by_company" in ext.red_flags
+    assert "missing_contract_value" not in ext.red_flags  # the value isn't missing, just redacted
+
+
 def test_computes_ratio_when_only_value_and_revenue_present():
     text = "계약금액 총액(원) 5,000,000,000 최근 매출액(원) 100,000,000,000"
     ext = parse_supply_contract(text, disclosure_id=5, report_name="단일판매")
