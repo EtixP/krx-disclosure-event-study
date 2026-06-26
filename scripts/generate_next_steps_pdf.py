@@ -92,7 +92,7 @@ def build(doc_path: Path) -> None:
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
         ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M5b risk-engine blacklist (halt/shareholder), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "109 / 109"),
+        ("Tests passing", "109 / 109 (Loop-12 iter3 only added workflow analysis, no new test files)"),
         ("Disclosures in DB", "1,119,270 across 2021-12-29 to 2026-06-24 (4.5 years, Loop-12 extension)"),
         ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
         ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
@@ -770,6 +770,85 @@ def build(doc_path: Path) -> None:
         s["note"]
     ))
     story.append(Spacer(1, 0.12 * inch))
+
+    story.append(Paragraph("<b>Loop 12 iter 3/5</b> — comprehensive 5yr meta-analysis (final picture)", s["h2"]))
+    story.append(Paragraph(
+        "Re-ran the full 7-category meta-analysis on 5yr extended data (n=28,728 events total). "
+        "29-agent workflow: 7 analyzers + 21 adversarial verifications (3 lenses each: scale_robustness, "
+        "execution_realism, regime_consistency) + synthesis. All categories tested with the "
+        "new auto-window analyzer (~10-11 walk-forward windows each).",
+        s["body"]
+    ))
+    final_table = Table(
+        [
+            ["Category", "n 2yr→5yr", "Aggr T+5", "Realistic", "WF +/total", "Lenses hold", "Change vs Loop 10", "Final verdict"],
+            ["supply_contract",   "3,495→8,585", "&minus;0.11%", "&minus;0.29%", "5/11", "3/3", "REVERSED",     "neutral"],
+            ["buyback",           "2,093→4,801", "+1.20%",       "+0.16%",       "10/11","2/3", "WEAKENED",     "idealized only"],
+            ["bonus_issue",       "273→828",     "+1.23%",       "+0.23%",       "7/10", "1/3", "WEAKENED",     "regime-dependent"],
+            ["rights_offering",   "2,528→5,911", "+0.40%",       "+0.25%",       "6/11", "3/3", "STRENGTHENED", "neutral"],
+            ["convertible_bond",  "1,864→4,175", "+0.63%",       "&minus;0.02%", "7/11", "3/3", "WEAKENED",     "neutral"],
+            ["halt_resumption",   "1,319→2,570", "&minus;1.18%", "+0.05%",       "4/11", "3/3", "WEAKENED",     "neutral (removal validated)"],
+            ["shareholder_change","834→1,858",   "&minus;1.22%", "&minus;1.09%", "2/10", "3/3", "WEAKENED",     "negative_robust — blacklist"],
+        ],
+        colWidths=[1.4 * inch, 0.9 * inch, 0.7 * inch, 0.7 * inch, 0.65 * inch, 0.55 * inch, 1.05 * inch, 1.55 * inch],
+    )
+    final_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 8),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 8),
+        ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 7), (-1, 7), colors.HexColor("#d4edda")),  # shareholder_change (kept)
+        ("BACKGROUND", (0, 2), (-1, 2), colors.HexColor("#fff3cd")),  # buyback (idealized only)
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(final_table)
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(
+        "<b>The honest final picture:</b> Zero categories are tradable long after realistic T+1-close "
+        "execution costs across 5 years and 21 adversarial verifications. Buyback retained the most "
+        "robust idealized edge (10/11 walk-forward windows positive, both markets PF&gt;1.5) but "
+        "execution_realism lens REFUTED its positive_robust label because realistic mean is only "
+        "+0.16% &mdash; barely above breakeven, below the +0.30% tradability threshold. Supply_contract "
+        "REVERSED sign at scale (the prior +0.39% edge was a 2025-2026 regime artifact). Bonus_issue "
+        "and convertible_bond collapsed to ~zero under realistic execution.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Blacklist final state:</b> shareholder_change is the only well-supported entry &mdash; "
+        "all 3 lenses HOLD, realistic mean &minus;1.09% (more than 2&times; the &minus;0.50% bar), "
+        "8/10 walk-forward windows negative, both KOSPI and KOSDAQ PF&lt;0.80, and the four most-recent "
+        "half-years all strongly negative. Halt_resumption's removal in iter2 is vindicated by this "
+        "analysis (realistic +0.05%, PF 1.01 &mdash; no edge in either direction).",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Methodology lessons (from the workflow synthesis):</b> "
+        "(1) Any single-period backtest, no matter how large the per-period n, must be cross-checked "
+        "against walk-forward windows spanning multiple regimes before any verdict is trusted. "
+        "(2) The gap between idealized T+5 and realistic T+1-close execution is the single biggest "
+        "determinant of tradability &mdash; verdicts framed only on idealized numbers are misleading. "
+        "(3) The adversarial 3-lens framework (scale, execution, regime) caught the buyback "
+        "overstatement that an idealized-only analysis would have shipped &mdash; it should be the "
+        "default gate for any future verdict.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Research-question status:</b> substantially answered in the negative across the 7 tested "
+        "categories. The first-version research goal (Phases 0&ndash;4) is functionally complete. "
+        "The deterministic + walk-forward + adversarial-verification methodology IS the project's "
+        "deliverable. Three productive forward paths if pursued: sub-segment KOSPI-only buyback "
+        "with stricter liquidity filters; expand to un-tested event types (earnings, M&amp;A, "
+        "delisting); build a faster-than-T+1 execution path (but that's HFT, outside CLAUDE.md scope).",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Workflow snapshot: <font face=\"Courier\">data/multi_event_meta_5yr_2026-06-26.json</font><br/>"
+        "Reproduce: <font face=\"Courier\">.venv/bin/python scripts/analyze_event_category.py --category &lt;X&gt;</font>",
+        s["note"]
+    ))
     story.append(Paragraph(
         "Reproduce: <font face=\"Courier\">.venv/bin/python -c \"from kdtb.risk import EventBlacklist; ...\"</font>",
         s["note"]

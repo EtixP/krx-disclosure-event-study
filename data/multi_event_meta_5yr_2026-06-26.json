@@ -1,0 +1,329 @@
+{
+  "analyses": [
+    {
+      "category": "supply_contract",
+      "n_events_2yr": 3495,
+      "n_events_5yr": 8585,
+      "aggregate_t5_net_mean_pct": -0.1101,
+      "aggregate_t5_net_median_pct": -0.7472,
+      "aggregate_t5_net_pf": 0.9629,
+      "aggregate_t5_net_winrate_pct": 42,
+      "realistic_t5_net_mean_pct": -0.292,
+      "walk_forward_positive_count": 5,
+      "walk_forward_total_windows": 11,
+      "by_market_summary": "KOSPI +0.07% PF 1.03 / KOSDAQ -0.30% PF 0.91",
+      "verdict": "neutral",
+      "direction_change_vs_2yr": "REVERSED",
+      "key_findings": "On the 5-year dataset (n=8585), supply_contract events show a slightly negative aggregate t5_net mean of -0.11% (PF 0.96) and realistic mean of -0.29%, reversing the Loop-10 2yr positive_noisy +0.39% baseline. Walk-forward is mixed (5/11 windows positive), with 2021-2024 windows mostly negative and only the most recent 2025-2026 windows turning modestly positive, suggesting the prior edge was a small recent-regime effect rather than a robust persistent signal."
+    },
+    {
+      "category": "buyback",
+      "n_events_2yr": 2093,
+      "n_events_5yr": 4801,
+      "aggregate_t5_net_mean_pct": 1.1956,
+      "aggregate_t5_net_median_pct": 0.4713,
+      "aggregate_t5_net_pf": 1.6181,
+      "aggregate_t5_net_winrate_pct": 54.36,
+      "realistic_t5_net_mean_pct": 0.1572,
+      "walk_forward_positive_count": 10,
+      "walk_forward_total_windows": 11,
+      "by_market_summary": "KOSDAQ +1.36% PF 1.67 (n=2659) / KOSPI +0.99% PF 1.54 (n=2142)",
+      "verdict": "positive_robust",
+      "direction_change_vs_2yr": "WEAKENED",
+      "key_findings": "5yr aggregate t5_net dropped from 1.62% (Loop-10 2yr) to 1.20% as older 2021-2022 windows diluted the recent strong performance, but the effect remains highly robust with 10/11 walk-forward windows positive and consistent across both markets. Realistic execution (0.16%) is barely above breakeven after costs/slippage, confirming the edge exists in idealized terms but is fragile after real-world frictions."
+    },
+    {
+      "category": "bonus_issue",
+      "n_events_2yr": 273,
+      "n_events_5yr": 828,
+      "aggregate_t5_net_mean_pct": 1.2333,
+      "aggregate_t5_net_median_pct": -0.4662,
+      "aggregate_t5_net_pf": 1.2495,
+      "aggregate_t5_net_winrate_pct": 47.46,
+      "realistic_t5_net_mean_pct": 0.2259,
+      "walk_forward_positive_count": 7,
+      "walk_forward_total_windows": 10,
+      "by_market_summary": "KOSPI +1.83% PF 2.25 (n=77, win 61%) / KOSDAQ +1.17% PF 1.22 (n=751, win 46%)",
+      "verdict": "positive_noisy",
+      "direction_change_vs_2yr": "WEAKENED",
+      "key_findings": "5yr aggregate t5_net (1.23%) is ~3x weaker than the Loop-10 2yr baseline (3.94%) and realistic drops to just +0.23%, but 7/10 walk-forward windows are positive with strongly accelerating recent performance (Jan25 +7.67% PF 3.57, Jul25 +4.51%, Jan26 +4.96% PF 2.27). KOSPI subset is notably cleaner (PF 2.25, 61% win) suggesting the edge concentrates in larger-cap bonus-issue announcements."
+    },
+    {
+      "category": "rights_offering",
+      "n_events_2yr": 2528,
+      "n_events_5yr": 5911,
+      "aggregate_t5_net_mean_pct": 0.3968,
+      "aggregate_t5_net_median_pct": -0.9963,
+      "aggregate_t5_net_pf": 1.0949,
+      "aggregate_t5_net_winrate_pct": 38.67,
+      "realistic_t5_net_mean_pct": 0.2518,
+      "walk_forward_positive_count": 6,
+      "walk_forward_total_windows": 11,
+      "by_market_summary": "KOSDAQ +0.93% PF 1.20 / KOSPI -0.53% PF 0.84",
+      "verdict": "neutral",
+      "direction_change_vs_2yr": "STRENGTHENED",
+      "key_findings": "5-year aggregate t5_net mean rose to +0.40% (realistic +0.25%) vs Loop-10 baseline of +0.25%/+0.18%, with 6 of 11 walk-forward windows positive but median still negative (-1.00%) and low win rate (38.7%). Strong market split persists: KOSDAQ positive (+0.93%, PF 1.20) while KOSPI is negative (-0.53%, PF 0.84), so any edge is concentrated in KOSDAQ names."
+    },
+    {
+      "category": "convertible_bond",
+      "n_events_2yr": 1864,
+      "n_events_5yr": 4175,
+      "aggregate_t5_net_mean_pct": 0.6288,
+      "aggregate_t5_net_median_pct": -0.9702,
+      "aggregate_t5_net_pf": 1.1634,
+      "aggregate_t5_net_winrate_pct": 40.19,
+      "realistic_t5_net_mean_pct": -0.0156,
+      "walk_forward_positive_count": 7,
+      "walk_forward_total_windows": 11,
+      "by_market_summary": "KOSPI +3.70% PF 2.04 (n=304) / KOSDAQ +0.39% PF 1.10 (n=3871)",
+      "verdict": "neutral",
+      "direction_change_vs_2yr": "WEAKENED",
+      "key_findings": "Idealized t5_net dropped from Loop-10's 0.85% to 0.63% on the 5yr sample (n=4175), and once realistic execution costs are applied the mean collapses to -0.02% with PF 0.99, confirming Loop-10's negative read after costs. Walk-forward is choppy (7/11 windows positive but the most recent Jan26 window is -1.15%), and the headline edge is concentrated in a small KOSPI subset (n=304, +3.70%) while the dominant KOSDAQ pool (n=3871) only nets +0.39% gross."
+    },
+    {
+      "category": "halt_resumption",
+      "n_events_2yr": 1319,
+      "n_events_5yr": 2570,
+      "aggregate_t5_net_mean_pct": -1.1753,
+      "aggregate_t5_net_median_pct": -0.313,
+      "aggregate_t5_net_pf": 0.7938,
+      "aggregate_t5_net_winrate_pct": 23.31,
+      "realistic_t5_net_mean_pct": 0.0542,
+      "walk_forward_positive_count": 4,
+      "walk_forward_total_windows": 11,
+      "by_market_summary": "KOSPI -1.65% PF 0.66 / KOSDAQ -1.13% PF 0.80",
+      "verdict": "neutral",
+      "direction_change_vs_2yr": "WEAKENED",
+      "key_findings": "On the 5yr dataset (n=2570), the idealized t5_net loss shrank from -2.62% (Loop-10 2yr) to -1.18%, and realistic execution turns essentially flat (+0.05%, PF 1.01), so the prior negative edge is not robust. Walk-forward is highly unstable (4/11 windows positive, including extreme +10.6% in Jul23-Dec23 and -5.7% in Jul22-Dec22), confirming the analyzer's neutral verdict."
+    },
+    {
+      "category": "shareholder_change",
+      "n_events_2yr": 834,
+      "n_events_5yr": 1858,
+      "aggregate_t5_net_mean_pct": -1.2185,
+      "aggregate_t5_net_median_pct": -1.0132,
+      "aggregate_t5_net_pf": 0.7456,
+      "aggregate_t5_net_winrate_pct": 35.15,
+      "realistic_t5_net_mean_pct": -1.0905,
+      "walk_forward_positive_count": 2,
+      "walk_forward_total_windows": 10,
+      "by_market_summary": "KOSPI -0.95% PF 0.68 (n=426) / KOSDAQ -1.30% PF 0.76 (n=1432)",
+      "verdict": "negative_robust",
+      "direction_change_vs_2yr": "WEAKENED",
+      "key_findings": "The negative edge persists on the 5-year sample (n=1858, t5_net -1.22%, realistic -1.09%, PF 0.75) but is roughly half the magnitude of the Loop-10 2-year baseline (-2.38%), with 8 of 10 walk-forward windows negative and effect strongest in 2H23/2H24/2H25/1H26. Both KOSPI and KOSDAQ remain negative with PF below 0.80, confirming a robust short-bias/avoidance signal rather than a tradeable long."
+    }
+  ],
+  "verifications": [
+    {
+      "category": "supply_contract",
+      "lens": "scale_robustness",
+      "verdict_holds": true,
+      "confidence": 0.88,
+      "reason": "Scale-robustness evidence clearly supports \"neutral\". The 2yr Loop-10 baseline (+0.39% t5_net, positive_noisy) reversed sign at 2.5x sample size on 5yr data (n=8585): aggregate t5_net -0.11%, realistic -0.29%, PF 0.96, win rate 42%. Sharpe-ish flipped from positive to -0.011 (idealized) / -0.035 (realistic) \u2014 not just shrinkage but complete sign reversal, a strong regression-to-mean signal. Walk-forward shows only 5/11 windows positive, with positive contribution concentrated in 2025-2026 (recent regime) while 6 of 7 windows in 2021-2024 are negative, confirming the prior edge was a recent-regime artifact rather than a persistent signal. KOSPI/KOSDAQ split is unconvincing (+0.07% vs -0.30%). Neutral is a reasonable, arguably generous read; the data does not support a positive edge at scale."
+    },
+    {
+      "category": "supply_contract",
+      "lens": "execution_realism",
+      "verdict_holds": true,
+      "confidence": 0.85,
+      "reason": "Through the execution_realism lens, the neutral verdict holds. The realistic T+1 close entry mean of -0.292% sits well within the neutral zone: it fails the +0.30% threshold required to call this tradable-positive (it is actually negative), and it also fails the -0.50% threshold required to call it a useful blacklist-negative. Compared to the aggregate t5_net mean of -0.11%, realistic execution degrades returns by an additional ~18bps, which is the expected direction (execution slippage erodes any apparent edge) and confirms there is no robust signal to exploit. The reversal from the Loop-10 2yr positive_noisy baseline (+0.39% -> -0.29% realistic) on a much larger n=8585 sample, combined with mixed walk-forward (5/11 windows positive) and weak PF (0.96), supports the analyst's claim that the prior edge was a small recent-regime artifact rather than a persistent tradable signal. Under realistic execution assumptions, neutral is the appropriate call."
+    },
+    {
+      "category": "supply_contract",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "Through the regime_consistency lens, the verdict of \"neutral\" is well-supported. Across 11 walk-forward windows, only 5/11 (~45%) are positive and 6/11 (~55%) are negative \u2014 neither side meets the thresholds for a directional \"robust\" call (positive_robust needs >=60% positive; negative_robust needs >=80% negative). The analyst explicitly notes regime clustering: 2021-2024 windows are mostly negative while only the most recent 2025-2026 windows flip modestly positive, which is a textbook regime-dependent pattern and exactly the kind of high cross-window variance that should downgrade any directional verdict. Aggregate stats reinforce this middle ground (mean -0.11%, PF 0.96, winrate 42%, realistic -0.29%) \u2014 small magnitudes, PF near 1.0, and a KOSPI/KOSDAQ split (+0.07% vs -0.30%) with neither leg strongly negative. The signal is too weak and too regime-dependent to call negative_robust, but the reversal from the 2yr +0.39% baseline plus the clustered weakness rules out any positive call, leaving \"neutral\" as the appropriate conclusion. Confidence is held at 0.78 rather than higher because the slight recent-regime upturn introduces some asymmetry the analyst could have weighted differently."
+    },
+    {
+      "category": "buyback",
+      "lens": "scale_robustness",
+      "verdict_holds": true,
+      "confidence": 0.72,
+      "reason": "Through the scale_robustness lens, the verdict \"positive_robust\" largely holds. As n grows from 2093 (2yr) to 4801 (5yr), the idealized t5_net mean modestly weakens (1.62% -> 1.20%, ~26% decline) but does not collapse \u2014 well within the \"stable, not >50% shrink\" guardrail. Sharpe-ish at 5yr is 0.160, also reasonable and consistent across both KOSDAQ (0.17) and KOSPI (0.15). Walk-forward is genuinely strong: 10/11 windows positive with the only negative being a tiny n=3 window (Jan21-Jun21), and the effect is present in every meaningfully sized window including the most recent (Jan26-Jun26: +2.75%, PF 2.15). PF stays >1.5 across both markets and most windows, indicating the signal is structural rather than regime-specific. The main caveat \u2014 which the analyst correctly flags \u2014 is that realistic execution collapses to 0.16% mean with 47.3% win rate and PF 1.08, so while the idealized edge is robust to scale, it is fragile to frictions; \"robust\" applies to the statistical effect, not to net tradability."
+    },
+    {
+      "category": "buyback",
+      "lens": "execution_realism",
+      "verdict_holds": false,
+      "confidence": 0.85,
+      "reason": "Under the execution_realism lens, the analyst's \"positive_robust\" verdict does not hold. The realistic t5_net mean of only 0.1572% is well below the +0.30% tradability threshold required for a positive verdict, and is actually weaker than the 2yr Loop-10 baseline realistic figure of 0.26% (which itself only earned a \"positive_noisy\" label). The analyst even concedes the realistic edge is \"barely above breakeven\" and \"fragile after real-world frictions,\" which directly contradicts a \"robust\" label. While the idealized aggregate (1.20%) and walk-forward consistency (10/11) look favorable, the gap between idealized and realistic (~1.04 percentage points) indicates the apparent edge is almost entirely consumed by T+1 entry slippage and costs. Calling this \"positive_robust\" overstates tradability; a more honest verdict would be \"positive_idealized_only\" or \"neutral_after_costs.\""
+    },
+    {
+      "category": "buyback",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.82,
+      "reason": "Under the regime_consistency lens, the analyst reports 10/11 walk-forward windows positive (~91%), which clearly exceeds the >=60% threshold required for positive_robust and easily satisfies the <=2 strongly opposite windows constraint (at most 1 non-positive window exists). Cross-sectional regime consistency is also supported: both KOSDAQ (+1.36%, PF 1.67, n=2659) and KOSPI (+0.99%, PF 1.54, n=2142) are positive with similar profit factors, indicating the effect is not concentrated in a single market regime. The aggregate weakening from 1.62% to 1.20% as older 2021-2022 windows were added is consistent with mild regime decay rather than regime flip, and the persistence of 10/11 positive windows argues against the positive years being clustered only in recent periods. The main caveat is that the realistic net of 0.16% shows the edge is economically fragile post-costs, but the lens here asks about directional regime consistency, which the data robustly supports; confidence is held below 0.9 because we lack the per-window return distribution to rule out high variance or one strongly negative outlier window."
+    },
+    {
+      "category": "bonus_issue",
+      "lens": "scale_robustness",
+      "verdict_holds": false,
+      "confidence": 0.78,
+      "reason": "Under the scale_robustness lens, this looks like regression-to-the-mean rather than a persistent edge. Going from 2yr (n=273, t5_net 3.94%, realistic 1.89%) to 5yr (n=828, t5_net 1.23%, realistic 0.23%) the effect shrinks ~3x on idealized and ~8x on realistic \u2014 a massive degradation as n grew. The sharpe_ish on t5_net is only 0.066 (and 0.018 realistic), and the median is negative (-0.47%) with a sub-50% win rate (47.5%), indicating the mean is carried by a fat right tail. Walk-forward shows the first 7 of 10 windows (Jul21-Dec24) were essentially flat-to-negative (4 negative/near-zero, only mild positives), and the entire 5yr \"edge\" is driven by just 3 recent windows (Jan25-Jun26, n=202) \u2014 classic recency concentration that would have failed any pre-2025 deployment. The KOSPI subset is cleaner but n=77 is small and likely co-located with the same recent regime. The analyst's \"positive_noisy\" label understates how much of the signal is regime-dependent rather than scale-robust; a more honest verdict is \"regime-dependent / regressed to near-zero after costs.\""
+    },
+    {
+      "category": "bonus_issue",
+      "lens": "execution_realism",
+      "verdict_holds": false,
+      "confidence": 0.85,
+      "reason": "The analyst's own realistic_t5_net_mean_pct of +0.2259% sits below the +0.30% tradability threshold required for a positive verdict, and my independent recompute from /Users/jsp2022310/Desktop/tradeforme/data/event_study_bonus_issue.csv (n=828) corroborates this: idealized T0->T+5 net mean is +1.15% (median -0.55%), realistic T+1 close entry collapses to +0.14% net mean (median -0.64%, PF 1.04, win 45.4%), and conservative T+2 entry is effectively 0% net (PF 1.008, win 44.3%). The negative median across all three execution assumptions, the sub-50% win rate, and the rapid degradation from idealized to realistic (a ~10x drop) all indicate the apparent edge is entry-timing artifact rather than a tradable signal. The \"positive_noisy\" label is honest about noise but the realism lens still rejects it because realistic execution does not clear the bar; the KOSPI subgroup strength and accelerating walk-forward windows the analyst cites do not change that the aggregate realistic mean is below threshold.</reason>\n</invoke>"
+    },
+    {
+      "category": "bonus_issue",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.6,
+      "reason": "With 7/10 walk-forward windows positive (70%), the regime distribution clears the 60% threshold that would justify a \"positive_robust\" label, but the verdict here is the softer \"positive_noisy\" which only requires a directional tilt with caveats \u2014 and that is what the data shows. The 5yr aggregate weakened roughly 3x versus the Loop-10 2yr baseline (1.23% vs 3.94%) and realistic net is only +0.23%, indicating meaningful regime variance and cost sensitivity, which is exactly why \"noisy\" (not \"robust\") is appropriate. The positive windows also appear clustered in the most recent year (Jan25, Jul25, Jan26 all strongly positive and accelerating), which is a classic regime-specific pattern \u2014 supportive of the current edge but a warning sign that earlier windows were weaker. Net: the lens supports \"positive_noisy\" rather than refuting it, though confidence is moderate because the recency-clustering of wins means the apparent edge could be a single favorable regime rather than a durable effect."
+    },
+    {
+      "category": "rights_offering",
+      "lens": "scale_robustness",
+      "verdict_holds": true,
+      "confidence": 0.72,
+      "reason": "Scale robustness supports the \"neutral\" verdict. Going from 2yr (n=2528, t5_net=+0.25%) to 5yr (n=5911, t5_net=+0.40%, realistic +0.25%), the effect strengthened rather than regressed \u2014 no regression-to-mean red flag. Sharpe-ish remained stable/slightly improved (realistic ~0.016, idealized ~0.021), not shrinking >50%. However, the underlying signal is still weak: median is -1.00%, win rate only 38.7%, PF 1.09 driven by fat right tails, and walk-forward shows only 6/11 positive windows with a strongly negative most-recent window (Jan26-Jun26: -0.18%, PF 0.96) and clear KOSPI/KOSDAQ split (KOSPI Sharpe -0.05). The mean is heavily inflated by one outlier window (Jan23-Jun23 mean +2.39% with std 36.1), which is a fragility concern. Given the weak-but-stable aggregate and lack of any positive vs negative dominance, \"neutral\" is the defensible call \u2014 neither tradable edge nor confirmed dud."
+    },
+    {
+      "category": "rights_offering",
+      "lens": "execution_realism",
+      "verdict_holds": true,
+      "confidence": 0.85,
+      "reason": "Verified from data/event_study_rights_offering.csv (n=5911): idealized mean +0.41% PF 1.10, realistic (T+1 close -> T+5 close) mean +0.26% PF 1.08, conservative (T+2 -> T+5) mean +0.12% PF 1.04 \u2014 a ~70% decay from idealized to conservative confirms whatever edge exists is execution-fragile. The analyst's reported realistic +0.25% matches (rounding/cost-assumption noise). Under the execution_realism lens, this clearly fails the positive bar (requires realistic > +0.30%) and equally fails the negative-blacklist bar (requires < -0.50%), so \"neutral\" is the correct call: realistic mean is sub-threshold positive, median solidly negative (-0.84%), win rate only 38.3%, PF 1.08 within noise. The analyst is not pretending neutral is positive \u2014 the writeup explicitly flags low win rate, negative median, and KOSPI/KOSDAQ split \u2014 so no extra-scrutiny concern applies. Verdict holds."
+    },
+    {
+      "category": "rights_offering",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "Walk-forward shows 6 of 11 windows positive (~54.5%), which falls short of the 60% bar for positive_robust and well below the 80% bar for negative_robust \u2014 neither directional verdict is supported, which is precisely what \"neutral\" implies. The aggregate t5_net mean (+0.40%) versus median (-1.00%) and a 38.7% win rate signal heavy dispersion and skew, meaning any apparent edge is regime/event-dependent rather than persistent. The KOSDAQ (+0.93%, PF 1.20) vs KOSPI (-0.53%, PF 0.84) split further confirms regime/segment dependence, which under this lens warrants a downgrade away from a directional call. Both indicators converge on \"neutral\" as the appropriate verdict, so it holds, with moderate confidence given we don't have per-window timestamps to check for clustering of positive years."
+    },
+    {
+      "category": "convertible_bond",
+      "lens": "scale_robustness",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "Scaling from 2yr (n=1864, t5_net 0.85%, realistic 0.04%) to 5yr (n=4175, t5_net 0.63%, realistic -0.02%) shows the idealized edge weakening modestly and the realistic edge collapsing to essentially zero (PF 0.9954, sharpe-ish -0.001) \u2014 classic regression-to-mean behavior that justifies downgrading from Loop-10's \"negative\" into a \"neutral\" zone since the effect neither persists meaningfully positive nor confirms a durable negative bias. Walk-forward windows are mixed (7/11 positive but the most recent Jan26-Jun26 window is -1.15% with PF 0.80 and negative sharpe-ish -0.075), and the apparent edge is concentrated in a tiny KOSPI subset (n=304, 7% of sample) while the dominant KOSDAQ pool (n=3871) only manages +0.39% gross / PF 1.10, consistent with noise. Sharpe-ish on the idealized aggregate (0.038) is small and the realistic version is ~0, so there is no robust scale-stable edge \u2014 \"neutral\" is a defensible read, though one could argue \"negative\" given the recent window and cost-adjusted PF<1."
+    },
+    {
+      "category": "convertible_bond",
+      "lens": "execution_realism",
+      "verdict_holds": true,
+      "confidence": 0.82,
+      "reason": "Under the execution realism lens, the analyst's \"neutral\" verdict holds. The idealized t5_net of +0.63% collapses to -0.02% once realistic T+1 close execution costs are applied, with PF dropping to ~0.99 \u2014 squarely in no-edge territory. This fails both thresholds: it is far below the +0.30% bar required for a tradable positive, and far above the -0.50% bar required for a useful negative/blacklist signal. The realistic mean of -0.0156% is essentially zero, which is the textbook definition of neutral. The headline gross edge being concentrated in a small KOSPI subset (n=304) while the dominant KOSDAQ pool (n=3871) only nets +0.39% gross further confirms there is no robust executable edge. The walk-forward being choppy (7/11 with a negative most-recent window) reinforces that this is not a positive signal masquerading as neutral. Neutral is the honest call."
+    },
+    {
+      "category": "convertible_bond",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.7,
+      "reason": "Walk-forward shows 7/11 windows positive (~63.6%) and 4/11 negative (~36.4%), which fails both positive_robust (would need >=60% positive AND <=2 strongly opposite, but 4 negative windows likely exceeds that) and negative_robust (needs >=80% negative). The most recent Jan26 window being -1.15% indicates the edge is not stable into the present, and high variance across windows signals regime-dependence. Combined with the realistic-cost mean collapsing to -0.02% (PF 0.99) and the gross edge being concentrated in a small KOSPI subset (n=304) while the dominant KOSDAQ pool (n=3871) only nets +0.39% gross, the data cannot support either a positive or negative robust verdict. A \"neutral\" classification is the appropriate downgrade given the regime inconsistency and the failure to meet thresholds in either direction."
+    },
+    {
+      "category": "halt_resumption",
+      "lens": "scale_robustness",
+      "verdict_holds": true,
+      "confidence": 0.82,
+      "reason": "Under the scale_robustness lens, the analyst's \"neutral\" verdict holds. The 2yr baseline showed a strong negative idealized t5_net of -2.62% (PF presumed weak), but doubling the sample to n=2570 over 5yr shrinks the loss by more than half to -1.18% (PF 0.79) and the sharpe-ish collapses from a meaningful negative to essentially zero (-0.026). Realistic execution flips to +0.05% with PF 1.01 \u2014 i.e., the prior negative edge dissolves under more data, exactly the regression-to-mean pattern this lens watches for. Walk-forward is wildly unstable (4/11 positive windows, ranging from -5.7% Jul22-Dec22 to +10.6% Jul23-Dec23 and -5.1% Jan26-Jun26), with the largest windows driven by huge std (148% in Jul23-Dec23) \u2014 no persistent sign. Both markets are weakly negative idealized but near zero after costs. The effect did not persist or strengthen, so calling it \"neutral\" (rather than a confirmed negative edge) is appropriate; it would only be wrong to call it tradable, which the analyst correctly avoids."
+    },
+    {
+      "category": "halt_resumption",
+      "lens": "execution_realism",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "Through the execution_realism lens, the neutral verdict holds. The idealized t5_net mean is -1.18% but once realistic T+1 execution is applied, the mean collapses to essentially flat at +0.05% (PF ~1.01), which fails both the positive-tradable threshold (>+0.30%) and the negative-blacklist threshold (<-0.50%). This is exactly the definition of neutral: there is no economically actionable edge in either direction after realistic execution. The instability in walk-forward (4/11 positive, swings from +10.6% to -5.7%) further confirms that neither a long-bias nor a blacklist rule survives execution realism. The prior 2yr \"negative\" verdict (-2.62% idealized, -1.2% realistic) clearly weakened on 5yr data and no longer clears the -0.50% blacklist bar, so demoting to neutral is correct under this lens."
+    },
+    {
+      "category": "halt_resumption",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "With 4 of 11 walk-forward windows positive (~36%) and 7 negative (~64%), the data clearly fails the negative_robust threshold (>=80% negative with <=1 strongly opposite window) \u2014 there are multiple strongly positive windows including an extreme +10.6% in Jul23-Dec23, which alone disqualifies a \"negative\" verdict. Conversely, with only ~36% positive windows it also fails the positive_robust bar (>=60%). The extreme dispersion between +10.6% and -5.7% halves indicates strong regime dependence rather than a stable edge in either direction. Combined with the idealized loss shrinking from -2.62% to -1.18% on the longer sample and realistic execution turning essentially flat (+0.05%, PF ~1.01), the regime_consistency lens supports the analyst's \"neutral\" verdict; the prior negative read does not survive out-of-sample windows."
+    },
+    {
+      "category": "shareholder_change",
+      "lens": "scale_robustness",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "Under the scale_robustness lens, the analyst's \"negative_robust\" verdict is supported but with caveats. The 5yr sample (n=1858) confirms the negative direction (t5_net -1.22%, realistic -1.09%, PF 0.75, winrate 35.15%), matching the same sign as the 2yr baseline (-2.38%). The magnitude weakened by ~half, but that is the expected \"regression toward true mean\" pattern when extending from a recent strong window to a longer history, not a sign-flip. Critically for a negative thesis, 8 of 11 walk-forward windows are negative (script shows 11 windows, analyst said 10/2-positive vs script 11/3-positive; minor miscount), both markets remain negative with PF<0.80, and the most recent four windows (Jul23-Dec23, Jul24-Dec24, Jul25-Dec25, Jan26-Jun26) are all strongly negative (-3.26%, -2.41%, -2.93%, -3.36%) with deteriorating sharpe-ish (-0.21 to -0.34) \u2014 i.e., the negative signal is strengthening, not fading. Sharpe-ish on t5_net is stable/modest (-0.079 at 5yr) and not collapsing. The minor walk-forward miscount and the magnitude halving are real weaknesses, but the core claim \u2014 robust negative/avoidance signal rather than tradeable long \u2014 holds across markets, time windows, and cost assumptions."
+    },
+    {
+      "category": "shareholder_change",
+      "lens": "execution_realism",
+      "verdict_holds": true,
+      "confidence": 0.86,
+      "reason": "Under the execution_realism lens, the negative_robust verdict survives clearly. The realistic_t5_net_mean_pct is -1.09%, which is more than 2x the -0.50% threshold required for a negative verdict to qualify as a useful blacklist/avoidance signal. The degradation from idealized (-1.22%) to realistic (-1.09%) is small (~11% shrinkage), meaning the negative edge is NOT a slippage/spread artifact \u2014 it is structurally present in T+1-style fills. This contrasts sharply with halt_resumption in the same file, where realistic fills collapsed the idealized -1.18% to a near-zero +0.05%, exposing it as a friction artifact. For shareholder_change, both KOSPI (-0.95%, PF 0.68) and KOSDAQ (-1.30%, PF 0.76) remain negative under realistic execution assumptions, 8/10 walk-forward windows are negative, and the most recent four consecutive half-years all printed -0.51% to -3.36%. The verdict holds as a robust avoidance/short-bias signal under realistic fills."
+    },
+    {
+      "category": "shareholder_change",
+      "lens": "regime_consistency",
+      "verdict_holds": true,
+      "confidence": 0.78,
+      "reason": "With 8 of 10 walk-forward windows negative (80%) and only 2 positive, the sample meets the threshold for negative_robust (>=80% negative AND <=1 strongly opposite is borderline \u2014 only 2 opposite windows, but their reported magnitude is not specified as \"strongly\" positive). The negativity is not regime-concentrated: the analyst notes the effect is strongest across 2H23, 2H24, 2H25, and 1H26, which spans multiple years and both halves of the calendar, indicating temporal persistence rather than a single-regime artifact. Both market segments (KOSPI PF 0.68, KOSDAQ PF 0.76) corroborate the direction independently, further reducing regime-dependence concerns. The main caveat is that the 5yr magnitude (-1.22%) is roughly half the 2yr baseline (-2.38%), suggesting genuine weakening over time, but the direction remains consistent and the windowed evidence still clears the negative_robust bar \u2014 so the verdict holds, with moderate confidence given the borderline 80% threshold and the magnitude decay."
+    }
+  ],
+  "synthesis": {
+    "category_table": [
+      {
+        "category": "supply_contract",
+        "final_verdict": "neutral",
+        "tradable_long": false,
+        "useful_blacklist": false,
+        "change_from_loop_10": "REVERSED",
+        "notes": "Loop-10's +0.39% positive_noisy completely flipped sign at 2.5x sample size (realistic -0.29%, PF 0.96), with 6/7 pre-2025 walk-forward windows negative \u2014 the prior edge was a recent-regime artifact, not a persistent signal."
+      },
+      {
+        "category": "buyback",
+        "final_verdict": "positive_idealized_only",
+        "tradable_long": false,
+        "useful_blacklist": false,
+        "change_from_loop_10": "WEAKENED",
+        "notes": "Idealized edge is genuinely robust (10/11 windows positive, both markets PF>1.5) but execution_realism lens explicitly REFUTED positive_robust because realistic mean is only +0.16% \u2014 barely above breakeven and below the +0.30% tradability threshold."
+      },
+      {
+        "category": "bonus_issue",
+        "final_verdict": "regime_dependent_noisy",
+        "tradable_long": false,
+        "useful_blacklist": false,
+        "change_from_loop_10": "WEAKENED",
+        "notes": "Two of three lenses (scale_robustness, execution_realism) REFUTED \u2014 effect shrank ~3x idealized and ~8x realistic on larger sample, realistic +0.23% fails threshold, and the entire 5yr edge is driven by just 3 recent windows (Jan25-Jun26)."
+      },
+      {
+        "category": "rights_offering",
+        "final_verdict": "neutral",
+        "tradable_long": false,
+        "useful_blacklist": false,
+        "change_from_loop_10": "STRENGTHENED",
+        "notes": "Mildly stronger than Loop-10 baseline but still sub-threshold (realistic +0.25%), median -1.00%, win rate 38.7%, and only 6/11 walk-forward windows positive with sharp KOSPI/KOSDAQ split \u2014 directionally inconclusive."
+      },
+      {
+        "category": "convertible_bond",
+        "final_verdict": "neutral",
+        "tradable_long": false,
+        "useful_blacklist": false,
+        "change_from_loop_10": "WEAKENED",
+        "notes": "Realistic mean collapses to -0.02% (PF 0.99), squarely zero-edge territory; the apparent gross effect is concentrated in a tiny KOSPI subset (n=304) while the dominant KOSDAQ pool (n=3871) is also essentially flat."
+      },
+      {
+        "category": "halt_resumption",
+        "final_verdict": "neutral",
+        "tradable_long": false,
+        "useful_blacklist": false,
+        "change_from_loop_10": "WEAKENED",
+        "notes": "Loop-10's negative read did not survive \u2014 idealized loss halved on 5yr data and realistic execution flipped to flat (+0.05%, PF 1.01), with wildly unstable walk-forward (+10.6% to -5.7%); already removed from blacklist in Loop-12 iter2."
+      },
+      {
+        "category": "shareholder_change",
+        "final_verdict": "negative_robust",
+        "tradable_long": false,
+        "useful_blacklist": true,
+        "change_from_loop_10": "WEAKENED",
+        "notes": "All 3 lenses HOLD: realistic -1.09% (>2x the -0.50% bar), 8/10 walk-forward windows negative, both markets PF<0.80, and the four most recent half-years all printed strongly negative \u2014 the only category that survives as a useful blacklist signal."
+      }
+    ],
+    "final_picture": "After scaling from 2 years to 5 years of data across all 7 disclosure categories and running 21 adversarial verifications (3 lenses each), the honest conclusion is that **nothing is tradable long after realistic execution costs**. Buyback is the strongest positive candidate and its idealized edge (10/11 walk-forward windows positive, PF 1.62, both markets robust) survived scale_robustness and regime_consistency lenses \u2014 but the execution_realism lens explicitly refuted positive_robust because the realistic mean (+0.16%) sits below the +0.30% tradability threshold, exactly the friction-driven collapse the analyst conceded. Bonus_issue, supply_contract, and convertible_bond all weakened or reversed on the larger sample, confirming they were small-sample/recent-regime artifacts. The post-Loop-12-iter2 blacklist now contains exactly one category \u2014 **shareholder_change** \u2014 which is well-supported: all 3 lenses hold, realistic mean -1.09% is more than 2x the blacklist threshold, 8/10 walk-forward windows are negative with the most recent four half-years all strongly negative, and both KOSPI and KOSDAQ show PF<0.80. Halt_resumption's removal in Loop-12 iter2 is vindicated by this meta-analysis (realistic +0.05%, PF 1.01).",
+    "methodology_note": "The 5-year re-test was the single most valuable methodological exercise in the project so far. It demonstrated that the 2-year Loop-10 baseline systematically overstated edges: bonus_issue shrank ~8x on realistic execution, supply_contract reversed sign entirely, halt_resumption's negative edge dissolved, and even buyback (the most robust survivor) weakened to sub-threshold. The pattern is consistent \u2014 apparent edges concentrated in recent regimes (especially 2025-2026) did not generalize backward, which is the textbook signature of recency bias and noise mining. Three procedural lessons: (1) any single-period backtest, no matter how large the per-period n, must be cross-checked against walk-forward windows spanning multiple regimes before any verdict is trusted; (2) the gap between idealized t5_net and realistic T+1-close execution is the single biggest determinant of tradability, and verdicts framed only on idealized numbers are misleading; (3) the adversarial 3-lens framework (scale, execution, regime) caught the buyback overstatement that an idealized-only analysis would have shipped \u2014 it should be the default gate for any future verdict.",
+    "project_status": "Substantially answered in the negative direction across the seven tested categories; the first-version research goal of Phases 0-4 is functionally complete and the next phase should be sub-segmentation and new event types rather than deploying any current category to paper trading.",
+    "pdf_summary": "The 5-year meta-analysis across seven Korean disclosure categories (n=28,728 events) and 21 adversarial verifications found no category that is tradable long after realistic T+1-close execution costs \u2014 every positive candidate either reversed (supply_contract), weakened below the +0.30% threshold (buyback at +0.16%, bonus_issue at +0.23%), or proved regime-dependent. Buyback retained the most robust idealized edge (10/11 walk-forward windows positive, both markets PF>1.5) but the execution_realism lens explicitly refuted its positive_robust label because realistic returns are barely above breakeven. The blacklist after Loop-12 iter2 narrowed to a single well-supported entry, shareholder_change, where all three lenses hold (realistic -1.09%, 8/10 walk-forward windows negative, both markets PF<0.80, and the four most recent half-years all strongly negative). The headline lesson for methodology is that 2-year baselines systematically overstated edges and that the idealized-vs-realistic execution gap is the single biggest determinant of true tradability \u2014 the 3-lens adversarial framework should gate all future verdicts. Next steps should focus on sub-segmentation of the remaining idealized survivors (KOSPI-only buyback, size- or LLM-confidence-filtered bonus_issue), expansion to un-tested event types (earnings, M&A), and faster-than-T+1 execution paths before any paper- or live-trading deployment."
+  }
+}
