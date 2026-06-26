@@ -161,6 +161,61 @@ def build(doc_path: Path) -> None:
         "ML filter on richer features. Each is a real hypothesis to test &mdash; none is guaranteed to work.",
         s["body"]
     ))
+    story.append(Spacer(1, 0.1 * inch))
+
+    story.append(Paragraph("Loop-6 subgroup + walk-forward results", s["h2"]))
+    story.append(Paragraph(
+        "Sliced the 3,377 events by market, ratio bucket, contract value, day-of-week, calendar quarter, "
+        "and counterparty type (regex heuristic). Then walk-forward validated the most-positive subgroup "
+        "and the most-negative subgroup across four 6-month windows. Honest reading below.",
+        s["body"]
+    ))
+    wf_table = Table(
+        [
+            ["Subgroup", "Aggregate T+5", "Aggregate PF", "Walk-fwd verdict (4 windows)"],
+            ["KOSPI / ratio 0.15-0.30", "+1.59% (n=199)", "1.59", "ALTERNATES (+/-/-/+) — not robust"],
+            ["KOSPI (any ratio)",       "+0.63% (n=1708)", "1.22", "3/4 windows positive — modest but holds"],
+            ["KOSDAQ (any ratio)",      "+0.06% (n=1669)", "1.02", "no edge"],
+            ["Government counterparty",  "&minus;2.14% (n=90)", "0.51", "3/4 windows NEGATIVE (sometimes &minus;5%)"],
+            ["Other_korean_corp",       "&minus;0.65% (n=417)", "0.84", "consistently negative"],
+            ["Ratio 1.00+",             "&minus;1.83% (n=66)",  "0.64", "small n; likely distressed/unusual events"],
+        ],
+        colWidths=[2.0 * inch, 1.5 * inch, 0.9 * inch, 2.4 * inch],
+    )
+    wf_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 8),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 2), (-1, 2), colors.HexColor("#d4edda")),  # KOSPI all
+        ("BACKGROUND", (0, 4), (-1, 4), colors.HexColor("#f8d7da")),  # gov
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(wf_table)
+    story.append(Spacer(1, 0.1 * inch))
+    story.append(Paragraph(
+        "<b>Two actionable findings:</b><br/>"
+        "&bull; <b>Government-counterparty contracts consistently underperform.</b> 3/4 walk-forward windows "
+        "show net T+5 returns of &minus;5% to &minus;0.5%. Aligns with intuition: government contracts are "
+        "pre-priced, low-margin, expected. We can't short (CLAUDE.md rule), but this is a <b>strong "
+        "negative filter</b> &mdash; the strategy should skip long signals where counterparty is government.<br/>"
+        "&bull; <b>KOSPI &gt; KOSDAQ</b> in 3/4 windows. Aligns with the liquidity-premium hypothesis. "
+        "Worth restricting the strategy to KOSPI-only.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Two findings ruled out:</b> the KOSPI/0.15-0.30 subgroup that looked best in aggregate (+1.59% T+5) "
+        "alternates positive/negative across windows &mdash; a classic small-sample fluke. The 0.30+ ratio "
+        "\"edge\" from Loop 3 stays dead at scale. Median return remains negative at every threshold.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Raw CSV: <font face=\"Courier\">data/subgroup_analysis.csv</font> (3,377 events x 6+ feature columns).",
+        s["note"]
+    ))
     story.append(Paragraph(
         "Raw CSV: <font face=\"Courier\">data/event_study_results.csv</font> (3,531 events, all "
         "horizons, gross). Loop-3 log of the smaller dataset is preserved in git history.",
