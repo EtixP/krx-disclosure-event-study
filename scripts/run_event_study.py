@@ -27,6 +27,8 @@ import pandas as pd
 from kdtb.data.market_data_client import MarketDataClient
 from kdtb.logging_setup import setup_logging
 
+from kdtb.data.event_categories import CATEGORIES
+
 _BASE_QUERY = """
 SELECT id, receipt_no, corp_code, corp_name, stock_code, report_name,
        DATE(receipt_datetime) AS event_date, market
@@ -37,17 +39,6 @@ WHERE {where}
   AND market IN ('KOSPI', 'KOSDAQ')
 ORDER BY event_date, receipt_no
 """
-
-CATEGORIES = {
-    # name → SQL fragment (excluding the IS NOT NULL / market clauses)
-    "supply_contract": "report_name LIKE '단일판매%' AND report_name NOT LIKE '%정정%' AND report_name NOT LIKE '%해지%'",
-    "buyback":         "report_name LIKE '%자기주식%취득%' AND report_name NOT LIKE '%처분%' AND report_name NOT LIKE '%정정%'",
-    "rights_offering": "report_name LIKE '%유상증자%' AND report_name NOT LIKE '%정정%'",
-    "bonus_issue":     "report_name LIKE '%무상증자%' AND report_name NOT LIKE '%정정%'",
-    "convertible_bond":"report_name LIKE '%전환사채%' AND report_name LIKE '%발행%' AND report_name NOT LIKE '%정정%'",
-    "halt_resumption": "(report_name LIKE '%매매거래정지%' OR report_name LIKE '%거래재개%')",
-    "shareholder_change":"report_name LIKE '%최대주주%변경%' AND report_name NOT LIKE '%정정%'",
-}
 
 SUPPLY_CONTRACT_QUERY = _BASE_QUERY.format(where=CATEGORIES["supply_contract"])  # legacy alias
 

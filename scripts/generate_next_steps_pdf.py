@@ -91,8 +91,8 @@ def build(doc_path: Path) -> None:
     story.append(_kv_table([
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
-        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "92 / 92"),
+        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M5b risk-engine blacklist (halt/shareholder), M6/M7 paper-broker scaffolding"),
+        ("Tests passing", "108 / 108"),
         ("Disclosures in DB", "514,304 across 488 trading days (Jun 25 2024 – Jun 24 2026, full 24 months)"),
         ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
         ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
@@ -303,9 +303,10 @@ def build(doc_path: Path) -> None:
         ("DB backup", "./scripts/backup_db.sh — gzipped SQL dump under data/backups/"),
         ("Walk-forward", "scripts/walk_forward.py — reproduces the v0/v1/v2 4-window table"),
         ("Paper backtest", "scripts/run_paper_backtest.py — realized-PnL with 3 execution assumptions"),
-        ("Per-category analysis (NEW)", "scripts/analyze_event_category.py --category &lt;X&gt;"),
-        ("Cross-category summary (NEW)", "scripts/summarize_all_categories.py"),
-        ("Event study by category (NEW)", "scripts/run_event_study.py --category &lt;X&gt;"),
+        ("Per-category analysis", "scripts/analyze_event_category.py --category &lt;X&gt;"),
+        ("Cross-category summary", "scripts/summarize_all_categories.py"),
+        ("Event study by category", "scripts/run_event_study.py --category &lt;X&gt;"),
+        ("Event blacklist (NEW)", "src/kdtb/risk/event_blacklist.py — risk-engine check for recent negative events"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -599,6 +600,56 @@ def build(doc_path: Path) -> None:
         "Workflow JSON snapshot: <font face=\"Courier\">data/multi_event_meta_2026-06-26.json</font><br/>"
         "Reproduce per-category: <font face=\"Courier\">.venv/bin/python scripts/analyze_event_category.py --category &lt;X&gt;</font><br/>"
         "Cross-category table: <font face=\"Courier\">.venv/bin/python scripts/summarize_all_categories.py</font>",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.1 * inch))
+
+    story.append(Paragraph("<b>Loop 11</b> — halt/shareholder blacklist in the risk engine", s["h2"]))
+    story.append(Paragraph(
+        "Per Loop-10's findings (halt_resumption and shareholder_change are consistently "
+        "negative-return event categories), implemented a deterministic do-not-trade filter "
+        "in the risk engine. When the strategy generates a long signal, the risk engine now "
+        "queries SQLite to check whether the subject stock has had a disclosure in any blacklisted "
+        "category within the lookback window (default 30 days). If yes, the signal is rejected "
+        "with reason <font face=\"Courier\">recent_negative_event:&lt;category&gt;</font>.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Architecture:</b>",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "&bull; <b>data/event_categories.py</b> &mdash; shared CATEGORIES dict (extracted from run_event_study.py) so the event-study runner and the risk engine use the SAME patterns. DEFAULT_NEGATIVE_CATEGORIES = [halt_resumption, shareholder_change].<br/>"
+        "&bull; <b>risk/event_blacklist.py</b> &mdash; EventBlacklist class wraps a SQLite connection, exposes <font face=\"Courier\">has_recent_negative_event(stock_code, now, lookback_days) → category_name | None</font>. ~5ms per query on the 514k-row table; no index needed.<br/>"
+        "&bull; <b>risk/limits.py</b> &mdash; added <font face=\"Courier\">blacklist_lookback_days: int = 30</font> and <font face=\"Courier\">blacklisted_event_categories: list[str] = [halt_resumption, shareholder_change]</font>.<br/>"
+        "&bull; <b>risk/checks.py</b> &mdash; new <font face=\"Courier\">check_negative_event_blacklist()</font> function. Silently skipped if blacklist is None (backwards-compatible with existing tests).<br/>"
+        "&bull; <b>risk/risk_engine.py</b> &mdash; RiskEngine now accepts optional <font face=\"Courier\">blacklist</font> param in its constructor. Default None preserves the existing API.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Validation:</b>",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "&bull; 17 new test cases covering: detection of both blacklist categories, lookback window "
+        "boundary, different stock no-match, revision exclusion, supply_contract not in default list, "
+        "custom category list, unknown category raises, empty stock_code returns None, zero lookback "
+        "returns None, future event excluded (no look-ahead), picks most-recent when multiple.<br/>"
+        "&bull; Full suite: 92 &rarr; <b>108 tests passing</b>. Zero regressions in existing risk tests "
+        "(the optional <font face=\"Courier\">blacklist=None</font> default is backwards compatible).<br/>"
+        "&bull; <b>Applied to the live 693 v2 stored signals</b>: 7 (1.0%) would be filtered out &mdash; "
+        "4 by shareholder_change, 3 by halt_resumption. Rare-fire but high-conviction defensive filter.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Bonus_issue extension (in progress):</b> as of this PDF write, a background backfill "
+        "is extending the DART dataset by 36 more months (back to 2021-06). When complete, "
+        "bonus_issue will have ~3&times; the current 273 events — enough to retest the only "
+        "category with realistic-execution edge. The backfill takes ~30-40 minutes total.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Reproduce: <font face=\"Courier\">.venv/bin/python -c \"from kdtb.risk import EventBlacklist; ...\"</font>",
         s["note"]
     ))
     story.append(Spacer(1, 0.1 * inch))

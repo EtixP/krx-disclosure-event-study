@@ -15,3 +15,10 @@ class RiskLimits(BaseModel):
     no_short_selling: bool = True
     no_margin: bool = True
     no_derivatives: bool = True
+    # Loop-11: negative-event blacklist (per Loop-10 findings).
+    # If the subject stock has had a disclosure in one of these categories within
+    # `blacklist_lookback_days`, the risk engine rejects the long signal.
+    blacklist_lookback_days: int = Field(default=30, ge=0)
+    blacklisted_event_categories: list[str] = Field(
+        default_factory=lambda: ["halt_resumption", "shareholder_change"]
+    )

@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from kdtb.risk import checks
 from kdtb.risk.limits import RiskLimits
@@ -12,6 +12,8 @@ from kdtb.schemas import Extraction, Signal
 
 class RiskContext(BaseModel):
     """Inputs the risk engine evaluates against."""
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     signal: Signal
     extraction: Extraction
@@ -36,8 +38,13 @@ class RiskDecision(BaseModel):
 
 
 class RiskEngine:
-    def __init__(self, limits: RiskLimits) -> None:
+    def __init__(self, limits: RiskLimits, blacklist=None) -> None:
+        """blacklist is an optional EventBlacklist (or duck-typed equivalent).
+        When None, the negative-event filter is skipped — useful for tests
+        that don't want SQLite, and for unit tests of other checks.
+        """
         self.limits = limits
+        self.blacklist = blacklist
 
     def evaluate(self, ctx: RiskContext) -> RiskDecision:
         reasons: list[Optional[str]] = [
@@ -50,6 +57,9 @@ class RiskEngine:
             checks.check_open_positions(ctx.open_positions, self.limits),
             checks.check_trades_today(ctx.trades_today, self.limits),
             checks.check_revision_or_cancellation(ctx.extraction),
+            checks.check_negative_event_blacklist(
+                self.blacklist, ctx.signal.stock_code, ctx.now, self.limits
+            ),
         ]
         failures = [r for r in reasons if r is not None]
         if failures:

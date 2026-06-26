@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from kdtb.risk.limits import RiskLimits
 from kdtb.schemas import Extraction, Signal
@@ -66,4 +67,26 @@ def check_revision_or_cancellation(extraction: Extraction) -> str | None:
         return "disclosure_is_cancellation"
     if extraction.is_revision and extraction.is_new_contract is False:
         return "disclosure_is_revision_not_new"
+    return None
+
+
+def check_negative_event_blacklist(
+    blacklist: Any,
+    stock_code: str,
+    now: datetime,
+    limits: RiskLimits,
+) -> str | None:
+    """If the stock has had a recent disclosure in a blacklisted category, reject.
+
+    blacklist is an EventBlacklist instance; we accept Any here to avoid a
+    circular import. Skip silently if blacklist is None (the engine is then
+    running without the negative-event filter, which is allowed).
+    """
+    if blacklist is None or not stock_code:
+        return None
+    hit = blacklist.has_recent_negative_event(
+        stock_code, now, limits.blacklist_lookback_days
+    )
+    if hit:
+        return f"recent_negative_event:{hit}"
     return None
