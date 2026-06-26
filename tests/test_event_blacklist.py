@@ -42,19 +42,31 @@ def test_returns_none_when_no_recent_event(conn):
     assert bl.has_recent_negative_event("005930", now, lookback_days=30) is None
 
 
-def test_detects_halt_resumption(conn):
+def test_halt_resumption_NOT_in_default_blacklist(conn):
+    """Loop 12 (iter 2/5) removed halt_resumption — refuted on all 3 adversarial lenses
+    (regime_consistency 60% < 70%, sharpe-ish in noise band, structurally heterogeneous).
+    Inserting a halt event for a stock should NOT trigger the default blacklist."""
     when = datetime(2026, 6, 20, 14, 0)
     _insert_disclosure(conn, "20260620100001", "005930", "매매거래정지(중요사항 공시 등)", when)
     bl = EventBlacklist(conn)
     now = datetime(2026, 6, 26, 10, 0)
-    hit = bl.has_recent_negative_event("005930", now, lookback_days=30)
-    assert hit == "halt_resumption"
+    assert bl.has_recent_negative_event("005930", now, lookback_days=30) is None
 
 
-def test_detects_거래재개(conn):
+def test_detects_halt_resumption_when_explicitly_added(conn):
+    """halt_resumption is removed from the default blacklist as of Loop 12, but
+    users can still add it explicitly if they want."""
+    when = datetime(2026, 6, 20, 14, 0)
+    _insert_disclosure(conn, "20260620100001", "005930", "매매거래정지(중요사항 공시 등)", when)
+    bl = EventBlacklist(conn, categories=["shareholder_change", "halt_resumption"])
+    now = datetime(2026, 6, 26, 10, 0)
+    assert bl.has_recent_negative_event("005930", now, lookback_days=30) == "halt_resumption"
+
+
+def test_detects_거래재개_when_explicitly_added(conn):
     when = datetime(2026, 6, 25, 14, 0)
     _insert_disclosure(conn, "20260625100002", "005930", "[기재정정]주식의 거래재개", when)
-    bl = EventBlacklist(conn)
+    bl = EventBlacklist(conn, categories=["halt_resumption"])
     hit = bl.has_recent_negative_event("005930", datetime(2026, 6, 26), lookback_days=7)
     assert hit == "halt_resumption"
 
@@ -137,12 +149,14 @@ def test_future_event_not_counted(conn):
 
 
 def test_picks_most_recent_when_multiple(conn):
+    """Both halt_resumption and shareholder_change in scope; expects shareholder_change
+    because halt is no longer in the default blacklist (Loop 12). Without halt in the
+    default categories, the older halt event isn't even considered."""
     older = datetime(2026, 6, 10)
     newer = datetime(2026, 6, 24)
     _insert_disclosure(conn, "20260610100012", "005930", "매매거래정지", older)
     _insert_disclosure(conn, "20260624100013", "005930", "최대주주변경", newer)
-    bl = EventBlacklist(conn)
-    # ORDER BY DESC LIMIT 1 should give the newer one (shareholder_change)
+    bl = EventBlacklist(conn)  # default = [shareholder_change] only
     hit = bl.has_recent_negative_event("005930", datetime(2026, 6, 26), lookback_days=30)
     assert hit == "shareholder_change"
 

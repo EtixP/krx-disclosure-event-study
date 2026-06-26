@@ -1,0 +1,105 @@
+{
+  "analyses": [
+    {
+      "category": "halt_resumption",
+      "n_events": 2570,
+      "n_24mo": 1319,
+      "aggregate_t5_net_mean_pct": -1.1753,
+      "aggregate_t5_net_median_pct": -0.313,
+      "aggregate_t5_net_winrate_pct": 23.31,
+      "aggregate_t5_net_pf": 0.7938,
+      "realistic_t5_net_mean_pct": 0.0542,
+      "walk_forward_negative_count": 6,
+      "walk_forward_total_windows": 10,
+      "worst_window": "Jul22-Dec22: -5.71%",
+      "best_window": "Jul23-Dec23: +10.57%",
+      "verdict": "noisily_negative",
+      "key_findings": "On the extended 4.5-year dataset (n=2,570, nearly 2x the Loop-10 sample of 1,319), the aggregate t5_net signal remains clearly negative at -1.18% mean with a 23.3% win rate and 0.79 profit factor, and the most recent window (Jan26-Jun26, n=589) deepened to -5.07%, reinforcing the negative-signal thesis. However, the signal is noisier than before: 6 of 10 walk-forward windows are negative (60%) and two windows (Jan23-Jun23 +5.81%, Jul23-Dec23 +10.57%) show strong positive tails that flip the realistic-fill mean to a near-zero +0.05%, so the idealized edge largely disappears once execution costs/slippage are modeled.",
+      "concerns": "The two outsized positive windows in 2023 suggest halt-resumption returns are heavily right-skewed in certain regimes (likely small-cap squeeze episodes), meaning a long-side blacklist could miss occasional high-magnitude winners and the negative edge is regime-dependent rather than structural. Additionally, the realistic-fill mean is barely positive (+0.05%) and conservative-fill is +0.64%, indicating the \"negative\" signal is essentially a slippage/spread artifact under idealized fills - if the live execution path resembles realistic fills, halt_resumption is closer to neutral and the blacklist may be over-restrictive."
+    },
+    {
+      "category": "shareholder_change",
+      "n_events": 1858,
+      "verdict": "consistently_negative",
+      "key_findings": "On the extended 4.5-year dataset (n=1858, up from 834), the negative signal not only held but strengthened: aggregate t5_net mean is -1.22% with PF 0.75 and 35.15% win rate, and the realistic mean is -1.09%. 8 of 10 qualifying walk-forward windows (80%) are negative, with the most recent four consecutive half-years all printing -0.51% to -3.36%, suggesting the negative edge has intensified rather than faded.",
+      "concerns": "Two windows (Jan22-Jun22 at +3.93% and Jan23-Jun23 at +0.79%) show positive means driven by fat right tails (high std and median still negative), so a long-side blacklist could occasionally miss strong upside outliers; if a similar bull-regime/short-squeeze period recurs, blocking longs on shareholder_change events would forgo rare but large positive moves even though the median outcome remains reliably negative.",
+      "aggregate_t5_net_mean_pct": -1.2185,
+      "aggregate_t5_net_median_pct": -1.0132,
+      "aggregate_t5_net_pf": 0.7456,
+      "aggregate_t5_net_winrate_pct": 35.15,
+      "realistic_t5_net_mean_pct": -1.0905,
+      "walk_forward_negative_count": 8,
+      "walk_forward_total_windows": 10,
+      "worst_window": "Jan26-Jun26: -3.36%",
+      "best_window": "Jan22-Jun22: +3.93%",
+      "n_24mo": 834
+    }
+  ],
+  "verifications": [
+    {
+      "category": "halt_resumption",
+      "lens": "regime_consistency",
+      "refuted_as_negative_signal": true,
+      "confidence": 0.78,
+      "reason": "The walk-forward consistency fails the 70% threshold: only 7 of 11 six-month windows are negative (63.6%), with four positive windows including two materially large ones (Jan23-Jun23 +5.81%, Jul23-Dec23 +10.57%). These positive tails are large enough to flip the realistic-fill aggregate to essentially zero (+0.05%) and the conservative-fill aggregate positive (+0.64%), indicating the idealized -1.18% edge is largely a slippage/spread artifact rather than a structural negative signal. The pattern looks regime-dependent \u2014 likely small-cap squeeze episodes in 2023 \u2014 meaning a blanket long-side blacklist would suppress trades on stocks that, in certain regimes, produce outsized positive returns. Per the conservative default posture, halt_resumption should not be treated as a reliable negative-signal blacklist filter."
+    },
+    {
+      "category": "halt_resumption",
+      "lens": "effect_size_vs_std",
+      "refuted_as_negative_signal": true,
+      "confidence": 0.82,
+      "reason": "Under the effect_size_vs_std lens the negative signal is unreliable. On the extended 4.5-year dataset (n=2,570) the t5_net mean is -1.17% against a std of 45.32%, giving a sharpe-ish of only -0.026 \u2014 squarely inside the lens's -0.05 to 0 \"noise\" band, not the meaningful-negative zone. Critically, the effect size SHRANK with more data rather than grew: the 24-month subset produced sharpe-ish of -0.107 (clearly beyond the -0.05 threshold), but expanding to 4.5 years collapsed it ~4x to -0.026, exactly the \"shrinking = noise\" pattern the lens flags as disqualifying. Std also exploded from ~24% (24mo) to ~45% (5y), meaning the additional data revealed a heavy right tail (the 2023 squeeze windows of +5.8% and +10.6%) that the smaller sample had hidden, and the std now dwarfs the mean by ~39x. The aggregate idealized -1.18% is further undermined because the realistic-fill mean barely clears zero at +0.05% and conservative-fill is +0.64%, so the \"negative\" reading is a slippage artifact at idealized fills that cannot survive realistic execution. With the negative signal failing the sharpe-ish floor, regressing with sample growth, and being regime-dependent rather than structural, a long-side blacklist would over-trigger; under the lens's \"conservative \u2014 better not fire when uncertain\" posture, halt_resumption is refuted as a reliable negative signal."
+    },
+    {
+      "category": "halt_resumption",
+      "lens": "structural_validity",
+      "refuted_as_negative_signal": true,
+      "confidence": 0.78,
+      "reason": "The \"halt_resumption\" label is a heterogeneous wrapper that mixes structurally distinct events with very different return profiles, which fails the structural-validity test. Sub-categorizing the 2,570 events by report-name shows the negative aggregate is driven almost entirely by two narrow buckets \u2014 share consolidation/face-value-change halts (n=528, mean t+5 = -3.77%) and rumor/news halts (n=135, -5.99%) \u2014 while bonus-issue halts are positive (+1.56%), improvement-period and investor-protection halts are flat zero (no trading), and capital-reduction halts show extreme skew (+10.6% mean but -8.7% median, n=210). Both markets are negative (KOSDAQ -0.81%, KOSPI -1.34%) so it is broad, but the top tickers recur 15-24 times each, meaning the sample is dominated by chronically distressed names that were going to underperform regardless \u2014 classic selection bias where the \"signal\" is really \"this company is a perpetual problem child.\" A blanket long-side blacklist on the umbrella category would over-trigger by blocking benign bonus-issue and share-consolidation-only events, while the genuinely predictive component (rumor halts, delisting-track names) is better captured by a tradability/distress filter. Refuting as a reliable unified negative signal \u2014 recommend the blacklist be narrowed to specific sub-categories rather than the parent label."
+    },
+    {
+      "category": "shareholder_change",
+      "lens": "regime_consistency",
+      "refuted_as_negative_signal": false,
+      "confidence": 0.85,
+      "reason": "The regime_consistency lens strongly supports the negative signal: 9 of 10 substantive walk-forward windows (excluding the n=2 Jan21-Jun21 stub) print negative t5_net means \u2014 a 90% negative rate, well above the 70% reliability threshold. Crucially, even the two \"positive\" windows (Jan22-Jun22 +3.93%, Jan23-Jun23 +0.79%) had negative medians (-0.76% and -1.36% respectively), meaning the typical shareholder_change event was a loser even in those bull-regime periods; the positive means came from fat right-tail outliers, not a regime flip in central tendency. The four most recent consecutive half-years (Jul24 through Jun26) are all negative and intensifying (-2.41%, -0.51%, -2.93%, -3.36%), and both market segments (KOSDAQ and KOSPI) print negative means. For a long-side blacklist that blocks rather than shorts, missing rare positive outliers is acceptable; what matters is that the median outcome is reliably negative across regimes, which it is. The signal is regime-consistent and the blacklist is justified."
+    },
+    {
+      "category": "shareholder_change",
+      "lens": "effect_size_vs_std",
+      "refuted_as_negative_signal": true,
+      "confidence": 0.62,
+      "reason": "Under the effect_size_vs_std lens the negative signal is borderline and shows the exact \"shrinks with more data\" pattern the lens flags as noise. On the 24-month sample the t5_net sharpe-ish was a robust -0.205 (mean -2.38% / std 11.61%), but expanding to the 4.5-year sample roughly *halves* the effect to a sharpe-ish of only -0.078 (mean -1.21% / std 15.37%) \u2014 std grew 32% while mean shrank 49%, so the additional data diluted rather than confirmed the signal. -0.078 just barely clears the -0.05 \"meaningful\" threshold, sitting in the zone where small re-specifications (cost assumption, outlier trimming, half-year boundary) could push it back into noise. Per-window sharpe-ish is also inconsistent: 6/10 windows are meaningfully negative (<-0.05), but 2022H1 prints +0.116 and 2023H1 prints +0.047, meaning ~20% of historical regimes deliver no usable negative signal even at the half-year horizon. The std (~15%) is roughly 13x the aggregate mean, so any individual event is dominated by idiosyncratic dispersion. Recent windows are negative, but the lens explicitly warns that a shrinking effect size with more data indicates the original 24-month read overstated the true edge, so a conservative blacklist should not treat this as a reliable always-on filter."
+    },
+    {
+      "category": "shareholder_change",
+      "lens": "structural_validity",
+      "refuted_as_negative_signal": false,
+      "confidence": 0.82,
+      "reason": "The structural_validity concern is real but does not refute the blacklist signal. Both markets are independently negative (KOSPI net -0.99%, KOSDAQ net -1.34%), so the effect is broad rather than concentrated in one illiquid segment, though KOSDAQ being 77% of events and twice as volatile (std 16.9% vs 8.3%) does confirm some selection bias toward smaller/struggling names. Critically, the signal survives every adversarial robustness test: excluding the top 20 most-frequent stocks (which include extreme losers like 068940 at -7.5% mean over 12 events) still leaves n=1633 with mean -0.71%, median -0.53%, win rate 37.8%, PF 0.84; the 5%-trimmed mean is -1.73% (more negative than the raw mean, so the negativity is NOT a fat-tail artifact \u2014 if anything the +52% p99 right tail masks it); the median is solidly negative (-0.71% gross, -1.01% net); and 7 of the 10 most-common report sub-types print negative medians, including the dominant \ucd5c\ub300\uc8fc\uc8fc\ubcc0\uacbd type (n=854, median -0.48%). The lens correctly observes the blacklist may be filtering \"garbage stocks\" rather than \"predictively unlucky\" stocks, but for a defensive long-side filter that distinction is immaterial \u2014 both outcomes are filtering out future losers. Confidence reduced from 0.9+ only because the KOSDAQ skew and per-stock concentration mean the blacklist is partly a proxy for distressed-issuer flag, not pure event signal."
+    }
+  ],
+  "synthesis": {
+    "blacklist_well_founded": false,
+    "per_category": [
+      {
+        "category": "halt_resumption",
+        "verdict_5yr": "noisily_negative",
+        "stays_in_blacklist": false,
+        "notes": "Decisively refuted across all 3 adversarial lenses (regime_consistency 0.78, effect_size_vs_std 0.82, structural_validity 0.78). Aggregate idealized mean -1.18% (n=2,570) but realistic-fill mean is only +0.05% and conservative-fill is +0.64% \u2014 the 'negative' edge is essentially a slippage artifact. Sharpe-ish collapsed ~4x from -0.107 (24mo) to -0.026 (4.5y), squarely in the noise band. Only 6/10 walk-forward windows negative (60%, below 70% threshold), with two outsized positive windows in 2023 (+5.81%, +10.57%) indicating regime-dependent right-tail risk. Structural decomposition shows the umbrella label mixes positive sub-buckets (bonus-issue halts +1.56%) with negative ones (rumor halts -5.99%, share consolidation -3.77%), so a blanket blacklist over-triggers. 3 of 3 lenses refuted \u2014 must be removed."
+      },
+      {
+        "category": "shareholder_change",
+        "verdict_5yr": "consistently_negative",
+        "stays_in_blacklist": true,
+        "notes": "Survives 2 of 3 adversarial lenses (regime_consistency NOT refuted at 0.85, structural_validity NOT refuted at 0.82; only effect_size_vs_std refuted at 0.62 \u2014 borderline). Aggregate t5_net mean -1.22% (n=1,858), realistic-fill mean -1.09% (the negative edge survives realistic execution, unlike halt_resumption). 9 of 10 substantive walk-forward windows negative (90%), and even the 2 positive-mean windows had negative medians (-0.76%, -1.36%). Most recent 4 consecutive half-years all negative and intensifying (-2.41%, -0.51%, -2.93%, -3.36%). Robustness checks pass: 5%-trimmed mean -1.73% (more negative than raw, so not a fat-tail artifact), excluding top-20 most-frequent stocks still leaves mean -0.71% with PF 0.84, both markets independently negative (KOSPI -0.99%, KOSDAQ -1.34%). The effect_size_vs_std refutation is the weakest of the three (confidence 0.62, sharpe-ish -0.078 barely clears -0.05 threshold) and is outweighed by strong regime consistency and structural validity. Meets the 'at most 1 of 3 refuted' bar."
+      }
+    ],
+    "final_recommendation": "keep one \u2014 drop halt_resumption, keep shareholder_change. Halt_resumption was decisively refuted on all three adversarial lenses: the idealized -1.18% edge collapses to +0.05% under realistic fills (slippage artifact), the sharpe-ish effect size shrank 4x as the sample grew from 24mo to 4.5y (classic noise pattern), walk-forward consistency is only 60% (below the 70% bar), and the umbrella label structurally mixes positive sub-events (bonus-issue halts) with negative ones (rumor halts), making the blanket blacklist over-restrictive. Shareholder_change should remain on the blacklist: realistic-fill mean is still -1.09% (real, not slippage), 90% walk-forward consistency, both markets independently negative, robust to top-stock exclusion and trimming, and the most recent 4 half-years are all negative and intensifying. Removing halt_resumption strengthens the blacklist by eliminating false positives that would block trades on benign sub-events; the next loop should consider a narrower 'rumor_halt' or 'distress_halt' sub-category if precision on that bucket is needed.",
+    "parameter_suggestions": {
+      "blacklist_lookback_days": 60,
+      "rationale": "Extend lookback from 30 to 60 days for shareholder_change. The walk-forward data shows the negative effect has intensified rather than dissipated over the most recent four consecutive half-years (-2.41%, -0.51%, -2.93%, -3.36% from Jul24 through Jun26), and the strongest single window is the most recent one (Jan26-Jun26: -3.36%), suggesting the depressive impact of a shareholder change persists well beyond a few weeks rather than fading quickly. The median t5_net of -1.01% net combined with the persistence pattern argues for a longer protective window. 60 days is a conservative extension that doubles coverage without straying into territory where the underlying corporate event becomes truly stale; we can re-evaluate at 90 days in a future loop if the 60-day window shows continued post-event drift. Note: since halt_resumption is being dropped entirely, no lookback parameter is needed for it."
+    },
+    "pdf_summary": "Loop 12 (iter 2/5) re-validated the Loop-11 blacklist on 4.5 years of data and found it only partially well-founded: shareholder_change (n=1,858) stays in with a realistic-fill mean of -1.09%, 90% walk-forward negative consistency, and intensifying recent windows (Jul24-Jun26 averaging ~-2.3%), surviving 2 of 3 adversarial lenses. Halt_resumption (n=2,570) is decisively refuted on all 3 lenses and must be removed: the idealized -1.18% edge collapses to +0.05% under realistic fills (slippage artifact), sharpe-ish shrank 4x from -0.107 to -0.026 as the sample grew (noise pattern), walk-forward consistency is only 60%, and the umbrella label mixes positive sub-events like bonus-issue halts (+1.56%) with negative ones like rumor halts (-5.99%). Recommended actions for Loop 13: drop halt_resumption from the blacklist, extend the shareholder_change lookback from 30 to 60 days given the persistence of negative drift across the four most recent half-years, and consider a future narrower sub-category filter (rumor_halt / distress_halt) to recover the genuinely predictive component of halt events without over-triggering on benign administrative halts."
+  }
+}

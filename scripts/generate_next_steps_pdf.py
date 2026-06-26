@@ -92,7 +92,7 @@ def build(doc_path: Path) -> None:
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
         ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M5b risk-engine blacklist (halt/shareholder), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "108 / 108"),
+        ("Tests passing", "109 / 109"),
         ("Disclosures in DB", "1,119,270 across 2021-12-29 to 2026-06-24 (4.5 years, Loop-12 extension)"),
         ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
         ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
@@ -707,6 +707,69 @@ def build(doc_path: Path) -> None:
         "Reproduce: <font face=\"Courier\">.venv/bin/python scripts/run_event_study.py --category bonus_issue</font>",
         s["note"]
     ))
+    story.append(Spacer(1, 0.12 * inch))
+
+    story.append(Paragraph("<b>Loop 12 iter 2/5</b> — re-validating the Loop-11 blacklist on 4.5yr data", s["h2"]))
+    story.append(Paragraph(
+        "Workflow: re-fetched halt_resumption (n=1,319 &rarr; <b>2,570</b>) and shareholder_change "
+        "(n=834 &rarr; <b>1,858</b>) on the extended dataset, then ran 3 adversarial verifiers per "
+        "category (regime_consistency, effect_size_vs_std, structural_validity). Total: 9 agents.",
+        s["body"]
+    ))
+    blr_table = Table(
+        [
+            ["Category", "n 2yr → 5yr", "Aggregate T+5 net", "Realistic T+5 net", "Walk-fwd negative", "Lenses refuted", "Verdict"],
+            ["halt_resumption",     "1,319 → 2,570", "&minus;1.18%", "+0.05%", "6/10 (60%)", "3/3", "REMOVE"],
+            ["shareholder_change",  "834 → 1,858",   "&minus;1.22%", "&minus;1.09%", "8/10 (80%)", "1/3", "KEEP, extend to 60d"],
+        ],
+        colWidths=[1.45 * inch, 1.0 * inch, 0.95 * inch, 0.95 * inch, 1.0 * inch, 0.85 * inch, 1.3 * inch],
+    )
+    blr_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#f8d7da")),
+        ("BACKGROUND", (0, 2), (-1, 2), colors.HexColor("#d4edda")),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(blr_table)
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(
+        "<b>halt_resumption removed</b> from the blacklist — refuted on all 3 lenses. "
+        "Critical evidence: idealized aggregate &minus;1.18% collapses to <b>+0.05% under realistic "
+        "fills</b> (the \"negative\" edge was a slippage artifact, not a real signal). Sharpe-ish "
+        "shrank ~4&times; from &minus;0.107 (24mo) to &minus;0.026 (4.5y) &mdash; classic noise-with-more-data pattern. "
+        "Structural decomposition showed the umbrella label mixes positive sub-events (bonus-issue "
+        "halts +1.56%) with negative ones (rumor halts &minus;5.99%), so a blanket blacklist over-triggers.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>shareholder_change kept</b>, lookback extended 30 &rarr; 60 days. Realistic-fill mean "
+        "is <b>&minus;1.09%</b> (real, not slippage), 90% walk-forward consistency, both markets "
+        "independently negative, and the 4 most-recent half-years are all negative AND intensifying "
+        "(&minus;2.41%, &minus;0.51%, &minus;2.93%, &minus;3.36%). The persistence pattern justifies the longer lookback.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>What this validates:</b> the adversarial-verification methodology caught a real flaw in "
+        "the Loop-11 implementation. Without re-validation, we would have kept a do-not-trade filter "
+        "that fires on benign events (bonus-issue halts, share-consolidation halts) and adds noise "
+        "rather than risk control. The system is now demonstrating self-correction across loops.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Code: <font face=\"Courier\">DEFAULT_NEGATIVE_CATEGORIES = [\"shareholder_change\"]</font> in "
+        "<font face=\"Courier\">src/kdtb/data/event_categories.py</font>; "
+        "<font face=\"Courier\">blacklist_lookback_days: int = 60</font> in "
+        "<font face=\"Courier\">src/kdtb/risk/limits.py</font>. Tests updated. Suite: 108 &rarr; 109.<br/>"
+        "Workflow JSON: <font face=\"Courier\">data/blacklist_robustness_5yr_2026-06-26.json</font>",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.12 * inch))
     story.append(Paragraph(
         "Reproduce: <font face=\"Courier\">.venv/bin/python -c \"from kdtb.risk import EventBlacklist; ...\"</font>",
         s["note"]

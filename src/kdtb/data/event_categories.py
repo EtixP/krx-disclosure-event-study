@@ -19,10 +19,23 @@ CATEGORIES: dict[str, str] = {
     "shareholder_change":"report_name LIKE '%최대주주%변경%' AND report_name NOT LIKE '%정정%'",
 }
 
-# Categories empirically shown (Loop 10) to predict negative returns on long signals.
-# When the risk engine sees a recent disclosure in one of these categories for the
-# subject stock, it should reject a long signal.
+# Categories empirically shown to predict negative returns on long signals.
+# Updated Loop 12 (iter 2/5) after re-validation on 4.5-year extended dataset.
+#
+# Loop 10 originally identified both halt_resumption and shareholder_change as
+# clean negative signals on 2-year data. Loop 12 re-tested both on 4.5 years
+# and found halt_resumption fails all 3 adversarial lenses:
+#   - regime_consistency: only 60% windows negative (below 70% threshold);
+#     2023 had two strongly positive windows (+5.81%, +10.57%)
+#   - effect_size_vs_std: sharpe-ish shrank from -0.107 (24mo) to -0.026 (4.5y),
+#     in the noise band; std exploded from ~24% to ~45%
+#   - structural_validity: the umbrella category mixes positive sub-events
+#     (bonus-issue halts +1.56%) with negative ones (rumor halts -5.99%)
+#   - Realistic-fill mean is +0.05% — the "negative" edge is a slippage artifact
+#
+# shareholder_change survived 2 of 3 lenses with realistic-fill -1.09%, 90%
+# walk-forward consistency, both markets independently negative, and most-recent
+# 4 half-years intensifying (-2.41% to -3.36%).
 DEFAULT_NEGATIVE_CATEGORIES: list[str] = [
-    "halt_resumption",
     "shareholder_change",
 ]

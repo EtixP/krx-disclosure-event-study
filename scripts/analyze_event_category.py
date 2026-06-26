@@ -22,6 +22,42 @@ from kdtb.backtest.cost_model import CostModel
 from kdtb.backtest.metrics import compute
 
 
+def _auto_windows(df: pd.DataFrame, months_per_window: int = 6) -> list[tuple[str, str, str]]:
+    """Generate non-overlapping windows from data's date range, half-year aligned.
+
+    Half-year aligned (Jan 1 / Jul 1) so windows are deterministic across runs.
+    Drops trailing partial windows (< 4 weeks of data) since they have too few events.
+    """
+    if "event_dt" in df.columns:
+        first_dt = df["event_dt"].min()
+        last_dt = df["event_dt"].max()
+    else:
+        first_dt = pd.to_datetime(df["event_date"].min())
+        last_dt = pd.to_datetime(df["event_date"].max())
+    if pd.isna(first_dt) or pd.isna(last_dt):
+        return []
+    start_year = int(first_dt.year)
+    start_half = 1 if first_dt.month <= 6 else 7
+    cur = pd.Timestamp(year=start_year, month=start_half, day=1)
+    if cur > first_dt:
+        cur = pd.Timestamp(year=start_year - 1 if start_half == 1 else start_year,
+                           month=7 if start_half == 1 else 1, day=1)
+    out: list[tuple[str, str, str]] = []
+    while cur < last_dt:
+        nxt = cur + pd.DateOffset(months=months_per_window)
+        last_day = nxt - pd.Timedelta(days=1)
+        # Drop trailing partial windows where we don't have enough data to fill
+        if (min(nxt, last_dt + pd.Timedelta(days=1)) - cur).days >= 28:
+            mlabel = "Jan" if cur.month == 1 else "Jul"
+            # Window ends at (nxt - 1 day). If that's in Jun -> 'Jun'; if in Dec -> 'Dec'.
+            mnxt = "Dec" if last_day.month == 12 else "Jun"
+            label = f"{mlabel}{cur.year % 100:02d}-{mnxt}{last_day.year % 100:02d}"
+            out.append((cur.strftime("%Y-%m-%d"), nxt.strftime("%Y-%m-%d"), label))
+        cur = nxt
+    return out
+
+
+# Legacy fixed windows — kept for back-compat with scripts/walk_forward.py
 WINDOWS: list[tuple[str, str, str]] = [
     ("2024-07-01", "2025-01-01", "Jul24-Dec24"),
     ("2025-01-01", "2025-07-01", "Jan25-Jun25"),
@@ -46,9 +82,11 @@ def _stats(series: pd.Series) -> dict:
     }
 
 
-def _walk_forward(df: pd.DataFrame, cost: float) -> list[dict]:
+def _walk_forward(df: pd.DataFrame, cost: float, windows: list[tuple[str, str, str]] | None = None) -> list[dict]:
+    if windows is None:
+        windows = _auto_windows(df)
     out = []
-    for start, end, label in WINDOWS:
+    for start, end, label in windows:
         sub = df[(df["event_dt"] >= start) & (df["event_dt"] < end)]
         net5 = (sub["ret_5d"] - cost).dropna()
         s = _stats(net5)
@@ -84,17 +122,27 @@ def _realistic_scenarios(df: pd.DataFrame, cost: float) -> dict:
 
 
 def _verdict(walk_forward: list[dict], realistic: dict) -> str:
-    """Categorize the finding: positive_robust | positive_noisy | neutral | negative."""
+    """Categorize the finding using percentages so it scales to any number of windows.
+
+    positive_robust: >=60% of windows positive AND realistic_mean > +0.30% AND realistic_pf > 1.15
+    positive_noisy:  >=60% of windows positive AND realistic_mean > +0.10% (but doesn't clear robust bar)
+    negative:        <=20% positive AND realistic_mean < -0.10%
+    neutral:         everything else
+    insufficient_data: <4 valid windows
+    """
     valid = [w for w in walk_forward if w.get("n", 0) >= 5]
-    if not valid:
+    if len(valid) < 4:
         return "insufficient_data"
     pos_windows = sum(1 for w in valid if w.get("mean_pct", 0) > 0)
-    realistic_mean = realistic.get("realistic", {}).get("mean_pct", 0) or 0
-    if pos_windows >= 3 and realistic_mean > 0.10:
+    pos_pct = pos_windows / len(valid)
+    realistic_block = realistic.get("realistic", {}) or {}
+    realistic_mean = realistic_block.get("mean_pct", 0) or 0
+    realistic_pf = realistic_block.get("pf") or 0
+    if pos_pct >= 0.60 and realistic_mean > 0.30 and realistic_pf > 1.15:
         return "positive_robust"
-    if pos_windows >= 3:
-        return "positive_noisy"  # holds in walk-forward but realistic execution kills it
-    if pos_windows <= 1 and realistic_mean < -0.10:
+    if pos_pct >= 0.60 and realistic_mean > 0.10:
+        return "positive_noisy"
+    if pos_pct <= 0.20 and realistic_mean < -0.10:
         return "negative"
     return "neutral"
 
@@ -154,13 +202,16 @@ def _human_report(result: dict) -> str:
         f"  walk-forward (T+5 net mean / pos_windows):",
     ]
     pos = 0
+    valid = 0
     for w in result["walk_forward"]:
-        if w.get("n", 0) >= 5 and w.get("mean_pct", 0) > 0:
-            pos += 1
+        if w.get("n", 0) >= 5:
+            valid += 1
+            if w.get("mean_pct", 0) > 0:
+                pos += 1
         m = w.get("mean_pct", "n/a")
         m_str = f"{m:+.3f}%" if isinstance(m, (int, float)) else m
         lines.append(f"    {w['window']:>15}  n={w.get('n', 0):>4}  T+5 net={m_str}")
-    lines.append(f"    => {pos}/4 windows positive")
+    lines.append(f"    => {pos}/{valid} windows positive")
     lines.append(f"  by market:")
     for mk, st in result["by_market"].items():
         if st.get("n", 0) >= 5:
