@@ -93,7 +93,7 @@ def build(doc_path: Path) -> None:
         ("Branch", "main"),
         ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M5b risk-engine blacklist (halt/shareholder), M6/M7 paper-broker scaffolding"),
         ("Tests passing", "108 / 108"),
-        ("Disclosures in DB", "514,304 across 488 trading days (Jun 25 2024 – Jun 24 2026, full 24 months)"),
+        ("Disclosures in DB", "1,119,270 across 2021-12-29 to 2026-06-24 (4.5 years, Loop-12 extension)"),
         ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
         ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
         ("Candidate signals stored", "693 (v2 strategy: ratio ≥ 0.08, KOSPI only, skip government counterparty). Mean strength 0.72."),
@@ -641,12 +641,71 @@ def build(doc_path: Path) -> None:
         "4 by shareholder_change, 3 by halt_resumption. Rare-fire but high-conviction defensive filter.",
         s["body"]
     ))
+    story.append(Spacer(1, 0.1 * inch))
+
+    story.append(Paragraph("<b>Loop 12</b> — bonus_issue extension result: the methodology was right", s["h2"]))
     story.append(Paragraph(
-        "<b>Bonus_issue extension (in progress):</b> as of this PDF write, a background backfill "
-        "is extending the DART dataset by 36 more months (back to 2021-06). When complete, "
-        "bonus_issue will have ~3&times; the current 273 events — enough to retest the only "
-        "category with realistic-execution edge. The backfill takes ~30-40 minutes total.",
+        "Extended the DART dataset back to 2021-12 (added 36 months), then re-ran the "
+        "bonus_issue event study on the larger sample. Loop-10's adversarial verifier had refuted "
+        "the bonus_issue claim on sample_size and regime_stability grounds; this loop tested "
+        "whether more data would confirm or rescue the original finding.",
         s["body"]
+    ))
+    bonus_table = Table(
+        [
+            ["Metric", "2yr (n=273)", "5yr (n=828)", "Change"],
+            ["T+1 net mean",   "+1.74%", "+0.74%",  "&minus;57%"],
+            ["T+5 net mean",   "+3.94%", "+1.23%",  "&minus;69%"],
+            ["T+5 median",     "+1.69%", "&minus;0.47%", "FLIPPED to NEGATIVE"],
+            ["T+5 win%",       "57.9%",  "47.5%",   "Below 50% now"],
+            ["T+5 profit factor","1.92", "1.25",    "&minus;35%"],
+            ["Realistic T+5 mean","+1.89%", "+0.23%", "&minus;88%"],
+            ["Realistic PF",   "1.54",   "1.06",    "Essentially breakeven"],
+        ],
+        colWidths=[1.9 * inch, 1.3 * inch, 1.3 * inch, 2.2 * inch],
+    )
+    bonus_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 3), (-1, 3), colors.HexColor("#f8d7da")),
+        ("BACKGROUND", (0, 6), (-1, 7), colors.HexColor("#f8d7da")),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(bonus_table)
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(
+        "<b>The verdict:</b> bonus_issue's apparent edge was small-sample artifact, exactly as "
+        "Loop 10's adversarial verification predicted. Median return FLIPPED from +1.69% to "
+        "&minus;0.47%, meaning the majority of bonus issues now lose money at T+5. Realistic execution "
+        "collapses to +0.23% with PF 1.06 — essentially breakeven after costs. This is the same "
+        "regression-to-mean pattern supply_contract showed going from 90-day to 24-month data.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Methodology validation:</b> the adversarial-verification workflow from Loop 10 correctly "
+        "flagged bonus_issue as fragile. Two of three lenses (sample_size, regime_stability) refuted "
+        "the positive verdict on the smaller sample, and the larger dataset confirms. The system is "
+        "now demonstrating that it can distinguish real signal from noise even when intermediate "
+        "results look exciting — exactly what an intellectually honest research framework should do.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Where this leaves us:</b> no event category in this project has been shown to have "
+        "tradable edge after realistic execution costs. The deterministic-pipeline + walk-forward + "
+        "adversarial-verification methodology IS the project's deliverable, plus a hard-won "
+        "research finding: <i>Korean disclosure information is incorporated into prices too "
+        "efficiently by event-day close for retail entry timing (T+1 close) to capture it</i>. "
+        "The halt/shareholder blacklist (Loop 11) remains a genuinely useful defensive risk filter.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "DB now: 1,119,270 disclosures across 2021-12-29 to 2026-06-24 (4.5 years). "
+        "Reproduce: <font face=\"Courier\">.venv/bin/python scripts/run_event_study.py --category bonus_issue</font>",
+        s["note"]
     ))
     story.append(Paragraph(
         "Reproduce: <font face=\"Courier\">.venv/bin/python -c \"from kdtb.risk import EventBlacklist; ...\"</font>",
