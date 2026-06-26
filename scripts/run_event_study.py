@@ -102,6 +102,10 @@ def main() -> int:
         time.sleep(args.sleep)
         if i % 25 == 0:
             log.info("  progress: %d/%d stocks (%d events, %d fetch failures)", i, len(stocks), len(rows), failed)
+        # Checkpoint every 100 stocks so we don't lose work if the process hangs.
+        if i % 100 == 0:
+            pd.DataFrame(rows).to_csv(args.out, index=False)
+            log.info("  checkpoint saved -> %s", args.out)
 
     df = pd.DataFrame(rows)
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)

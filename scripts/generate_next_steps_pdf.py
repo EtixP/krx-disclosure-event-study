@@ -91,69 +91,79 @@ def build(doc_path: Path) -> None:
     story.append(_kv_table([
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
-        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.2% OK), M4, M5 (signals stored), M6/M7 paper-broker scaffolding"),
+        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored), M6/M7 paper-broker scaffolding"),
         ("Tests passing", "88 / 88"),
-        ("Disclosures in DB", "111,622 across 60 trading days (Feb 27 – May 27, 2026)"),
-        ("Supply-contract events", "533 candidates &rarr; 513 OK + 20 manual-review (19 value-undisclosed, 1 ratio-inconsistent), 0 blocked"),
-        ("Real contract values extracted", "513 events with verified contract_value, prior_year_revenue, ratio"),
-        ("Candidate signals stored", "331 at default threshold (ratio &ge; 0.08); 58 at strict threshold (ratio &ge; 0.30)"),
+        ("Disclosures in DB", "514,304 across 488 trading days (Jun 25 2024 – Jun 24 2026, full 24 months)"),
+        ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
+        ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
+        ("Candidate signals stored", "331 at the default 0.08 threshold &mdash; signals from Loop 4 on the smaller dataset; re-run with --min-ratio to refresh"),
         ("Price data source", "pykrx (free, no auth)"),
         ("LLM extraction", "Code complete (prompts + validator + client) — optional now that deterministic parser works at 96%"),
         ("Broker integration", "PaperBroker (historical fills) ready; KIS broker needs your credentials"),
     ]))
 
     # === Event study results ===
-    story.append(Paragraph("Threshold sweep: net-of-cost returns by ratio cutoff", s["h2"]))
+    story.append(Paragraph("Threshold sweep on 24 months / 3,412 events", s["h2"]))
     story.append(Paragraph(
-        "514 contracts with real extracted values, returns measured from event-day close to "
-        "T+1/T+5 close, net of 0.313% roundtrip cost. The CLAUDE.md hypothesis "
-        "(filter to ratio &ge; 0.08) is the line marked &laquo; in the table.",
+        "Net of 0.313% roundtrip cost (commission + VAT + sale tax + slippage). "
+        "Loop-3 ran the same sweep on only 514 events (3 months); the comparison column "
+        "shows how those earlier numbers held up after 6.6&times; more data.",
         s["body"]
     ))
     sweep_table = Table(
         [
-            ["Threshold", "n", "T+1 net", "T+5 net", "T+1 win%", "T+5 win%", "Profit factor (5d)"],
-            ["0.00 (all)", "514", "+0.35%", "+1.21%", "42.6%", "44.2%", "1.38"],
-            ["0.05",       "430", "+0.43%", "+0.95%", "43.7%", "42.8%", "1.30"],
-            ["0.08 «", "333", "+0.39%", "+0.55%", "41.7%", "42.3%", "1.20"],
-            ["0.10",       "287", "+0.54%", "+0.87%", "40.8%", "44.3%", "1.27"],
-            ["0.15",       "169", "+0.18%", "+0.89%", "38.5%", "46.2%", "1.26"],
-            ["0.20",       "110", "+0.49%", "+1.15%", "38.2%", "45.5%", "1.33"],
-            ["0.30",       "59",  "+1.64%", "+3.10%", "40.7%", "42.4%", "1.93"],
-            ["0.50",       "23",  "+1.78%", "+2.67%", "30.4%", "39.1%", "1.77"],
+            ["Threshold", "n (24mo)", "T+1 net", "T+5 net", "T+5 win%", "PF (5d)", "Median 5d", "Loop-3 T+5 (n=514)"],
+            ["0.00 (all)", "3,412", "&minus;0.12%", "+0.35%", "44.1%", "1.21", "&minus;0.68%", "+1.21% (n=514)"],
+            ["0.08 «", "2,176", "&minus;0.07%", "+0.22%", "42.9%", "1.16", "&minus;0.73%", "+0.55% (n=333)"],
+            ["0.15", "1,177", "&minus;0.16%", "+0.56%", "44.0%", "1.25", "&minus;0.71%", "+0.89% (n=169)"],
+            ["0.20", "819",   "&minus;0.06%", "+0.59%", "42.9%", "1.25", "&minus;1.07%", "+1.15% (n=110)"],
+            ["0.30", "470",   "+0.18%",       "+0.50%", "41.2%", "1.21", "&minus;1.29%", "+3.10% (n=59)  «"],
+            ["0.50", "217",   "+0.47%",       "+0.92%", "38.1%", "1.31", "&minus;1.79%", "+2.67% (n=23)"],
+            ["1.00", "66",    "&minus;0.06%", "&minus;1.83%", "32.3%", "0.69", "&minus;3.98%", "— "],
         ],
-        colWidths=[0.9 * inch, 0.45 * inch, 0.85 * inch, 0.85 * inch, 0.85 * inch, 0.85 * inch, 1.25 * inch],
+        colWidths=[0.85 * inch, 0.6 * inch, 0.7 * inch, 0.7 * inch, 0.7 * inch, 0.55 * inch, 0.8 * inch, 1.45 * inch],
     )
     sweep_table.setStyle(TableStyle([
-        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 8),
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 8),
         ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
         ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
-        ("BACKGROUND", (0, 3), (-1, 3), colors.HexColor("#fff3cd")),  # highlight 0.08 row
-        ("BACKGROUND", (0, 7), (-1, 7), colors.HexColor("#d4edda")),  # highlight 0.30 row
+        ("BACKGROUND", (0, 2), (-1, 2), colors.HexColor("#fff3cd")),  # 0.08 row
+        ("BACKGROUND", (0, 5), (-1, 5), colors.HexColor("#f8d7da")),  # 0.30 row (was green, now red — edge disappeared)
         ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
         ("TOPPADDING", (0, 0), (-1, -1), 5),
     ]))
     story.append(sweep_table)
     story.append(Spacer(1, 0.1 * inch))
     story.append(Paragraph(
-        "<b>Key finding:</b> the CLAUDE.md-suggested 8% threshold underperforms the unfiltered baseline "
-        "(T+5 net +0.55% vs +1.21%). The 30%+ threshold shows real edge &mdash; T+5 net +3.10%, "
-        "profit factor 1.93 &mdash; but on only 59 events, well within noise.",
+        "<b>The big finding: the &ge; 0.30 \"edge\" from Loop 3 was largely noise.</b> "
+        "Going from 59 to 470 events, the T+5 net mean dropped from +3.10% to +0.50% and "
+        "profit factor from 1.93 to 1.21. Median is negative at every threshold. The 1.00+ "
+        "row is actually negative &mdash; suggests very large contracts may be a slight negative signal "
+        "(possibly representing distressed wins or unusual situations).",
         s["body"]
     ))
     story.append(Paragraph(
-        "<b>What this means:</b> the project's actual research question now has a partial answer: "
-        "small-to-medium supply contracts do NOT show a tradable post-disclosure drift, but very large "
-        "ones (&ge; 30% of revenue) might. To confirm, the system needs more data &mdash; "
-        "<i>backfill</i> is now the highest-leverage next move.",
+        "<b>Honest conclusion:</b> <i>after 24 months and 3,412 events, the major-supply-contract "
+        "event does NOT produce a clean tradable post-disclosure drift after costs.</i> Mean net "
+        "returns at every threshold are within noise of zero, win rates are 38&ndash;46%, medians are "
+        "negative. This is exactly the kind of \"strong negative result\" CLAUDE.md anticipates &mdash; "
+        "it answers the original research question. The market reacts efficiently to these "
+        "disclosures by event-day close.",
         s["body"]
     ))
     story.append(Paragraph(
-        "Raw CSVs: <font face=\"Courier\">data/event_study_results.csv</font> (all 533) and "
-        "<font face=\"Courier\">data/event_study_filtered.csv</font> (ratio &ge; 0.08).",
+        "<b>What can still rescue this:</b> (a) sub-segment by counterparty type, sector, market cap, "
+        "or recent volatility &mdash; maybe certain slices DO work. (b) try other event types (buybacks, "
+        "dilutive financing, halt/resumption). (c) different exit horizons (T+10, T+20). (d) the M5b "
+        "ML filter on richer features. Each is a real hypothesis to test &mdash; none is guaranteed to work.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Raw CSV: <font face=\"Courier\">data/event_study_results.csv</font> (3,531 events, all "
+        "horizons, gross). Loop-3 log of the smaller dataset is preserved in git history.",
         s["note"]
     ))
 
@@ -170,17 +180,17 @@ def build(doc_path: Path) -> None:
 
     actions = [
         ("P1",
-         "Authorize a larger backfill (12+ months)",
-         "Strongest finding so far: very large contracts (ratio >= 30%) show +3.1% T+5 net but only 59 events. We need ~3x more data to know if this is real. 12 months of DART = ~1.5M disclosures, ~2000+ supply contracts, runs in ~30 min, free.",
-         "Reply: 'backfill 12 months' (or '6 months', or longer). Claude will loop scripts/ingest_disclosures.py + scripts/parse_supply_contracts.py."),
+         "Decide on the strategic pivot",
+         "The 24-month backfill killed the apparent 30% edge from Loop 3. The major-supply-contract strategy as currently conceived does NOT have a tradable edge after costs. Three paths forward: (a) try sub-segmentation/M5b ML filter on richer features, (b) test other event types (buybacks, dilutive financing), (c) accept the negative result and pivot the project.",
+         "Reply with which path you want to take. Each is a real research direction; none is guaranteed to find edge. Honestly: (a) is most aligned with the existing code, (b) is the most likely to find some signal, (c) is the bravest choice."),
         ("P1",
-         "Rotate the DART API key",
-         "The current key briefly appeared in chat output during the first smoke test (before the httpx log filter was added). Still safe on your machine, but rotating is the clean call.",
-         "opendart.fss.or.kr → 관리자 → API Key 재발급. Replace DART_API_KEY in .env."),
+         "Get an LLM API key (Anthropic or OpenAI) — needed for M5b",
+         "M5b needs LLM-extracted qualitative features (counterparty type, language strength, recurrence) to feed the ML filter. Without these, M5b is just a boosted-tree on numeric ratios and probably won't beat the deterministic rule.",
+         "console.anthropic.com / platform.openai.com. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env, set LLM_PROVIDER, pip install anthropic|openai. Cost for 3,400 extractions: ~$10 with Sonnet, ~$1 with Haiku."),
         ("P2",
-         "Get an LLM API key (Anthropic or OpenAI) — now optional",
-         "Demoted from P1: deterministic parser handles 96% of supply contracts without LLM, and the cross-check architecture is already in place. LLM still useful for: (a) the 18 blocked rows, (b) other event types (buybacks, dilutive financing), (c) ratio cross-check on tradeable signals.",
-         "console.anthropic.com / platform.openai.com. Add ANTHROPIC_API_KEY or OPENAI_API_KEY to .env, set LLM_PROVIDER, pip install anthropic|openai."),
+         "Rotate the DART API key",
+         "The current key briefly appeared in chat output during the first smoke test (before the httpx log filter was added). Still safe on your machine, but rotating is the clean call. Demoted to P2 since it's been days with no incident.",
+         "opendart.fss.or.kr → 관리자 → API Key 재발급. Replace DART_API_KEY in .env."),
         ("P2",
          "Set up GitHub branch protection on main",
          "Once live trading code exists, you don't want a stray push to main to enable LIVE_TINY by accident.",
@@ -232,9 +242,10 @@ def build(doc_path: Path) -> None:
         ("Tests", "tests/ — run with: .venv/bin/pytest"),
         ("DART ingestion CLI", "scripts/ingest_disclosures.py --date YYYY-MM-DD"),
         ("Event study CLI", "scripts/run_event_study.py [--limit N]"),
-        ("Parse docs CLI", "scripts/parse_supply_contracts.py [--limit N]"),
+        ("Parse docs CLI", "scripts/parse_supply_contracts.py [--limit N] [--skip-existing]"),
         ("Filtered event study", "scripts/run_filtered_event_study.py [--min-ratio 0.08]"),
-        ("Strategy runner (NEW)", "scripts/run_strategy.py [--min-ratio 0.30] [--dry-run]"),
+        ("Strategy runner", "scripts/run_strategy.py [--min-ratio 0.30] [--dry-run]"),
+        ("DB backup (NEW)", "./scripts/backup_db.sh — gzipped SQL dump under data/backups/"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -277,19 +288,24 @@ def build(doc_path: Path) -> None:
     ))
     story.append(Paragraph("<b>Loop 4</b> (end-to-end signal generation + parser refinement):", s["body"]))
     story.append(Paragraph(
-        "&bull; Parser refinement: distinguishes 'value undisclosed by company' (literal dash in form) from 'value missing entirely'. "
-        "Previously 18 rows were marked 'blocked'; now 0 blocked and 19 are correctly flagged "
-        "<font face=\"Courier\">value_undisclosed_by_company</font> in needs_manual_review.<br/>"
-        "&bull; <b>storage/signal_store.py</b> &mdash; upsert keyed on signal_id (UNIQUE), plus clear-by-strategy<br/>"
-        "&bull; <b>scripts/run_strategy.py</b> &mdash; runs strategy engine across all extractions, tallies rejections by reason, "
-        "stores Signal rows. <font face=\"Courier\">--min-ratio</font> override and <font face=\"Courier\">--dry-run</font> flags.<br/>"
-        "&bull; End-to-end pipeline now operational: <b>331 candidate signals stored in DB</b> at default threshold (0.08), "
-        "58 at the empirically-better 0.30 threshold. Mean strength 0.76, range 0.40&ndash;1.00.<br/>"
-        "&bull; 4 new test cases (signal store + value-undisclosed parser test)",
+        "&bull; Parser refinement: distinguishes 'value undisclosed' (literal dash) from 'missing entirely'. 0 blocked rows now.<br/>"
+        "&bull; <b>storage/signal_store.py</b> + <b>scripts/run_strategy.py</b><br/>"
+        "&bull; 331 candidate signals stored in DB at default threshold (Loop 4 snapshot)<br/>"
+        "&bull; 4 new test cases",
+        s["body"]
+    ))
+    story.append(Paragraph("<b>Loop 5</b> (24-month backfill + scale-out + the negative finding):", s["body"]))
+    story.append(Paragraph(
+        "&bull; CLAUDE.md updated: ML/LLM allowed for extraction + feature enrichment + filtering, but NOT in the order-placing decision. New <b>Milestone 5b</b> added (ML-enriched signal filter).<br/>"
+        "&bull; <b>scripts/backup_db.sh</b> &mdash; gzipped SQL dumps to <font face=\"Courier\">data/backups/</font>, keeps last 7, ready for cron.<br/>"
+        "&bull; <b>24-month DART backfill</b>: 111,622 &rarr; <b>514,304 disclosures</b> across 488 trading days (Jun 2024 &ndash; Jun 2026).<br/>"
+        "&bull; <b>Re-ran deterministic parser</b>: 533 &rarr; <b>3,412 OK extractions</b> (96.6% success rate held up at scale, 0 blocked).<br/>"
+        "&bull; <b>Re-ran event study + threshold sweep</b>: the 30%+ edge from Loop 3 (T+5 +3.10%, PF 1.93) collapsed to T+5 +0.50% / PF 1.21 on 8&times; more data. Median negative at every threshold.<br/>"
+        "&bull; <b>Event study script now checkpoints CSV every 100 stocks</b> &mdash; one of yesterday's runs hung overnight; we no longer lose hours of fetches.",
         s["body"]
     ))
     story.append(Paragraph(
-        "Suite: 28 &rarr; 43 &rarr; 68 &rarr; 84 &rarr; <b>88</b> passing tests. Zero regressions across four loops.",
+        "Suite: 28 &rarr; 43 &rarr; 68 &rarr; 84 &rarr; <b>88</b> passing tests. Zero regressions across five loops.",
         s["note"]
     ))
 

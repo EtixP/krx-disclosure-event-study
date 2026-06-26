@@ -14,6 +14,7 @@ config/secrets.yaml
 logs/
 data/raw/
 data/cache/
+data/backups/
 data/*.csv
 data/*.log
 
