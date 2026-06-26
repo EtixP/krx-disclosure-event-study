@@ -72,7 +72,7 @@ def main() -> int:
 
     print()
     print("=" * 160)
-    print("CROSS-CATEGORY EVENT STUDY SUMMARY  (24 months of KOSPI+KOSDAQ disclosures, 0.313% roundtrip cost)")
+    print("CROSS-CATEGORY EVENT STUDY SUMMARY  (KOSPI+KOSDAQ disclosures, 0.313% roundtrip cost)")
     print("=" * 160)
     for r in results:
         print(_table_row(r))

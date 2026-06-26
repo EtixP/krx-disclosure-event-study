@@ -895,6 +895,67 @@ def build(doc_path: Path) -> None:
         "Adversarial-review JSON: <font face=\"Courier\">data/daily_monitor_review_2026-06-26.json</font>",
         s["note"]
     ))
+    story.append(Spacer(1, 0.12 * inch))
+
+    story.append(Paragraph("<b>Loop 12 iter 5/5 — FINAL</b>: project deliverable docs", s["h2"]))
+    story.append(Paragraph(
+        "Wrote the project's research deliverables as committed markdown so the work survives "
+        "after the loop session ends and is browsable on GitHub:",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "&bull; <b>README.md</b> &mdash; rewritten as a proper landing page. Documents the negative "
+        "result up front, links to RESEARCH_FINDINGS, lists every reproducibility command, "
+        "shows live monitor output from today.<br/>"
+        "&bull; <b>RESEARCH_FINDINGS.md</b> &mdash; the primary research deliverable. Per-category "
+        "table with verdicts on 4.5-year data; methodology evolution (the 5 phases the analysis "
+        "went through); what's well-supported vs decisively not supported; three productive "
+        "directions for future work; full reproducibility recipe.<br/>"
+        "&bull; <b>CLAUDE.md</b> &mdash; updated &quot;Immediate Next Step&quot; section now reflects "
+        "milestone completion status (M1-M5b done, M3 LLM scaffolded but unused, M6/M7/M8/M9 not done) "
+        "instead of the stale Milestone-1 instructions.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Cross-check workflow</b> (4-agent: 3 verifiers + synthesis) caught 3 real corrections "
+        "in the docs: README had wrong disclosure count (1.12M &rarr; <b>1.21M</b>), wrong date range "
+        "(Dec 2021 &rarr; <b>Jun 2021</b>, ~5 years), and wrong event-study row count (28,728 &rarr; "
+        "<b>28,979</b>). RESEARCH_FINDINGS overstated shareholder_change negativity as 90% when it's "
+        "80% (8/10). The <font face=\"Courier\">scripts/summarize_all_categories.py</font> CLI was "
+        "documented as runnable but actually failed with a ModuleNotFoundError &mdash; fixed by "
+        "adding <font face=\"Courier\">scripts/__init__.py</font> and updating the README to use "
+        "<font face=\"Courier\">-m scripts.summarize_all_categories</font>.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Final test run: 118/118 passing</b>. Final commit ends the planned 5-iteration loop "
+        "cycle. No more ScheduleWakeup is set. The repo state at this commit IS the project's "
+        "deliverable, plus this PDF + RESEARCH_FINDINGS.md.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Cross-check workflow JSON: <font face=\"Courier\">data/final_docs_cross_check_2026-06-26.json</font>",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.15 * inch))
+
+    story.append(Paragraph("<b>End of loop cycle</b>", s["h2"]))
+    story.append(Paragraph(
+        "12 loops total (Loops 1&ndash;11 + Loop 12 with 5 iterations). 30+ workflow agents across "
+        "the adversarial-verification phases. The methodology self-corrected multiple times "
+        "(bonus_issue claim killed in iter 1, halt_resumption blacklist removed in iter 2, buyback "
+        "tradability refuted in iter 3). The deterministic-pipeline + walk-forward + adversarial-"
+        "verification framework is the project's primary value, plus the strong negative research "
+        "finding it produced.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Next steps for the user are documented in <b>RESEARCH_FINDINGS.md</b> &quot;Three "
+        "productive directions&quot;: sub-segment buyback by liquidity, test untested event types "
+        "(earnings/M&amp;A), or build faster-than-T+1 execution (HFT-adjacent, excluded by CLAUDE.md "
+        "non-goals). Daily usage: <font face=\"Courier\">.venv/bin/python scripts/run_daily_monitor.py</font>.",
+        s["body"]
+    ))
     story.append(Paragraph(
         "Reproduce: <font face=\"Courier\">.venv/bin/python -c \"from kdtb.risk import EventBlacklist; ...\"</font>",
         s["note"]

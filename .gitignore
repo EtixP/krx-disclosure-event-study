@@ -9,6 +9,9 @@ config/secrets.yaml
 *.db
 *.sqlite
 *.sqlite3
+*.db-shm
+*.db-wal
+*.db-journal
 
 # Logs and raw data
 logs/
