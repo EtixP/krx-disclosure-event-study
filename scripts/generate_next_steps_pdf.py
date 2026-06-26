@@ -300,7 +300,8 @@ def build(doc_path: Path) -> None:
         ("Parse docs CLI", "scripts/parse_supply_contracts.py [--limit N] [--skip-existing]"),
         ("Filtered event study", "scripts/run_filtered_event_study.py [--min-ratio 0.08]"),
         ("Strategy runner", "scripts/run_strategy.py [--min-ratio 0.30] [--dry-run]"),
-        ("DB backup (NEW)", "./scripts/backup_db.sh — gzipped SQL dump under data/backups/"),
+        ("DB backup", "./scripts/backup_db.sh — gzipped SQL dump under data/backups/"),
+        ("Walk-forward (NEW)", "scripts/walk_forward.py — reproduces the v0/v1/v2 4-window table"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -396,9 +397,62 @@ def build(doc_path: Path) -> None:
         s["body"]
     ))
     story.append(Paragraph(
-        "&bull; 88 tests still passing (+4 new for the filters).<br/>"
+        "&bull; 92 tests still passing (+4 new for the filters).<br/>"
         "&bull; Tests cover: kospi_only rejects KOSDAQ, kospi_only off lets KOSDAQ through, "
         "excluded_counterparty_types rejects matching, None counterparty_type still passes.",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.08 * inch))
+
+    story.append(Paragraph("<b>Loop 8</b> (walk-forward validation of v0/v1/v2):", s["body"]))
+    story.append(Paragraph(
+        "The v2 aggregate looked promising; this loop verified that the improvement holds across "
+        "4 non-overlapping 6-month windows (the real test of \"edge vs curve-fit\").",
+        s["body"]
+    ))
+    wf2_table = Table(
+        [
+            ["Window", "v0 T+5 / PF (n)", "v1 T+5 / PF (n)", "v2 T+5 / PF (n)"],
+            ["Jul24-Dec24", "+0.04% / 1.01 (785)", "&minus;0.38% / 0.90 (498)", "+1.57% / 1.58 (179) «"],
+            ["Jan25-Jun25", "+0.59% / 1.23 (713)", "+0.51% / 1.19 (463)",       "+1.11% / 1.65 (138) «"],
+            ["Jul25-Dec25", "+0.41% / 1.15 (930)", "+0.67% / 1.25 (573)",       "&minus;0.55% / 0.79 (200)"],
+            ["Jan26-Jun26", "+0.45% / 1.10 (906)", "+0.15% / 1.03 (591)",       "+1.01% / 1.28 (163) «"],
+            ["Aggregate",   "+0.37% / 1.11 (3,334)", "+0.25% / 1.07 (2,125)", "+0.72% / 1.27 (680)"],
+            ["Positive windows", "4/4", "3/4", "3/4"],
+        ],
+        colWidths=[1.5 * inch, 1.7 * inch, 1.7 * inch, 1.7 * inch],
+    )
+    wf2_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 5), (-1, 6), colors.HexColor("#fff3cd")),
+        ("FONT", (0, 5), (-1, 6), "Helvetica-Bold", 9),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(wf2_table)
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(
+        "<b>Verdict: v2 holds up.</b> 3 of 4 windows positive, average +1.23% in the three "
+        "winning windows, &minus;0.55% in the losing one. The losers are smaller in magnitude than the "
+        "winners. Aggregate T+5 net mean +0.72%, profit factor 1.27, win rate 47.1%. v1 is "
+        "consistently the worst of the three &mdash; the ratio filter alone removes signal without "
+        "adding edge. The KOSPI + skip-government conjunction is what's doing the work.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Still not a strategy ready for real money.</b> 47% win rate, one losing window in four, "
+        "PF 1.27 (₩1.27 won per ₩1 lost) &mdash; thin margin once execution slippage drifts the numbers. "
+        "But it IS the first thing in this project that survives walk-forward validation. The next "
+        "moves (paper broker simulation, then ML on top) are now standing on real ground.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Reproduce with: <font face=\"Courier\">.venv/bin/python scripts/walk_forward.py</font>",
         s["note"]
     ))
     story.append(Spacer(1, 0.08 * inch))
