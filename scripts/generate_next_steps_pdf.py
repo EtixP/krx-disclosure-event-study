@@ -235,9 +235,9 @@ def build(doc_path: Path) -> None:
 
     actions = [
         ("P1",
-         "Decide on the strategic pivot",
-         "The 24-month backfill killed the apparent 30% edge from Loop 3. The major-supply-contract strategy as currently conceived does NOT have a tradable edge after costs. Three paths forward: (a) try sub-segmentation/M5b ML filter on richer features, (b) test other event types (buybacks, dilutive financing), (c) accept the negative result and pivot the project.",
-         "Reply with which path you want to take. Each is a real research direction; none is guaranteed to find edge. Honestly: (a) is most aligned with the existing code, (b) is the most likely to find some signal, (c) is the bravest choice."),
+         "Decide on the strategic pivot — even more urgent after Loop 9",
+         "Loop 9 paper backtest showed the v2 strategy nets only +₩42/trade under realistic execution (T+1 close entry). The edge IS real (3/4 walk-forward windows positive) but it lives in the event-day reaction, which retail traders can't capture without HFT-like infrastructure. Three paths: (a) HFT-like infrastructure to react within seconds of DART publication — CLAUDE.md excludes this as a non-goal; (b) test other event types (buybacks, dilutive financing, halt/resumption) which may have longer-lived reactions; (c) accept the verdict, document the methodology as the deliverable.",
+         "Reply with which path. Honest take: (a) is out of scope per CLAUDE.md and infrastructure-heavy. (b) is the most likely to find any usable signal and is purely code work (no new API costs). (c) is honest but ends the project."),
         ("P1",
          "Get an LLM API key (Anthropic or OpenAI) — needed for M5b",
          "M5b needs LLM-extracted qualitative features (counterparty type, language strength, recurrence) to feed the ML filter. Without these, M5b is just a boosted-tree on numeric ratios and probably won't beat the deterministic rule.",
@@ -301,7 +301,8 @@ def build(doc_path: Path) -> None:
         ("Filtered event study", "scripts/run_filtered_event_study.py [--min-ratio 0.08]"),
         ("Strategy runner", "scripts/run_strategy.py [--min-ratio 0.30] [--dry-run]"),
         ("DB backup", "./scripts/backup_db.sh — gzipped SQL dump under data/backups/"),
-        ("Walk-forward (NEW)", "scripts/walk_forward.py — reproduces the v0/v1/v2 4-window table"),
+        ("Walk-forward", "scripts/walk_forward.py — reproduces the v0/v1/v2 4-window table"),
+        ("Paper backtest (NEW)", "scripts/run_paper_backtest.py — realized-PnL with 3 execution assumptions"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -456,6 +457,67 @@ def build(doc_path: Path) -> None:
         s["note"]
     ))
     story.append(Spacer(1, 0.08 * inch))
+
+    story.append(Paragraph("<b>Loop 9</b> (realistic-execution backtest — the painful finding):", s["body"]))
+    story.append(Paragraph(
+        "Re-priced the 684 v2 signals under three entry/exit assumptions. The "
+        "&quot;idealized&quot; scenario matches the event study (buy event-day close, sell T+5 close), "
+        "which assumes a fill we usually <i>can't</i> get as a retail trader.",
+        s["body"]
+    ))
+    rb_table = Table(
+        [
+            ["Scenario", "Mean", "Median", "Win%", "PF", "₩/trade (on ₩30k)", "Total over 684 trades"],
+            ["idealized (t0 close → t+5)",   "+0.67%", "&minus;0.31%", "46.6%", "1.25", "+₩201", "+₩137,779"],
+            ["realistic (t+1 close → t+5)",  "+0.14%", "&minus;0.82%", "42.0%", "1.05", "+₩43",  "+₩29,140"],
+            ["conservative (t+2 close → t+5)","+0.32%", "&minus;0.31%", "44.2%", "1.15", "+₩97",  "+₩66,078"],
+        ],
+        colWidths=[1.9 * inch, 0.65 * inch, 0.75 * inch, 0.55 * inch, 0.45 * inch, 1.25 * inch, 1.45 * inch],
+    )
+    rb_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 2), (-1, 2), colors.HexColor("#f8d7da")),  # realistic row highlighted (bad news)
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(rb_table)
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(
+        "<b>The painful finding:</b> under realistic execution (entering at the T+1 close instead of the "
+        "event-day close), <b>most of v2's edge disappears.</b> Mean net per trade falls from +0.67% to "
+        "+0.14%, PF from 1.25 to 1.05, win rate from 47% to 42%. Total realized PnL across 684 trades "
+        "in 24 months would be roughly +₩29,000 &mdash; ~₩42/trade. Easily wiped out by execution slippage "
+        "we haven't modeled.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Distribution shows why:</b> 52% of v2 trades lose money under realistic execution (20% lose more "
+        "than 5%). The 16% of trades that gain &gt;5% just barely outweigh the losers. This is a strategy "
+        "whose entire \"edge\" is concentrated in the event-day reaction. If you can't trade at the close, "
+        "you don't get the edge.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>What this means strategically:</b> the major-supply-contract drift is real but largely "
+        "captured by the time a retail trader can act. Three realistic paths forward: "
+        "(a) build infrastructure to react WITHIN seconds of DART publication &mdash; that's how Korean "
+        "HFT desks trade these. CLAUDE.md explicitly excludes this as a non-goal. "
+        "(b) Test other event types that may have longer-lived reactions: buybacks, dilutive financing, "
+        "halt/resumption. (c) Accept the verdict and document the negative result as the project's "
+        "deliverable. The deterministic-pipeline + walk-forward methodology is itself valuable; the "
+        "strategy choice was the wrong horse.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Reproduce: <font face=\"Courier\">.venv/bin/python scripts/run_paper_backtest.py</font><br/>"
+        "Per-trade detail: <font face=\"Courier\">data/paper_backtest_v2.csv</font>",
+        s["note"]
+    ))
 
     story.append(Paragraph("<b>Loop 5</b> (24-month backfill + scale-out + the negative finding):", s["body"]))
     story.append(Paragraph(
