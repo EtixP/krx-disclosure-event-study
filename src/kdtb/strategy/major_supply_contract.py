@@ -43,6 +43,18 @@ class MajorSupplyContractStrategy(Strategy):
             return None
         if not disclosure.stock_code:
             return None
+        # Loop-7 filter: KOSPI showed 3/4 walk-forward windows positive vs
+        # KOSDAQ's no edge. Restricting to KOSPI removes ~half of signals but
+        # keeps the half with consistent edge.
+        if self.params.kospi_only and disclosure.market != "KOSPI":
+            return None
+        # Loop-7 filter: government counterparties showed 3/4 walk-forward
+        # windows from -5% to -0.5% T+5. Excluded by default.
+        if (
+            extraction.counterparty_type
+            and extraction.counterparty_type in self.params.excluded_counterparty_types
+        ):
+            return None
 
         # ratio of 0.20 maps to strength 1.0; capped at 1.0
         strength = min(1.0, ratio / 0.20)
@@ -51,6 +63,8 @@ class MajorSupplyContractStrategy(Strategy):
             f"llm_confidence={extraction.confidence:.2f}",
             f"contract_value_krw={extraction.contract_value_krw or 0}",
             f"prior_year_revenue_krw={extraction.prior_year_revenue_krw or 0}",
+            f"market={disclosure.market}",
+            f"counterparty_type={extraction.counterparty_type or 'unknown'}",
         ]
         return Signal(
             signal_id=f"{disclosure.receipt_no}-{self.name}",

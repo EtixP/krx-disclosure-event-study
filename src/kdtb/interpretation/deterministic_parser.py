@@ -46,7 +46,29 @@ RATIO_PATTERNS = [
 ]
 COUNTERPARTY_PATTERNS = [
     r"계약상대방\s*([가-힣A-Za-z0-9\(\)\.\-\s]+?)\s*(?:최근|주요사업|회사와|\d+\.)",
+    r"계약상대\s*([가-힣A-Za-z0-9\(\)\.\-\s,]+?)\s*(?:-\s+회사와|회사와|주요사업|\d+\.)",
 ]
+
+
+def classify_counterparty(name: Optional[str]) -> str:
+    """Heuristic classification (regex-based, identical logic to subgroup analysis).
+
+    Returns: government | foreign | large_corp_korean | other_korean_corp | unknown
+    """
+    if not name:
+        return "unknown"
+    cp = name.strip()
+    if not cp or cp in ("None", "-"):
+        return "unknown"
+    if re.search(r"(공단|공사|정부|시청|구청|도청|국립|보건|연구원)", cp):
+        return "government"
+    if re.search(r"(Co\.|Ltd|Inc|Corp|LLC|GmbH|S\.A\.|미국|일본|중국|독일|영국)", cp, re.IGNORECASE):
+        return "foreign"
+    if re.search(r"(삼성|현대|LG|SK|롯데|한화|두산|포스코|GS|CJ|KT|네이버|카카오)", cp):
+        return "large_corp_korean"
+    if "주식회사" in cp or "㈜" in cp or "(주)" in cp:
+        return "other_korean_corp"
+    return "unknown"
 CONTRACT_START_PATTERNS = [
     r"계약기간\s*(?:시작일)?\s*(\d{4}[-\.]\d{2}[-\.]\d{2})",
 ]
@@ -113,6 +135,7 @@ def parse_supply_contract(
     value_undisclosed = _is_explicit_dash(raw_value_str)  # field present but redacted
     reported_ratio = _to_ratio(_first_match(RATIO_PATTERNS, text))
     counterparty = _first_match(COUNTERPARTY_PATTERNS, text)
+    counterparty_type = classify_counterparty(counterparty)
     start_date = _first_match(CONTRACT_START_PATTERNS, text)
     end_date = _first_match(CONTRACT_END_PATTERNS, text)
 
@@ -173,6 +196,8 @@ def parse_supply_contract(
         is_new_contract=is_new,
         is_revision=is_revision,
         is_cancellation=is_cancellation,
+        counterparty_name=counterparty,
+        counterparty_type=counterparty_type,
         red_flags=red_flags,
         summary=summary[:500],
         raw_llm_output=None,

@@ -15,6 +15,10 @@ strategy:
     max_price_move_after_disclosure_pct: 0.08
     stop_loss_pct: 0.02
     take_profit_pct: 0.04
+    # Loop-7 filters (walk-forward validated on 24 months / 3,377 events).
+    # See NEXT_STEPS.pdf for the data behind these defaults.
+    kospi_only: true
+    excluded_counterparty_types: ["government"]
 
 market:
   max_spread_pct: 0.004

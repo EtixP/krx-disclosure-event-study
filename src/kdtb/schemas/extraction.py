@@ -35,6 +35,8 @@ class Extraction(BaseModel):
     is_new_contract: Optional[bool] = None
     is_revision: Optional[bool] = None
     is_cancellation: Optional[bool] = None
+    counterparty_name: Optional[str] = None
+    counterparty_type: Optional[str] = None  # government | large_corp_korean | other_korean_corp | foreign | unknown
     red_flags: list[str] = Field(default_factory=list)
     summary: str = ""
     raw_llm_output: Optional[str] = None

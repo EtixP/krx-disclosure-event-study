@@ -29,9 +29,10 @@ class ExtractionStore:
                 event_type, direction, confidence,
                 contract_value_krw, prior_year_revenue_krw, contract_to_revenue_ratio,
                 is_new_contract, is_revision, is_cancellation,
+                counterparty_name, counterparty_type,
                 red_flags_json, summary, raw_llm_output,
                 validation_status, validation_errors_json
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 ext.disclosure_id, ext.model_name, ext.prompt_version,
@@ -40,6 +41,8 @@ class ExtractionStore:
                 int(ext.is_new_contract) if ext.is_new_contract is not None else None,
                 int(ext.is_revision) if ext.is_revision is not None else None,
                 int(ext.is_cancellation) if ext.is_cancellation is not None else None,
+                ext.counterparty_name,
+                ext.counterparty_type,
                 json.dumps(ext.red_flags, ensure_ascii=False),
                 ext.summary,
                 ext.raw_llm_output,

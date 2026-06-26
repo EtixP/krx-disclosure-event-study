@@ -91,12 +91,12 @@ def build(doc_path: Path) -> None:
     story.append(_kv_table([
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
-        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "88 / 88"),
+        ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M6/M7 paper-broker scaffolding"),
+        ("Tests passing", "92 / 92"),
         ("Disclosures in DB", "514,304 across 488 trading days (Jun 25 2024 – Jun 24 2026, full 24 months)"),
         ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
         ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
-        ("Candidate signals stored", "331 at the default 0.08 threshold &mdash; signals from Loop 4 on the smaller dataset; re-run with --min-ratio to refresh"),
+        ("Candidate signals stored", "693 (v2 strategy: ratio ≥ 0.08, KOSPI only, skip government counterparty). Mean strength 0.72."),
         ("Price data source", "pykrx (free, no auth)"),
         ("LLM extraction", "Code complete (prompts + validator + client) — optional now that deterministic parser works at 96%"),
         ("Broker integration", "PaperBroker (historical fills) ready; KIS broker needs your credentials"),
@@ -349,6 +349,60 @@ def build(doc_path: Path) -> None:
         "&bull; 4 new test cases",
         s["body"]
     ))
+    story.append(Paragraph("<b>Loop 7</b> (codified the walk-forward filters into the strategy):", s["body"]))
+    story.append(Paragraph(
+        "&bull; Added <font face=\"Courier\">counterparty_name</font> + <font face=\"Courier\">counterparty_type</font> "
+        "fields to Extraction schema, with idempotent ALTER TABLE migration in <font face=\"Courier\">init_db</font>.<br/>"
+        "&bull; Parser now classifies counterparty (government / large_corp_korean / other_korean_corp / foreign / unknown) using the same regex heuristic the subgroup analysis used.<br/>"
+        "&bull; Backfilled <font face=\"Courier\">counterparty_type</font> for all 3,531 existing extractions (94 government, 154 foreign, 331 large_corp_korean, 439 other_korean_corp, 2513 unknown).<br/>"
+        "&bull; Added <font face=\"Courier\">kospi_only</font> and <font face=\"Courier\">excluded_counterparty_types</font> "
+        "params to <font face=\"Courier\">MajorSupplyContractStrategy</font>. Defaults in config: "
+        "<font face=\"Courier\">kospi_only: true</font>, <font face=\"Courier\">excluded_counterparty_types: [\"government\"]</font>.<br/>"
+        "&bull; <b>Real PnL improvement</b> from the filters (still on the same 3,412 OK extractions):",
+        s["body"]
+    ))
+    v2_table = Table(
+        [
+            ["Variant", "n", "T+1 net", "T+5 net", "T+5 win%", "PF 5d", "Notes"],
+            ["v0 — no filters",             "3,377", "&minus;0.12%", "+0.35%", "44.1%", "1.10", "baseline (Loop 5)"],
+            ["v1 — ratio ≥ 0.08",           "2,149", "&minus;0.07%", "+0.22%", "42.9%", "1.06", "CLAUDE.md default"],
+            ["v2 — KOSPI + skip-gov",       "684",   "+0.17%",       "+0.67%", "46.6%", "1.25", "Loop-7 filters"],
+        ],
+        colWidths=[1.8 * inch, 0.55 * inch, 0.7 * inch, 0.7 * inch, 0.7 * inch, 0.55 * inch, 1.3 * inch],
+    )
+    v2_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("ALIGN", (1, 1), (-1, -1), "RIGHT"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 3), (-1, 3), colors.HexColor("#d4edda")),  # v2 row highlighted
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(v2_table)
+    story.append(Spacer(1, 0.08 * inch))
+    story.append(Paragraph(
+        "<b>The v2 strategy nearly tripled T+5 net mean</b> over v1 (+0.67% vs +0.22%), pushed win rate from "
+        "42.9% to 46.6%, and lifted profit factor from 1.06 to 1.25. T+1 mean turned positive for the first "
+        "time. Median is still &minus;0.31% at T+5 &mdash; most individual trades still lose, but winners are bigger.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Honest caveats:</b> 684 events over 24 months is ~28/month. Win rate is still &lt;50%. PF 1.25 means "
+        "you win ₩1.25 for every ₩1 lost &mdash; thin margin once execution slippage and the 18 blocked rows "
+        "drift the numbers. This is &quot;real progress&quot;, not &quot;ready to trade&quot;.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "&bull; 88 tests still passing (+4 new for the filters).<br/>"
+        "&bull; Tests cover: kospi_only rejects KOSDAQ, kospi_only off lets KOSDAQ through, "
+        "excluded_counterparty_types rejects matching, None counterparty_type still passes.",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.08 * inch))
+
     story.append(Paragraph("<b>Loop 5</b> (24-month backfill + scale-out + the negative finding):", s["body"]))
     story.append(Paragraph(
         "&bull; CLAUDE.md updated: ML/LLM allowed for extraction + feature enrichment + filtering, but NOT in the order-placing decision. New <b>Milestone 5b</b> added (ML-enriched signal filter).<br/>"

@@ -38,6 +38,8 @@ CREATE TABLE IF NOT EXISTS extractions (
     is_new_contract INTEGER,
     is_revision INTEGER,
     is_cancellation INTEGER,
+    counterparty_name TEXT,
+    counterparty_type TEXT,
     red_flags_json TEXT,
     summary TEXT,
     raw_llm_output TEXT,
@@ -115,10 +117,25 @@ CREATE TABLE IF NOT EXISTS positions (
 """
 
 
+MIGRATIONS = [
+    # idempotent ALTER TABLEs — wrap in try/except since SQLite has no IF NOT EXISTS
+    # for ADD COLUMN. Added Loop 7 for the KOSPI-only / counterparty-blacklist filters.
+    "ALTER TABLE extractions ADD COLUMN counterparty_name TEXT",
+    "ALTER TABLE extractions ADD COLUMN counterparty_type TEXT",
+]
+
+
 def init_db(path: str | Path) -> sqlite3.Connection:
     db_path = Path(path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path)
     conn.executescript(SCHEMA)
+    for sql in MIGRATIONS:
+        try:
+            conn.execute(sql)
+        except sqlite3.OperationalError as e:
+            # "duplicate column name" means the migration already ran — ignore.
+            if "duplicate column" not in str(e):
+                raise
     conn.commit()
     return conn

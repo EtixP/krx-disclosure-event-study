@@ -37,6 +37,7 @@ SELECT e.id AS extraction_id, e.disclosure_id, e.model_name, e.prompt_version,
        e.event_type, e.direction, e.confidence,
        e.contract_value_krw, e.prior_year_revenue_krw, e.contract_to_revenue_ratio,
        e.is_new_contract, e.is_revision, e.is_cancellation,
+       e.counterparty_name, e.counterparty_type,
        e.red_flags_json, e.summary, e.raw_llm_output,
        e.validation_status, e.validation_errors_json,
        d.id AS d_id, d.receipt_no, d.corp_code, d.corp_name, d.stock_code,
@@ -63,6 +64,8 @@ def _build_extraction(row: sqlite3.Row) -> Extraction:
         is_new_contract=bool(row["is_new_contract"]) if row["is_new_contract"] is not None else None,
         is_revision=bool(row["is_revision"]) if row["is_revision"] is not None else None,
         is_cancellation=bool(row["is_cancellation"]) if row["is_cancellation"] is not None else None,
+        counterparty_name=row["counterparty_name"],
+        counterparty_type=row["counterparty_type"],
         red_flags=json.loads(row["red_flags_json"] or "[]"),
         summary=row["summary"] or "",
         raw_llm_output=row["raw_llm_output"],
@@ -84,7 +87,7 @@ def _build_disclosure(row: sqlite3.Row) -> Disclosure:
     )
 
 
-def _why_no_signal(ext: Extraction, params) -> str:
+def _why_no_signal(ext: Extraction, disc, params) -> str:
     """Categorize why an extraction didn't produce a signal."""
     if not params.enabled:
         return "strategy_disabled"
@@ -103,6 +106,10 @@ def _why_no_signal(ext: Extraction, params) -> str:
         return "ratio_unknown"
     if r < params.min_contract_to_revenue_ratio:
         return "ratio_below_threshold"
+    if params.kospi_only and disc.market != "KOSPI":
+        return f"market_filter:{disc.market}"
+    if ext.counterparty_type in params.excluded_counterparty_types:
+        return f"counterparty_filter:{ext.counterparty_type}"
     return "other"
 
 
@@ -152,7 +159,7 @@ def main() -> int:
         disc = _build_disclosure(row)
         sig = strategy.evaluate(ext, disc)
         if sig is None:
-            rejection_reasons[_why_no_signal(ext, params)] += 1
+            rejection_reasons[_why_no_signal(ext, disc, params)] += 1
             continue
         signals.append(sig)
         if not args.dry_run:

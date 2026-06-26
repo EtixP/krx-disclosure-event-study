@@ -115,3 +115,38 @@ def test_strength_caps_at_one(params):
     sig = s.evaluate(_extraction(contract_to_revenue_ratio=0.5), _disclosure())
     assert sig is not None
     assert sig.strength == 1.0
+
+
+def test_kospi_only_filter_rejects_kosdaq(params):
+    params.kospi_only = True
+    s = MajorSupplyContractStrategy(params)
+    assert s.evaluate(_extraction(), _disclosure(market="KOSDAQ")) is None
+    assert s.evaluate(_extraction(), _disclosure(market="KOSPI")) is not None
+
+
+def test_kospi_only_off_lets_kosdaq_through(params):
+    params.kospi_only = False
+    s = MajorSupplyContractStrategy(params)
+    sig = s.evaluate(_extraction(), _disclosure(market="KOSDAQ"))
+    assert sig is not None
+
+
+def test_excluded_counterparty_types_filter(params):
+    params.excluded_counterparty_types = ["government"]
+    s = MajorSupplyContractStrategy(params)
+    # government counterparty -> rejected
+    ex = _extraction()
+    ex.counterparty_type = "government"
+    assert s.evaluate(ex, _disclosure()) is None
+    # other types -> pass
+    ex.counterparty_type = "foreign"
+    assert s.evaluate(ex, _disclosure()) is not None
+
+
+def test_unknown_counterparty_not_excluded(params):
+    """unknown is the default — must not be silently blocked."""
+    params.excluded_counterparty_types = ["government"]
+    s = MajorSupplyContractStrategy(params)
+    ex = _extraction()
+    ex.counterparty_type = None  # unknown / missing
+    assert s.evaluate(ex, _disclosure()) is not None

@@ -28,6 +28,9 @@ class StrategyParams(BaseModel):
     max_price_move_after_disclosure_pct: float = Field(ge=0)
     stop_loss_pct: float = Field(gt=0)
     take_profit_pct: float = Field(gt=0)
+    # Loop-7 additions, both walk-forward validated on 24 months of data.
+    kospi_only: bool = False
+    excluded_counterparty_types: list[str] = Field(default_factory=list)
 
 
 class StrategyConfig(BaseModel):
