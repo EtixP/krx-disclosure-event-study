@@ -1,0 +1,130 @@
+{
+  "reviews": [
+    {
+      "lens": "correctness",
+      "findings": [
+        {
+          "severity": "low",
+          "description": "`_parse_pending` returns `len(pending)` (the count of disclosures *attempted*), but the caller logs it as `parsed: %d new supply-contract disclosures`. Disclosures whose `fetch_document_text` raised (handled by `continue`) and disclosures that the parser marked `needs_manual_review`/`blocked` are still included in the reported number, so the log overstates how many were successfully parsed.",
+          "location": "scripts/run_daily_monitor.py:111-128 (returns `len(pending)`, n_ok is computed but discarded); used at line 286-287",
+          "suggested_fix": "Return `n_ok` (or a `(attempted, ok)` tuple) and adjust the log line accordingly, since `n_ok` is already tracked but never returned."
+        },
+        {
+          "severity": "nit",
+          "description": "The `elif not args.no_parse` warning fires whenever `--no-ingest` is passed but `--no-parse` is omitted, even though the user did not actually intend to override parsing. The warning text (\"--no-parse also implied\") is informational only, but it's emitted on the common case `--no-ingest` alone, making the script appear to be doing something it isn't. (No incorrect output, just noise.)",
+          "location": "scripts/run_daily_monitor.py:288-289",
+          "suggested_fix": "Either drop the warning or only emit it when the user supplied a flag combination that's truly contradictory."
+        }
+      ]
+    },
+    {
+      "lens": "integration",
+      "findings": [
+        {
+          "severity": "low",
+          "description": "Korean characters are 2 visual columns wide in most monospaced terminals but Python `len()` counts each as 1, so the printed signal table columns misalign for Korean corp_name values. Visible in the actual run: '\ub178\ub8e8\ud398\uc778\ud2b8' (5 chars, 10 visual cols) is padded with 17 spaces, throwing off subsequent columns from the header.",
+          "location": "scripts/run_daily_monitor.py:232-239",
+          "suggested_fix": "Compute display width with `unicodedata.east_asian_width` (treating 'W' and 'F' as 2) and pad with explicit spaces, or use a table library like `tabulate`/`rich` that handles CJK width."
+        },
+        {
+          "severity": "nit",
+          "description": "The warning message 'no-ingest set; --no-parse also implied' implies the user passed --no-parse, which is misleading \u2014 actually the code unconditionally skips parsing whenever --no-ingest is set, regardless of --no-parse. The user did NOT set --no-parse; the script just can't parse without a DartClient.",
+          "location": "scripts/run_daily_monitor.py:288-289",
+          "suggested_fix": "Reword to e.g. 'skipping parse step (cannot fetch documents without DartClient)' so it doesn't sound like the user's flags are being modified."
+        },
+        {
+          "severity": "nit",
+          "description": "`n_ok` is incremented but never read (the function returns `len(pending)` instead), so the per-row 'ok' count is lost. The log line then reports total pending rather than successfully parsed.",
+          "location": "scripts/run_daily_monitor.py:116,126,128",
+          "suggested_fix": "Either return n_ok and adjust the log message, or drop the n_ok bookkeeping entirely."
+        },
+        {
+          "severity": "nit",
+          "description": "`_print_blacklist_events` filters `stock_code IS NOT NULL` but not `!= ''`, unlike `_supply_contract_disclosures_needing_parse` (line 97-98) which excludes both. Currently zero empty-string rows exist in the DB so it's latent, but the inconsistency could surface if ingestion ever writes empty stock_codes.",
+          "location": "scripts/run_daily_monitor.py:250-254",
+          "suggested_fix": "Add `AND stock_code != ''` to match the other query's stock_code filter."
+        }
+      ]
+    },
+    {
+      "lens": "safety_and_robustness",
+      "findings": [
+        {
+          "severity": "medium",
+          "description": "`_parse_pending` reports `len(pending)` even though it tracks `n_ok` separately and discards it. If `fetch_document_text` fails for every pending row (network outage / rate limit), the script still logs `parsed: N new supply-contract disclosures` for the full pending count, masking total failure of the parse step.",
+          "location": "scripts/run_daily_monitor.py:128 (also see n_ok tracked at lines 116, 126 but never returned)",
+          "suggested_fix": "Return a tuple `(n_ok, len(pending))` and log both, e.g. `parsed: %d ok / %d attempted`."
+        },
+        {
+          "severity": "medium",
+          "description": "Invalid --date input crashes with an uncaught `ValueError` traceback from `strptime` rather than a clean error message \u2014 confusing for an operator running this daily.",
+          "location": "scripts/run_daily_monitor.py:76 (`_target_date`)",
+          "suggested_fix": "Wrap the `strptime` in try/except and call `parser.error(\"--date must be YYYY-MM-DD\")` (or log and return 1) so the failure is operator-friendly."
+        },
+        {
+          "severity": "low",
+          "description": "If `DART_API_KEY` is missing the script returns 1 (line 280) without closing the SQLite connection opened on line 273. Not catastrophic (process exits), but inconsistent with the explicit `conn.close()` on the happy path and worth tidying since the same DB may be reused immediately by a wrapper script.",
+          "location": "scripts/run_daily_monitor.py:273-280",
+          "suggested_fix": "Move `conn.close()` to a `finally` block, or open the DB after the API-key check."
+        },
+        {
+          "severity": "low",
+          "description": "`_evaluate_signals` mutates `sig.notional_krw = engine.limits.max_order_value_krw` so the order-value check is guaranteed to pass. This is fine for a research monitor, but the column labelled `status: APPROVED` in the output is misleading \u2014 it implies the order-value check passed for real reasons when in fact no realistic notional was computed.",
+          "location": "scripts/run_daily_monitor.py:206",
+          "suggested_fix": "Either compute notional from a real intended size (e.g. min(max_order_value, hypothesized share count * approximate price)) or relabel the column / add a footer noting that order-value is forced to the cap for evaluation."
+        },
+        {
+          "severity": "low",
+          "description": "When the user passes both `--no-ingest` and `--no-parse`, the warning message `--no-ingest set; --no-parse also implied` is technically misleading \u2014 the user explicitly passed --no-parse. Minor UX wording.",
+          "location": "scripts/run_daily_monitor.py:288-289",
+          "suggested_fix": "Only emit the warning when `--no-ingest` is set and `--no-parse` was NOT explicitly passed (e.g. `if not args.no_parse: log.warning(...)`)."
+        },
+        {
+          "severity": "low",
+          "description": "`sqlite3.connect` inside `init_db` uses the default 5-second `timeout`. If a concurrent process holds a write lock (e.g. the ingest script running on a cron), the monitor's first write (`conn.commit()` in `_parse_pending` / `DisclosureStore.ingest_records`) can raise `OperationalError: database is locked` and the script aborts mid-run without partial commit.",
+          "location": "src/kdtb/storage/db.py:127 (sqlite3.connect call) \u2014 surfaced via scripts/run_daily_monitor.py:273",
+          "suggested_fix": "Pass `timeout=30` (or similar) to `sqlite3.connect` in `init_db`, and consider enabling WAL mode (`PRAGMA journal_mode=WAL`) so readers and writers don't block each other."
+        },
+        {
+          "severity": "nit",
+          "description": "`conn.row_factory = sqlite3.Row` is set on line 274 in `main` and then again inside `_evaluate_signals` (line 175). Harmless duplication.",
+          "location": "scripts/run_daily_monitor.py:175, 274",
+          "suggested_fix": "Drop one assignment; the `main()` one is sufficient since the connection is shared."
+        }
+      ]
+    }
+  ],
+  "synthesis": {
+    "must_fix": [],
+    "should_consider": [
+      {
+        "summary": "`_parse_pending` returns `len(pending)` but tracks `n_ok` separately and discards it; log line overstates successful parses and would mask total failure if every fetch errored (raised by 3 reviewers across correctness/integration/safety lenses \u2014 strongest signal in the set). Fix: return `n_ok` (or a `(n_ok, attempted)` tuple) and update the log to `parsed: %d ok / %d attempted`."
+      },
+      {
+        "summary": "Invalid `--date` input raises an uncaught `ValueError` from `strptime`; wrap in try/except and use `parser.error(\"--date must be YYYY-MM-DD\")` for an operator-friendly failure."
+      },
+      {
+        "summary": "Misleading `--no-ingest set; --no-parse also implied` warning fires on the common `--no-ingest`-only case and implies the user passed `--no-parse` (raised by 3 reviewers). Reword to explain that parsing is skipped because no DartClient is available, and/or only emit when flags are truly contradictory."
+      },
+      {
+        "summary": "Korean corp_name values misalign the signal table because `len()` undercounts CJK width; use `unicodedata.east_asian_width` or a CJK-aware table library."
+      },
+      {
+        "summary": "`_evaluate_signals` mutates `sig.notional_krw = engine.limits.max_order_value_krw`, so APPROVED status is misleading; relabel the column or add a footer noting notional is forced to the cap."
+      },
+      {
+        "summary": "SQLite connection is not closed on the early-return path when `DART_API_KEY` is missing; move `conn.close()` to a `finally` or open the DB after the key check."
+      },
+      {
+        "summary": "`init_db` uses default 5s SQLite timeout and no WAL mode; concurrent ingest could trigger `OperationalError: database is locked`. Pass `timeout=30` and consider `PRAGMA journal_mode=WAL`."
+      },
+      {
+        "summary": "`_print_blacklist_events` filters `stock_code IS NOT NULL` but not `!= ''`, inconsistent with `_supply_contract_disclosures_needing_parse`; add `AND stock_code != ''` for consistency."
+      },
+      {
+        "summary": "`conn.row_factory = sqlite3.Row` is set twice (main and `_evaluate_signals`); drop the duplicate in `_evaluate_signals`."
+      }
+    ],
+    "overall_assessment": "Ship as is or with minor follow-ups: no critical or high-severity bugs were found, but several low/medium polish items (especially the `n_ok` vs `len(pending)` reporting bug flagged by three reviewers, the misleading flag warning, and the unhandled `--date` parse error) are worth a small follow-up commit."
+  }
+}

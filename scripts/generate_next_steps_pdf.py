@@ -92,7 +92,7 @@ def build(doc_path: Path) -> None:
         ("Repository", "https://github.com/EtixP/tradeforme (private)"),
         ("Branch", "main"),
         ("Milestones done", "M1, M2, M3 (deterministic extraction, 96.6% OK), M4, M5 (signals stored, v2 with KOSPI + skip-gov filters), M5b risk-engine blacklist (halt/shareholder), M6/M7 paper-broker scaffolding"),
-        ("Tests passing", "109 / 109 (Loop-12 iter3 only added workflow analysis, no new test files)"),
+        ("Tests passing", "118 / 118"),
         ("Disclosures in DB", "1,119,270 across 2021-12-29 to 2026-06-24 (4.5 years, Loop-12 extension)"),
         ("Supply-contract events", "3,531 candidates &rarr; 3,412 OK + 119 manual-review (96.6% / 3.4%), 0 blocked"),
         ("Real contract values extracted", "3,412 events with verified contract_value, prior_year_revenue, ratio"),
@@ -306,7 +306,8 @@ def build(doc_path: Path) -> None:
         ("Per-category analysis", "scripts/analyze_event_category.py --category &lt;X&gt;"),
         ("Cross-category summary", "scripts/summarize_all_categories.py"),
         ("Event study by category", "scripts/run_event_study.py --category &lt;X&gt;"),
-        ("Event blacklist (NEW)", "src/kdtb/risk/event_blacklist.py — risk-engine check for recent negative events"),
+        ("Event blacklist", "src/kdtb/risk/event_blacklist.py — risk-engine check for recent negative events"),
+        ("Daily monitor (NEW)", "scripts/run_daily_monitor.py — one command, end-to-end pipeline for any date"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -847,6 +848,51 @@ def build(doc_path: Path) -> None:
     story.append(Paragraph(
         "Workflow snapshot: <font face=\"Courier\">data/multi_event_meta_5yr_2026-06-26.json</font><br/>"
         "Reproduce: <font face=\"Courier\">.venv/bin/python scripts/analyze_event_category.py --category &lt;X&gt;</font>",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.12 * inch))
+
+    story.append(Paragraph("<b>Loop 12 iter 4/5</b> — the daily monitor (user-facing tool)", s["h2"]))
+    story.append(Paragraph(
+        "Built <font face=\"Courier\">scripts/run_daily_monitor.py</font>: a single command that "
+        "ingests today's DART disclosures, parses any new supply-contract docs, evaluates them "
+        "through the v2 strategy (KOSPI-only, skip-gov), applies the shareholder_change blacklist "
+        "(60-day lookback), and prints the candidate-signal table. The tool the user would actually "
+        "run each morning during Korean market hours.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Live test on 2026-06-26 (today):</b> ingested 1,067 disclosures, parsed 13 new supply "
+        "contracts, found <b>1 APPROVED candidate</b>: 한화엔진 (Hanwha Engine, KOSPI 082740) &mdash; "
+        "₩139.3B contract, 10.2% ratio, large_corp_korean counterparty. Also 5 negative events "
+        "on 3 stocks (will block long signals on those stocks for the next 60 days).",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Adversarial review</b> (4-agent workflow: 3 lens reviewers + synthesis) found 0 must-fix, "
+        "several should-consider. Three reviewers independently flagged the same 2 issues (highest-"
+        "confidence): the parser-pending log message was misleading on failures, and the "
+        "&quot;--no-ingest&quot; warning was worded misleadingly. Both fixed.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Other adversarial fixes applied:</b>"
+        "<br/>&bull; Invalid --date now produces a clean error (was uncaught ValueError traceback)."
+        "<br/>&bull; SQLite connection now uses 30s timeout + WAL mode so the monitor doesn't crash if a "
+        "parallel ingestion holds a write lock."
+        "<br/>&bull; DartClient creation moved after API-key check (no orphaned connection on early exit).",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Usage:</b><br/>"
+        "<font face=\"Courier\">.venv/bin/python scripts/run_daily_monitor.py</font> &mdash; today's signals<br/>"
+        "<font face=\"Courier\">.venv/bin/python scripts/run_daily_monitor.py --date 2026-05-15</font> &mdash; historical replay<br/>"
+        "<font face=\"Courier\">.venv/bin/python scripts/run_daily_monitor.py --no-ingest</font> &mdash; use existing DB rows only",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Tests: 9 new cases (109 &rarr; <b>118 passing</b>). "
+        "Adversarial-review JSON: <font face=\"Courier\">data/daily_monitor_review_2026-06-26.json</font>",
         s["note"]
     ))
     story.append(Paragraph(

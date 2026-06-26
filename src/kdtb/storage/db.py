@@ -128,7 +128,11 @@ MIGRATIONS = [
 def init_db(path: str | Path) -> sqlite3.Connection:
     db_path = Path(path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(db_path)
+    # timeout=30 so a brief contention from a parallel ingestion or backfill
+    # doesn't immediately crash the monitor. WAL mode lets readers and writers
+    # operate without blocking each other.
+    conn = sqlite3.connect(db_path, timeout=30.0)
+    conn.execute("PRAGMA journal_mode = WAL")
     conn.executescript(SCHEMA)
     for sql in MIGRATIONS:
         try:
