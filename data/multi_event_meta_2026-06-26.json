@@ -1,0 +1,244 @@
+{
+  "analyses": [
+    {
+      "category": "supply_contract",
+      "n_events": 3495,
+      "verdict": "positive_noisy",
+      "key_findings": "Supply contracts show 4 of 4 positive walk-forward windows (PF 1.01-1.25) and a clear KOSPI/KOSDAQ split (KOSPI +0.76% PF 1.27 vs KOSDAQ near-zero +0.01% PF 1.00), but the realistic execution scenario shrinks T+5 net mean to just +0.13% with PF 1.04, meaning most of the gross edge is consumed by spread/slippage.",
+      "concerns": "Median returns are deeply negative across every cut (-0.63% aggregate, -1.11% KOSDAQ) and win rate sits at 44%, so profitability depends on a thin right tail of large winners that could vanish in a different regime; KOSDAQ contributes meaningful sample but essentially no edge, so any deployment should restrict to KOSPI and budget for spread costs that already cut realistic PF to ~1.04.",
+      "aggregate_t5_net_mean_pct": 0.3869,
+      "aggregate_t5_net_median_pct": -0.6328,
+      "aggregate_t5_net_pf": 1.1153,
+      "aggregate_t5_net_winrate_pct": 44.38,
+      "realistic_t5_net_mean_pct": 0.1259,
+      "realistic_t5_net_pf": 1.0415,
+      "walk_forward_positive_count": 4,
+      "walk_forward_total_windows": 4,
+      "by_market_best": "KOSPI +0.76% PF 1.27"
+    },
+    {
+      "aggregate_t5_net_mean_pct": 1.6227,
+      "aggregate_t5_net_median_pct": 0.689,
+      "aggregate_t5_net_pf": 1.8221,
+      "aggregate_t5_net_winrate_pct": 55.38,
+      "by_market_best": "KOSDAQ +2.08% PF 2.04",
+      "category": "buyback",
+      "concerns": "Under realistic execution assumptions, the edge collapses to +0.26% mean with negative median (-0.31%) and sub-50% win rate (46.73%), suggesting slippage and bid-ask costs consume nearly all of the idealized edge. The Jul25-Dec25 window also showed material decay (mean 0.84%, win rate 50.25%) indicating regime sensitivity.",
+      "key_findings": "Buyback events show a robust positive idealized t5_net edge (+1.62% mean, PF 1.82, 55.38% win rate) across 2,093 events with all 4 walk-forward windows positive, and KOSDAQ outperforming KOSDAQ (+2.08%, PF 2.04) vs KOSPI (+1.09%, PF 1.56). However, the realistic execution scenario reduces mean to just +0.26% with PF 1.13, indicating the edge is highly execution-sensitive.",
+      "n_events": 2093,
+      "realistic_t5_net_mean_pct": 0.2574,
+      "realistic_t5_net_pf": 1.1263,
+      "verdict": "positive_noisy",
+      "walk_forward_positive_count": 4,
+      "walk_forward_total_windows": 4
+    },
+    {
+      "category": "bonus_issue",
+      "n_events": 273,
+      "verdict": "positive_robust",
+      "key_findings": "All 4 walk-forward windows are positive with strong PFs (1.04 to 3.57) and the aggregate T5 net mean is +3.94% on 273 events with 57.9% win rate; KOSPI subset is especially strong (PF 3.23, 70.8% win) though sample is small (n=24).",
+      "concerns": "The first window (Jul24-Dec24) is only marginally positive (mean 0.15%, PF 1.04), suggesting edge is regime-dependent; under conservative execution assumptions the median return goes slightly negative (-0.21%) and mean drops to +0.65%, so real-world slippage and entry timing could materially erode the apparent edge.",
+      "aggregate_t5_net_mean_pct": 3.9367,
+      "aggregate_t5_net_median_pct": 1.6937,
+      "aggregate_t5_net_pf": 1.918,
+      "aggregate_t5_net_winrate_pct": 57.88,
+      "realistic_t5_net_mean_pct": 1.8884,
+      "realistic_t5_net_pf": 1.5418,
+      "walk_forward_positive_count": 4,
+      "walk_forward_total_windows": 4,
+      "by_market_best": "KOSPI +3.68% PF 3.23 (n=24)"
+    },
+    {
+      "category": "rights_offering",
+      "n_events": 2528,
+      "verdict": "neutral",
+      "aggregate_t5_net_mean_pct": 0.2477,
+      "aggregate_t5_net_median_pct": -0.9432,
+      "aggregate_t5_net_pf": 1.0572,
+      "aggregate_t5_net_winrate_pct": 38.96,
+      "realistic_t5_net_mean_pct": 0.1764,
+      "realistic_t5_net_pf": 1.0503,
+      "walk_forward_positive_count": 2,
+      "walk_forward_total_windows": 4,
+      "by_market_best": "KOSDAQ +0.44% PF 1.09",
+      "key_findings": "Across 2,528 events, t5_net mean is barely positive (+0.25%) but the median is clearly negative (-0.94%) with only 38.96% winrate, meaning a few large winners mask a majority of losers. Walk-forward is split 2/4 positive with the strongest window (Jan25-Jun25 +1.02%) sandwiched by negative bookends, and KOSPI is outright negative (-0.13%, PF 0.96) while KOSDAQ carries the entire weak edge.",
+      "concerns": "Rights offerings are typically dilutive/negative events, so the slight positive mean likely reflects right-skewed survivor rallies rather than a tradeable signal; realistic execution drops mean to +0.18% with PF 1.05, well within noise. Inconsistent walk-forward windows and a negative median suggest any apparent edge is regime-dependent and would not survive a fixed long-only rule."
+    },
+    {
+      "category": "convertible_bond",
+      "n_events": 1864,
+      "verdict": "negative",
+      "key_findings": "Walk-forward shows clear monotonic decay from +2.76% (Jul24-Dec24) to -1.17% (Jan26-Jun26) with only 2 positive windows, and the realistic execution mean is just +0.04% (PF 1.01) \u2014 effectively zero edge after costs. The KOSPI subset shows a misleadingly large +12.19% mean driven by only 124 events with extreme std (49.2%), while the dominant KOSDAQ cohort (n=1740) is flat at +0.04%.",
+      "concerns": "The \"negative\" call hinges on the most recent window (-1.17%) and the deteriorating trend; if the regime reverses, the strategy could look neutral again rather than truly negative. The KOSPI tail could represent a real but rare subset edge that gets washed out in aggregate \u2014 though the tiny n and huge variance make it untradeable.",
+      "aggregate_t5_net_mean_pct": 0.8463,
+      "aggregate_t5_net_median_pct": -0.9581,
+      "aggregate_t5_net_pf": 1.2053,
+      "aggregate_t5_net_winrate_pct": 41.26,
+      "realistic_t5_net_mean_pct": 0.0417,
+      "realistic_t5_net_pf": 1.011,
+      "walk_forward_positive_count": 2,
+      "walk_forward_total_windows": 4,
+      "by_market_best": "KOSPI +12.19% PF 5.75 (n=124, std 49.2%)"
+    },
+    {
+      "category": "halt_resumption",
+      "n_events": 1319,
+      "verdict": "negative",
+      "key_findings": "Halt resumption events show consistently negative returns across all timeframes (t5_net mean -2.62%, PF 0.57, win rate only 23%), with negativity intensifying sharply in the latest window (Jan26-Jun26: -5.07% mean, PF 0.36, n=589). KOSDAQ (n=1199) fares worse than KOSPI (-2.76% vs -1.19%) and even the conservative execution variant remains loss-making (-0.51%).",
+      "concerns": "Only 1 of 4 walk-forward windows is positive (the earliest, Jul24-Dec24, with a small n=187 and very high std of 50%), and a naive long strategy may be inappropriate here since halt resumptions often follow bad news \u2014 a short or directional-classification overlay could change the picture entirely.",
+      "aggregate_t5_net_mean_pct": -2.615,
+      "aggregate_t5_net_median_pct": -0.313,
+      "aggregate_t5_net_pf": 0.5729,
+      "aggregate_t5_net_winrate_pct": 23.05,
+      "realistic_t5_net_mean_pct": -1.2041,
+      "realistic_t5_net_pf": 0.7165,
+      "walk_forward_positive_count": 1,
+      "walk_forward_total_windows": 4,
+      "by_market_best": "KOSPI -1.19% PF 0.76"
+    },
+    {
+      "aggregate_t5_net_mean_pct": -2.383,
+      "aggregate_t5_net_median_pct": -1.1245,
+      "aggregate_t5_net_pf": 0.5203,
+      "aggregate_t5_net_winrate_pct": 31.29,
+      "by_market_best": "KOSPI -2.08% PF 0.38 (KOSDAQ -2.48% PF 0.55; neither profitable)",
+      "category": "shareholder_change",
+      "concerns": "All four walk-forward windows are negative, so this is consistent across regimes; main concern is whether the negative direction is structural (selling pressure / dilution signal) such that a contrarian short could work \u2014 but Korean retail accounts cannot easily short, so practical exploitation is blocked.",
+      "key_findings": "Strongly negative across the board: 834 events show t5_net mean -2.38%, median -1.12%, win rate 31.3%, PF 0.52, with all 4 walk-forward windows negative (-0.51% to -3.36%) and both KOSPI (-2.08%) and KOSDAQ (-2.48%) underperforming. Recent windows are deteriorating (-2.93% then -3.36%), suggesting persistent post-event drift downward.",
+      "n_events": 834,
+      "realistic_t5_net_mean_pct": -1.9343,
+      "realistic_t5_net_pf": 0.5193,
+      "verdict": "negative",
+      "walk_forward_positive_count": 0,
+      "walk_forward_total_windows": 4
+    }
+  ],
+  "verifications": [
+    {
+      "category": "supply_contract",
+      "lens": "sample_size",
+      "refuted": true,
+      "confidence": 0.82,
+      "reason": "Although the headline sample sizes look generous (n=3,495 total, per-window n between 737-953, all comfortably above the 30-event threshold), the sample_size lens is fundamentally about whether the effect can be distinguished from noise, and on that test the claim fails. The t5_net mean of 0.39% sits against a std of 12.11%, giving a sharpe-ish of only ~0.032 \u2014 far below the 0.1 mean/std threshold the lens requires, and the realistic scenario drops it further to 0.013. Per-window sharpe-ish values are 0.003, 0.074, 0.061, and 0.021 \u2014 all well under 0.1, meaning none of the four \"positive\" walk-forward windows produce an effect size that can be cleanly separated from noise; the first window (n=823) is essentially zero (mean 0.04%, PF 1.01). The median is materially below the mean in every cut (aggregate -0.63% vs +0.39%; KOSDAQ -1.11% vs +0.01%), confirming the lens's red flag that a thin right tail of outliers drives the result rather than a broad, repeatable edge. Large n cannot rescue a sub-noise effect size, so the tradable-edge claim is refuted under this lens."
+    },
+    {
+      "category": "supply_contract",
+      "lens": "execution_realism",
+      "refuted": true,
+      "confidence": 0.78,
+      "reason": "Under the execution_realism lens the claim does not hold up. The realistic.realistic.mean_pct is just +0.1259% \u2014 right at the borderline the lens flags as \"consumed by slippage\" (the >+0.10% threshold is barely cleared) \u2014 and PF collapses from idealized 1.1153 to 1.0415, a ~67% drop in mean return that confirms the edge lives almost entirely in the event-day reaction. The conservative scenario drops further to +0.0751% mean / PF 1.0298, essentially no edge. Win rate is only 42.55% realistic with a deeply negative median (-0.807%), meaning profitability depends on a thin right tail that retail execution (spread, queue position, partial fills, halt risk on KOSDAQ small caps) is most likely to clip. KOSDAQ (half the sample) contributes essentially zero edge even before realistic costs, and any KOSPI-only restriction shrinks sample size and was not isolated in the realistic scenario. The margin above slippage is too thin and too dependent on tail outcomes to credit as tradable edge for retail execution."
+    },
+    {
+      "category": "supply_contract",
+      "lens": "regime_stability",
+      "refuted": false,
+      "confidence": 0.55,
+      "reason": "All four walk-forward windows are positive in sign (0.04%, 0.65%, 0.66%, 0.31%) with PFs above 1.0 (1.01, 1.25, 1.24, 1.07), so the claim of \"4 of 4 positive walk-forward windows\" holds and the sign is consistent across regimes, which materially supports the original claim's regime-stability case. However, magnitudes vary by ~17x: the worst window (Jul24-Dec24) is essentially flat (+0.04%, PF 1.01, Sharpe-ish 0.003) and two middle windows carry most of the aggregate edge, so the strategy is sign-stable but magnitude-dependent on regime. The most recent window also decays back toward flat (+0.31%, PF 1.07), which is concerning for forward deployment. Net: the claim is not refuted under this lens because no window is negative and PFs never break below 1.0, but confidence is moderate (not high) because one of four windows shows no usable edge and aggregate profitability leans heavily on the two middle windows."
+    },
+    {
+      "category": "buyback",
+      "lens": "sample_size",
+      "refuted": false,
+      "confidence": 0.8,
+      "reason": "Sample size criteria are clearly satisfied: n=2,093 events across 680 unique stocks is well above the 500+ event-study threshold, and all four walk-forward windows have n>=400 (660/557/400/464), far exceeding the 30-per-window minimum. The effect-size-vs-std ratio (sharpe_ish) for aggregate t5_net is 0.207 (mean 1.6227 / std 7.8315), above the 0.1 noise-floor threshold, and every individual window also passes that bar (0.207, 0.201, 0.130, 0.273). The median (0.689%) is meaningfully smaller than the mean (1.622%)\u2014roughly a 2.4x mean/median ratio\u2014suggesting right-tail outliers contribute disproportionately, but the median remains positive in aggregate and in 3 of 4 windows (the Jul25-Dec25 window's median is essentially zero at 0.0387%), so the edge is not solely outlier-driven. Confidence is held at 0.8 rather than higher because the mean/median skew and the visible regime decay in Jul25-Dec25 (sharpe_ish 0.13, median ~0) hint that the distribution is heavy-tailed enough that even with large n the central tendency is fragile\u2014and the realistic-execution scenario's collapse to mean 0.26% / negative median is a separate concern outside this lens."
+    },
+    {
+      "category": "buyback",
+      "lens": "execution_realism",
+      "refuted": true,
+      "confidence": 0.88,
+      "reason": "Under the execution_realism lens, the buyback edge collapses. Idealized t5_net mean of +1.62% drops to +0.26% under realistic execution (an ~84% reduction, well above the >70% threshold indicating the edge lives entirely in the event-day reaction) and further to just +0.06% under conservative execution. The realistic mean of 0.26% is only marginally above the 0.10% \"slippage-consumed\" threshold, but supporting metrics undermine it: realistic median is negative (-0.31%), win rate falls below 50% (46.73%), and profit factor is barely above breakeven (1.13). Conservative execution pushes win rate to 45.53% and PF to 1.03, essentially no edge. Combined with regime decay in Jul25-Dec25 (mean 0.84%, win rate 50.25%) and the fact that buyback announcements often coincide with structural tradability frictions (price-support periods, liquidity ramps), the claim of tradable edge does not survive realistic T+1 entry assumptions for a retail executor."
+    },
+    {
+      "category": "buyback",
+      "lens": "regime_stability",
+      "refuted": false,
+      "confidence": 0.7,
+      "reason": "Through the regime_stability lens, the claim holds up reasonably well. All four walk-forward windows are positive in sign (Jul24-Dec24: +1.58%, Jan25-Jun25: +1.36%, Jul25-Dec25: +0.84%, Jan26-Jun26: +2.74%), with a worst-window mean of +0.84% (still positive, not the -3% catastrophe the lens warns about). The window-mean standard deviation is roughly 0.81pp on a base of ~1.6%, indicating moderate but not extreme variance. No single window dominates the aggregate: excluding the best window (Jan26-Jun26 at +2.74%) still leaves the remaining three averaging ~1.26%, and excluding the worst still leaves a strong positive. Win rates range 50.25%-59.55%, all at or above breakeven. The Jul25-Dec25 dip toward 50% win rate is a yellow flag for regime sensitivity, but the pattern is not a \"one window carries everything\" story. Confidence is capped at 0.7 because (a) only 4 windows is a small sample to judge stability, (b) the weakest window's win rate is marginal, and (c) idealized edge collapsing to near-zero realistically (per the original analysis) makes regime stability somewhat moot for live deployment \u2014 but strictly on the regime_stability question asked, the data does not refute the claim."
+    },
+    {
+      "category": "bonus_issue",
+      "lens": "sample_size",
+      "refuted": true,
+      "confidence": 0.72,
+      "reason": "Through the sample_size lens, the claim of \"positive_robust\" tradable edge is not adequately supported. Total n=273 is moderate (acceptable but not strong for an event study), and only 114 unique stocks underlie those events, so observations are not fully independent. Per-window n is borderline: window 2 has only 50 events and window 1 has 64, with the highly bullish Jan25-Jun25 window (n=50, mean +7.67%) driving a disproportionate share of the aggregate result; remove it and the remaining windows are far less compelling. Effect-size-to-noise is weak: aggregate T5 net mean/std = 3.94/17.94 = 0.22 (only marginally above the 0.1 noise floor) and individual windows range from a near-zero 0.013 (window 1) up to 0.40 \u2014 far from stable. The median (1.69%) is less than half the mean (3.94%), and under conservative execution the median flips negative (-0.21%) while the mean collapses to 0.65%, confirming that a handful of large positive outliers carry the apparent edge. The KOSPI subset cited as \"especially strong\" has only n=24, which is well below the >30 threshold for any meaningful per-segment claim. Overall the sample is too small, too concentrated in one window, and too outlier-driven to call \"robust.\""
+    },
+    {
+      "category": "bonus_issue",
+      "lens": "execution_realism",
+      "refuted": false,
+      "confidence": 0.62,
+      "reason": "Under T+1 realistic execution, bonus_issue still shows mean +1.89% net with median +0.88%, win rate 54.58% and PF 1.54 across n=273 \u2014 comfortably above the +0.10% \"consumed by slippage\" threshold, so the edge is not entirely confined to the event-day reaction. The idealized-to-realistic drop is ~52% (3.94% to 1.89%), which is meaningful but well under the 70% red-line that would indicate the edge lives only in t0 reaction. However, the conservative scenario collapses to +0.65% mean with a negative median (-0.21%) and PF 1.21 \u2014 meaning if entries are further delayed or slippage is worse than modeled, the edge effectively vanishes for the median trade. The KOSPI subset (PF 3.23, n=24) is too small to lean on, and structural concerns for bonus_issue events (ex-rights price adjustment mechanics, potential trading halts around record dates, low-liquidity KOSDAQ small caps comprising 91% of sample) could erode realistic execution further than the model assumes. The claim of tradable edge survives realistic execution but is fragile under conservative assumptions, so I do not refute, with moderate confidence."
+    },
+    {
+      "category": "bonus_issue",
+      "lens": "regime_stability",
+      "refuted": true,
+      "confidence": 0.65,
+      "reason": "While all 4 walk-forward windows are positive in sign, the magnitudes vary dramatically \u2014 the worst window (Jul24-Dec24) is essentially flat at +0.148% mean with PF 1.04 and 53.1% win rate (barely distinguishable from noise), while the best window (Jan25-Jun25) is +7.67% with PF 3.57. This 52x spread in window means indicates high variance and regime dependence: the aggregate +3.94% is heavily inflated by one strong window. If the strategy had been deployed live during Jul24-Dec24, the operator would have seen near-zero edge and likely abandoned it. The two most recent windows (+4.5%, +5.0%) are encouraging and suggest the recent regime supports the edge, but the existence of a flat window within the 2-year sample means \"positive_robust\" overstates stability \u2014 this is a regime-conditional edge, not a stable one. The claim of robust edge is refuted under the regime_stability lens, though directional consistency (4/4 positive) prevents higher confidence in refutation."
+    }
+  ],
+  "synthesis": {
+    "category_rankings": [
+      {
+        "category": "bonus_issue",
+        "rank": 1,
+        "verdict_after_verification": "positive_but_fragile",
+        "tradable_edge": false,
+        "notes": "Original verdict was positive_robust, but 2 of 3 adversarial lenses refuted (sample_size and regime_stability). Realistic T+5 net mean is the highest of any category at +1.89% with PF 1.54 and 4/4 positive walk-forward windows, but n=273 is small (only 114 unique stocks), one window (Jan25-Jun25, n=50) carries most of the aggregate edge, and conservative execution collapses to +0.65% with negative median. The strongest realistic returns in the study, but sample and concentration concerns make it untradeable as a standalone strategy without more data."
+      },
+      {
+        "category": "buyback",
+        "rank": 2,
+        "verdict_after_verification": "positive_but_execution_sensitive",
+        "tradable_edge": false,
+        "notes": "Original verdict was positive_noisy (not positive_robust), so fails the strict criterion. Execution_realism lens clearly refuted (idealized 1.62% collapses 84% to realistic 0.26% with negative median -0.31% and sub-50% win rate 46.73%). Regime_stability and sample_size held, with n=2,093 across 680 stocks and 4/4 positive walk-forward windows. Edge exists in idealized world but is destroyed by T+1 entry costs."
+      },
+      {
+        "category": "supply_contract",
+        "rank": 3,
+        "verdict_after_verification": "marginal_kospi_only",
+        "tradable_edge": false,
+        "notes": "Original verdict was positive_noisy. Two of three lenses refuted (sample_size effect-size-vs-noise too thin at sharpe-ish 0.032; execution_realism collapses to +0.13% PF 1.04). Regime_stability held with 4/4 positive windows but magnitudes vary 17x. KOSPI-only restriction shows +0.76% PF 1.27 idealized but realistic execution likely takes that under +0.20%. Consistent with the original headline finding that this strategy has aggregate edge but no retail-tradable edge after costs."
+      },
+      {
+        "category": "rights_offering",
+        "rank": 4,
+        "verdict_after_verification": "neutral_noise",
+        "tradable_edge": false,
+        "notes": "Original verdict was neutral. Realistic mean +0.18% PF 1.05 is within noise, median deeply negative (-0.94%), win rate only 39%, walk-forward split 2/4. Tail-driven non-edge, not a candidate."
+      },
+      {
+        "category": "convertible_bond",
+        "rank": 5,
+        "verdict_after_verification": "decaying_to_negative",
+        "tradable_edge": false,
+        "notes": "Realistic mean +0.04% PF 1.01 is exactly zero edge. Walk-forward shows monotonic decay from +2.76% to -1.17% across windows. KOSPI tail (+12.19%, n=124, std 49.2%) is untradeable noise. Not a candidate."
+      },
+      {
+        "category": "halt_resumption",
+        "rank": 6,
+        "verdict_after_verification": "consistently_negative_long",
+        "tradable_edge": false,
+        "notes": "Realistic mean -1.20% PF 0.72, win rate 23%, 1/4 positive windows. Long strategy clearly inappropriate; could be a short signal but Korean retail accounts cannot easily short. Useful as a blacklist input."
+      },
+      {
+        "category": "shareholder_change",
+        "rank": 7,
+        "verdict_after_verification": "consistently_negative_long",
+        "tradable_edge": false,
+        "notes": "Realistic mean -1.93% PF 0.52, win rate 31%, 0/4 positive walk-forward windows, both markets negative. Cleanest negative signal in the study but unexploitable long. Could be combined with halt_resumption as a do-not-trade blacklist."
+      }
+    ],
+    "top_recommendation": "None \u2014 accept the negative result and reframe the project as a research deliverable. No event category survives strict adversarial verification: zero of seven categories meet both (a) positive_robust verdict and (b) at most 1 of 3 lenses refuted. The closest contender (bonus_issue) has the highest realistic net mean at +1.89% and 4/4 positive walk-forward windows, but fails sample_size (n=273, one window carries the aggregate) and regime_stability (52x spread in window means). Recommend pivoting the next milestone away from \"find a profitable strategy\" toward \"publish the rigorous negative finding\" with bonus_issue flagged as a watch-list candidate requiring 12+ more months of out-of-sample data before any paper trading.",
+    "rationale": "The strict tradable_edge rule produces zero qualifying categories, and that result is the honest read of the data. Bonus_issue is the only candidate that could conceivably warrant further work \u2014 it has the highest realistic T+5 net mean (+1.89%), the highest realistic PF among positive categories (1.54), and 4/4 positive walk-forward windows \u2014 but the sample (n=273, 114 unique stocks) is roughly an order of magnitude too small for the event-study standard, one window (Jan25-Jun25, mean +7.67%, n=50) carries a disproportionate share of the aggregate, and the worst window is effectively flat (+0.15%, PF 1.04), exactly the deployment scenario where an operator would abandon the strategy. Buyback and supply_contract both show genuine idealized edge but collapse under realistic T+1 execution (84% and 67% decay respectively, both ending at realistic means below +0.30%), confirming the project's original thesis that Korean disclosure information is incorporated too fast for retail execution to capture.\n\nThe remaining categories split into clear noise (rights_offering, convertible_bond) and consistently negative long-only signals (halt_resumption, shareholder_change). The negative categories are not useless: they can be incorporated as a deterministic blacklist in the risk engine to prevent the system from ever taking long positions following these event types, which is a tradable risk filter even when no profitable signal exists. The diversification opportunity that would justify a multi-strategy deployment does not exist in this data \u2014 every \"positive\" category fails on the same execution-realism axis, so combining them would not reduce the dominant failure mode.",
+    "next_steps": [
+      "Extend bonus_issue dataset back 3-5 years to grow n from 273 toward 1,000+ events; only reconsider paper trading if the worst walk-forward window stays above +0.30% mean with PF > 1.10 after extension.",
+      "Implement halt_resumption and shareholder_change as deterministic long-side blacklists in the risk engine with unit tests, converting the strongest negative findings into a tradable risk filter.",
+      "Build a KOSPI-restricted supply_contract variant with explicit spread/slippage budgeting and microstructure features (open spread, depth at touch, recent ADV) to test whether liquidity-conditional filtering can lift the +0.13% realistic edge above noise.",
+      "Formally document the negative result as the Milestone 4 deliverable: event-study methodology, walk-forward protocol, adversarial verification framework, and per-category findings as the project's research output.",
+      "Defer Milestones 5-9 (paper broker, live monitoring, broker API, live_tiny) until either the extended bonus_issue dataset confirms edge or a new untested event category (earnings surprise proxy, contract cancellation, dilutive financing subtypes) clears the same adversarial bar."
+    ],
+    "pdf_summary_paragraph": "Across seven Korean disclosure event categories tested with walk-forward validation and three adversarial verification lenses, zero categories survive strict tradable-edge criteria. Bonus_issue posts the highest realistic T+5 net mean at +1.89% with PF 1.54 and 4/4 positive walk-forward windows but fails on sample size (n=273, only 114 unique stocks, one window of n=50 carries the aggregate), while buyback (n=2,093) and supply_contract (n=3,495) show genuine idealized edge that collapses 84% and 67% respectively under T+1 realistic execution, ending at realistic means of just +0.26% and +0.13%. Halt_resumption (-1.20%, PF 0.72, 23% win rate) and shareholder_change (-1.93%, PF 0.52, 0/4 positive windows) produce the cleanest negative signals and should be implemented as deterministic long-side blacklists in the risk engine. The recommended next step is to extend the bonus_issue dataset by 3-5 years before any paper trading, formalize the negative findings as the project research deliverable, and defer broker integration until either a larger bonus_issue sample confirms edge or a new event category is added to the screen."
+  }
+}

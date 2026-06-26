@@ -235,9 +235,9 @@ def build(doc_path: Path) -> None:
 
     actions = [
         ("P1",
-         "Decide on the strategic pivot — even more urgent after Loop 9",
-         "Loop 9 paper backtest showed the v2 strategy nets only +₩42/trade under realistic execution (T+1 close entry). The edge IS real (3/4 walk-forward windows positive) but it lives in the event-day reaction, which retail traders can't capture without HFT-like infrastructure. Three paths: (a) HFT-like infrastructure to react within seconds of DART publication — CLAUDE.md excludes this as a non-goal; (b) test other event types (buybacks, dilutive financing, halt/resumption) which may have longer-lived reactions; (c) accept the verdict, document the methodology as the deliverable.",
-         "Reply with which path. Honest take: (a) is out of scope per CLAUDE.md and infrastructure-heavy. (b) is the most likely to find any usable signal and is purely code work (no new API costs). (c) is honest but ends the project."),
+         "Decide on the strategic pivot — Loop 10 has the full answer",
+         "Loop 10 tested all 7 plausible event types with adversarial verification (3 lenses each). ZERO categories survive strict tradable-edge criteria. Bonus_issue is closest (+1.89% realistic) but n=273 is too small. Two realistic forward paths: (a) extend bonus_issue back 3-5 years and re-test — DART data is free, takes ~1 hour of backfill; (b) implement halt_resumption + shareholder_change as long-side blacklists in the risk engine (the strongest negative signals can become tradable risk filters); (c) accept the verdict and document the methodology as the project deliverable.",
+         "Reply with which path(s). Honest take: do (b) regardless (it's a real risk control), then choose between (a) for one more shot at finding edge, or (c) to wind down the research phase."),
         ("P1",
          "Get an LLM API key (Anthropic or OpenAI) — needed for M5b",
          "M5b needs LLM-extracted qualitative features (counterparty type, language strength, recurrence) to feed the ML filter. Without these, M5b is just a boosted-tree on numeric ratios and probably won't beat the deterministic rule.",
@@ -302,7 +302,10 @@ def build(doc_path: Path) -> None:
         ("Strategy runner", "scripts/run_strategy.py [--min-ratio 0.30] [--dry-run]"),
         ("DB backup", "./scripts/backup_db.sh — gzipped SQL dump under data/backups/"),
         ("Walk-forward", "scripts/walk_forward.py — reproduces the v0/v1/v2 4-window table"),
-        ("Paper backtest (NEW)", "scripts/run_paper_backtest.py — realized-PnL with 3 execution assumptions"),
+        ("Paper backtest", "scripts/run_paper_backtest.py — realized-PnL with 3 execution assumptions"),
+        ("Per-category analysis (NEW)", "scripts/analyze_event_category.py --category &lt;X&gt;"),
+        ("Cross-category summary (NEW)", "scripts/summarize_all_categories.py"),
+        ("Event study by category (NEW)", "scripts/run_event_study.py --category &lt;X&gt;"),
         ("Local DB (gitignored)", "data/kdtb.db — SQLite, inspect with sqlite3 or DB Browser"),
         ("Event study CSV", "data/event_study_results.csv"),
         ("Secrets (gitignored)", ".env — DART_API_KEY lives here"),
@@ -518,6 +521,87 @@ def build(doc_path: Path) -> None:
         "Per-trade detail: <font face=\"Courier\">data/paper_backtest_v2.csv</font>",
         s["note"]
     ))
+    story.append(Spacer(1, 0.12 * inch))
+
+    story.append(Paragraph("<b>Loop 10</b> — multi-event-type meta-analysis (the comprehensive answer)", s["h2"]))
+    story.append(Paragraph(
+        "Fetched event-study data for 6 additional event categories besides supply_contract, "
+        "ran the same walk-forward + realistic-execution analysis on each, then adversarially "
+        "verified every positive finding through three lenses (sample_size, execution_realism, "
+        "regime_stability). Total: 17 agents in a parallel workflow.",
+        s["body"]
+    ))
+    multi_table = Table(
+        [
+            ["Category", "n", "T+5 net (idealized)", "T+5 net (realistic)", "PF realistic", "WF +", "Verdict"],
+            ["bonus_issue",        "273",   "+3.94%",      "+1.89%",      "1.54", "4/4", "positive but fragile (n too small)"],
+            ["buyback",            "2,093", "+1.62%",      "+0.26%",      "1.13", "4/4", "execution kills 84% of edge"],
+            ["supply_contract",    "3,495", "+0.39%",      "+0.13%",      "1.04", "4/4", "execution kills 67% of edge"],
+            ["rights_offering",    "2,528", "+0.25%",      "+0.18%",      "1.05", "2/4", "noise (median &minus;0.94%)"],
+            ["convertible_bond",   "1,864", "+0.85%",      "+0.04%",      "1.01", "2/4", "decaying, monotonic to negative"],
+            ["halt_resumption",    "1,319", "&minus;2.62%","&minus;1.20%","0.72", "1/4", "consistently negative long"],
+            ["shareholder_change", "834",   "&minus;2.38%","&minus;1.93%","0.52", "0/4", "consistently negative long"],
+        ],
+        colWidths=[1.4 * inch, 0.55 * inch, 1.0 * inch, 1.0 * inch, 0.8 * inch, 0.5 * inch, 2.0 * inch],
+    )
+    multi_table.setStyle(TableStyle([
+        ("FONT", (0, 0), (-1, 0), "Helvetica-Bold", 9),
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0b3d91")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONT", (0, 1), (-1, -1), "Helvetica", 9),
+        ("ALIGN", (1, 1), (5, -1), "RIGHT"),
+        ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#cccccc")),
+        ("BACKGROUND", (0, 1), (-1, 1), colors.HexColor("#fff3cd")),  # bonus_issue
+        ("BACKGROUND", (0, 6), (-1, 7), colors.HexColor("#d4edda")),  # negative signals as blacklist
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+    ]))
+    story.append(multi_table)
+    story.append(Spacer(1, 0.08 * inch))
+
+    story.append(Paragraph(
+        "<b>Adversarial verification verdict: ZERO categories pass.</b> "
+        "Across seven Korean disclosure event categories tested with walk-forward validation "
+        "and three adversarial verification lenses, zero categories survive strict tradable-edge "
+        "criteria. Bonus_issue posts the highest realistic T+5 net mean at +1.89% with PF 1.54 "
+        "and 4/4 positive walk-forward windows but fails on sample size (n=273, only 114 unique "
+        "stocks, one window of n=50 carries the aggregate). Buyback (n=2,093) and supply_contract "
+        "(n=3,495) show genuine idealized edge that collapses 84% and 67% respectively under T+1 "
+        "realistic execution, ending at realistic means of just +0.26% and +0.13%. Halt_resumption "
+        "(&minus;1.20%, PF 0.72, 23% win rate) and shareholder_change (&minus;1.93%, PF 0.52, 0/4 "
+        "positive windows) produce the cleanest negative signals and should be implemented as "
+        "deterministic long-side blacklists in the risk engine.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "<b>Recommended next steps (from the workflow synthesis):</b>",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "&bull; <b>Extend bonus_issue dataset 3-5 years</b> back. Only reconsider paper trading if "
+        "the worst walk-forward window stays above +0.30% mean with PF &gt; 1.10 after extension. "
+        "Bonus_issue is the only category with realistic-execution edge above noise; needs "
+        "~4&times; the current n to be statistically defensible.<br/>"
+        "&bull; <b>Implement halt_resumption + shareholder_change as long-side blacklists</b> in "
+        "the risk engine. These are the strongest negative findings &mdash; turning them into a "
+        "deterministic do-not-trade filter is a tradable risk control even when no profitable "
+        "signal exists.<br/>"
+        "&bull; <b>Formalize the negative result as the Milestone 4 deliverable</b>: event-study "
+        "methodology, walk-forward protocol, adversarial verification framework, per-category "
+        "findings as the project's research output.<br/>"
+        "&bull; <b>Defer M5b/M6/M7/M8/M9</b> (ML filter, broker integration, paper trading, live "
+        "tiny) until either the extended bonus_issue dataset confirms edge OR a new untested "
+        "category (earnings surprise proxy, contract cancellation, dilutive financing subtypes) "
+        "clears the same adversarial bar.",
+        s["body"]
+    ))
+    story.append(Paragraph(
+        "Workflow JSON snapshot: <font face=\"Courier\">data/multi_event_meta_2026-06-26.json</font><br/>"
+        "Reproduce per-category: <font face=\"Courier\">.venv/bin/python scripts/analyze_event_category.py --category &lt;X&gt;</font><br/>"
+        "Cross-category table: <font face=\"Courier\">.venv/bin/python scripts/summarize_all_categories.py</font>",
+        s["note"]
+    ))
+    story.append(Spacer(1, 0.1 * inch))
 
     story.append(Paragraph("<b>Loop 5</b> (24-month backfill + scale-out + the negative finding):", s["body"]))
     story.append(Paragraph(

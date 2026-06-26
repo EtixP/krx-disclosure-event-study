@@ -27,24 +27,36 @@ import pandas as pd
 from kdtb.data.market_data_client import MarketDataClient
 from kdtb.logging_setup import setup_logging
 
-SUPPLY_CONTRACT_QUERY = """
+_BASE_QUERY = """
 SELECT id, receipt_no, corp_code, corp_name, stock_code, report_name,
        DATE(receipt_datetime) AS event_date, market
 FROM disclosures
-WHERE report_name LIKE '단일판매%'
-  AND report_name NOT LIKE '%정정%'
-  AND report_name NOT LIKE '%해지%'
+WHERE {where}
   AND stock_code IS NOT NULL
   AND stock_code != ''
   AND market IN ('KOSPI', 'KOSDAQ')
 ORDER BY event_date, receipt_no
 """
 
+CATEGORIES = {
+    # name → SQL fragment (excluding the IS NOT NULL / market clauses)
+    "supply_contract": "report_name LIKE '단일판매%' AND report_name NOT LIKE '%정정%' AND report_name NOT LIKE '%해지%'",
+    "buyback":         "report_name LIKE '%자기주식%취득%' AND report_name NOT LIKE '%처분%' AND report_name NOT LIKE '%정정%'",
+    "rights_offering": "report_name LIKE '%유상증자%' AND report_name NOT LIKE '%정정%'",
+    "bonus_issue":     "report_name LIKE '%무상증자%' AND report_name NOT LIKE '%정정%'",
+    "convertible_bond":"report_name LIKE '%전환사채%' AND report_name LIKE '%발행%' AND report_name NOT LIKE '%정정%'",
+    "halt_resumption": "(report_name LIKE '%매매거래정지%' OR report_name LIKE '%거래재개%')",
+    "shareholder_change":"report_name LIKE '%최대주주%변경%' AND report_name NOT LIKE '%정정%'",
+}
+
+SUPPLY_CONTRACT_QUERY = _BASE_QUERY.format(where=CATEGORIES["supply_contract"])  # legacy alias
+
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--db", default="data/kdtb.db")
-    p.add_argument("--out", default="data/event_study_results.csv")
+    p.add_argument("--out", default=None, help="output CSV (defaults based on --category)")
+    p.add_argument("--category", default="supply_contract", choices=sorted(CATEGORIES.keys()))
     p.add_argument("--limit", type=int, default=None, help="limit number of unique stocks (testing)")
     p.add_argument("--sleep", type=float, default=0.15, help="seconds between pykrx fetches")
     return p.parse_args()
@@ -55,10 +67,13 @@ def main() -> int:
     setup_logging("INFO", False)
     log = logging.getLogger("event_study")
 
+    query = _BASE_QUERY.format(where=CATEGORIES[args.category])
+    out_path = args.out or f"data/event_study_{args.category}.csv"
+
     conn = sqlite3.connect(args.db)
     conn.row_factory = sqlite3.Row
-    events = [dict(r) for r in conn.execute(SUPPLY_CONTRACT_QUERY).fetchall()]
-    log.info("Found %d candidate supply-contract events", len(events))
+    events = [dict(r) for r in conn.execute(query).fetchall()]
+    log.info("Found %d candidate %s events", len(events), args.category)
 
     by_stock: dict[str, list[dict]] = {}
     for ev in events:
@@ -104,13 +119,13 @@ def main() -> int:
             log.info("  progress: %d/%d stocks (%d events, %d fetch failures)", i, len(stocks), len(rows), failed)
         # Checkpoint every 100 stocks so we don't lose work if the process hangs.
         if i % 100 == 0:
-            pd.DataFrame(rows).to_csv(args.out, index=False)
-            log.info("  checkpoint saved -> %s", args.out)
+            pd.DataFrame(rows).to_csv(out_path, index=False)
+            log.info("  checkpoint saved -> %s", out_path)
 
     df = pd.DataFrame(rows)
-    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(args.out, index=False)
-    log.info("Wrote %s (%d rows)", args.out, len(df))
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(out_path, index=False)
+    log.info("Wrote %s (%d rows)", out_path, len(df))
 
     print()
     print("=" * 64)
