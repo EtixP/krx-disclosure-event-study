@@ -187,6 +187,67 @@ are committed to [`data/`](data/):
 - `multi_event_meta_5yr_2026-06-26.json` — Loop 12 iter 3 (5yr meta)
 - `daily_monitor_review_2026-06-26.json` — Loop 12 iter 4 (adversarial code review)
 
+## The learning paper-trader
+
+After the research phase established that no category has a tradable long-side
+edge, a second deliverable was built: a **self-improving paper-trader** that
+learns from historical mock trades — the thing the project was originally
+imagined to be ([src/kdtb/learning/](src/kdtb/learning/)).
+
+**Design.** Each event is a mock trade (enter T+1 close, exit T+5 close, minus
+the 0.313% cost). A gradient-boosted classifier predicts P(net > 0) from
+decision-time features (ratio, market, counterparty, contract size, calendar)
+and trades when its PnL-optimal threshold is cleared. The learning loop is a
+**champion/challenger walk-forward**: each half-year fold, a challenger trains
+only on strictly-earlier folds, both models are scored on a held-out
+validation fold, and the challenger is promoted only if it wins. The champion
+starts as "never trade." There is **no look-ahead** — enforced structurally
+and asserted in tests.
+
+**Two independent claims.**
+
+1. *The machine works* — **TRUE**, a software/methodology result. It is
+   leak-free and seed-stable, and on a planted-edge synthetic dataset it
+   learns and earns **+2.02%/trade** with a **+2.16% selection lift** over
+   trade-everything. The synthetic path (`--synthetic-edge`) is the proof the
+   machine *can* learn when edge exists.
+
+2. *Korean disclosure events are tradable* — **FALSE**, the edge claim. On
+   real data the machine correctly finds no selective edge:
+   - **supply_contract**: traded only 2 of 9 folds (the recent regime) →
+     *insufficient breadth*, the same recency artifact found in the research
+     phase.
+   - **buyback**: looked positive (+0.299%/trade, 5/9 folds) and the first-cut
+     verdict over-credited it. Three adversarial reviewers refuted it. The
+     "+0.299% beats +0.174%" comparison was a **baseline mismatch**: the model
+     was measured only over its favorable 2024–2026 folds, while always-trade
+     was diluted across all 9 folds including the bad early ones it skipped. On
+     a **matched same-period basis, trade-everything returns +0.315% and beats
+     the model's +0.299%** — the within-fold stock-selection component is
+     **negative (−0.017%/trade)**, statistically insignificant (per-fold paired
+     t = 0.78), and the abstention in early folds was a mechanical walk-forward
+     warmup artifact, not a prediction. The underlying whole-sample buyback
+     return is +0.157%/trade, matching the earlier +0.16% finding and below the
+     +0.30% tradability bar.
+
+**The fix that came out of it.** The reviewers caught a flaw in the tool's own
+verdict logic (the all-folds vs matched-folds baseline mismatch). The tool now
+computes and reports a **selection-lift** metric — model per-trade return minus
+trade-everything on the *same* folds — which is the only number that isolates
+genuine stock-selection skill from fold-timing/regime beta. With that metric,
+the buyback verdict correctly reads "NO SELECTION EDGE" and the synthetic case
+correctly reads "POSITIVE SELECTIVE EDGE."
+
+**The lesson.** A learning system can only optimize edge that already exists in
+the data; it cannot manufacture edge from noise. Pointed at near-efficient
+Korean disclosure data, the honest learner abstains or finds no selective edge.
+The value delivered is the **machine** (reusable on any dataset) plus the
+**discipline baked into its verdict** (breadth + selection-lift + adversarial
+verification) that stops it from reporting regime beta as skill.
+
+Adversarial-verification snapshot:
+[`data/buyback_learner_skeptics_2026-06-29.json`](data/buyback_learner_skeptics_2026-06-29.json).
+
 ## Acknowledgments
 
 This project intentionally produced a strong negative result. CLAUDE.md

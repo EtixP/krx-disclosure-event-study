@@ -97,6 +97,38 @@ Supported event categories (`--category` flag):
 `supply_contract`, `buyback`, `bonus_issue`, `rights_offering`,
 `convertible_bond`, `halt_resumption`, `shareholder_change`.
 
+## Learning paper-trader
+
+An offline self-improving paper-trader lives in [src/kdtb/learning/](src/kdtb/learning/).
+It learns from historical mock trades (enter T+1 close, exit T+5 close, minus
+cost) and only adopts a new model version when a **challenger beats the
+incumbent champion on a validation fold it did not train on** — the honest
+version of "tries mock trades, learns, makes better choices."
+
+```bash
+.venv/bin/python scripts/train_learner.py --synthetic-edge      # sanity: machine learns planted edge
+.venv/bin/python scripts/train_learner.py --category buyback     # real data
+```
+
+Two independent claims, kept separate:
+
+- **The machine works** — TRUE. Leak-free (training data always strictly
+  precedes the test fold, enforced structurally + tested), seed-stable, and on
+  planted-edge synthetic data it learns and earns **+2.02%/trade** with a
+  **+2.16% selection lift** over trade-everything.
+- **Any Korean category is tradable** — FALSE. On real data the machine
+  correctly finds **no selective edge**. Buyback looked positive
+  (+0.30%/trade) but adversarial verification showed it was a baseline-mismatch
+  + regime artifact: on matched periods, naive trade-everything (+0.315%)
+  *beats* the model, and within-fold stock selection is **negative**
+  (−0.017%/trade). The tool now reports a **selection-lift** metric that
+  isolates skill from regime, so it can't make that mistake again.
+
+This is the whole point: a learning system can only optimize edge that
+exists. Pointed at near-efficient data, the honest outcome is "learns to
+abstain / no selective edge" — which is exactly what it reports. See
+[RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md#the-learning-paper-trader).
+
 ## Architecture
 
 ```
