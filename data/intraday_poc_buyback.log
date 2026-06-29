@@ -1,0 +1,58 @@
+buyback events in window: 864 across 229 dates
+  scraped 25/229 dates, 8650 times so far
+  scraped 50/229 dates, 20408 times so far
+  scraped 75/229 dates, 29507 times so far
+  scraped 100/229 dates, 42429 times so far
+  scrape fail 2025-12-23: The read operation timed out
+  scraped 125/229 dates, 53403 times so far
+  scraped 150/229 dates, 64554 times so far
+  scraped 175/229 dates, 83845 times so far
+  scrape fail 2026-04-28: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-04-29: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-04-30: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-04: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-06: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-07: [Errno 8] nodename nor servname provided, or not known
+  scraped 200/229 dates, 97546 times so far
+  scrape fail 2026-05-08: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-11: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-12: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-13: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-14: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-15: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-18: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-19: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-20: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-21: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-22: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-26: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-27: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-28: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-05-29: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-01: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-02: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-04: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-05: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-08: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-09: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-10: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-11: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-12: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-15: [Errno 8] nodename nor servname provided, or not known
+  scraped 225/229 dates, 97546 times so far
+  scrape fail 2026-06-16: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-17: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-18: [Errno 8] nodename nor servname provided, or not known
+  scrape fail 2026-06-19: [Errno 8] nodename nor servname provided, or not known
+total times scraped: 97546
+matched events: 520/864
+  intraday-published (can enter SAME-DAY close): 241 (46%)
+  after-close (earliest entry T+1):              279 (54%)
+
+=== TIME-AWARE realistic entry vs the old uniform-T+1 assumption ===
+  OLD (uniform T+1 close entry, all 520): mean +0.444%/trade  win 46.9%
+  TIME-AWARE blended (520):              mean +0.982%/trade  win 49.8%
+    - intraday subset, same-day-close entry (241): mean +1.698%/trade  win 53.5%
+    - after-close subset, T+1 entry (279):        mean +0.363%/trade  win 46.6%
+
+NOTE: this is a recent-window POC (no walk-forward / adversarial gate yet).
