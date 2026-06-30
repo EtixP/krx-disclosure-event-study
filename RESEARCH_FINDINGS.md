@@ -248,6 +248,55 @@ verification) that stops it from reporting regime beta as skill.
 Adversarial-verification snapshot:
 [`data/buyback_learner_skeptics_2026-06-29.json`](data/buyback_learner_skeptics_2026-06-29.json).
 
+## Intraday execution speed — the one real positive effect
+
+The research and learning phases all assumed next-day-close (T+1) entry, an
+artifact of the free daily-bar data, not the user's actual capability (they can
+trade intraday via a Korean broker API). Investigating that gap produced the
+project's first robust positive finding — and, on honest examination, the
+reason it still isn't tradable. Full detail in
+[INTRADAY_FEASIBILITY.md](INTRADAY_FEASIBILITY.md).
+
+**What was found.** DART exposes exact filing *times* on its website (not in the
+API) for historical dates; a resumable scraper backfilled them for the full
+buyback history (534k disclosures timestamped). ~46–71% of these events publish
+*during* market hours, so for them the same-day close is a realistic entry — not
+the T+1 close we had assumed. Assigning each event its earliest tradable entry
+(same-day close if published intraday, else T+1) and walking forward across all
+10 half-year folds:
+
+| | Mean net / trade | Folds positive |
+|---|---|---|
+| Uniform T+1 (old) | +0.157% | 7/10 |
+| Time-aware | +0.473% | 9/10 |
+| **Entry-timing delta** | **+0.317%** | **10/10** |
+
+The delta is a **real, deterministic, regime-independent effect**: positive in
+every fold (including the negative-base 2021–2022 regime), stable across entry
+cutoffs (fold t = 7.6), mechanism cleanly identified (the event-day-close →
+next-close overnight gap), coverage unbiased (p = 0.99), and a learned selector
+adds nothing (+0.06%) — it is an entry-timing rule, not stock selection. This is
+the first thing in the project that survived walk-forward *and* adversarial
+verification as a genuine effect.
+
+**Why it still isn't tradable.** A 4-skeptic adversarial pass (3 of 4 refuted)
+showed the absolute level collapses under real constraints: the median trade
+loses (−0.044%, 49.6% win) and removing the top 5% of trades flips the mean to
+−0.42% (positive-skew lottery); the median capturable gap is ~20bps, smaller
+than one KOSDAQ tick and concentrated in the low-price names hardest to fill at
+the closing auction; and under `max_open_positions=1` with a 5-day hold only ~6%
+of signals are reachable, giving a capacity-realistic ~+0.25%/trade and ~$2–9/yr
+at the ₩30k cap. Verdict: **`real_delta_untradable_level`** — keep the
+entry-timing insight as a documented edge; do not deploy it without a
+capacity-aware, closing-auction-fill-realistic *forward* test, the one thing no
+historical daily-close dataset can answer.
+
+**The lesson.** Even the project's single robust positive effect dissolved into
+"not deployable at retail scale" once capacity and fill realism were modeled —
+the same efficiency wall, now met one layer deeper. The honest output is a
+precisely characterized effect plus the exact, narrow experiment that could
+still validate it: live closing-auction fills via the broker API.
+
 ## Acknowledgments
 
 This project intentionally produced a strong negative result. CLAUDE.md
