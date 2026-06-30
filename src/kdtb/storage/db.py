@@ -114,6 +114,14 @@ CREATE TABLE IF NOT EXISTS positions (
     unrealized_pnl REAL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'open'
 );
+
+-- Tracks which DART daily-list dates have had their filing times scraped, so
+-- the backfill is resumable across network failures.
+CREATE TABLE IF NOT EXISTS scraped_dates (
+    ymd TEXT PRIMARY KEY,
+    n_times INTEGER,
+    scraped_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
 """
 
 
@@ -122,6 +130,9 @@ MIGRATIONS = [
     # for ADD COLUMN. Added Loop 7 for the KOSPI-only / counterparty-blacklist filters.
     "ALTER TABLE extractions ADD COLUMN counterparty_name TEXT",
     "ALTER TABLE extractions ADD COLUMN counterparty_type TEXT",
+    # Exact disclosure filing time (HH:MM, KST) scraped from the DART website —
+    # the OpenAPI only gives the date. Enables intraday / execution-speed analysis.
+    "ALTER TABLE disclosures ADD COLUMN filing_time TEXT",
 ]
 
 
