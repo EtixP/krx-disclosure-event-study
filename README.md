@@ -222,8 +222,8 @@ disclosures, refreshes fundamentals only when the cache is stale (>25 days, i.e.
 ~quarterly), and re-ranks the watchlist (prices change daily). Logs to
 `data/daily_update.log`.
 
-Schedule it on macOS with launchd (runs 17:00 on weekdays — after the 15:30 KST
-close; adjust the Hour in the plist for your timezone):
+Schedule it on macOS with launchd (runs **08:20 on weekdays** — pre-market,
+10 min before the 09:00 KST open; the plist assumes the Mac is on Korea time):
 
 ```bash
 cp scripts/com.tradeforme.daily.plist ~/Library/LaunchAgents/
@@ -234,8 +234,11 @@ launchctl unload ~/Library/LaunchAgents/com.tradeforme.daily.plist # disable
 Or with cron:
 
 ```cron
-0 17 * * 1-5  /Users/jsp2022310/Desktop/tradeforme/scripts/daily_update.sh
+20 8 * * 1-5  /Users/jsp2022310/Desktop/tradeforme/scripts/daily_update.sh
 ```
+
+The pre-open run uses the prior trading day's close, so the watchlist is ready
+before the market opens.
 
 Note: **the Anthropic (Claude) Max plan does not cover API access** — it's for
 using Claude interactively, not for scripts calling the API. The daily update
