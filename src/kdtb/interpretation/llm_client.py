@@ -15,7 +15,7 @@ from typing import Literal
 
 logger = logging.getLogger(__name__)
 
-LLMProvider = Literal["anthropic", "openai", "stub"]
+LLMProvider = Literal["anthropic", "openai", "ollama", "stub"]
 
 
 class LLMClient(ABC):
@@ -94,14 +94,53 @@ class OpenAILLMClient(LLMClient):
         return resp.choices[0].message.content or ""
 
 
+class OllamaLLMClient(LLMClient):
+    """Free, local LLM via Ollama (https://ollama.com) — no API key, no cost.
+
+    Talks to Ollama's native HTTP API (default http://localhost:11434), so it
+    needs no extra SDK. Install Ollama and `ollama pull qwen2.5` first.
+    """
+
+    provider = "ollama"
+
+    def __init__(self, model: str = "qwen2.5", host: str | None = None) -> None:
+        self.model = model
+        self.host = (host or os.getenv("OLLAMA_HOST") or "http://localhost:11434").rstrip("/")
+
+    def complete(self, prompt: str, max_tokens: int = 1500, temperature: float = 0.0) -> str:
+        import httpx
+
+        try:
+            r = httpx.post(
+                f"{self.host}/api/chat",
+                json={
+                    "model": self.model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "stream": False,
+                    "options": {"temperature": temperature, "num_predict": max_tokens},
+                },
+                timeout=120.0,
+            )
+            r.raise_for_status()
+        except httpx.HTTPError as e:
+            raise RuntimeError(
+                f"Ollama request to {self.host} failed: {e}. Is Ollama running "
+                f"(`ollama serve`) and the model pulled (`ollama pull {self.model}`)?"
+            ) from e
+        return (r.json().get("message", {}) or {}).get("content", "")
+
+
 def build_client(provider: LLMProvider, model: str | None = None) -> LLMClient:
     """Build a client per the configured provider. Defaults to StubLLMClient.
 
-    Reads ANTHROPIC_API_KEY / OPENAI_API_KEY from env. Raises if the chosen
-    provider's SDK isn't installed or key is missing.
+    - anthropic / openai: paid APIs; read ANTHROPIC_API_KEY / OPENAI_API_KEY.
+    - ollama: free local model; needs Ollama running, no key.
+    Raises if the chosen provider's SDK isn't installed or key is missing.
     """
     if provider == "anthropic":
         return AnthropicLLMClient(model=model or "claude-3-5-sonnet-latest")
     if provider == "openai":
         return OpenAILLMClient(model=model or "gpt-4o-mini")
+    if provider == "ollama":
+        return OllamaLLMClient(model=model or "qwen2.5")
     return StubLLMClient()

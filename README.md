@@ -179,12 +179,39 @@ A stock inherits its hottest theme's strength as a bounded, transparent tilt
 (default 20% weight, `--w-theme`), so a fundamentally-sound *laggard in a hot
 theme* gets surfaced. Set `--w-theme 0` for pure fundamentals.
 
-An optional LLM layer (`--llm-context`, needs `LLM_PROVIDER` + an API key in
-`.env`) **annotates** each hot theme with a one-line current-events explanation.
-Per the project's design rule, the LLM only *explains* — it never changes a
-score; the tilt stays 100% data-driven. (Theme membership is currently a curated
-ticker map covering the major themes; an LLM key also lets it extend theme
-classification to the full universe — a natural next enhancement.)
+An optional LLM layer (`--llm-context`) **annotates** each hot theme with a
+one-line current-events explanation. Per the project's design rule, the LLM only
+*explains* — it never changes a score; the tilt stays 100% data-driven.
+
+You don't have to pay for this. Set `LLM_PROVIDER` in `.env` to one of:
+- `ollama` — **free, local, no key** (install [Ollama](https://ollama.com),
+  `ollama pull qwen2.5`); the default model is `qwen2.5`
+- `anthropic` / `openai` — paid APIs (both require a key; there is **no free
+  Claude API**), set `ANTHROPIC_API_KEY` / `OPENAI_API_KEY`
+
+(Theme membership is currently a curated ticker map; an LLM also lets it extend
+theme classification to the full universe — a natural next enhancement.)
+
+## Visual dashboard (localhost)
+
+A Streamlit dashboard makes the watchlist explorable in the browser:
+
+```bash
+python scripts/run_ranker.py                       # refresh the data
+.venv/bin/streamlit run src/kdtb/dashboard/app.py  # opens http://localhost:8501
+```
+
+It gives you, interactively:
+- **Live weight sliders** — drag value / quality / momentum / theme and the
+  ranking re-sorts instantly (re-weighting cached percentiles, no re-fetch).
+- **Hottest-themes bar chart** — each theme's median basket momentum.
+- **Value-vs-quality landscape** — a scatter of the whole universe (bubble =
+  market cap, colour = theme); top-right is cheap *and* healthy.
+- **Ranked table** with colour-graded factor scores.
+- **Per-stock drill-down** — a factor-percentile bar + the raw PBR/PER/ROE/
+  debt/momentum for any name you pick.
+
+Powered by `data/ranker_watchlist.csv`; re-run `run_ranker.py` to refresh prices.
 
 Data: **DART financial statements + shares** (equity, net income, debt, common
 shares) and **per-ticker prices** (pykrx) — chosen because the bulk KRX
