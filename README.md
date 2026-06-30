@@ -129,6 +129,53 @@ exists. Pointed at near-efficient data, the honest outcome is "learns to
 abstain / no selective edge" — which is exactly what it reports. See
 [RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md#the-learning-paper-trader).
 
+## Multi-factor stock ranker (watchlist tool)
+
+A longer-horizon screener in [src/kdtb/ranker/](src/kdtb/ranker/) that ranks
+KOSPI/KOSDAQ stocks by a composite of three economically-grounded factor groups
+and prints an explainable watchlist. Unlike the event-driven work, this targets
+factor premia that play out over *months*, so the capacity/fill problems that
+sink fast strategies don't apply.
+
+```bash
+# one-time: cache DART fundamentals for the universe (resumable)
+.venv/bin/python scripts/build_fundamentals_cache.py            # or --limit N
+
+# run the ranker (fetches live prices + momentum, prints the watchlist)
+.venv/bin/python scripts/run_ranker.py --top 30 --min-mcap 100
+.venv/bin/python scripts/run_ranker.py --w-value 0.5 --w-quality 0.3 --w-momentum 0.2
+```
+
+| Group | Means | Built from |
+|---|---|---|
+| **Value** | cheap | book yield (1/PBR) + earnings yield (1/PER); losses → worst |
+| **Quality** | healthy | ROE + low debt-to-equity |
+| **Momentum** | rising | trailing 12-month return |
+
+Each factor is standardized by **cross-sectional percentile rank** (0–100,
+robust to the fat tails of valuation ratios), groups are averaged, then combined
+with configurable weights. Every name shows *why* it ranks where it does:
+
+```text
+=== Korean multi-factor watchlist  (value 40% / quality 35% / momentum 25%) ===
+  #    code name           mkt  score  val qual  mom    PBR     PER     ROE    D/E    12m%
+  1  004800 효성           KOSPI  0.777  69  77  91   1.05     7.1   14.8%   0.89 +215.2
+  2  011170 롯데케미칼        KOSPI  0.759 100  72  43   0.16    -      -     0.77  +10.7   (loss-maker: no PER)
+  7  000270 기아           KOSPI  0.736  71  79  70   0.88     7.2   12.3%   0.62  +57.2
+```
+
+Data: **DART financial statements + shares** (equity, net income, debt, common
+shares) and **per-ticker prices** (pykrx) — chosen because the bulk KRX
+fundamentals endpoints are unreliable; DART is the authoritative source. The
+universe is the 2,661 KOSPI/KOSDAQ companies in the local disclosures table.
+
+**Honest caveats.** (1) This ranks by sound, economically-motivated factors —
+it does **not** yet prove those factors *outperform in Korea after costs*; that
+backtest is a separate, deliberate next step. (2) Financials/holding companies
+have structurally high debt-to-equity, so the quality factor penalizes them —
+consider excluding financials or sector-neutral scoring. (3) Momentum and PBR/PER
+depend on your live price feed.
+
 ## Architecture
 
 ```
