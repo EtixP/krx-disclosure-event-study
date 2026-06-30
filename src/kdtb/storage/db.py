@@ -122,6 +122,22 @@ CREATE TABLE IF NOT EXISTS scraped_dates (
     n_times INTEGER,
     scraped_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Cached company fundamentals from DART (financial statements + shares), so the
+-- multi-factor ranker doesn't re-fetch on every run.
+CREATE TABLE IF NOT EXISTS fundamentals (
+    corp_code TEXT,
+    stock_code TEXT,
+    fiscal_year TEXT,
+    equity INTEGER,
+    net_income INTEGER,
+    revenue INTEGER,
+    debt INTEGER,
+    shares INTEGER,
+    fs_div TEXT,
+    fetched_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (corp_code, fiscal_year)
+);
 """
 
 
