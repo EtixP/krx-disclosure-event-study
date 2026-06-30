@@ -21,16 +21,21 @@ import pandas as pd
 
 @dataclass
 class FactorWeights:
-    """Weights for the three factor GROUPS (need not sum to 1; normalized)."""
+    """Weights for the factor GROUPS (need not sum to 1; normalized).
+
+    `theme` is the data-driven theme-momentum tilt (0 = pure fundamentals).
+    """
     value: float = 0.40
     quality: float = 0.35
     momentum: float = 0.25
+    theme: float = 0.0
 
     def normalized(self) -> "FactorWeights":
-        total = self.value + self.quality + self.momentum
+        total = self.value + self.quality + self.momentum + self.theme
         if total <= 0:
-            return FactorWeights(1 / 3, 1 / 3, 1 / 3)
-        return FactorWeights(self.value / total, self.quality / total, self.momentum / total)
+            return FactorWeights(0.25, 0.25, 0.25, 0.25)
+        return FactorWeights(self.value / total, self.quality / total,
+                             self.momentum / total, self.theme / total)
 
 
 @dataclass
@@ -110,14 +115,21 @@ def rank_universe(
     ], axis=1).mean(axis=1, skipna=True)
     # MOMENTUM: high trailing return
     mom = _pct_rank(universe["mom_12m"], higher_better=True)
+    # THEME: strength of the stock's hottest theme (data-driven basket momentum)
+    if "theme_raw" in universe.columns:
+        theme = _pct_rank(universe["theme_raw"], higher_better=True)
+    else:
+        theme = pd.Series(np.nan, index=universe.index)
 
     universe["value_score"] = val
     universe["quality_score"] = qual
     universe["momentum_score"] = mom
+    universe["theme_score"] = theme
 
     # Composite: weighted mean of available group scores (missing group => reweight).
-    groups = pd.DataFrame({"value": val, "quality": qual, "momentum": mom})
-    w = pd.Series({"value": weights.value, "quality": weights.quality, "momentum": weights.momentum})
+    groups = pd.DataFrame({"value": val, "quality": qual, "momentum": mom, "theme": theme})
+    w = pd.Series({"value": weights.value, "quality": weights.quality,
+                   "momentum": weights.momentum, "theme": weights.theme})
     mask = groups.notna()
     weighted = (groups.fillna(0) * w).sum(axis=1)
     wsum = (mask * w).sum(axis=1)

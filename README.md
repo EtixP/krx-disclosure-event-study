@@ -151,18 +151,40 @@ sink fast strategies don't apply.
 | **Value** | cheap | book yield (1/PBR) + earnings yield (1/PER); losses → worst |
 | **Quality** | healthy | ROE + low debt-to-equity |
 | **Momentum** | rising | trailing 12-month return |
+| **Theme** | in a hot theme | trailing momentum of the stock's market *theme* basket (defense, nuclear, batteries, shipbuilding, AI, bio, …) |
 
 Each factor is standardized by **cross-sectional percentile rank** (0–100,
 robust to the fat tails of valuation ratios), groups are averaged, then combined
-with configurable weights. Every name shows *why* it ranks where it does:
+with configurable weights. Every name shows *why* it ranks where it does, and a
+**data-driven "hottest themes now" readout** surfaces which sectors are moving:
 
 ```text
-=== Korean multi-factor watchlist  (value 40% / quality 35% / momentum 25%) ===
-  #    code name           mkt  score  val qual  mom    PBR     PER     ROE    D/E    12m%
-  1  004800 효성           KOSPI  0.777  69  77  91   1.05     7.1   14.8%   0.89 +215.2
-  2  011170 롯데케미칼        KOSPI  0.759 100  72  43   0.16    -      -     0.77  +10.7   (loss-maker: no PER)
-  7  000270 기아           KOSPI  0.736  71  79  70   0.88     7.2   12.3%   0.62  +57.2
+=== Korean multi-factor watchlist  (value 35% / quality 30% / momentum 15% / theme 20%) ===
+
+Hottest themes now (by basket 12m momentum):
+   반도체     +442.4%      조선  +131.6%     2차전지  +94.1%     방산  +48.2%
+
+  #    code name        mkt  score  val qual  mom  thm theme       PBR    PER    ROE    D/E   12m%
+  1  004800 효성        KOSPI  0.765  69  77  91   -            1.04    7.0  14.8%  0.89 +212.7
+  5  000270 기아        KOSPI  0.727  71  79  70  67 자동차       0.88    7.2  12.3%  0.62  +57.2
+ 16  000660 SK하이닉스   KOSPI  0.695  21  93 100  97 반도체      16.17   45.4  35.6%  0.46 +1220
 ```
+
+### Current-events / theme layer
+
+The user asked for valuations that reflect current sociopolitical events. The
+honest, measurable way to do that: **"which themes are hot" is read from the
+real price momentum of each theme's stock basket** — a fact, not an opinion.
+A stock inherits its hottest theme's strength as a bounded, transparent tilt
+(default 20% weight, `--w-theme`), so a fundamentally-sound *laggard in a hot
+theme* gets surfaced. Set `--w-theme 0` for pure fundamentals.
+
+An optional LLM layer (`--llm-context`, needs `LLM_PROVIDER` + an API key in
+`.env`) **annotates** each hot theme with a one-line current-events explanation.
+Per the project's design rule, the LLM only *explains* — it never changes a
+score; the tilt stays 100% data-driven. (Theme membership is currently a curated
+ticker map covering the major themes; an LLM key also lets it extend theme
+classification to the full universe — a natural next enhancement.)
 
 Data: **DART financial statements + shares** (equity, net income, debt, common
 shares) and **per-ticker prices** (pykrx) — chosen because the bulk KRX
