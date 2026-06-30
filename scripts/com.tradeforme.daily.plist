@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd agent to run the daily ranker update at 17:00 local time on weekdays.
+  Adjust the Hour/Minute to your timezone (after the 15:30 KST market close).
+
+  Enable:
+    cp scripts/com.tradeforme.daily.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.tradeforme.daily.plist
+  Disable:
+    launchctl unload ~/Library/LaunchAgents/com.tradeforme.daily.plist
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.tradeforme.daily</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/jsp2022310/Desktop/tradeforme/scripts/daily_update.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>2</integer><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Weekday</key><integer>5</integer><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+  </array>
+  <key>RunAtLoad</key>
+  <false/>
+  <key>StandardOutPath</key>
+  <string>/Users/jsp2022310/Desktop/tradeforme/data/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/jsp2022310/Desktop/tradeforme/data/launchd.err.log</string>
+</dict>
+</plist>

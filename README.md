@@ -213,6 +213,34 @@ It gives you, interactively:
 
 Powered by `data/ranker_watchlist.csv`; re-run `run_ranker.py` to refresh prices.
 
+## Daily updates (free — no Claude credits)
+
+The entire pipeline is free data (DART + pykrx) + local computation — it uses
+**no Claude / LLM / API credits**, so a daily refresh costs nothing.
+[scripts/daily_update.sh](scripts/daily_update.sh) does it all: ingests today's
+disclosures, refreshes fundamentals only when the cache is stale (>25 days, i.e.
+~quarterly), and re-ranks the watchlist (prices change daily). Logs to
+`data/daily_update.log`.
+
+Schedule it on macOS with launchd (runs 17:00 on weekdays — after the 15:30 KST
+close; adjust the Hour in the plist for your timezone):
+
+```bash
+cp scripts/com.tradeforme.daily.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.tradeforme.daily.plist   # enable
+launchctl unload ~/Library/LaunchAgents/com.tradeforme.daily.plist # disable
+```
+
+Or with cron:
+
+```cron
+0 17 * * 1-5  /Users/jsp2022310/Desktop/tradeforme/scripts/daily_update.sh
+```
+
+Note: **the Anthropic (Claude) Max plan does not cover API access** — it's for
+using Claude interactively, not for scripts calling the API. The daily update
+needs neither; the only optional LLM use (`--llm-context`) runs free via Ollama.
+
 Data: **DART financial statements + shares** (equity, net income, debt, common
 shares) and **per-ticker prices** (pykrx) — chosen because the bulk KRX
 fundamentals endpoints are unreliable; DART is the authoritative source. The
