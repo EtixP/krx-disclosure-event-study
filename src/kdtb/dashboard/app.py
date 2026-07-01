@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -94,15 +95,26 @@ def main() -> None:
     st.caption("Top-right = cheap AND healthy. Bubble size = market cap, colour = theme.")
     sc = ranked.copy()
     sc["theme_lbl"] = sc.get("top_theme", "").fillna("").replace("", "(none)")
+    # Bubble size = market cap, but caps span ~4-6 orders of magnitude, so a raw
+    # linear size makes one mega-cap huge and every other stock sub-pixel. Tame
+    # the outliers (clip at the 95th pct) and sqrt-compress so all bubbles show.
+    mc = pd.to_numeric(sc["market_cap"], errors="coerce")
+    mc = mc.fillna(mc.median())
+    sc["_bubble"] = np.sqrt(mc.clip(lower=1, upper=mc.quantile(0.95)))
+    sc["시총_₩B"] = (mc / 1e9).round(0)
     fig2 = px.scatter(
-        sc, x="value_score", y="quality_score", size="market_cap", color="theme_lbl",
+        sc, x="value_score", y="quality_score", size="_bubble", color="theme_lbl",
         hover_name="corp_name",
         hover_data={"composite": ":.3f", "pbr": ":.2f", "per": ":.1f", "roe": ":.2%",
-                    "mom_12m": ":.1%", "value_score": False, "quality_score": False, "market_cap": False},
-        labels={"value_score": "Value percentile", "quality_score": "Quality percentile", "theme_lbl": "Theme"},
-        size_max=40,
+                    "mom_12m": ":.1%", "시총_₩B": ":,.0f",
+                    "value_score": False, "quality_score": False, "_bubble": False},
+        labels={"value_score": "Value percentile", "quality_score": "Quality percentile",
+                "theme_lbl": "Theme", "시총_₩B": "Market cap (₩B)"},
+        size_max=22, opacity=0.6,
     )
-    fig2.update_layout(height=480, margin=dict(l=10, r=10, t=10, b=10))
+    fig2.update_traces(marker=dict(line=dict(width=0.5, color="white")))
+    fig2.update_layout(height=520, margin=dict(l=10, r=10, t=10, b=10),
+                       xaxis=dict(range=[-0.03, 1.03]), yaxis=dict(range=[-0.03, 1.03]))
     st.plotly_chart(fig2, use_container_width=True)
 
     # ---- ranked table ----
