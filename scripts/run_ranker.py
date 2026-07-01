@@ -102,7 +102,7 @@ def main() -> int:
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     cols = ["rank", "stock_code", "corp_name", "market", "composite",
             "value_score", "quality_score", "momentum_score", "theme_score", "top_theme",
-            "pbr", "per", "roe", "debt_to_equity", "mom_12m", "market_cap", "fiscal_year"]
+            "pbr", "per", "roe", "debt_to_equity", "mom_12m", "market_cap", "has_earnings", "fiscal_year"]
     ranked[[c for c in cols if c in ranked.columns]].to_csv(args.out, index=False)
 
     w = weights.normalized()

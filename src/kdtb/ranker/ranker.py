@@ -103,16 +103,22 @@ def rank_universe(
     if universe.empty:
         return universe
 
-    # VALUE: cheap = high book/earnings yield
+    # VALUE / QUALITY are 2-factor groups. A MISSING sub-factor (e.g. earnings
+    # data we couldn't read) is treated as NEUTRAL (0.5), not skipped — so a
+    # stock cheap on book value but with UNKNOWN earnings is pulled toward the
+    # middle instead of getting a free top score on half the picture. A stock
+    # with KNOWN-bad fundamentals (a loss, high debt) still scores low, because
+    # its sub-factor is present and simply ranks poorly.
     val = pd.concat([
         _pct_rank(universe["book_yield"], higher_better=True),
         _pct_rank(universe["earnings_yield"], higher_better=True),
-    ], axis=1).mean(axis=1, skipna=True)
-    # QUALITY: high ROE, low leverage
+    ], axis=1).fillna(0.5).mean(axis=1)
     qual = pd.concat([
         _pct_rank(universe["roe"], higher_better=True),
         _pct_rank(universe["debt_to_equity"], higher_better=False),
-    ], axis=1).mean(axis=1, skipna=True)
+    ], axis=1).fillna(0.5).mean(axis=1)
+    # data-completeness flag: do we actually know this stock's earnings?
+    universe["has_earnings"] = universe["net_income"].notna() if "net_income" in universe.columns else True
     # MOMENTUM: high trailing return
     mom = _pct_rank(universe["mom_12m"], higher_better=True)
     # THEME: strength of the stock's hottest theme (data-driven basket momentum)

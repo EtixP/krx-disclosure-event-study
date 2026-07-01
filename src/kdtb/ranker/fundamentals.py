@@ -10,6 +10,7 @@ compute PBR, PER, ROE and leverage once combined with the market price.
 from __future__ import annotations
 
 import logging
+import re
 from typing import Optional
 
 import httpx
@@ -22,7 +23,35 @@ DART_BASE = "https://opendart.fss.or.kr/api"
 _EQUITY = ["자본총계"]
 _DEBT = ["부채총계"]
 _REVENUE = ["매출액", "수익(매출액)", "영업수익"]
-_NET_INCOME = ["당기순이익", "당기순이익(손실)", "분기순이익", "반기순이익"]
+# Net income takes many forms across statement types, so it's matched by regex
+# on the income-statement rows (IS/CIS), not an exact-name whitelist:
+#   당기순이익 / 연결당기순이익            (profit; most industrials)
+#   당기순손실 / 당기순손익               (loss / profit-or-loss; e.g. SK이노베이션, 한화솔루션)
+#   지배기업소유주지분순이익 / 지배주주순이익  (attributable-to-owners; financials, 고려아연)
+# Section prefixes (e.g. "XI.", "Ⅸ.", "1.") are stripped first, and non-net
+# lines (pretax / per-share / comprehensive / minority / operating) are skipped.
+_INCOME_SJ = frozenset({"IS", "CIS"})
+_NI_PREFIX = re.compile(r"^\s*(?:[Ⅰ-Ⅻ]+|[IVXLCDM]+|\d+)\s*[.)]\s*")
+_NI_EXCLUDE = ("법인세", "주당", "포괄", "영업", "비지배", "소수주주")
+_NI_TOTAL_RE = re.compile(r"^(연결)?당기순(이익|손실|손익)(\(손실\))?$")
+_NI_ATTRIB_RE = re.compile(r"^(지배기업소유주지분순이익|지배주주순이익|보통주당기순이익)$")
+
+
+def _find_net_income(accounts: list[dict]) -> Optional[int]:
+    """Robustly locate the period net income. Prefers the total line; falls back
+    to the attributable-to-owners line when no plain total exists (financials)."""
+    total = attrib = None
+    for acc in accounts:
+        if acc.get("sj_div") not in _INCOME_SJ:
+            continue
+        nm = _NI_PREFIX.sub("", str(acc.get("account_nm", ""))).replace(" ", "")
+        if any(x in nm for x in _NI_EXCLUDE):
+            continue
+        if total is None and _NI_TOTAL_RE.match(nm):
+            total = _to_int(acc.get("thstrm_amount"))
+        elif attrib is None and _NI_ATTRIB_RE.match(nm):
+            attrib = _to_int(acc.get("thstrm_amount"))
+    return total if total is not None else attrib
 
 
 def _to_int(s: Optional[str]) -> Optional[int]:
@@ -40,14 +69,24 @@ def _to_int(s: Optional[str]) -> Optional[int]:
         return None
 
 
-def _find_amount(accounts: list[dict], names: list[str]) -> Optional[int]:
-    wanted = {n.replace(" ", "") for n in names}
-    for acc in accounts:
-        nm = str(acc.get("account_nm", "")).replace(" ", "")
-        if nm in wanted:
-            v = _to_int(acc.get("thstrm_amount"))
-            if v is not None:
-                return v
+def _find_amount(
+    accounts: list[dict],
+    names: list[str],
+    allowed_sj: Optional[frozenset[str]] = None,
+) -> Optional[int]:
+    """First account whose (space-stripped) name matches, honoring `names`
+    priority order. If allowed_sj is given, only rows from those statements
+    (sj_div) are considered — used to keep net income to the income statement.
+    """
+    for target in names:  # respect priority order of the names list
+        t = target.replace(" ", "")
+        for acc in accounts:
+            if allowed_sj is not None and acc.get("sj_div") not in allowed_sj:
+                continue
+            if str(acc.get("account_nm", "")).replace(" ", "") == t:
+                v = _to_int(acc.get("thstrm_amount"))
+                if v is not None:
+                    return v
     return None
 
 
@@ -88,8 +127,8 @@ class DartFundamentals:
             return {
                 "equity": equity,
                 "debt": _find_amount(accts, _DEBT),
-                "revenue": _find_amount(accts, _REVENUE),
-                "net_income": _find_amount(accts, _NET_INCOME),
+                "revenue": _find_amount(accts, _REVENUE, _INCOME_SJ),
+                "net_income": _find_net_income(accts),
                 "fs_div": fs_div,
             }
         return None

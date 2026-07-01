@@ -98,6 +98,34 @@ def test_weights_normalized_and_momentum_tilt_changes_order():
     assert list(value_heavy["stock_code"]) != list(mom_heavy["stock_code"]) or len(u) <= 1
 
 
+def test_missing_earnings_neutralized_between_earner_and_loss():
+    # identical cheap book value; differ only in earnings. Unknown-earnings must
+    # land BETWEEN the profitable and the loss-making name (neutral, not a free pass).
+    base = dict(market="KOSPI", price=1000, shares=1_000_000,
+                equity=1_000_000_000, debt=100_000_000, mom_12m=0.1)
+    df = pd.DataFrame([
+        {"stock_code": "A", "corp_name": "Earner", "net_income": 200_000_000, **base},
+        {"stock_code": "B", "corp_name": "Unknown", "net_income": None, **base},
+        {"stock_code": "C", "corp_name": "LossCo", "net_income": -200_000_000, **base},
+    ])
+    r = rank_universe(df, weights=FactorWeights(value=1, quality=0, momentum=0, theme=0),
+                      filters=RankFilters(min_market_cap_krw=0))
+    order = list(r["corp_name"])
+    assert order.index("Earner") < order.index("Unknown") < order.index("LossCo")
+
+
+def test_has_earnings_flag():
+    base = dict(market="KOSPI", price=1000, shares=1_000_000,
+                equity=1_000_000_000, debt=100_000_000, mom_12m=0.1)
+    df = pd.DataFrame([
+        {"stock_code": "A", "corp_name": "Earner", "net_income": 200_000_000, **base},
+        {"stock_code": "B", "corp_name": "Unknown", "net_income": None, **base},
+    ])
+    r = rank_universe(df, filters=RankFilters(min_market_cap_krw=0))
+    assert bool(r.loc[r["corp_name"] == "Earner", "has_earnings"].iloc[0]) is True
+    assert bool(r.loc[r["corp_name"] == "Unknown", "has_earnings"].iloc[0]) is False
+
+
 def test_missing_momentum_group_reweights():
     u = _universe()
     u["mom_12m"] = np.nan  # momentum entirely missing
