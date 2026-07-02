@@ -17,7 +17,7 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
-    <string>/Users/jsp2022310/Desktop/tradeforme/scripts/daily_update.sh</string>
+    <string>/Users/jsp2022310/tradeforme/scripts/daily_update.sh</string>
   </array>
   <key>StartCalendarInterval</key>
   <array>
@@ -30,8 +30,8 @@
   <key>RunAtLoad</key>
   <false/>
   <key>StandardOutPath</key>
-  <string>/Users/jsp2022310/Desktop/tradeforme/data/launchd.out.log</string>
+  <string>/Users/jsp2022310/tradeforme/data/launchd.out.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/jsp2022310/Desktop/tradeforme/data/launchd.err.log</string>
+  <string>/Users/jsp2022310/tradeforme/data/launchd.err.log</string>
 </dict>
 </plist>

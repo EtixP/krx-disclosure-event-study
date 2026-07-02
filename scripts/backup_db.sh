@@ -8,7 +8,7 @@
 #   ./scripts/backup_db.sh /path/to/other.db    # different source DB
 #
 # To run nightly via cron (macOS launchd or cron):
-#   0 23 * * * cd ~/Desktop/tradeforme && ./scripts/backup_db.sh >> data/backups/backup.log 2>&1
+#   0 23 * * * cd ~/tradeforme && ./scripts/backup_db.sh >> data/backups/backup.log 2>&1
 
 set -euo pipefail
 

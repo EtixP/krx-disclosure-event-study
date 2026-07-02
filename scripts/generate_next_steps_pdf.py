@@ -253,11 +253,11 @@ def build(doc_path: Path) -> None:
         ("P2",
          "Back up data/kdtb.db",
          "111k rows of ingested DART data — free to re-fetch but slow. Loss = ~5 min replay per 90 days.",
-         "Easiest: enable iCloud Drive backup of the Desktop/tradeforme folder. Or a weekly cron: sqlite3 data/kdtb.db .dump > backup.sql."),
+         "Easiest: enable iCloud Drive backup of the tradeforme folder. Or a weekly cron: sqlite3 data/kdtb.db .dump > backup.sql."),
         ("P2",
          "Schedule daily DART ingestion",
          "Right now ingestion only runs when you invoke the CLI manually. To catch fresh disclosures during market hours, this needs to run on a schedule.",
-         "Local cron: 0 19 * * 1-5 cd ~/Desktop/tradeforme && .venv/bin/python scripts/ingest_disclosures.py --date $(date +%Y-%m-%d). Or a cheap VPS (Fly.io / Railway, ~$5/mo) if you want 24/7."),
+         "Local cron: 0 19 * * 1-5 cd ~/tradeforme && .venv/bin/python scripts/ingest_disclosures.py --date $(date +%Y-%m-%d). Or a cheap VPS (Fly.io / Railway, ~$5/mo) if you want 24/7."),
         ("P2",
          "Obtain KIS broker credentials",
          "Required for Milestone 6 (broker integration) and beyond (paper/live trading). Without this we can't even fetch live quotes, let alone place orders.",
@@ -290,7 +290,7 @@ def build(doc_path: Path) -> None:
     # === Where to find things ===
     story.append(Paragraph("Where to find things", s["h2"]))
     story.append(_kv_table([
-        ("Project root", "/Users/jsp2022310/Desktop/tradeforme"),
+        ("Project root", "/Users/jsp2022310/tradeforme"),
         ("Repo on GitHub", "https://github.com/EtixP/tradeforme"),
         ("Project spec", "CLAUDE.md (in repo root)"),
         ("Source code", "src/kdtb/ — schemas, config, data, strategy, risk, storage"),

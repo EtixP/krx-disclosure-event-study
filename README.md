@@ -234,7 +234,7 @@ launchctl unload ~/Library/LaunchAgents/com.tradeforme.daily.plist # disable
 Or with cron:
 
 ```cron
-20 8 * * 1-5  /Users/jsp2022310/Desktop/tradeforme/scripts/daily_update.sh
+20 8 * * 1-5  /Users/jsp2022310/tradeforme/scripts/daily_update.sh
 ```
 
 The pre-open run uses the prior trading day's close, so the watchlist is ready
