@@ -8,8 +8,6 @@ from pydantic import ValidationError
 from kdtb.schemas import (
     Disclosure,
     Extraction,
-    Order,
-    Position,
     Signal,
 )
 
@@ -51,27 +49,3 @@ def test_signal_requires_positive_stops():
             stop_loss_pct=0,
             take_profit_pct=0.04,
         )
-
-
-def test_order_quantity_must_be_positive():
-    with pytest.raises(ValidationError):
-        Order(
-            signal_id="s1",
-            broker="kis",
-            account_mode="paper",
-            stock_code="005930",
-            side="buy",
-            order_type="limit",
-            quantity=0,
-        )
-
-
-def test_position_defaults():
-    p = Position(
-        stock_code="005930",
-        quantity=10,
-        average_price=70000.0,
-        opened_at=datetime(2026, 5, 28, 10, 15),
-    )
-    assert p.status == "open"
-    assert p.realized_pnl == 0.0

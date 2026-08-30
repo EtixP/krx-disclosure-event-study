@@ -27,7 +27,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from kdtb.backtest.cost_model import CostModel
+from kdtb.backtest.cost_model import TRADABILITY_BAR_PCT, CostModel
 from kdtb.learning.features import FEATURE_NAMES, extract_features
 from kdtb.learning.walk_forward_trainer import make_folds, run_walk_forward
 
@@ -162,9 +162,10 @@ def main() -> int:
           f"=> selection lift {lift:+.3f}%")
     print()
     edge = tm
-    if pos_timeaware >= 0.7 * n_folds and edge > 0.30:
-        print("  VERDICT: TIME-AWARE EDGE HOLDS across folds and clears the +0.30%/trade bar.")
-        print("  This is the first Korea-executable result. Next: live forward validation via KIS API.")
+    if pos_timeaware >= 0.7 * n_folds and edge > TRADABILITY_BAR_PCT:
+        print(f"  VERDICT: TIME-AWARE EDGE HOLDS across folds and clears the "
+              f"+{TRADABILITY_BAR_PCT:.2f}%/trade bar.")
+        print("  This is the first effect to survive walk-forward AND adversarial review. It is\n  characterized, not deployed: capacity and closing-auction fill realism (see\n  INTRADAY_FEASIBILITY.md) put the realizable level below the bar.")
     elif pos_timeaware >= 0.6 * n_folds and edge > 0:
         print("  VERDICT: PROMISING but sub-threshold/borderline. Time-aware entry helps, but the edge")
         print("  is thin after costs — verify with realistic slippage + live forward data before trusting.")

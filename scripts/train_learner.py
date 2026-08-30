@@ -23,6 +23,7 @@ import sys
 import numpy as np
 import pandas as pd
 
+from kdtb.backtest.cost_model import TRADABILITY_BAR_PCT
 from kdtb.learning.dataset import load_mock_trades
 from kdtb.learning.features import FEATURE_NAMES
 from kdtb.learning.walk_forward_trainer import make_folds, run_walk_forward
@@ -116,7 +117,8 @@ def main() -> int:
     matched_always_n = sum(f.test_n for f in report.folds if f.model_trades > 0)
     matched_always_avg = (matched_always_pnl / matched_always_n * 100) if matched_always_n else 0.0
     selection_lift = model_avg - matched_always_avg  # >0 only if the model beats trade-everything on matched periods
-    TRADABILITY_BAR = 0.30  # %/trade, the project's realistic threshold
+    # %/trade. Single source of truth + derivation: backtest/cost_model.py
+    TRADABILITY_BAR = TRADABILITY_BAR_PCT
 
     print()
     print("=== Verdict ===")

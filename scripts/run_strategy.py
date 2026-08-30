@@ -7,7 +7,7 @@ visibility.
 
 Usage:
     python scripts/run_strategy.py
-    python scripts/run_strategy.py --min-ratio 0.30      # override CLAUDE.md default
+    python scripts/run_strategy.py --min-ratio 0.30      # override DESIGN.md default
     python scripts/run_strategy.py --dry-run             # don't persist, just summarize
 """
 from __future__ import annotations

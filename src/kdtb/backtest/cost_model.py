@@ -20,6 +20,37 @@ DEFAULT_VAT_ON_COMMISSION = 0.10
 DEFAULT_SLIPPAGE_BPS = 5.0  # 5 bps = 0.05%
 
 
+# ---------------------------------------------------------------------------
+# Tradability bar
+# ---------------------------------------------------------------------------
+# Minimum mean net return per trade, in percent, for a category to count as
+# tradable. Applied to a return that is ALREADY net of the modeled roundtrip
+# cost below.
+#
+# Derivation. The modeled roundtrip is 0.313% of notional (commission x2 +
+# VAT + 0.18% sale tax + 5bps slippage). Requiring a post-cost mean of roughly
+# one further roundtrip means a strategy still clears zero if the true all-in
+# cost turns out to be about double what we model. That margin is not
+# decorative: the 5bps slippage assumption is the weakest input in the model
+# and is optimistic for the illiquid KOSDAQ names where most of these events
+# occur, and the event studies fill at a daily close that a real order may not
+# obtain. So the bar is set at one modeled roundtrip, rounded down to a round
+# number: 0.30%.
+#
+# This is a chosen hurdle, not an estimate of anything. It is deliberately
+# blunt, and it is the criterion the project's headline conclusion turns on:
+# every category tested lands below it. Note the conclusion is not sensitive
+# to the rounding — the best realistic mean observed across seven categories
+# is +0.25%, so the verdict is unchanged anywhere in a 0.25%-0.35% band.
+TRADABILITY_BAR_PCT = 0.30
+
+# Companion gates applied alongside the bar (see analyze_event_category._verdict):
+# a category must also clear PF > 1.15 and have >=60% of walk-forward windows
+# positive, so a single lucky regime cannot carry the mean past the bar.
+MIN_TRADABLE_PF = 1.15
+MIN_TRADABLE_WINDOW_FRACTION = 0.60
+
+
 class CostModel(BaseModel):
     """Per-trade cost assumptions for Korean equities."""
 

@@ -18,7 +18,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from kdtb.backtest.cost_model import CostModel
+from kdtb.backtest.cost_model import (
+    MIN_TRADABLE_PF,
+    MIN_TRADABLE_WINDOW_FRACTION,
+    TRADABILITY_BAR_PCT,
+    CostModel,
+)
 from kdtb.backtest.metrics import compute
 
 
@@ -64,6 +69,15 @@ WINDOWS: list[tuple[str, str, str]] = [
     ("2025-07-01", "2026-01-01", "Jul25-Dec25"),
     ("2026-01-01", "2026-07-01", "Jan26-Jun26"),
 ]
+
+
+# A walk-forward window with fewer than this many events is not scored: its
+# mean is noise. Such windows are excluded from BOTH the numerator and the
+# denominator of the 'windows positive' count, so the denominator is the
+# number of windows actually SCORED, not the number generated. Reporting it
+# the other way (scored/generated) is what made an earlier hand-written
+# summary disagree with this script -- see RESEARCH_FINDINGS.md.
+MIN_WINDOW_EVENTS = 5
 
 
 def _stats(series: pd.Series) -> dict:
@@ -124,13 +138,16 @@ def _realistic_scenarios(df: pd.DataFrame, cost: float) -> dict:
 def _verdict(walk_forward: list[dict], realistic: dict) -> str:
     """Categorize the finding using percentages so it scales to any number of windows.
 
-    positive_robust: >=60% of windows positive AND realistic_mean > +0.30% AND realistic_pf > 1.15
+    positive_robust: >=MIN_TRADABLE_WINDOW_FRACTION of windows positive
+                     AND realistic_mean > TRADABILITY_BAR_PCT
+                     AND realistic_pf > MIN_TRADABLE_PF
+                     (see backtest/cost_model.py for where the bar comes from)
     positive_noisy:  >=60% of windows positive AND realistic_mean > +0.10% (but doesn't clear robust bar)
     negative:        <=20% positive AND realistic_mean < -0.10%
     neutral:         everything else
     insufficient_data: <4 valid windows
     """
-    valid = [w for w in walk_forward if w.get("n", 0) >= 5]
+    valid = [w for w in walk_forward if w.get("n", 0) >= MIN_WINDOW_EVENTS]
     if len(valid) < 4:
         return "insufficient_data"
     pos_windows = sum(1 for w in valid if w.get("mean_pct", 0) > 0)
@@ -138,7 +155,9 @@ def _verdict(walk_forward: list[dict], realistic: dict) -> str:
     realistic_block = realistic.get("realistic", {}) or {}
     realistic_mean = realistic_block.get("mean_pct", 0) or 0
     realistic_pf = realistic_block.get("pf") or 0
-    if pos_pct >= 0.60 and realistic_mean > 0.30 and realistic_pf > 1.15:
+    if (pos_pct >= MIN_TRADABLE_WINDOW_FRACTION
+            and realistic_mean > TRADABILITY_BAR_PCT
+            and realistic_pf > MIN_TRADABLE_PF):
         return "positive_robust"
     if pos_pct >= 0.60 and realistic_mean > 0.10:
         return "positive_noisy"
@@ -204,14 +223,16 @@ def _human_report(result: dict) -> str:
     pos = 0
     valid = 0
     for w in result["walk_forward"]:
-        if w.get("n", 0) >= 5:
+        if w.get("n", 0) >= MIN_WINDOW_EVENTS:
             valid += 1
             if w.get("mean_pct", 0) > 0:
                 pos += 1
         m = w.get("mean_pct", "n/a")
         m_str = f"{m:+.3f}%" if isinstance(m, (int, float)) else m
         lines.append(f"    {w['window']:>15}  n={w.get('n', 0):>4}  T+5 net={m_str}")
-    lines.append(f"    => {pos}/{valid} windows positive")
+    skipped = len(result["walk_forward"]) - valid
+    note = f"  ({skipped} window(s) skipped: fewer than {MIN_WINDOW_EVENTS} events)" if skipped else ""
+    lines.append(f"    => {pos}/{valid} scored windows positive{note}")
     lines.append(f"  by market:")
     for mk, st in result["by_market"].items():
         if st.get("n", 0) >= 5:

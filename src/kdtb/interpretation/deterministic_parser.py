@@ -1,6 +1,6 @@
 """Regex-based extractor for the standardized 단일판매ㆍ공급계약체결 disclosure form.
 
-This is a deterministic alternative to LLM extraction. Per CLAUDE.md:
+This is a deterministic alternative to LLM extraction. Per DESIGN.md:
   "If numbers conflict with deterministic parser results, block trading."
 
 So this parser serves two roles:

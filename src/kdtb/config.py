@@ -1,19 +1,17 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
-from typing import Literal
 
 import yaml
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
-TradingMode = Literal["BACKTEST", "PAPER", "LIVE_TINY", "LIVE"]
-
 
 class TradingConfig(BaseModel):
-    mode: TradingMode = "PAPER"
-    allow_live_orders: bool = False
+    """Position/exposure caps. Used by the risk engine when it scores a
+    candidate signal; this project has no execution path, so they bound the
+    hypothetical trade the backtest prices, not a real order."""
+
     max_order_value_krw: int = Field(gt=0)
     max_daily_loss_krw: int = Field(gt=0)
     max_open_positions: int = Field(ge=1)
@@ -68,10 +66,6 @@ class Settings(BaseModel):
     logging: LoggingConfig = LoggingConfig()
 
 
-class LiveTradingNotAuthorizedError(RuntimeError):
-    """Raised when config requests live trading but env hasn't explicitly enabled it."""
-
-
 def _deep_merge(base: dict, override: dict) -> dict:
     out = dict(base)
     for key, value in override.items():
@@ -88,9 +82,7 @@ def load_settings(
 ) -> Settings:
     """Load YAML config(s) and .env, then validate.
 
-    Later paths override earlier ones (shallow keys deep-merged). Live trading
-    requires both `trading.allow_live_orders: true` in YAML AND
-    `ENABLE_LIVE_TRADING=true` in the environment — otherwise raises.
+    Later paths override earlier ones (shallow keys deep-merged).
     """
     if config_paths is None:
         config_paths = [Path("config/default.yaml")]
@@ -105,16 +97,4 @@ def load_settings(
             data = yaml.safe_load(f) or {}
         merged = _deep_merge(merged, data)
 
-    settings = Settings(**merged)
-    _enforce_live_trading_guard(settings)
-    return settings
-
-
-def _enforce_live_trading_guard(settings: Settings) -> None:
-    wants_live = settings.trading.mode in ("LIVE_TINY", "LIVE") or settings.trading.allow_live_orders
-    env_enabled = os.getenv("ENABLE_LIVE_TRADING", "false").lower() == "true"
-    if wants_live and not env_enabled:
-        raise LiveTradingNotAuthorizedError(
-            "Config requests live trading but ENABLE_LIVE_TRADING is not 'true' in env. "
-            "Refusing to load."
-        )
+    return Settings(**merged)

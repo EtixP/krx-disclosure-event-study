@@ -1,16 +1,16 @@
-# Research Findings — tradeforme
+# Research Findings
 
 This document is the **primary research deliverable** of the project: a
-rigorous, intellectually honest answer to the question CLAUDE.md set out
+rigorous, intellectually honest answer to the question DESIGN.md set out
 to test, plus the methodology that produced the answer.
 
-**Research question (from CLAUDE.md):** do selected Korean disclosure
+**Research question (from DESIGN.md):** do selected Korean disclosure
 event categories — major supply contracts, share buybacks, dilutive
 financing, halts, etc. — produce a tradable post-disclosure price
 drift after realistic transaction costs?
 
-**Answer:** No. Across 7 categories tested on 4.5 years of data
-(28,728 event-study rows, 21 adversarial verifications), zero
+**Answer:** No. Across 7 categories tested on 5 years of data
+(28,728 scored event rows, 21 adversarial verifications), zero
 categories are tradable long after realistic T+1-close execution.
 One category — **shareholder_change** — is a well-supported negative
 signal, useful as a long-side risk filter even though Korean retail
@@ -20,16 +20,34 @@ accounts can't easily short to monetize it directly.
 
 | Category | n | Idealized T+5 net | Realistic T+5 net | Walk-forward + | Lenses survive | Verdict |
 |---|---|---|---|---|---|---|
-| supply_contract | 8,585 | −0.11% | −0.29% | 5/11 | 3/3 | neutral (reversed from 2yr) |
-| **buyback** | 4,801 | **+1.20%** | **+0.16%** | **10/11** | 2/3 | **idealized only — below tradability threshold** |
+| supply_contract | 8,585 | −0.11% | −0.29% | 6/11 | 3/3 | neutral (reversed from 2yr) |
+| **buyback** | 4,801 | **+1.20%** | **+0.16%** | **10/10** | 2/3 | **idealized only — below tradability threshold** |
 | bonus_issue | 828 | +1.23% | +0.23% | 7/10 | 1/3 | regime-dependent noise |
 | rights_offering | 5,911 | +0.40% | +0.25% | 6/11 | 3/3 | neutral |
 | convertible_bond | 4,175 | +0.63% | −0.02% | 7/11 | 3/3 | neutral |
-| halt_resumption | 2,570 | −1.18% | +0.05% | 4/11 | 3/3 | neutral (negative-signal claim refuted) |
+| halt_resumption | 2,570 | −1.18% | +0.05% | 4/10 | 3/3 | neutral (negative-signal claim refuted) |
 | **shareholder_change** | **1,858** | **−1.22%** | **−1.09%** | **2/10** | **3/3** | **negative_robust → blacklist** |
 
 Roundtrip cost: **0.313%** (0.015% commission × 2 + 10% VAT + 0.18% sale
 tax + 5bps slippage), per [`backtest/cost_model.py`](src/kdtb/backtest/cost_model.py).
+The **+0.30% tradability bar** is derived in that same file
+([`TRADABILITY_BAR_PCT`](src/kdtb/backtest/cost_model.py)): post-cost returns
+must clear roughly one further roundtrip, so a category still profits if the
+true all-in cost is about double what we model.
+
+**Walk-forward column, corrected 2026-08-30.** "Walk-forward +" is *windows
+positive / windows **scored***. A half-year window with fewer than 5 events is
+not scored — its mean is noise — and is excluded from the denominator as well as
+the numerator. Three rows in an earlier version of this table applied that rule
+inconsistently: buyback read 10/11 and halt_resumption 4/11, both counting a
+skipped 3–4 event window from Jan–Jun 2021 in the denominator only, and
+supply_contract read 5/11 against an actual 6 positive windows. The underlying
+data never changed (identical n in every row); only these counts were wrong. The
+table now matches `python -m scripts.summarize_all_categories` exactly, and the
+script prints the scored/skipped split so the denominator can no longer be
+ambiguous. No verdict changes: buyback going 10/11 → 10/10 makes it *cleaner*,
+and it still fails on realistic mean (+0.16%), which is what the verdict rests
+on.
 
 ## How the methodology evolved
 
@@ -86,7 +104,7 @@ lenses catches over-claiming that a single-pass analysis misses.
 Loop 11 implemented the recommended halt_resumption + shareholder_change
 blacklists in the risk engine.
 
-Loop 12 re-validated on 4.5 years (38 months added):
+Loop 12 re-validated on 5 years (38 months added):
 
 - **bonus_issue (iter 1)**: confirmed as noise. Mean +3.94% → +1.23%,
   median +1.69% → **−0.47%** (flipped sign).
@@ -111,7 +129,7 @@ multiple intermediate "discoveries" that didn't survive scale.
 1. **The 0.313% roundtrip cost figure** for Korean equities is right and
    the single biggest filter on what looks tradable on paper.
 2. **shareholder_change is consistently negative** (n=1,858, 8 of 10
-   walk-forward windows negative, both KOSPI and KOSDAQ below PF 0.80,
+   scored walk-forward windows negative, both KOSPI and KOSDAQ below PF 0.80,
    four most-recent half-years all strongly negative). Used as a
    long-side blacklist with 60-day lookback in
    [`risk/event_blacklist.py`](src/kdtb/risk/event_blacklist.py).
@@ -144,7 +162,7 @@ Listed in increasing order of effort and uncertainty:
    pattern. A narrower filter (e.g. mid-cap only, top 30% of recent
    volume) might lift realistic returns above the +0.30% threshold.
 2. **Test untested event types**: earnings surprise proxy, large M&A,
-   delisting/relisting. CLAUDE.md mentioned these but the work was
+   delisting/relisting. DESIGN.md mentioned these but the work was
    never done. The methodology infrastructure (event-study runner,
    analyzer, walk-forward, adversarial workflow) handles any new
    category with a one-line SQL fragment addition to
@@ -152,7 +170,7 @@ Listed in increasing order of effort and uncertainty:
 3. **Faster-than-T+1 execution**. The data is unambiguous: any
    tradable edge in these events lives in the event-day reaction. A
    retail trader using next-day-close fills will not capture it.
-   CLAUDE.md explicitly excludes HFT-level infrastructure, but a
+   DESIGN.md explicitly excludes HFT-level infrastructure, but a
    broker-API event subscription that reacts within seconds of DART
    publication is the only realistic path to capturing the buyback
    idealized edge.
@@ -176,7 +194,7 @@ sqlite3 data/kdtb.db "SELECT COUNT(*), MIN(DATE(receipt_datetime)), MAX(DATE(rec
 .venv/bin/python scripts/run_paper_backtest.py
 
 # Reproduce daily monitor on any past date
-.venv/bin/python scripts/run_daily_monitor.py --date 2026-05-15 --no-ingest
+.venv/bin/python scripts/check_pipeline_health.py --date 2026-05-15 --no-ingest
 ```
 
 The workflow outputs that drove the synthesis (JSON, agent-level detail)
@@ -299,7 +317,7 @@ still validate it: live closing-auction fills via the broker API.
 
 ## Acknowledgments
 
-This project intentionally produced a strong negative result. CLAUDE.md
+This project intentionally produced a strong negative result. DESIGN.md
 explicitly said:
 
 > "The project must remain intellectually honest: the edge may not

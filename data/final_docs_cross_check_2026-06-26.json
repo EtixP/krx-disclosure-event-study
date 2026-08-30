@@ -5,35 +5,35 @@
       "errors_found": [
         {
           "severity": "medium",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/README.md",
+          "file": "README.md",
           "claim": "1.12M DART disclosures",
           "reality": "SQLite count is 1,205,753 (~1.21M), not 1.12M. The README understates by ~85k rows.",
           "fix": "Change '1.12M DART disclosures' to '1.2M DART disclosures' (or the exact 1.21M)."
         },
         {
           "severity": "medium",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/README.md",
+          "file": "README.md",
           "claim": "4.5 years (Dec 2021 - Jun 2026)",
           "reality": "Actual date range is 2021-06-28 to 2026-06-26 = ~5.0 years; earliest disclosure is in June 2021, not December 2021.",
           "fix": "Change to '5 years (Jun 2021 - Jun 2026)'."
         },
         {
           "severity": "medium",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/README.md",
+          "file": "README.md",
           "claim": "28,728 event-study rows across 7 categories",
           "reality": "Sum of data rows across the 7 event_study_*.csv files (header excluded) is 28,979 (supply_contract 8624 + buyback 4846 + bonus_issue 840 + rights_offering 5991 + convertible_bond 4202 + halt_resumption 2598 + shareholder_change 1878).",
           "fix": "Update the row count to 28,979 (or whichever exact number is intended)."
         },
         {
           "severity": "low",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/README.md",
+          "file": "README.md",
           "claim": "Example output (2026-06-26 live) shows date label as part of the README narrative",
           "reality": "Disclosure for 082740 \ud55c\ud654\uc5d4\uc9c4 on 2026-06-26 (\ub2e8\uc77c\ud310\ub9e4\u318d\uacf5\uae09\uacc4\uc57d\uccb4\uacb0) does exist in the DB, so the example snippet is consistent with the data. No discrepancy on the example values themselves (ratio/value cannot be re-verified without the parser cache, but the headline row is accurate).",
           "fix": "No change required for the 082740 row itself."
         },
         {
           "severity": "low",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/scripts/summarize_all_categories.py",
+          "file": "scripts/summarize_all_categories.py",
           "claim": "README shows `.venv/bin/python scripts/summarize_all_categories.py` as a runnable cross-category comparison command.",
           "reality": "Running `.venv/bin/python scripts/summarize_all_categories.py` fails with `ModuleNotFoundError: No module named 'scripts'` because the script imports `from scripts.analyze_event_category import ...`. It only works when invoked as `python -m scripts.summarize_all_categories` (or after manipulating sys.path/PYTHONPATH).",
           "fix": "Either change the README command to `.venv/bin/python -m scripts.summarize_all_categories`, or fix the import in summarize_all_categories.py (e.g. add the project root to sys.path or convert to a relative-style import)."
@@ -45,7 +45,7 @@
       "errors_found": [
         {
           "severity": "medium",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/RESEARCH_FINDINGS.md",
+          "file": "RESEARCH_FINDINGS.md",
           "claim": "shareholder_change is consistently negative (n=1,858, 90% of walk-forward windows negative...)",
           "reality": "JSON shows walk_forward_positive_count=2 of walk_forward_total_windows=10 for shareholder_change, i.e. 8/10 = 80% negative, not 90%. The README's own Final per-category verdict table correctly reports 2/10 (= 80% negative), and the Methodology section also correctly states 8 of 10 walk-forward windows negative. Only the 'What is well-supported' bullet overstates this as 90%.",
           "fix": "Change '90% of walk-forward windows negative' to '80% of walk-forward windows negative' (or '8 of 10 walk-forward windows negative') in the 'What is well-supported' section."
@@ -57,7 +57,7 @@
       "errors_found": [
         {
           "severity": "high",
-          "file": "/Users/jsp2022310/Desktop/tradeforme/scripts/summarize_all_categories.py",
+          "file": "scripts/summarize_all_categories.py",
           "claim": "README.md line 84 documents `.venv/bin/python scripts/summarize_all_categories.py` as the 'Cross-category comparison table' reproducibility command, and is listed as one of the verifiable commands.",
           "reality": "Running `.venv/bin/python scripts/summarize_all_categories.py` exits with code 1 immediately with `ModuleNotFoundError: No module named 'scripts'` at line 15 (`from scripts.analyze_event_category import analyze, _human_report`). The `scripts/` directory has no `__init__.py`, and when invoked directly the working dir is added to `sys.path` rather than the parent, so `scripts.analyze_event_category` is unimportable. No comparison table is produced.",
           "fix": "Either (a) add `scripts/__init__.py` AND invoke via `python -m scripts.summarize_all_categories` (and update the README accordingly), or (b) change the import in `summarize_all_categories.py` to a path-based import, e.g. prepend `sys.path.insert(0, str(Path(__file__).parent))` and then `from analyze_event_category import analyze, _human_report`."
@@ -68,19 +68,19 @@
   "synthesis": {
     "must_fix": [
       {
-        "file": "/Users/jsp2022310/Desktop/tradeforme/README.md",
+        "file": "README.md",
         "old_text": "| **Data scale** | 1.12M DART disclosures, 4.5 years (Dec 2021 \u2013 Jun 2026), 28,728 event-study rows across 7 categories |",
         "new_text": "| **Data scale** | 1.21M DART disclosures, 5 years (Jun 2021 \u2013 Jun 2026), 28,979 event-study rows across 7 categories |",
         "rationale": "Three factual corrections: (1) SQLite count is 1,205,753 (~1.21M), not 1.12M; (2) earliest disclosure is 2021-06-28, so the date range is ~5 years starting June 2021, not Dec 2021; (3) sum of the 7 event_study_*.csv data rows is 28,979, not 28,728."
       },
       {
-        "file": "/Users/jsp2022310/Desktop/tradeforme/README.md",
+        "file": "README.md",
         "old_text": "# Cross-category comparison table\n.venv/bin/python scripts/summarize_all_categories.py",
         "new_text": "# Cross-category comparison table\n.venv/bin/python -m scripts.summarize_all_categories",
         "rationale": "Running the script directly fails with `ModuleNotFoundError: No module named 'scripts'` because it does `from scripts.analyze_event_category import ...`. Invoking via `-m` from the project root makes the import resolve, restoring the documented reproducibility command."
       },
       {
-        "file": "/Users/jsp2022310/Desktop/tradeforme/RESEARCH_FINDINGS.md",
+        "file": "RESEARCH_FINDINGS.md",
         "old_text": "2. **shareholder_change is consistently negative** (n=1,858, 90% of\n   walk-forward windows negative, both KOSPI and KOSDAQ below PF 0.80,\n   four most-recent half-years all strongly negative). Used as a\n   long-side blacklist with 60-day lookback in",
         "new_text": "2. **shareholder_change is consistently negative** (n=1,858, 8 of 10\n   walk-forward windows negative, both KOSPI and KOSDAQ below PF 0.80,\n   four most-recent half-years all strongly negative). Used as a\n   long-side blacklist with 60-day lookback in",
         "rationale": "Walk-forward JSON reports 2 of 10 windows positive (= 8/10 = 80% negative), and the doc's own verdict table and methodology section both state 8/10. The 'What is well-supported' bullet's 90% figure is internally inconsistent with the underlying data and the rest of the document."

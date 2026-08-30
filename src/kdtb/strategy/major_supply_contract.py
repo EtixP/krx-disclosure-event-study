@@ -10,7 +10,7 @@ from kdtb.strategy.base import Strategy
 class MajorSupplyContractStrategy(Strategy):
     """Generate LONG signal when a sufficiently large NEW supply contract is disclosed.
 
-    Per CLAUDE.md, the rule is:
+    Per DESIGN.md, the rule is:
       - event_type == major_supply_contract
       - is_new_contract == true and not a revision/cancellation
       - contract_to_revenue_ratio >= threshold (default 0.08 = 8%)

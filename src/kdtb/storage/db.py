@@ -76,45 +76,6 @@ CREATE TABLE IF NOT EXISTS risk_decisions (
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    signal_id TEXT NOT NULL REFERENCES signals(signal_id),
-    broker TEXT NOT NULL,
-    account_mode TEXT NOT NULL,
-    stock_code TEXT NOT NULL,
-    side TEXT NOT NULL,
-    order_type TEXT NOT NULL,
-    quantity INTEGER NOT NULL,
-    limit_price REAL,
-    submitted_at TEXT,
-    broker_order_id TEXT,
-    status TEXT NOT NULL DEFAULT 'pending',
-    raw_response_json TEXT
-);
-
-CREATE TABLE IF NOT EXISTS fills (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    order_id INTEGER NOT NULL REFERENCES orders(id),
-    filled_quantity INTEGER NOT NULL,
-    fill_price REAL NOT NULL,
-    fill_time TEXT NOT NULL,
-    fees REAL DEFAULT 0,
-    taxes REAL DEFAULT 0,
-    raw_response_json TEXT
-);
-
-CREATE TABLE IF NOT EXISTS positions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    stock_code TEXT NOT NULL,
-    quantity INTEGER NOT NULL,
-    average_price REAL NOT NULL,
-    opened_at TEXT NOT NULL,
-    closed_at TEXT,
-    realized_pnl REAL DEFAULT 0,
-    unrealized_pnl REAL DEFAULT 0,
-    status TEXT NOT NULL DEFAULT 'open'
-);
-
 -- Tracks which DART daily-list dates have had their filing times scraped, so
 -- the backfill is resumable across network failures.
 CREATE TABLE IF NOT EXISTS scraped_dates (
@@ -123,23 +84,7 @@ CREATE TABLE IF NOT EXISTS scraped_dates (
     scraped_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
--- Cached company fundamentals from DART (financial statements + shares), so the
--- multi-factor ranker doesn't re-fetch on every run.
-CREATE TABLE IF NOT EXISTS fundamentals (
-    corp_code TEXT,
-    stock_code TEXT,
-    fiscal_year TEXT,
-    equity INTEGER,
-    net_income INTEGER,
-    revenue INTEGER,
-    debt INTEGER,
-    shares INTEGER,
-    fs_div TEXT,
-    fetched_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (corp_code, fiscal_year)
-);
 """
-
 
 MIGRATIONS = [
     # idempotent ALTER TABLEs — wrap in try/except since SQLite has no IF NOT EXISTS
@@ -150,7 +95,6 @@ MIGRATIONS = [
     # the OpenAPI only gives the date. Enables intraday / execution-speed analysis.
     "ALTER TABLE disclosures ADD COLUMN filing_time TEXT",
 ]
-
 
 def init_db(path: str | Path) -> sqlite3.Connection:
     db_path = Path(path)

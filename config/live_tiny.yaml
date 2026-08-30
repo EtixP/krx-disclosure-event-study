@@ -1,7 +1,0 @@
-trading:
-  mode: LIVE_TINY
-  allow_live_orders: true
-  max_order_value_krw: 30000
-  max_daily_loss_krw: 10000
-  max_open_positions: 1
-  max_trades_per_day: 3

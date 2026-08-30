@@ -1,22 +1,32 @@
-"""Daily disclosure monitor: end-to-end pipeline for one date.
+"""Pipeline liveness check: run ingest -> extraction -> strategy end-to-end for one date.
 
-What it does for the given date (default today):
-  1. Ingest DART disclosures for the date (skip if --no-ingest).
-  2. Parse all matching supply-contract disclosures with the deterministic parser.
-  3. Evaluate each ok extraction through the v2 strategy
+This is a health check, NOT a signal generator. Its job is to confirm the
+research pipeline still works against live DART data — that the API responds,
+that the document format hasn't drifted out from under the deterministic
+parser, that the strategy and risk engine still evaluate without error.
+
+For the given date (default today) it:
+  1. Ingests DART disclosures for the date (skip with --no-ingest).
+  2. Parses matching supply-contract disclosures with the deterministic parser.
+  3. Evaluates each ok extraction through the v2 strategy
      (default config: ratio >= 0.08, KOSPI only, skip government counterparty).
-  4. Apply the risk engine including the shareholder_change blacklist
+  4. Applies the risk engine including the shareholder_change blacklist
      (default 60-day lookback).
-  5. Print a candidate-signal table + a "blacklist-impact" table showing
-     stocks that just had a negative event (and so will be blocked for 60d).
+  5. Prints the candidate-signal table and a "blacklist-impact" table.
 
-Read-only with respect to broker state — no orders are submitted. The DB
-is updated with the new disclosures and parser extractions.
+The printed candidates are pipeline output, not recommendations. The research
+in RESEARCH_FINDINGS.md found no tradable edge in this event category after
+realistic costs, so a candidate appearing here is evidence the plumbing runs,
+not evidence the trade is worth making. Nothing is submitted anywhere; the
+only side effect is that new disclosures and extractions land in the DB.
+
+A healthy run exits 0 having ingested and parsed the day's disclosures. Zero
+candidates is a perfectly normal result — most days have none.
 
 Usage:
-    python scripts/run_daily_monitor.py
-    python scripts/run_daily_monitor.py --date 2026-05-27
-    python scripts/run_daily_monitor.py --date 2026-05-27 --no-ingest   # use existing DB rows
+    python scripts/check_pipeline_health.py
+    python scripts/check_pipeline_health.py --date 2026-05-27
+    python scripts/check_pipeline_health.py --date 2026-05-27 --no-ingest   # use existing DB rows
 """
 from __future__ import annotations
 
@@ -276,7 +286,7 @@ def main() -> int:
     load_dotenv(".env")
     settings = load_settings([Path(args.config)])
     setup_logging(settings.logging.level, settings.logging.json_format)
-    log = logging.getLogger("daily_monitor")
+    log = logging.getLogger("pipeline_health")
 
     target = _target_date(args.date)
     log.info("monitoring %s", target)

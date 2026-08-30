@@ -1,7 +1,7 @@
 """Event study filtered by deterministic-parser-extracted contract/revenue ratio.
 
 This is the proper version of the event study: only events where the contract
-value is at least N% of prior-year revenue (default 8%, per CLAUDE.md) are
+value is at least N% of prior-year revenue (default 8%, per DESIGN.md) are
 included. Compares gross vs net-of-costs returns to the unfiltered baseline.
 
 Reuses cached prices from data/event_study_results.csv if present (the

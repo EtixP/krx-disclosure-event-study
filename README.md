@@ -1,262 +1,52 @@
-# tradeforme
+# krx-disclosure-event-study
 
-Event-driven Korean equity disclosure-trading **research** system. Monitors
-official corporate disclosures via OPEN DART, extracts structured event
-features deterministically (and optionally via LLM), evaluates candidate
-trades through walk-forward-validated rules + an adversarially-verified
-risk engine, and exposes a one-command daily monitor.
+An event study of Korean corporate disclosures: does the market leave anything
+on the table after a company files a material disclosure, and can a retail
+trader capture it after costs?
 
 > **Research deliverable, not a profitable trading system.**
 > Per the 5-year empirical analysis ([RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md)),
 > **no Korean disclosure event category** tested here is tradable long after
 > realistic T+1-close execution costs. The strongest candidate (buyback) has
-> 10/11 walk-forward windows positive but realistic mean is only +0.16% —
+> 10/10 walk-forward windows positive but realistic mean is only +0.16% —
 > below the +0.30% tradability threshold. **Shareholder change** is the one
 > well-supported negative signal (used as a long-side blacklist in the risk
 > engine). The methodology — deterministic pipeline + walk-forward +
 > adversarial verification — is the project's primary value.
 
-## What's in the repo
+## The question
 
-| | |
-|---|---|
-| **Data scale** | 1.21M DART disclosures, 5 years (Jun 2021 – Jun 2026), 28,979 event-study rows across 7 categories |
-| **Tests** | 118 passing, no regressions across 12 loops |
-| **Coverage** | M1 skeleton + M2 DART ingest + M3 deterministic extraction (96.6% success) + M4 event study + cost model + M5 strategy engine + M5b risk-engine blacklist + paper-broker scaffolding |
-| **Not built** | Live broker integration (M6/M8), real LLM calls (M3 client is scaffolded but no key consumed), Streamlit dashboard (M9) |
+Korean disclosure filings (DART) are public, timestamped, and structured. If
+the market absorbs them imperfectly, a disclosure should be followed by a
+short-horizon drift that a disciplined rule could trade. I wanted to know
+whether that drift exists in any event category, and whether it survives the
+0.313% roundtrip cost of actually trading Korean equities.
 
-## Setup
+I set out to answer this honestly, including the possibility that the answer is
+no. It is no. What follows is how I established that, and how much of the
+apparent edge I found along the way turned out to be artifact.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e .
-cp .env.example .env             # add DART_API_KEY at minimum
-pytest                            # should be 118/118
-```
+## Data
 
-## Daily usage
+- **1,209,249 DART disclosures** ingested, covering 2021-06-28 to 2026-08-26.
+  The event studies below cover events through 2026-06-24.
+- **28,728 analyzed event rows** across seven disclosure categories, each with
+  event-relative daily returns out to T+5.
+- **3,544 supply-contract filings** parsed for contract value and prior-year
+  revenue; **96.6% (3,425) extracted cleanly**, the remainder flagged
+  `needs_manual_review` rather than guessed at.
+- Prices from `pykrx` (daily OHLCV, free, no auth). Disclosure text and
+  metadata from the OPEN DART API.
 
-```bash
-.venv/bin/python scripts/run_daily_monitor.py
-```
+Raw API payloads are stored verbatim, so every derived feature traces back to
+its source. Exact filing *times* are not in the DART API but are on the DART
+website; a resumable scraper backfilled them, which is what made the intraday
+analysis below possible.
 
-Ingests today's DART disclosures, parses any new supply contracts, runs the
-v2 strategy (KOSPI-only, skip-government, ratio ≥ 0.08), applies the
-shareholder-change blacklist (60-day lookback), and prints the candidate
-table. **Does not place any orders.**
+## Method
 
-Example output (2026-06-26 live):
-
-```text
-=== Candidate signals ===
- stock  market corp               ratio    value(원)         cp_type  strength  status
-082740   KOSPI 한화엔진              0.102 139,297,977,900 large_corp_korean    0.51  APPROVED
-
-=== Negative events today (will block long signals on these stocks for 60d) ===
- 340930 유일에너테크          최대주주변경을수반하는주식양수도계약해제ㆍ취소등
- 214150 클래시스              최대주주변경을수반하는주식담보제공계약체결
- 215480 토박스코리아          최대주주변경을수반하는주식양수도계약체결
-
-Summary: 1 candidate signal(s), 1 approved, 0 blocked.
-```
-
-## Reproducing the analyses
-
-```bash
-# Bulk ingest a date range
-for i in $(seq 1 90); do
-  d=$(date -v-${i}d -j +%Y-%m-%d)
-  .venv/bin/python scripts/ingest_disclosures.py --date $d
-done
-
-# Parse supply contracts (deterministic regex parser)
-.venv/bin/python scripts/parse_supply_contracts.py [--limit N] [--skip-existing]
-
-# Event study for any category
-.venv/bin/python scripts/run_event_study.py --category buyback
-
-# Per-category analysis (aggregate, walk-forward, realistic execution)
-.venv/bin/python scripts/analyze_event_category.py --category buyback
-
-# Cross-category comparison table
-.venv/bin/python -m scripts.summarize_all_categories
-
-# v2 strategy walk-forward (4 six-month windows)
-.venv/bin/python scripts/walk_forward.py
-
-# Realistic-execution paper backtest
-.venv/bin/python scripts/run_paper_backtest.py
-
-# Backup the SQLite DB
-./scripts/backup_db.sh
-```
-
-Supported event categories (`--category` flag):
-`supply_contract`, `buyback`, `bonus_issue`, `rights_offering`,
-`convertible_bond`, `halt_resumption`, `shareholder_change`.
-
-## Learning paper-trader
-
-An offline self-improving paper-trader lives in [src/kdtb/learning/](src/kdtb/learning/).
-It learns from historical mock trades (enter T+1 close, exit T+5 close, minus
-cost) and only adopts a new model version when a **challenger beats the
-incumbent champion on a validation fold it did not train on** — the honest
-version of "tries mock trades, learns, makes better choices."
-
-```bash
-.venv/bin/python scripts/train_learner.py --synthetic-edge      # sanity: machine learns planted edge
-.venv/bin/python scripts/train_learner.py --category buyback     # real data
-```
-
-Two independent claims, kept separate:
-
-- **The machine works** — TRUE. Leak-free (training data always strictly
-  precedes the test fold, enforced structurally + tested), seed-stable, and on
-  planted-edge synthetic data it learns and earns **+2.02%/trade** with a
-  **+2.16% selection lift** over trade-everything.
-- **Any Korean category is tradable** — FALSE. On real data the machine
-  correctly finds **no selective edge**. Buyback looked positive
-  (+0.30%/trade) but adversarial verification showed it was a baseline-mismatch
-  + regime artifact: on matched periods, naive trade-everything (+0.315%)
-  *beats* the model, and within-fold stock selection is **negative**
-  (−0.017%/trade). The tool now reports a **selection-lift** metric that
-  isolates skill from regime, so it can't make that mistake again.
-
-This is the whole point: a learning system can only optimize edge that
-exists. Pointed at near-efficient data, the honest outcome is "learns to
-abstain / no selective edge" — which is exactly what it reports. See
-[RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md#the-learning-paper-trader).
-
-## Multi-factor stock ranker (watchlist tool)
-
-A longer-horizon screener in [src/kdtb/ranker/](src/kdtb/ranker/) that ranks
-KOSPI/KOSDAQ stocks by a composite of three economically-grounded factor groups
-and prints an explainable watchlist. Unlike the event-driven work, this targets
-factor premia that play out over *months*, so the capacity/fill problems that
-sink fast strategies don't apply.
-
-```bash
-# one-time: cache DART fundamentals for the universe (resumable)
-.venv/bin/python scripts/build_fundamentals_cache.py            # or --limit N
-
-# run the ranker (fetches live prices + momentum, prints the watchlist)
-.venv/bin/python scripts/run_ranker.py --top 30 --min-mcap 100
-.venv/bin/python scripts/run_ranker.py --w-value 0.5 --w-quality 0.3 --w-momentum 0.2
-```
-
-| Group | Means | Built from |
-|---|---|---|
-| **Value** | cheap | book yield (1/PBR) + earnings yield (1/PER); losses → worst |
-| **Quality** | healthy | ROE + low debt-to-equity |
-| **Momentum** | rising | trailing 12-month return |
-| **Theme** | in a hot theme | trailing momentum of the stock's market *theme* basket (defense, nuclear, batteries, shipbuilding, AI, bio, …) |
-
-Each factor is standardized by **cross-sectional percentile rank** (0–100,
-robust to the fat tails of valuation ratios), groups are averaged, then combined
-with configurable weights. Every name shows *why* it ranks where it does, and a
-**data-driven "hottest themes now" readout** surfaces which sectors are moving:
-
-```text
-=== Korean multi-factor watchlist  (value 35% / quality 30% / momentum 15% / theme 20%) ===
-
-Hottest themes now (by basket 12m momentum):
-   반도체     +442.4%      조선  +131.6%     2차전지  +94.1%     방산  +48.2%
-
-  #    code name        mkt  score  val qual  mom  thm theme       PBR    PER    ROE    D/E   12m%
-  1  004800 효성        KOSPI  0.765  69  77  91   -            1.04    7.0  14.8%  0.89 +212.7
-  5  000270 기아        KOSPI  0.727  71  79  70  67 자동차       0.88    7.2  12.3%  0.62  +57.2
- 16  000660 SK하이닉스   KOSPI  0.695  21  93 100  97 반도체      16.17   45.4  35.6%  0.46 +1220
-```
-
-### Current-events / theme layer
-
-The user asked for valuations that reflect current sociopolitical events. The
-honest, measurable way to do that: **"which themes are hot" is read from the
-real price momentum of each theme's stock basket** — a fact, not an opinion.
-A stock inherits its hottest theme's strength as a bounded, transparent tilt
-(default 20% weight, `--w-theme`), so a fundamentally-sound *laggard in a hot
-theme* gets surfaced. Set `--w-theme 0` for pure fundamentals.
-
-An optional LLM layer (`--llm-context`) **annotates** each hot theme with a
-one-line current-events explanation. Per the project's design rule, the LLM only
-*explains* — it never changes a score; the tilt stays 100% data-driven.
-
-You don't have to pay for this. Set `LLM_PROVIDER` in `.env` to one of:
-- `ollama` — **free, local, no key** (install [Ollama](https://ollama.com),
-  `ollama pull qwen2.5`); the default model is `qwen2.5`
-- `anthropic` / `openai` — paid APIs (both require a key; there is **no free
-  Claude API**), set `ANTHROPIC_API_KEY` / `OPENAI_API_KEY`
-
-(Theme membership is currently a curated ticker map; an LLM also lets it extend
-theme classification to the full universe — a natural next enhancement.)
-
-## Visual dashboard (localhost)
-
-A Streamlit dashboard makes the watchlist explorable in the browser:
-
-```bash
-python scripts/run_ranker.py                       # refresh the data
-.venv/bin/streamlit run src/kdtb/dashboard/app.py  # opens http://localhost:8501
-```
-
-It gives you, interactively:
-- **Live weight sliders** — drag value / quality / momentum / theme and the
-  ranking re-sorts instantly (re-weighting cached percentiles, no re-fetch).
-- **Hottest-themes bar chart** — each theme's median basket momentum.
-- **Value-vs-quality landscape** — a scatter of the whole universe (bubble =
-  market cap, colour = theme); top-right is cheap *and* healthy.
-- **Ranked table** with colour-graded factor scores.
-- **Per-stock drill-down** — a factor-percentile bar + the raw PBR/PER/ROE/
-  debt/momentum for any name you pick.
-
-Powered by `data/ranker_watchlist.csv`; re-run `run_ranker.py` to refresh prices.
-
-## Daily updates (free — no Claude credits)
-
-The entire pipeline is free data (DART + pykrx) + local computation — it uses
-**no Claude / LLM / API credits**, so a daily refresh costs nothing.
-[scripts/daily_update.sh](scripts/daily_update.sh) does it all: ingests today's
-disclosures, refreshes fundamentals only when the cache is stale (>25 days, i.e.
-~quarterly), and re-ranks the watchlist (prices change daily). Logs to
-`data/daily_update.log`.
-
-Schedule it on macOS with launchd (runs **08:20 on weekdays** — pre-market,
-10 min before the 09:00 KST open; the plist assumes the Mac is on Korea time):
-
-```bash
-cp scripts/com.tradeforme.daily.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.tradeforme.daily.plist   # enable
-launchctl unload ~/Library/LaunchAgents/com.tradeforme.daily.plist # disable
-```
-
-Or with cron:
-
-```cron
-20 8 * * 1-5  /Users/jsp2022310/tradeforme/scripts/daily_update.sh
-```
-
-The pre-open run uses the prior trading day's close, so the watchlist is ready
-before the market opens.
-
-Note: **the Anthropic (Claude) Max plan does not cover API access** — it's for
-using Claude interactively, not for scripts calling the API. The daily update
-needs neither; the only optional LLM use (`--llm-context`) runs free via Ollama.
-
-Data: **DART financial statements + shares** (equity, net income, debt, common
-shares) and **per-ticker prices** (pykrx) — chosen because the bulk KRX
-fundamentals endpoints are unreliable; DART is the authoritative source. The
-universe is the 2,661 KOSPI/KOSDAQ companies in the local disclosures table.
-
-**Honest caveats.** (1) This ranks by sound, economically-motivated factors —
-it does **not** yet prove those factors *outperform in Korea after costs*; that
-backtest is a separate, deliberate next step. (2) Financials/holding companies
-have structurally high debt-to-equity, so the quality factor penalizes them —
-consider excluding financials or sector-neutral scoring. (3) Momentum and PBR/PER
-depend on your live price feed.
-
-## Architecture
+The pipeline is deterministic end to end. No model output reaches a trading
+decision:
 
 ```
 DART list.json → Disclosure ↘
@@ -266,23 +56,301 @@ DART document.xml → Parser → Extraction ↗
 Extraction + Disclosure → Strategy → Signal → Risk engine (+ blacklist) → Decision
 ```
 
-The **strategy** layer is deterministic Python (no ML in the order-placing
-path). The **risk engine** consults the `EventBlacklist` to reject longs
-when a blacklisted negative event has occurred for the same stock within
-the lookback window.
+Three things do the real work of keeping me honest:
 
-See [CLAUDE.md](CLAUDE.md) for the full design spec and milestone definitions.
-See [NEXT_STEPS.pdf](NEXT_STEPS.pdf) for the running action log and the
-unresolved decisions waiting on the user.
+**Cost realism.** Every return is net of a 0.313% roundtrip: 0.015% commission
+per side, 10% VAT on commission, 0.18% securities transaction tax on the sale,
+and 5bps slippage. See
+[src/kdtb/backtest/cost_model.py](src/kdtb/backtest/cost_model.py). This single
+number is the biggest filter on what looks tradable.
+
+**Execution realism.** An event study that buys at the event-day close assumes a
+fill I could not actually get — many disclosures land after hours. So I report
+two numbers: idealized (event-day close entry) and realistic (T+1 close entry).
+The gap between them is where most apparent edge dies.
+
+**Walk-forward.** Aggregate statistics over a five-year sample hide regime
+dependence. Every category is re-scored across non-overlapping half-year
+windows, and I count how many come out positive. A result that only works in
+2024–2025 is a regime bet, not an edge.
+
+On top of that, each promising result went through adversarial verification —
+independent passes trying to refute it on sample size, execution realism, and
+regime stability. That process refuted several of my own intermediate findings,
+including one I had already written into the risk engine.
+
+## Results
+
+All seven categories, 5-year sample, generated by
+`python -m scripts.summarize_all_categories`:
+
+| Category | n | Raw T+5 mean | Post-cost T+5 mean | Realistic (T+1 entry) | Walk-forward positive | Clears bar? |
+|---|---:|---:|---:|---:|---:|---|
+| supply_contract | 8,585 | +0.20% | −0.11% | −0.29% | 6/11 | No |
+| buyback | 4,801 | +1.51% | +1.20% | +0.16% | 10/10 | No |
+| bonus_issue | 828 | +1.55% | +1.23% | +0.23% | 7/10 | No |
+| rights_offering | 5,911 | +0.71% | +0.40% | +0.25% | 6/11 | No |
+| convertible_bond | 4,175 | +0.94% | +0.63% | −0.02% | 7/11 | No |
+| halt_resumption | 2,570 | −0.86% | −1.18% | +0.05% | 4/10 | No |
+| shareholder_change | 1,858 | −0.91% | −1.22% | −1.09% | 2/10 | No (negative) |
+
+"Raw" is the gross T+5 return; "post-cost" subtracts the 0.313% roundtrip.
+"Realistic" additionally moves entry from the event-day close to the T+1 close.
+The tradability bar is realistic mean > +0.30% with profit factor > 1.15 and at
+least 60% of walk-forward windows positive. Nothing clears it. The best
+realistic mean in the table is +0.25%.
+
+**Where the +0.30% bar comes from.** It is a chosen hurdle, and worth stating
+plainly rather than leaving as a magic number. The returns above are already net
+of the modeled 0.313% roundtrip. Requiring a post-cost mean of roughly one
+*further* roundtrip means a strategy still clears zero if the true all-in cost
+turns out to be about double what I model — margin I want because the 5bps
+slippage assumption is the weakest input and is optimistic for the illiquid
+KOSDAQ names where most of these events happen, and because the event study
+fills at a daily close a real order may not get. So the bar is one modeled
+roundtrip, rounded to 0.30%, with companion gates of profit factor > 1.15 and
+at least 60% of walk-forward windows positive so one lucky regime cannot carry
+the mean. It lives in one place with that derivation written down
+([`TRADABILITY_BAR_PCT`](src/kdtb/backtest/cost_model.py)). The conclusion does
+not hinge on the rounding: the best realistic mean across all seven categories
+is +0.25%, so nothing changes anywhere in a 0.25–0.35% band.
+
+**Reading the walk-forward column.** It is windows positive over windows
+*scored*. A half-year window with fewer than 5 events is not scored, and is
+excluded from the denominator as well as the numerator — hence 10/10 for buyback
+(11 windows generated, the first has 3 events) and 6/11 for supply_contract
+(every window has enough). An earlier hand-written version of this table applied
+that rule inconsistently in three rows; the numbers here are generated by the
+script, which now prints the scored/skipped split. See the correction note in
+[RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md).
+
+One category is a usable signal, in the negative direction.
+**shareholder_change** (disclosures involving a change of largest shareholder)
+runs −1.09% realistic with 2 of 10 walk-forward windows positive, negative in
+both KOSPI and KOSDAQ, and strongly negative in each of the four most recent
+half-years. Korean retail accounts cannot easily short it, so it earns its keep
+as a long-side blacklist: the risk engine rejects a long if the stock had one of
+these filings in the last 60 days
+([src/kdtb/risk/event_blacklist.py](src/kdtb/risk/event_blacklist.py)).
+
+### The buyback false positive
+
+Buyback is the result I most wanted to be real, and it is the one worth
+describing in detail, because the way it fell apart is the actual finding.
+
+On first pass it looked like an edge: **+0.30% per trade**, 5 of 9 folds traded
+profitably, walk-forward positive in every window with enough events. That
+number cleared the bar exactly.
+
+Adversarial verification took it apart on two counts:
+
+**Baseline mismatch.** I was comparing the model's return, measured only over
+the 2024–2026 folds it chose to trade, against always-trade diluted across all 9
+folds including the early bad ones the model skipped. That is not a comparison.
+On a **matched same-period basis, trade-everything returns +0.315% and beats the
+model's +0.299%.**
+
+**Regime artifact.** The model's apparent skill was fold timing, not stock
+picking. Isolating the within-fold selection component gives **−0.017% per
+trade** — negative, and statistically insignificant (per-fold paired t = 0.78).
+The abstention in early folds that looked like prudence was a mechanical
+walk-forward warmup artifact: the model had no training data yet.
+
+Stripped of both, the underlying whole-sample buyback return is +0.157% per
+trade, consistent with the +0.16% in the table above and well below the bar.
+
+The fix outlived the finding. I added a **selection-lift** metric — model return
+minus trade-everything *on the same folds* — which is the only number that
+separates genuine selection skill from regime beta. It is now computed and
+printed on every run, so the tool cannot make that mistake again. With it, the
+buyback verdict correctly reads "NO SELECTION EDGE."
+
+### Entry timing: a real effect that still isn't tradable
+
+Everything above assumes T+1 close entry, which is an artifact of free daily-bar
+data rather than a real constraint — a broker API can trade intraday. Backfilling
+exact filing times showed 46–71% of these events publish *during* market hours,
+making the same-day close a legitimate entry for them.
+
+Assigning each event its earliest genuinely tradable entry:
+
+| | Mean net / trade | Folds positive |
+|---|---:|---:|
+| Uniform T+1 (assumed) | +0.157% | 7/10 |
+| Time-aware | +0.473% | 9/10 |
+| **Entry-timing delta** | **+0.317%** | **10/10** |
+
+The delta is real: positive in every fold including the negative-base 2021–2022
+regime, stable across entry cutoffs (t = 7.6), with a cleanly identified
+mechanism (the event-day-close to next-close overnight gap) and unbiased
+coverage (p = 0.99). A learned selector adds nothing on top (+0.06%), confirming
+it is an entry-timing rule rather than stock selection. This is the only thing in
+the project that survived both walk-forward and adversarial verification.
+
+It still is not tradable. The median trade loses (−0.044%, 49.6% win rate) and
+removing the top 5% of trades flips the mean to −0.42% — it is a positive-skew
+lottery, not a steady edge. The median capturable gap is about 20bps, smaller
+than one KOSDAQ tick, concentrated in exactly the low-priced names hardest to
+fill at the closing auction. And with one open position at a time and a five-day
+hold, only ~6% of signals are even reachable. Full detail in
+[INTRADAY_FEASIBILITY.md](INTRADAY_FEASIBILITY.md).
+
+## The learning paper-trader
+
+After the event studies came back negative, I built the thing the project was
+originally imagined to be: a paper-trader that learns from its own mock trades
+([src/kdtb/learning/](src/kdtb/learning/)).
+
+Each event is a mock trade — enter T+1 close, exit T+5 close, minus the 0.313%
+cost. A gradient-boosted classifier predicts P(net > 0) from decision-time
+features and trades when its PnL-optimal threshold is cleared. The loop is
+champion/challenger walk-forward: each half-year fold, a challenger trains only
+on strictly earlier folds, both are scored on a held-out validation fold, and
+the challenger is promoted only if it wins. The champion starts as "never
+trade." There is no look-ahead, enforced structurally and asserted in tests.
+
+Two claims, which I keep separate because they have different answers:
+
+**"The machine works" — true.** It is leak-free and seed-stable, and on a
+synthetic dataset with a planted edge it finds it: **+2.021% per trade with
++2.161% selection lift** over trade-everything, trading in 6 of 6 folds. The
+`--synthetic-edge` path exists precisely to prove the machine *can* learn when
+there is something to learn.
+
+**"Any Korean disclosure category is tradable" — false.** On real buyback data
+the same machine returns +0.299% per trade against a matched trade-everything
+baseline of +0.315%: **selection lift −0.017%**, verdict `NO SELECTION EDGE`.
+On supply contracts it traded only 2 of 9 folds — insufficient breadth, the same
+recency artifact the event study found.
+
+That gap is the point. A learning system can only optimize edge that already
+exists in the data; it cannot manufacture edge from noise. Pointed at
+near-efficient Korean disclosure data, an honest learner abstains or reports no
+selective edge, and this one does. The deliverable is the machine — reusable on
+any dataset — plus the discipline baked into its verdict that stops it from
+reporting regime beta as skill.
+
+## Limitations
+
+- **Daily bars.** Most of the analysis uses daily closes. The entry-timing
+  result above shows intraday data changes the picture materially; I have
+  same-day-close resolution, not tick data.
+- **The intraday effect is unconfirmed forward.** It is characterized on
+  historical closes. Whether those closing-auction fills are actually
+  obtainable is the one question no historical daily-close dataset can answer.
+  It needs a live forward test.
+- **Long-only.** The strongest signal I found (shareholder_change) is negative,
+  and I cannot easily short it from a Korean retail account, so it is only
+  usable as a filter.
+- **Costs are modeled, not measured.** The 0.313% roundtrip uses published tax
+  and commission rates plus a 5bps slippage assumption. Real slippage on
+  illiquid KOSDAQ names is likely worse.
+- **Seven categories, not all of them.** Earnings surprise, large M&A, and
+  delisting/relisting were never tested. The infrastructure handles a new
+  category with a one-line SQL addition to
+  [src/kdtb/data/event_categories.py](src/kdtb/data/event_categories.py).
+- **No execution path.** There is no broker integration and no order-placing
+  code in this repo, by choice — there is no edge here worth executing.
+- **The LLM extraction layer is scaffolded but unused.** The deterministic
+  parser hit 96.6%, so the LLM was never needed to clear the bar. Whether LLM
+  extraction would beat regex on the hard 3.4% is untested.
+
+## Reproduce
+
+Setup:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+cp .env.example .env             # add DART_API_KEY to ingest anything new
+pytest                            # 140 passing
+```
+
+The derived event-study CSVs are committed, so the headline results run
+straight from a clone with no database and no API key:
+
+```bash
+# The cross-category results table above
+python -m scripts.summarize_all_categories
+
+# One category in detail (aggregate, walk-forward, realistic execution)
+python scripts/analyze_event_category.py --category buyback
+
+# The learning paper-trader
+python scripts/train_learner.py --synthetic-edge      # sanity: learns a planted edge
+python scripts/train_learner.py --category buyback    # real data: no selection edge
+
+# Entry-timing walk-forward
+python scripts/run_intraday_walkforward.py
+```
+
+Categories accepted by `--category`: `supply_contract`, `buyback`,
+`bonus_issue`, `rights_offering`, `convertible_bond`, `halt_resumption`,
+`shareholder_change`.
+
+Rebuilding from source data needs `DART_API_KEY` and a local SQLite DB:
+
+```bash
+# Ingest a date range
+for i in $(seq 1 90); do
+  d=$(date -v-${i}d -j +%Y-%m-%d)
+  python scripts/ingest_disclosures.py --date $d
+done
+
+# Extract contract value / prior-year revenue (deterministic parser)
+python scripts/parse_supply_contracts.py [--limit N] [--skip-existing]
+
+# Recompute event-relative returns for a category
+python scripts/run_event_study.py --category buyback
+
+# Strategy walk-forward and the realistic-execution backtest
+python scripts/walk_forward.py
+python scripts/run_paper_backtest.py
+
+# Back up the SQLite DB
+./scripts/backup_db.sh
+```
+
+### Pipeline liveness check
+
+```bash
+python scripts/check_pipeline_health.py
+python scripts/check_pipeline_health.py --date 2026-05-15 --no-ingest
+```
+
+This verifies the pipeline still works end to end against live DART data: that
+the API responds, that the filing format has not drifted out from under the
+deterministic parser, and that the strategy and risk engine still evaluate
+without error. It ingests the day's disclosures, parses them, and prints any
+candidate signals along with stocks newly hit by the blacklist.
+
+It is a health check, not a signal generator. The candidates it prints are
+pipeline output, not recommendations — the research above found no tradable edge
+in this category, so a row appearing here is evidence the plumbing runs, not
+evidence the trade is worth making. Nothing is submitted anywhere; the only side
+effect is new rows in the local database. Zero candidates is a normal day.
+
+## Repository
+
+| Path | What it is |
+|---|---|
+| [src/kdtb/data/](src/kdtb/data/) | DART ingestion, disclosure store, price client, filing-time scraper |
+| [src/kdtb/interpretation/](src/kdtb/interpretation/) | Deterministic parser; LLM client and validator (scaffolded, unused) |
+| [src/kdtb/strategy/](src/kdtb/strategy/) | Deterministic candidate-signal rules |
+| [src/kdtb/risk/](src/kdtb/risk/) | Risk engine, hard limits, event blacklist |
+| [src/kdtb/backtest/](src/kdtb/backtest/) | Cost model and performance metrics |
+| [src/kdtb/learning/](src/kdtb/learning/) | Champion/challenger walk-forward learner |
+| [scripts/](scripts/) | Ingest, event study, analysis, walk-forward, training |
+| [RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md) | Full findings and how the methodology evolved |
+| [INTRADAY_FEASIBILITY.md](INTRADAY_FEASIBILITY.md) | The entry-timing effect and why it isn't deployable |
+| [DESIGN.md](DESIGN.md) | Original design spec, written before any code |
 
 ## Warnings
 
-- Experimental software. Not financial advice. May lose money if you ignore the
-  research findings and trade anyway.
-- Default `trading.mode: PAPER` in [config/default.yaml](config/default.yaml).
-  Live trading requires both `allow_live_orders: true` in YAML AND
-  `ENABLE_LIVE_TRADING=true` in env (see
-  [src/kdtb/config.py](src/kdtb/config.py) for the guard).
-- Korean Securities Transaction Tax (0.18% on sale) plus broker commission
-  and slippage adds ~0.31% roundtrip drag — built into
-  [src/kdtb/backtest/cost_model.py](src/kdtb/backtest/cost_model.py).
+- Experimental research code. Not financial advice.
+- Backtests mislead. Most of the apparent edges in this repo's history did not
+  survive contact with a larger sample or a stricter baseline, and that is the
+  main thing it documents.
+- The cost model uses published rates that change; verify before relying on them.

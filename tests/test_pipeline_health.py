@@ -12,7 +12,7 @@ from datetime import date, datetime, time
 
 import pytest
 
-import scripts.run_daily_monitor as monitor
+import scripts.check_pipeline_health as monitor
 from kdtb.config import StrategyParams
 from kdtb.risk import EventBlacklist, RiskEngine
 from kdtb.risk.limits import RiskLimits

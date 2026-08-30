@@ -2,9 +2,9 @@
 on every event category for which a CSV exists, and prints a single
 comparison table + machine-readable JSON.
 
-Usage:
-    python scripts/summarize_all_categories.py
-    python scripts/summarize_all_categories.py --json   # JSON only, no human table
+Run as a module (it imports a sibling in scripts/):
+    python -m scripts.summarize_all_categories
+    python -m scripts.summarize_all_categories --json   # JSON only, no human table
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ import argparse
 import json
 from pathlib import Path
 
-from scripts.analyze_event_category import analyze, _human_report
+from scripts.analyze_event_category import MIN_WINDOW_EVENTS, analyze, _human_report
 
 
 CATEGORIES = [
@@ -31,8 +31,9 @@ def _table_row(r: dict) -> str:
         return f"  {r['category']:>20}  ERROR: {r['error']}"
     a = r["aggregate"]
     real = r["realistic"].get("realistic", {})
-    wf_pos = sum(1 for w in r["walk_forward"] if w.get("n", 0) >= 5 and w.get("mean_pct", 0) > 0)
-    wf_total = sum(1 for w in r["walk_forward"] if w.get("n", 0) >= 5)
+    wf_pos = sum(1 for w in r["walk_forward"]
+                 if w.get("n", 0) >= MIN_WINDOW_EVENTS and w.get("mean_pct", 0) > 0)
+    wf_total = sum(1 for w in r["walk_forward"] if w.get("n", 0) >= MIN_WINDOW_EVENTS)
     pf_t5 = a["t5_net"].get("pf")
     pf_real = real.get("pf")
 
@@ -59,7 +60,7 @@ def main() -> int:
 
     results = []
     for cat in CATEGORIES:
-        csv = f"data/event_study_{cat}.csv" if cat != "supply_contract" else "data/event_study_results.csv"
+        csv = f"data/event_study_{cat}.csv"
         if not Path(csv).exists():
             results.append({"category": cat, "error": f"missing {csv}"})
             continue
@@ -73,6 +74,8 @@ def main() -> int:
     print()
     print("=" * 160)
     print("CROSS-CATEGORY EVENT STUDY SUMMARY  (KOSPI+KOSDAQ disclosures, 0.313% roundtrip cost)")
+    print(f"WF = walk-forward windows positive / windows SCORED "
+          f"(a window needs >={MIN_WINDOW_EVENTS} events to be scored)")
     print("=" * 160)
     for r in results:
         print(_table_row(r))
