@@ -54,6 +54,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--synthetic-edge", action="store_true",
                    help="ignore --category; run on planted-edge synthetic data (sanity demo)")
     p.add_argument("--random-state", type=int, default=0)
+    p.add_argument(
+        "--return-basis",
+        choices=("raw", "abnormal"),
+        default="abnormal",
+        help="reward attribution for historical mock trades",
+    )
     p.add_argument("--out", default=None, help="optional CSV path for the per-fold report")
     return p.parse_args()
 
@@ -66,7 +72,7 @@ def main() -> int:
         label = "SYNTHETIC (planted edge)"
     else:
         try:
-            df = load_mock_trades(args.category)
+            df = load_mock_trades(args.category, return_basis=args.return_basis)
         except FileNotFoundError as e:
             print(f"error: {e}\nRun scripts/run_event_study.py --category {args.category} first.")
             return 1
@@ -75,7 +81,8 @@ def main() -> int:
     n_folds = len(make_folds(df))
     print(f"\n=== Learning paper-trader — {label} ===")
     print(f"mock trades: {len(df)}  |  half-year folds: {n_folds}  |  features: {len(FEATURE_NAMES)}")
-    print("(mock trade = enter T+1 close, exit T+5 close, minus 0.313% roundtrip cost)\n")
+    basis = "broad-market abnormal" if not args.synthetic_edge and args.return_basis == "abnormal" else "raw"
+    print(f"(mock trade = enter T+1 close, exit T+5 close, {basis} return minus dated costs)\n")
 
     if n_folds < 3:
         print("Not enough history (need >= 3 half-year folds). Ingest/backfill more data.")

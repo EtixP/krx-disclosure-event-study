@@ -5,7 +5,7 @@ Joins scraped filing times onto an event category, assigns each event its
 earliest realistically-tradable entry:
   - published intraday (filing_time < 15:20 KST) -> enter at the SAME-DAY close
   - published after close                        -> enter at the T+1 close
-exits at the T+5 close, nets the 0.313% roundtrip cost, then walks forward
+exits at the T+5 close, nets the date/market-aware roundtrip cost, then walks forward
 across half-year folds. Reports, per fold:
   - always-trade with the OLD uniform T+1 entry
   - always-trade with the TIME-AWARE entry
@@ -28,6 +28,7 @@ import numpy as np
 import pandas as pd
 
 from kdtb.backtest.cost_model import TRADABILITY_BAR_PCT, CostModel
+from kdtb.data.benchmarks import require_benchmark_columns
 from kdtb.learning.features import FEATURE_NAMES, extract_features
 from kdtb.learning.walk_forward_trainer import make_folds, run_walk_forward
 
@@ -57,6 +58,79 @@ def classify_entry(filing_mins, t0_close: float, t1_close: float, cutoff: int = 
     return t1_close, "afterclose"
 
 
+def apply_timeaware_returns(
+    df: pd.DataFrame,
+    cost_model: CostModel | None = None,
+    *,
+    return_basis: str = "abnormal",
+) -> pd.DataFrame:
+    """Apply dated costs and raw/abnormal attribution to both entry rules."""
+
+    required = ["t0_date", "t+1_date", "t+5_date", "market"]
+    missing = [column for column in required if column not in df.columns]
+    if missing:
+        raise ValueError(
+            "dated transaction costs require event-study columns: "
+            + ", ".join(missing)
+        )
+    if df[required].isna().any().any():
+        raise ValueError("dated transaction-cost inputs contain missing values")
+
+    out = df.copy()
+    if return_basis not in {"raw", "abnormal"}:
+        raise ValueError(f"unsupported intraday return basis: {return_basis}")
+    if return_basis == "abnormal":
+        require_benchmark_columns(out, tokens=("t0", "t1", "t5"))
+    model = cost_model or CostModel()
+    intraday = out["filing_mins"].notna() & (
+        out["filing_mins"] < INTRADAY_CUTOFF_MIN
+    )
+    entry = np.where(intraday, out["t0_close"], out["t+1_close"])
+    entry_dates = np.where(intraday, out["t0_date"], out["t+1_date"])
+    uniform_costs = model.roundtrip_cost_fractions(
+        buy_dates=out["t+1_date"],
+        sell_dates=out["t+5_date"],
+        markets=out["market"],
+    )
+    timeaware_costs = model.roundtrip_cost_fractions(
+        buy_dates=entry_dates,
+        sell_dates=out["t+5_date"],
+        markets=out["market"],
+    )
+    out["ret_uniform_raw"] = (
+        (out["t+5_close"] - out["t+1_close"]) / out["t+1_close"]
+        - uniform_costs
+    )
+    out["entry_mode"] = np.where(intraday, "intraday", "afterclose")
+    out["ret_timeaware_raw"] = (
+        (out["t+5_close"] - entry) / entry - timeaware_costs
+    )
+    if return_basis == "abnormal":
+        benchmark_entry = np.where(
+            intraday, out["benchmark_t0_close"], out["benchmark_t1_close"]
+        )
+        benchmark_uniform = (
+            (out["benchmark_t5_close"] - out["benchmark_t1_close"])
+            / out["benchmark_t1_close"]
+        )
+        benchmark_timeaware = (
+            (out["benchmark_t5_close"] - benchmark_entry) / benchmark_entry
+        )
+        out["ret_uniform_abnormal"] = out["ret_uniform_raw"] - benchmark_uniform
+        out["ret_timeaware_abnormal"] = (
+            out["ret_timeaware_raw"] - benchmark_timeaware
+        )
+        out["ret_uniform"] = out["ret_uniform_abnormal"]
+        out["ret_timeaware"] = out["ret_timeaware_abnormal"]
+    else:
+        out["ret_uniform_abnormal"] = float("nan")
+        out["ret_timeaware_abnormal"] = float("nan")
+        out["ret_uniform"] = out["ret_uniform_raw"]
+        out["ret_timeaware"] = out["ret_timeaware_raw"]
+    out["return_basis"] = return_basis
+    return out
+
+
 def load_timeaware(category: str, db_path: str) -> pd.DataFrame:
     csv = "data/event_study_supply_contract.csv" if category == "supply_contract" else f"data/event_study_{category}.csv"
     df = pd.read_csv(csv)
@@ -80,14 +154,7 @@ def load_timeaware(category: str, db_path: str) -> pd.DataFrame:
 
     df["filing_time"] = df["receipt_no"].map(times)
     df["filing_mins"] = df["filing_time"].map(_mins)
-    cost = CostModel().roundtrip_cost(1.0)
-
-    df["ret_uniform"] = (df["t+5_close"] - df["t+1_close"]) / df["t+1_close"] - cost
-    # time-aware entry close (no look-ahead: after-close events can't use t0_close)
-    intraday = df["filing_mins"].notna() & (df["filing_mins"] < INTRADAY_CUTOFF_MIN)
-    entry = np.where(intraday, df["t0_close"], df["t+1_close"])
-    df["entry_mode"] = np.where(intraday, "intraday", "afterclose")
-    df["ret_timeaware"] = (df["t+5_close"] - entry) / entry - cost
+    df = apply_timeaware_returns(df)
     df["event_date"] = pd.to_datetime(df["event_date"])
     return df
 
@@ -104,7 +171,7 @@ def main() -> int:
     df = load_timeaware(args.category, args.db)
     have_time = df["filing_mins"].notna()
     matched = df[have_time].copy()
-    print(f"\n=== Time-aware walk-forward — {args.category} ===")
+    print(f"\n=== Time-aware walk-forward — {args.category} (benchmark-adjusted) ===")
     print(f"events with prices: {len(df)}  |  with filing_time: {have_time.sum()} "
           f"({have_time.mean()*100:.0f}% coverage)")
     if have_time.sum() < 100:
@@ -113,7 +180,6 @@ def main() -> int:
     intr = (matched["entry_mode"] == "intraday").mean()
     print(f"intraday-published: {intr*100:.0f}%   after-close: {(1-intr)*100:.0f}%")
 
-    cost = CostModel().roundtrip_cost(1.0)
     folds = make_folds(matched.rename(columns={"ret_timeaware": "realized_net_return"}))
 
     print(f"\n{'fold':>9} {'n':>5} {'always_uniform':>15} {'always_timeaware':>17} {'intraday%':>10} {'delta':>8}")

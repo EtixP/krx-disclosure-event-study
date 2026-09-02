@@ -14,7 +14,7 @@ Three scenarios, all using the existing event_study_results.csv close prices
   realistic      t+1_close     t+5_close      4
   conservative   t+2_close     t+5_close      3
 
-Cost model is the same — 0.313% roundtrip drag.
+Costs use the statutory rate for each exact exit date and market.
 
 For each scenario, computes:
   - Per-trade realized return (gross + net)
@@ -37,6 +37,7 @@ import pandas as pd
 
 from kdtb.backtest.cost_model import CostModel
 from kdtb.backtest.metrics import compute
+from kdtb.data.benchmarks import require_benchmark_columns
 from kdtb.logging_setup import setup_logging
 
 
@@ -54,11 +55,38 @@ ORDER BY d.receipt_datetime
 NOTIONAL_PER_TRADE_KRW = 30_000
 
 
-def _scenario(prices: pd.DataFrame, buy_col: str, sell_col: str, cost: float) -> pd.DataFrame:
+def _scenario(
+    prices: pd.DataFrame,
+    buy_col: str,
+    sell_col: str,
+    cost_model: CostModel,
+) -> pd.DataFrame:
     """Compute per-trade gross+net returns for an entry/exit pair."""
+    buy_date_col = buy_col.replace("close", "date")
+    sell_date_col = sell_col.replace("close", "date")
     out = prices.dropna(subset=[buy_col, sell_col]).copy()
+    dated = [buy_date_col, sell_date_col, "market"]
+    if out[dated].isna().any().any():
+        raise ValueError("dated transaction-cost inputs contain missing values")
     out["gross_return"] = (out[sell_col] - out[buy_col]) / out[buy_col]
-    out["net_return"] = out["gross_return"] - cost
+    buy_token = buy_col.removesuffix("_close").replace("+", "")
+    sell_token = sell_col.removesuffix("_close").replace("+", "")
+    require_benchmark_columns(out, tokens=(buy_token, sell_token))
+    benchmark_buy = f"benchmark_{buy_token}_close"
+    benchmark_sell = f"benchmark_{sell_token}_close"
+    out["benchmark_return"] = (
+        (out[benchmark_sell] - out[benchmark_buy]) / out[benchmark_buy]
+    )
+    out["abnormal_gross_return"] = out["gross_return"] - out["benchmark_return"]
+    out["cost_fraction"] = cost_model.roundtrip_cost_fractions(
+        buy_dates=out[buy_date_col],
+        sell_dates=out[sell_date_col],
+        markets=out["market"],
+    )
+    out["net_return"] = out["gross_return"] - out["cost_fraction"]
+    out["abnormal_net_return"] = (
+        out["abnormal_gross_return"] - out["cost_fraction"]
+    )
     return out
 
 
@@ -93,7 +121,14 @@ def main() -> int:
     log.info("Loaded %d v2 signals", len(signals))
 
     prices = pd.read_csv("data/event_study_results.csv")
-    needed = ["id", "stock_code", "event_date", "t0_close", "t+1_close", "t+2_close", "t+5_close"]
+    needed = [
+        "id", "stock_code", "event_date",
+        "t0_close", "t+1_close", "t+2_close", "t+5_close",
+        "t0_date", "t+1_date", "t+2_date", "t+5_date",
+        "benchmark_source", "benchmark_symbol", "benchmark_alignment",
+        "benchmark_t0_close", "benchmark_t1_close", "benchmark_t2_close",
+        "benchmark_t5_close",
+    ]
     missing = [c for c in needed if c not in prices.columns]
     if missing:
         log.error("event_study_results.csv missing columns: %s", missing)
@@ -105,8 +140,8 @@ def main() -> int:
     merged = signals.merge(price_subset, left_on="disclosure_id", right_on="id", how="inner")
     log.info("Joined: %d signals with prices", len(merged))
 
-    cost = CostModel().roundtrip_cost(1.0)
-    print(f"\nCost model: {cost*100:.4f}% per roundtrip\n")
+    cost_model = CostModel()
+    print("\nCost model: exact sell-date/market statutory schedule\n")
 
     scenarios = [
         ("idealized   (buy t0_close → sell t+5_close)", "t0_close",  "t+5_close"),
@@ -117,25 +152,31 @@ def main() -> int:
     rows = []
     per_trade_outputs = {}
     for label, buy, sell in scenarios:
-        df = _scenario(merged, buy, sell, cost)
+        df = _scenario(merged, buy, sell, cost_model)
         per_trade_outputs[label] = df
-        rows.append(_summarize(label, df["net_return"], NOTIONAL_PER_TRADE_KRW))
+        summary = _summarize(label, df["net_return"], NOTIONAL_PER_TRADE_KRW)
+        abnormal = _summarize(
+            label, df["abnormal_net_return"], NOTIONAL_PER_TRADE_KRW
+        )
+        summary["abnormal_mean_pct"] = abnormal.get("mean_pct")
+        summary["abnormal_pf"] = abnormal.get("pf")
+        rows.append(summary)
 
     print(f"=== Realized-PnL backtest of v2 strategy on {len(merged)} signals ===")
     print(f"  notional per trade: ₩{NOTIONAL_PER_TRADE_KRW:,}")
     print()
-    print(f"{'scenario':>52} {'n':>4} {'mean':>9} {'median':>9} {'win%':>7} {'PF':>6} {'sharpe-ish':>11} {'max_dd':>9} {'KRW/trd':>9} {'total KRW':>11}")
+    print(f"{'scenario':>52} {'n':>4} {'raw_mean':>9} {'abn_mean':>9} {'raw_med':>9} {'raw_win%':>9} {'raw_PF':>7} {'abn_PF':>7} {'raw KRW/trd':>12}")
     print("-" * 135)
     for r in rows:
         if r["n"] == 0:
             continue
         pf_s = f"{r['pf']:.3f}" if r['pf'] is not None and r['pf'] != float('inf') else "—"
-        sh_s = f"{r['sharpe_ish']:+.4f}" if r['sharpe_ish'] is not None else "—"
+        abnormal_pf_s = f"{r['abnormal_pf']:.3f}" if r['abnormal_pf'] is not None and r['abnormal_pf'] != float('inf') else "—"
         print(
             f"{r['scenario']:>52} {r['n']:>4} "
-            f"{r['mean_pct']:>+8.3f}% {r['median_pct']:>+8.3f}% "
-            f"{r['win_pct']:>6.1f}% {pf_s:>6} {sh_s:>11} "
-            f"{r['max_dd_pct']:>+8.2f}% ₩{r['krw_per_trade']:>+7.0f} ₩{r['total_krw']:>+10,.0f}"
+            f"{r['mean_pct']:>+8.3f}% {r['abnormal_mean_pct']:>+8.3f}% "
+            f"{r['median_pct']:>+8.3f}% {r['win_pct']:>8.1f}% "
+            f"{pf_s:>7} {abnormal_pf_s:>7} ₩{r['krw_per_trade']:>+10.0f}"
         )
 
     # Save the realistic scenario per-trade for further analysis
@@ -144,7 +185,10 @@ def main() -> int:
     out_csv = Path("data/paper_backtest_v2.csv")
     realistic[["signal_id", "stock_code", "market", "counterparty_type",
                "contract_to_revenue_ratio", "event_date", "t+1_close",
-               "t+5_close", "gross_return", "net_return"]].to_csv(out_csv, index=False)
+               "t+5_close", "t+1_date", "t+5_date", "cost_fraction",
+               "benchmark_symbol", "benchmark_t1_close", "benchmark_t5_close",
+               "gross_return", "benchmark_return", "abnormal_gross_return",
+               "net_return", "abnormal_net_return"]].to_csv(out_csv, index=False)
     log.info("Wrote per-trade detail -> %s", out_csv)
 
     # Tally exit-type breakdown for realistic scenario

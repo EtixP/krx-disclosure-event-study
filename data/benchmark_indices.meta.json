@@ -1,0 +1,14 @@
+{
+  "alignment_policy": "exact stock observation date; no fill",
+  "end": "2026-07-01",
+  "endpoint": "https://m.stock.naver.com/api/index/{symbol}/price",
+  "markets": [
+    "KOSPI",
+    "KOSDAQ"
+  ],
+  "retrieved_at_utc": "2026-08-31T17:42:37.743805+00:00",
+  "rows": 2452,
+  "schema_version": 1,
+  "source": "NAVER_FINANCE_DOMESTIC_INDEX_DAILY",
+  "start": "2021-06-28"
+}

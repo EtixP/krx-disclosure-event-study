@@ -1,0 +1,3506 @@
+{
+  "events": [
+    {
+      "event_date": "2022-03-29",
+      "receipt_datetime": "2022-03-29T00:00:00",
+      "receipt_no": "20220329902181",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "002680"
+    },
+    {
+      "event_date": "2024-11-18",
+      "receipt_datetime": "2024-11-18T00:00:00",
+      "receipt_no": "20241118900555",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "007530"
+    },
+    {
+      "event_date": "2026-06-10",
+      "receipt_datetime": "2026-06-10T00:00:00",
+      "receipt_no": "20260610900826",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "008830"
+    },
+    {
+      "event_date": "2024-05-14",
+      "receipt_datetime": "2024-05-14T00:00:00",
+      "receipt_no": "20240514901379",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "009620"
+    },
+    {
+      "event_date": "2024-07-01",
+      "receipt_datetime": "2024-07-01T00:00:00",
+      "receipt_no": "20240701900620",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "009730"
+    },
+    {
+      "event_date": "2026-01-07",
+      "receipt_datetime": "2026-01-07T00:00:00",
+      "receipt_no": "20260107900680",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "010170"
+    },
+    {
+      "event_date": "2022-10-25",
+      "receipt_datetime": "2022-10-25T00:00:00",
+      "receipt_no": "20221025900448",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "011080"
+    },
+    {
+      "event_date": "2025-04-14",
+      "receipt_datetime": "2025-04-14T00:00:00",
+      "receipt_no": "20250414900624",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "011080"
+    },
+    {
+      "event_date": "2026-06-02",
+      "receipt_datetime": "2026-06-02T00:00:00",
+      "receipt_no": "20260602900597",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "011080"
+    },
+    {
+      "event_date": "2023-07-03",
+      "receipt_datetime": "2023-07-03T00:00:00",
+      "receipt_no": "20230703900479",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "012340"
+    },
+    {
+      "event_date": "2026-05-14",
+      "receipt_datetime": "2026-05-14T00:00:00",
+      "receipt_no": "20260514901220",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "012340"
+    },
+    {
+      "event_date": "2022-08-11",
+      "receipt_datetime": "2022-08-11T00:00:00",
+      "receipt_no": "20220811900520",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "013720"
+    },
+    {
+      "event_date": "2023-07-25",
+      "receipt_datetime": "2023-07-25T00:00:00",
+      "receipt_no": "20230725900515",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "016790"
+    },
+    {
+      "event_date": "2024-03-18",
+      "receipt_datetime": "2024-03-18T00:00:00",
+      "receipt_no": "20240318901090",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "018000"
+    },
+    {
+      "event_date": "2025-08-01",
+      "receipt_datetime": "2025-08-01T00:00:00",
+      "receipt_no": "20250801901139",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "018000"
+    },
+    {
+      "event_date": "2026-06-11",
+      "receipt_datetime": "2026-06-11T00:00:00",
+      "receipt_no": "20260611900840",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "018620"
+    },
+    {
+      "event_date": "2026-04-09",
+      "receipt_datetime": "2026-04-09T00:00:00",
+      "receipt_no": "20260409901026",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "020400"
+    },
+    {
+      "event_date": "2021-10-27",
+      "receipt_datetime": "2021-10-27T00:00:00",
+      "receipt_no": "20211027900427",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "023790"
+    },
+    {
+      "event_date": "2025-06-27",
+      "receipt_datetime": "2025-06-27T00:00:00",
+      "receipt_no": "20250627900684",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "023790"
+    },
+    {
+      "event_date": "2022-05-30",
+      "receipt_datetime": "2022-05-30T00:00:00",
+      "receipt_no": "20220530900672",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "024810"
+    },
+    {
+      "event_date": "2023-02-24",
+      "receipt_datetime": "2023-02-24T00:00:00",
+      "receipt_no": "20230224900715",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "025320"
+    },
+    {
+      "event_date": "2021-07-01",
+      "receipt_datetime": "2021-07-01T00:00:00",
+      "receipt_no": "20210701900490",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "026150"
+    },
+    {
+      "event_date": "2023-05-10",
+      "receipt_datetime": "2023-05-10T00:00:00",
+      "receipt_no": "20230510900597",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "027830"
+    },
+    {
+      "event_date": "2022-10-12",
+      "receipt_datetime": "2022-10-12T00:00:00",
+      "receipt_no": "20221012900523",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "028300"
+    },
+    {
+      "event_date": "2023-08-01",
+      "receipt_datetime": "2023-08-01T00:00:00",
+      "receipt_no": "20230801900500",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "028300"
+    },
+    {
+      "event_date": "2021-07-26",
+      "receipt_datetime": "2021-07-26T00:00:00",
+      "receipt_no": "20210726900390",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "030350"
+    },
+    {
+      "event_date": "2022-10-26",
+      "receipt_datetime": "2022-10-26T00:00:00",
+      "receipt_no": "20221026900577",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "030350"
+    },
+    {
+      "event_date": "2026-03-19",
+      "receipt_datetime": "2026-03-19T00:00:00",
+      "receipt_no": "20260319901564",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "032540"
+    },
+    {
+      "event_date": "2023-11-07",
+      "receipt_datetime": "2023-11-07T00:00:00",
+      "receipt_no": "20231107900640",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "032790"
+    },
+    {
+      "event_date": "2024-03-07",
+      "receipt_datetime": "2024-03-07T00:00:00",
+      "receipt_no": "20240307901272",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "032800"
+    },
+    {
+      "event_date": "2024-05-09",
+      "receipt_datetime": "2024-05-09T00:00:00",
+      "receipt_no": "20240509900538",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "033230"
+    },
+    {
+      "event_date": "2021-07-08",
+      "receipt_datetime": "2021-07-08T00:00:00",
+      "receipt_no": "20210708900404",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "033310"
+    },
+    {
+      "event_date": "2021-09-10",
+      "receipt_datetime": "2021-09-10T00:00:00",
+      "receipt_no": "20210910900437",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "033310"
+    },
+    {
+      "event_date": "2021-10-05",
+      "receipt_datetime": "2021-10-05T00:00:00",
+      "receipt_no": "20211005900509",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "034810"
+    },
+    {
+      "event_date": "2022-02-25",
+      "receipt_datetime": "2022-02-25T00:00:00",
+      "receipt_no": "20220225901039",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "037070"
+    },
+    {
+      "event_date": "2021-09-28",
+      "receipt_datetime": "2021-09-28T00:00:00",
+      "receipt_no": "20210928900461",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "038110"
+    },
+    {
+      "event_date": "2023-09-25",
+      "receipt_datetime": "2023-09-25T00:00:00",
+      "receipt_no": "20230925900585",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "038110"
+    },
+    {
+      "event_date": "2024-11-21",
+      "receipt_datetime": "2024-11-21T00:00:00",
+      "receipt_no": "20241121900397",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "038390"
+    },
+    {
+      "event_date": "2021-06-30",
+      "receipt_datetime": "2021-06-30T00:00:00",
+      "receipt_no": "20210630900679",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "038620"
+    },
+    {
+      "event_date": "2021-12-28",
+      "receipt_datetime": "2021-12-28T00:00:00",
+      "receipt_no": "20211228900894",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "038620"
+    },
+    {
+      "event_date": "2022-09-26",
+      "receipt_datetime": "2022-09-26T00:00:00",
+      "receipt_no": "20220926900366",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "039200"
+    },
+    {
+      "event_date": "2024-10-10",
+      "receipt_datetime": "2024-10-10T00:00:00",
+      "receipt_no": "20241010900484",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "040350"
+    },
+    {
+      "event_date": "2021-10-07",
+      "receipt_datetime": "2021-10-07T00:00:00",
+      "receipt_no": "20211007900422",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "041920"
+    },
+    {
+      "event_date": "2023-08-16",
+      "receipt_datetime": "2023-08-16T00:00:00",
+      "receipt_no": "20230816900450",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "041960"
+    },
+    {
+      "event_date": "2024-04-15",
+      "receipt_datetime": "2024-04-15T00:00:00",
+      "receipt_no": "20240415900630",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "042500"
+    },
+    {
+      "event_date": "2025-09-17",
+      "receipt_datetime": "2025-09-17T00:00:00",
+      "receipt_no": "20250917900417",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "042500"
+    },
+    {
+      "event_date": "2025-03-11",
+      "receipt_datetime": "2025-03-11T00:00:00",
+      "receipt_no": "20250311901684",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "042940"
+    },
+    {
+      "event_date": "2024-11-04",
+      "receipt_datetime": "2024-11-04T00:00:00",
+      "receipt_no": "20241104900521",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "043100"
+    },
+    {
+      "event_date": "2021-12-01",
+      "receipt_datetime": "2021-12-01T00:00:00",
+      "receipt_no": "20211201900728",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "043910"
+    },
+    {
+      "event_date": "2024-06-14",
+      "receipt_datetime": "2024-06-14T00:00:00",
+      "receipt_no": "20240614900575",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "043910"
+    },
+    {
+      "event_date": "2022-07-13",
+      "receipt_datetime": "2022-07-13T00:00:00",
+      "receipt_no": "20220713900264",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "044060"
+    },
+    {
+      "event_date": "2021-09-03",
+      "receipt_datetime": "2021-09-03T00:00:00",
+      "receipt_no": "20210903900539",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "044180"
+    },
+    {
+      "event_date": "2024-12-16",
+      "receipt_datetime": "2024-12-16T00:00:00",
+      "receipt_no": "20241216901742",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "048410"
+    },
+    {
+      "event_date": "2025-07-23",
+      "receipt_datetime": "2025-07-23T00:00:00",
+      "receipt_no": "20250723900426",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "048410"
+    },
+    {
+      "event_date": "2025-02-20",
+      "receipt_datetime": "2025-02-20T00:00:00",
+      "receipt_no": "20250220900726",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "049520"
+    },
+    {
+      "event_date": "2023-12-19",
+      "receipt_datetime": "2023-12-19T00:00:00",
+      "receipt_no": "20231219900516",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "051380"
+    },
+    {
+      "event_date": "2025-01-17",
+      "receipt_datetime": "2025-01-17T00:00:00",
+      "receipt_no": "20250117900598",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "051780"
+    },
+    {
+      "event_date": "2022-04-06",
+      "receipt_datetime": "2022-04-06T00:00:00",
+      "receipt_no": "20220406900714",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "052020"
+    },
+    {
+      "event_date": "2024-10-22",
+      "receipt_datetime": "2024-10-22T00:00:00",
+      "receipt_no": "20241022900346",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "052020"
+    },
+    {
+      "event_date": "2024-05-16",
+      "receipt_datetime": "2024-05-16T00:00:00",
+      "receipt_no": "20240516901807",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "052260"
+    },
+    {
+      "event_date": "2023-02-23",
+      "receipt_datetime": "2023-02-23T00:00:00",
+      "receipt_no": "20230223900924",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "052710"
+    },
+    {
+      "event_date": "2026-06-24",
+      "receipt_datetime": "2026-06-24T00:00:00",
+      "receipt_no": "20260624900954",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "052710"
+    },
+    {
+      "event_date": "2021-08-25",
+      "receipt_datetime": "2021-08-25T00:00:00",
+      "receipt_no": "20210825900328",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "053080"
+    },
+    {
+      "event_date": "2022-01-25",
+      "receipt_datetime": "2022-01-25T00:00:00",
+      "receipt_no": "20220125900626",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "053950"
+    },
+    {
+      "event_date": "2024-08-30",
+      "receipt_datetime": "2024-08-30T00:00:00",
+      "receipt_no": "20240830900672",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "053950"
+    },
+    {
+      "event_date": "2023-12-26",
+      "receipt_datetime": "2023-12-26T00:00:00",
+      "receipt_no": "20231226900778",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "053980"
+    },
+    {
+      "event_date": "2022-11-15",
+      "receipt_datetime": "2022-11-15T00:00:00",
+      "receipt_no": "20221115900434",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "054180"
+    },
+    {
+      "event_date": "2023-03-02",
+      "receipt_datetime": "2023-03-02T00:00:00",
+      "receipt_no": "20230302901069",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "054220"
+    },
+    {
+      "event_date": "2021-07-01",
+      "receipt_datetime": "2021-07-01T00:00:00",
+      "receipt_no": "20210701900488",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "054630"
+    },
+    {
+      "event_date": "2022-08-04",
+      "receipt_datetime": "2022-08-04T00:00:00",
+      "receipt_no": "20220804900431",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "056090"
+    },
+    {
+      "event_date": "2023-06-02",
+      "receipt_datetime": "2023-06-02T00:00:00",
+      "receipt_no": "20230602900530",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "057540"
+    },
+    {
+      "event_date": "2021-07-16",
+      "receipt_datetime": "2021-07-16T00:00:00",
+      "receipt_no": "20210716900539",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "057880"
+    },
+    {
+      "event_date": "2022-01-14",
+      "receipt_datetime": "2022-01-14T00:00:00",
+      "receipt_no": "20220114900468",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "058970"
+    },
+    {
+      "event_date": "2026-01-27",
+      "receipt_datetime": "2026-01-27T00:00:00",
+      "receipt_no": "20260127900663",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "059120"
+    },
+    {
+      "event_date": "2021-10-08",
+      "receipt_datetime": "2021-10-08T00:00:00",
+      "receipt_no": "20211008900358",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "059270"
+    },
+    {
+      "event_date": "2021-11-24",
+      "receipt_datetime": "2021-11-24T00:00:00",
+      "receipt_no": "20211124900336",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "060250"
+    },
+    {
+      "event_date": "2025-06-26",
+      "receipt_datetime": "2025-06-26T00:00:00",
+      "receipt_no": "20250626900532",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "060370"
+    },
+    {
+      "event_date": "2026-06-17",
+      "receipt_datetime": "2026-06-17T00:00:00",
+      "receipt_no": "20260617900525",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "061970"
+    },
+    {
+      "event_date": "2024-11-11",
+      "receipt_datetime": "2024-11-11T00:00:00",
+      "receipt_no": "20241111900432",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "062970"
+    },
+    {
+      "event_date": "2026-01-28",
+      "receipt_datetime": "2026-01-28T00:00:00",
+      "receipt_no": "20260128900868",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "062970"
+    },
+    {
+      "event_date": "2026-03-23",
+      "receipt_datetime": "2026-03-23T00:00:00",
+      "receipt_no": "20260323901834",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "062970"
+    },
+    {
+      "event_date": "2025-06-02",
+      "receipt_datetime": "2025-06-02T00:00:00",
+      "receipt_no": "20250602900643",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "065060"
+    },
+    {
+      "event_date": "2025-02-25",
+      "receipt_datetime": "2025-02-25T00:00:00",
+      "receipt_no": "20250225901160",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "065170"
+    },
+    {
+      "event_date": "2021-08-02",
+      "receipt_datetime": "2021-08-02T00:00:00",
+      "receipt_no": "20210802900276",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "066360"
+    },
+    {
+      "event_date": "2022-11-14",
+      "receipt_datetime": "2022-11-14T00:00:00",
+      "receipt_no": "20221114901829",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "066430"
+    },
+    {
+      "event_date": "2025-01-23",
+      "receipt_datetime": "2025-01-23T00:00:00",
+      "receipt_no": "20250123900722",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "066910"
+    },
+    {
+      "event_date": "2021-09-07",
+      "receipt_datetime": "2021-09-07T00:00:00",
+      "receipt_no": "20210907900338",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "066980"
+    },
+    {
+      "event_date": "2025-06-24",
+      "receipt_datetime": "2025-06-24T00:00:00",
+      "receipt_no": "20250624900449",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "067170"
+    },
+    {
+      "event_date": "2025-12-29",
+      "receipt_datetime": "2025-12-29T00:00:00",
+      "receipt_no": "20251229900727",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "067290"
+    },
+    {
+      "event_date": "2021-11-03",
+      "receipt_datetime": "2021-11-03T00:00:00",
+      "receipt_no": "20211103900462",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "067310"
+    },
+    {
+      "event_date": "2021-12-15",
+      "receipt_datetime": "2021-12-15T00:00:00",
+      "receipt_no": "20211215901370",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "067310"
+    },
+    {
+      "event_date": "2024-06-18",
+      "receipt_datetime": "2024-06-18T00:00:00",
+      "receipt_no": "20240618900532",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "067310"
+    },
+    {
+      "event_date": "2024-08-07",
+      "receipt_datetime": "2024-08-07T00:00:00",
+      "receipt_no": "20240807900536",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "067310"
+    },
+    {
+      "event_date": "2023-06-16",
+      "receipt_datetime": "2023-06-16T00:00:00",
+      "receipt_no": "20230616900523",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "067570"
+    },
+    {
+      "event_date": "2024-05-08",
+      "receipt_datetime": "2024-05-08T00:00:00",
+      "receipt_no": "20240508900619",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "067630"
+    },
+    {
+      "event_date": "2022-03-10",
+      "receipt_datetime": "2022-03-10T00:00:00",
+      "receipt_no": "20220310901951",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "068240"
+    },
+    {
+      "event_date": "2024-03-12",
+      "receipt_datetime": "2024-03-12T00:00:00",
+      "receipt_no": "20240312901245",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "068240"
+    },
+    {
+      "event_date": "2023-09-25",
+      "receipt_datetime": "2023-09-25T00:00:00",
+      "receipt_no": "20230925900554",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "069140"
+    },
+    {
+      "event_date": "2025-07-02",
+      "receipt_datetime": "2025-07-02T00:00:00",
+      "receipt_no": "20250702900424",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "070300"
+    },
+    {
+      "event_date": "2025-08-19",
+      "receipt_datetime": "2025-08-19T00:00:00",
+      "receipt_no": "20250819900304",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "070300"
+    },
+    {
+      "event_date": "2024-05-08",
+      "receipt_datetime": "2024-05-08T00:00:00",
+      "receipt_no": "20240508900509",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "071850"
+    },
+    {
+      "event_date": "2023-03-13",
+      "receipt_datetime": "2023-03-13T00:00:00",
+      "receipt_no": "20230313901135",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "072950"
+    },
+    {
+      "event_date": "2025-11-25",
+      "receipt_datetime": "2025-11-25T00:00:00",
+      "receipt_no": "20251125900441",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "072990"
+    },
+    {
+      "event_date": "2024-01-04",
+      "receipt_datetime": "2024-01-04T00:00:00",
+      "receipt_no": "20240104900422",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "073010"
+    },
+    {
+      "event_date": "2022-03-29",
+      "receipt_datetime": "2022-03-29T00:00:00",
+      "receipt_no": "20220329902180",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "075130"
+    },
+    {
+      "event_date": "2025-04-24",
+      "receipt_datetime": "2025-04-24T00:00:00",
+      "receipt_no": "20250424900650",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "076610"
+    },
+    {
+      "event_date": "2022-04-13",
+      "receipt_datetime": "2022-04-13T00:00:00",
+      "receipt_no": "20220413900588",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "077360"
+    },
+    {
+      "event_date": "2023-09-18",
+      "receipt_datetime": "2023-09-18T00:00:00",
+      "receipt_no": "20230918900399",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "078160"
+    },
+    {
+      "event_date": "2024-01-15",
+      "receipt_datetime": "2024-01-15T00:00:00",
+      "receipt_no": "20240115900710",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "079370"
+    },
+    {
+      "event_date": "2023-07-20",
+      "receipt_datetime": "2023-07-20T00:00:00",
+      "receipt_no": "20230720900666",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "079810"
+    },
+    {
+      "event_date": "2025-12-24",
+      "receipt_datetime": "2025-12-24T00:00:00",
+      "receipt_no": "20251224900771",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "079950"
+    },
+    {
+      "event_date": "2022-03-29",
+      "receipt_datetime": "2022-03-29T00:00:00",
+      "receipt_no": "20220329902178",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "080010"
+    },
+    {
+      "event_date": "2026-01-08",
+      "receipt_datetime": "2026-01-08T00:00:00",
+      "receipt_no": "20260108900647",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "082800"
+    },
+    {
+      "event_date": "2025-12-09",
+      "receipt_datetime": "2025-12-09T00:00:00",
+      "receipt_no": "20251209900505",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "082920"
+    },
+    {
+      "event_date": "2024-06-25",
+      "receipt_datetime": "2024-06-25T00:00:00",
+      "receipt_no": "20240625900508",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "083450"
+    },
+    {
+      "event_date": "2022-03-30",
+      "receipt_datetime": "2022-03-30T00:00:00",
+      "receipt_no": "20220330901867",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "084650"
+    },
+    {
+      "event_date": "2023-08-04",
+      "receipt_datetime": "2023-08-04T00:00:00",
+      "receipt_no": "20230804900439",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "084650"
+    },
+    {
+      "event_date": "2025-04-08",
+      "receipt_datetime": "2025-04-08T00:00:00",
+      "receipt_no": "20250408901005",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "085660"
+    },
+    {
+      "event_date": "2022-03-08",
+      "receipt_datetime": "2022-03-08T00:00:00",
+      "receipt_no": "20220308901131",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "086710"
+    },
+    {
+      "event_date": "2025-05-26",
+      "receipt_datetime": "2025-05-26T00:00:00",
+      "receipt_no": "20250526900728",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "086820"
+    },
+    {
+      "event_date": "2023-01-06",
+      "receipt_datetime": "2023-01-06T00:00:00",
+      "receipt_no": "20230106900515",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "086960"
+    },
+    {
+      "event_date": "2024-10-07",
+      "receipt_datetime": "2024-10-07T00:00:00",
+      "receipt_no": "20241007900483",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "087010"
+    },
+    {
+      "event_date": "2024-11-05",
+      "receipt_datetime": "2024-11-05T00:00:00",
+      "receipt_no": "20241105900427",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "088130"
+    },
+    {
+      "event_date": "2023-08-03",
+      "receipt_datetime": "2023-08-03T00:00:00",
+      "receipt_no": "20230803900534",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "088800"
+    },
+    {
+      "event_date": "2022-07-29",
+      "receipt_datetime": "2022-07-29T00:00:00",
+      "receipt_no": "20220729900651",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "089030"
+    },
+    {
+      "event_date": "2021-08-13",
+      "receipt_datetime": "2021-08-13T00:00:00",
+      "receipt_no": "20210813901165",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "089530"
+    },
+    {
+      "event_date": "2024-04-01",
+      "receipt_datetime": "2024-04-01T00:00:00",
+      "receipt_no": "20240401901396",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "089850"
+    },
+    {
+      "event_date": "2022-06-03",
+      "receipt_datetime": "2022-06-03T00:00:00",
+      "receipt_no": "20220603900493",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "091120"
+    },
+    {
+      "event_date": "2023-10-20",
+      "receipt_datetime": "2023-10-20T00:00:00",
+      "receipt_no": "20231020900666",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "092040"
+    },
+    {
+      "event_date": "2023-12-12",
+      "receipt_datetime": "2023-12-12T00:00:00",
+      "receipt_no": "20231212900691",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "092040"
+    },
+    {
+      "event_date": "2021-09-16",
+      "receipt_datetime": "2021-09-16T00:00:00",
+      "receipt_no": "20210916900370",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "092460"
+    },
+    {
+      "event_date": "2024-10-29",
+      "receipt_datetime": "2024-10-29T00:00:00",
+      "receipt_no": "20241029900549",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "092730"
+    },
+    {
+      "event_date": "2024-05-31",
+      "receipt_datetime": "2024-05-31T00:00:00",
+      "receipt_no": "20240531901190",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "092870"
+    },
+    {
+      "event_date": "2023-11-10",
+      "receipt_datetime": "2023-11-10T00:00:00",
+      "receipt_no": "20231110900782",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "094360"
+    },
+    {
+      "event_date": "2021-09-07",
+      "receipt_datetime": "2021-09-07T00:00:00",
+      "receipt_no": "20210907900337",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "094860"
+    },
+    {
+      "event_date": "2021-10-28",
+      "receipt_datetime": "2021-10-28T00:00:00",
+      "receipt_no": "20211028900753",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "094860"
+    },
+    {
+      "event_date": "2022-11-08",
+      "receipt_datetime": "2022-11-08T00:00:00",
+      "receipt_no": "20221108900451",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "095700"
+    },
+    {
+      "event_date": "2023-01-10",
+      "receipt_datetime": "2023-01-10T00:00:00",
+      "receipt_no": "20230110900595",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "095700"
+    },
+    {
+      "event_date": "2026-01-20",
+      "receipt_datetime": "2026-01-20T00:00:00",
+      "receipt_no": "20260120900616",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "095910"
+    },
+    {
+      "event_date": "2021-07-16",
+      "receipt_datetime": "2021-07-16T00:00:00",
+      "receipt_no": "20210716900538",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "096690"
+    },
+    {
+      "event_date": "2024-03-29",
+      "receipt_datetime": "2024-03-29T00:00:00",
+      "receipt_no": "20240329904357",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "097800"
+    },
+    {
+      "event_date": "2023-03-13",
+      "receipt_datetime": "2023-03-13T00:00:00",
+      "receipt_no": "20230313901136",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "099190"
+    },
+    {
+      "event_date": "2022-05-04",
+      "receipt_datetime": "2022-05-04T00:00:00",
+      "receipt_no": "20220504900484",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "099390"
+    },
+    {
+      "event_date": "2022-11-22",
+      "receipt_datetime": "2022-11-22T00:00:00",
+      "receipt_no": "20221122900444",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "099430"
+    },
+    {
+      "event_date": "2025-05-12",
+      "receipt_datetime": "2025-05-12T00:00:00",
+      "receipt_no": "20250512900646",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "099440"
+    },
+    {
+      "event_date": "2025-12-17",
+      "receipt_datetime": "2025-12-17T00:00:00",
+      "receipt_no": "20251217900716",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "099750"
+    },
+    {
+      "event_date": "2024-06-03",
+      "receipt_datetime": "2024-06-03T00:00:00",
+      "receipt_no": "20240603900466",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "101360"
+    },
+    {
+      "event_date": "2024-08-05",
+      "receipt_datetime": "2024-08-05T00:00:00",
+      "receipt_no": "20240805900773",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "101360"
+    },
+    {
+      "event_date": "2022-07-04",
+      "receipt_datetime": "2022-07-04T00:00:00",
+      "receipt_no": "20220704900566",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "102370"
+    },
+    {
+      "event_date": "2021-07-21",
+      "receipt_datetime": "2021-07-21T00:00:00",
+      "receipt_no": "20210721900416",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "104620"
+    },
+    {
+      "event_date": "2022-04-06",
+      "receipt_datetime": "2022-04-06T00:00:00",
+      "receipt_no": "20220406900716",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "105550"
+    },
+    {
+      "event_date": "2024-10-29",
+      "receipt_datetime": "2024-10-29T00:00:00",
+      "receipt_no": "20241029900648",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "106080"
+    },
+    {
+      "event_date": "2025-09-26",
+      "receipt_datetime": "2025-09-26T00:00:00",
+      "receipt_no": "20250926900657",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "108490"
+    },
+    {
+      "event_date": "2023-05-10",
+      "receipt_datetime": "2023-05-10T00:00:00",
+      "receipt_no": "20230510900627",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "108860"
+    },
+    {
+      "event_date": "2021-11-03",
+      "receipt_datetime": "2021-11-03T00:00:00",
+      "receipt_no": "20211103900461",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "109860"
+    },
+    {
+      "event_date": "2021-09-10",
+      "receipt_datetime": "2021-09-10T00:00:00",
+      "receipt_no": "20210910900439",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "112040"
+    },
+    {
+      "event_date": "2023-09-04",
+      "receipt_datetime": "2023-09-04T00:00:00",
+      "receipt_no": "20230904900721",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "114450"
+    },
+    {
+      "event_date": "2022-08-31",
+      "receipt_datetime": "2022-08-31T00:00:00",
+      "receipt_no": "20220831900654",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "114630"
+    },
+    {
+      "event_date": "2022-06-02",
+      "receipt_datetime": "2022-06-02T00:00:00",
+      "receipt_no": "20220602900460",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "114840"
+    },
+    {
+      "event_date": "2024-02-27",
+      "receipt_datetime": "2024-02-27T00:00:00",
+      "receipt_no": "20240227900909",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "114840"
+    },
+    {
+      "event_date": "2023-11-08",
+      "receipt_datetime": "2023-11-08T00:00:00",
+      "receipt_no": "20231108900660",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "115180"
+    },
+    {
+      "event_date": "2023-12-15",
+      "receipt_datetime": "2023-12-15T00:00:00",
+      "receipt_no": "20231215901939",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "115180"
+    },
+    {
+      "event_date": "2023-03-14",
+      "receipt_datetime": "2023-03-14T00:00:00",
+      "receipt_no": "20230314901742",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "115450"
+    },
+    {
+      "event_date": "2025-01-13",
+      "receipt_datetime": "2025-01-13T00:00:00",
+      "receipt_no": "20250113900429",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "115450"
+    },
+    {
+      "event_date": "2026-03-11",
+      "receipt_datetime": "2026-03-11T00:00:00",
+      "receipt_no": "20260311902222",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "115450"
+    },
+    {
+      "event_date": "2021-11-10",
+      "receipt_datetime": "2021-11-10T00:00:00",
+      "receipt_no": "20211110900430",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "115610"
+    },
+    {
+      "event_date": "2025-06-25",
+      "receipt_datetime": "2025-06-25T00:00:00",
+      "receipt_no": "20250625900516",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "115610"
+    },
+    {
+      "event_date": "2022-05-31",
+      "receipt_datetime": "2022-05-31T00:00:00",
+      "receipt_no": "20220531900660",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "118990"
+    },
+    {
+      "event_date": "2022-04-15",
+      "receipt_datetime": "2022-04-15T00:00:00",
+      "receipt_no": "20220415900818",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "121850"
+    },
+    {
+      "event_date": "2022-11-11",
+      "receipt_datetime": "2022-11-11T00:00:00",
+      "receipt_no": "20221111901001",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "121850"
+    },
+    {
+      "event_date": "2025-12-17",
+      "receipt_datetime": "2025-12-17T00:00:00",
+      "receipt_no": "20251217900719",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "121850"
+    },
+    {
+      "event_date": "2022-06-15",
+      "receipt_datetime": "2022-06-15T00:00:00",
+      "receipt_no": "20220615900520",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "123010"
+    },
+    {
+      "event_date": "2022-08-31",
+      "receipt_datetime": "2022-08-31T00:00:00",
+      "receipt_no": "20220831900652",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "123010"
+    },
+    {
+      "event_date": "2022-05-24",
+      "receipt_datetime": "2022-05-24T00:00:00",
+      "receipt_no": "20220524900370",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "124560"
+    },
+    {
+      "event_date": "2023-06-30",
+      "receipt_datetime": "2023-06-30T00:00:00",
+      "receipt_no": "20230630901061",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "126600"
+    },
+    {
+      "event_date": "2022-04-14",
+      "receipt_datetime": "2022-04-14T00:00:00",
+      "receipt_no": "20220414900556",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "128540"
+    },
+    {
+      "event_date": "2022-06-10",
+      "receipt_datetime": "2022-06-10T00:00:00",
+      "receipt_no": "20220610900529",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "128540"
+    },
+    {
+      "event_date": "2021-08-05",
+      "receipt_datetime": "2021-08-05T00:00:00",
+      "receipt_no": "20210805900482",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "130500"
+    },
+    {
+      "event_date": "2021-08-24",
+      "receipt_datetime": "2021-08-24T00:00:00",
+      "receipt_no": "20210824900342",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "131400"
+    },
+    {
+      "event_date": "2023-02-06",
+      "receipt_datetime": "2023-02-06T00:00:00",
+      "receipt_no": "20230206901059",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "131400"
+    },
+    {
+      "event_date": "2021-10-27",
+      "receipt_datetime": "2021-10-27T00:00:00",
+      "receipt_no": "20211027900429",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "136510"
+    },
+    {
+      "event_date": "2022-08-05",
+      "receipt_datetime": "2022-08-05T00:00:00",
+      "receipt_no": "20220805900473",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "138070"
+    },
+    {
+      "event_date": "2021-11-15",
+      "receipt_datetime": "2021-11-15T00:00:00",
+      "receipt_no": "20211115901397",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "138580"
+    },
+    {
+      "event_date": "2022-04-04",
+      "receipt_datetime": "2022-04-04T00:00:00",
+      "receipt_no": "20220404900694",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "140410"
+    },
+    {
+      "event_date": "2025-11-26",
+      "receipt_datetime": "2025-11-26T00:00:00",
+      "receipt_no": "20251126900512",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "140430"
+    },
+    {
+      "event_date": "2025-09-29",
+      "receipt_datetime": "2025-09-29T00:00:00",
+      "receipt_no": "20250929900521",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "140670"
+    },
+    {
+      "event_date": "2022-06-16",
+      "receipt_datetime": "2022-06-16T00:00:00",
+      "receipt_no": "20220616900343",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "142210"
+    },
+    {
+      "event_date": "2024-12-17",
+      "receipt_datetime": "2024-12-17T00:00:00",
+      "receipt_no": "20241217900573",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "145170"
+    },
+    {
+      "event_date": "2026-05-12",
+      "receipt_datetime": "2026-05-12T00:00:00",
+      "receipt_no": "20260512900846",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "147760"
+    },
+    {
+      "event_date": "2021-09-17",
+      "receipt_datetime": "2021-09-17T00:00:00",
+      "receipt_no": "20210917900496",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "147830"
+    },
+    {
+      "event_date": "2023-11-28",
+      "receipt_datetime": "2023-11-28T00:00:00",
+      "receipt_no": "20231128900435",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "148150"
+    },
+    {
+      "event_date": "2022-07-26",
+      "receipt_datetime": "2022-07-26T00:00:00",
+      "receipt_no": "20220726900324",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "148780"
+    },
+    {
+      "event_date": "2023-02-02",
+      "receipt_datetime": "2023-02-02T00:00:00",
+      "receipt_no": "20230202900474",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "149980"
+    },
+    {
+      "event_date": "2024-02-06",
+      "receipt_datetime": "2024-02-06T00:00:00",
+      "receipt_no": "20240206900876",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "149980"
+    },
+    {
+      "event_date": "2023-06-14",
+      "receipt_datetime": "2023-06-14T00:00:00",
+      "receipt_no": "20230614900480",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "156100"
+    },
+    {
+      "event_date": "2022-08-01",
+      "receipt_datetime": "2022-08-01T00:00:00",
+      "receipt_no": "20220801900329",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "159010"
+    },
+    {
+      "event_date": "2026-03-06",
+      "receipt_datetime": "2026-03-06T00:00:00",
+      "receipt_no": "20260306901385",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "163280"
+    },
+    {
+      "event_date": "2021-12-28",
+      "receipt_datetime": "2021-12-28T00:00:00",
+      "receipt_no": "20211228900893",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "164060"
+    },
+    {
+      "event_date": "2022-02-22",
+      "receipt_datetime": "2022-02-22T00:00:00",
+      "receipt_no": "20220222900874",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "164060"
+    },
+    {
+      "event_date": "2025-09-16",
+      "receipt_datetime": "2025-09-16T00:00:00",
+      "receipt_no": "20250916900361",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "166480"
+    },
+    {
+      "event_date": "2023-12-27",
+      "receipt_datetime": "2023-12-27T00:00:00",
+      "receipt_no": "20231227900682",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "168360"
+    },
+    {
+      "event_date": "2022-02-23",
+      "receipt_datetime": "2022-02-23T00:00:00",
+      "receipt_no": "20220223900966",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "169330"
+    },
+    {
+      "event_date": "2023-07-18",
+      "receipt_datetime": "2023-07-18T00:00:00",
+      "receipt_no": "20230718900434",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "171120"
+    },
+    {
+      "event_date": "2021-12-03",
+      "receipt_datetime": "2021-12-03T00:00:00",
+      "receipt_no": "20211203900385",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "175250"
+    },
+    {
+      "event_date": "2022-10-20",
+      "receipt_datetime": "2022-10-20T00:00:00",
+      "receipt_no": "20221020900462",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "175250"
+    },
+    {
+      "event_date": "2022-12-13",
+      "receipt_datetime": "2022-12-13T00:00:00",
+      "receipt_no": "20221213900697",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "175250"
+    },
+    {
+      "event_date": "2023-10-23",
+      "receipt_datetime": "2023-10-23T00:00:00",
+      "receipt_no": "20231023900439",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "177350"
+    },
+    {
+      "event_date": "2023-12-13",
+      "receipt_datetime": "2023-12-13T00:00:00",
+      "receipt_no": "20231213900856",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "177350"
+    },
+    {
+      "event_date": "2022-04-12",
+      "receipt_datetime": "2022-04-12T00:00:00",
+      "receipt_no": "20220412900415",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "178320"
+    },
+    {
+      "event_date": "2024-07-08",
+      "receipt_datetime": "2024-07-08T00:00:00",
+      "receipt_no": "20240708900378",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "180400"
+    },
+    {
+      "event_date": "2022-02-25",
+      "receipt_datetime": "2022-02-25T00:00:00",
+      "receipt_no": "20220225901041",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "181340"
+    },
+    {
+      "event_date": "2021-07-21",
+      "receipt_datetime": "2021-07-21T00:00:00",
+      "receipt_no": "20210721900418",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "182360"
+    },
+    {
+      "event_date": "2023-12-20",
+      "receipt_datetime": "2023-12-20T00:00:00",
+      "receipt_no": "20231220900670",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "182400"
+    },
+    {
+      "event_date": "2026-05-22",
+      "receipt_datetime": "2026-05-22T00:00:00",
+      "receipt_no": "20260522900968",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "183300"
+    },
+    {
+      "event_date": "2021-10-22",
+      "receipt_datetime": "2021-10-22T00:00:00",
+      "receipt_no": "20211022900310",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "183490"
+    },
+    {
+      "event_date": "2022-08-16",
+      "receipt_datetime": "2022-08-16T00:00:00",
+      "receipt_no": "20220816902653",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "183490"
+    },
+    {
+      "event_date": "2025-10-23",
+      "receipt_datetime": "2025-10-23T00:00:00",
+      "receipt_no": "20251023900466",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "185490"
+    },
+    {
+      "event_date": "2024-11-26",
+      "receipt_datetime": "2024-11-26T00:00:00",
+      "receipt_no": "20241126900456",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "187660"
+    },
+    {
+      "event_date": "2026-06-26",
+      "receipt_datetime": "2026-06-26T00:00:00",
+      "receipt_no": "20260626901006",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "187660"
+    },
+    {
+      "event_date": "2026-04-27",
+      "receipt_datetime": "2026-04-27T00:00:00",
+      "receipt_no": "20260427900859",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "187870"
+    },
+    {
+      "event_date": "2023-05-24",
+      "receipt_datetime": "2023-05-24T00:00:00",
+      "receipt_no": "20230524900498",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "189300"
+    },
+    {
+      "event_date": "2021-09-14",
+      "receipt_datetime": "2021-09-14T00:00:00",
+      "receipt_no": "20210914900391",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "189330"
+    },
+    {
+      "event_date": "2025-06-30",
+      "receipt_datetime": "2025-06-30T00:00:00",
+      "receipt_no": "20250630900659",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "189330"
+    },
+    {
+      "event_date": "2021-06-29",
+      "receipt_datetime": "2021-06-29T00:00:00",
+      "receipt_no": "20210629900507",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "189690"
+    },
+    {
+      "event_date": "2022-06-29",
+      "receipt_datetime": "2022-06-29T00:00:00",
+      "receipt_no": "20220629900580",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "189690"
+    },
+    {
+      "event_date": "2023-06-29",
+      "receipt_datetime": "2023-06-29T00:00:00",
+      "receipt_no": "20230629900604",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "189690"
+    },
+    {
+      "event_date": "2022-07-05",
+      "receipt_datetime": "2022-07-05T00:00:00",
+      "receipt_no": "20220705900458",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "194700"
+    },
+    {
+      "event_date": "2022-08-17",
+      "receipt_datetime": "2022-08-17T00:00:00",
+      "receipt_no": "20220817900317",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "194700"
+    },
+    {
+      "event_date": "2022-10-24",
+      "receipt_datetime": "2022-10-24T00:00:00",
+      "receipt_no": "20221024900433",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "196170"
+    },
+    {
+      "event_date": "2024-05-09",
+      "receipt_datetime": "2024-05-09T00:00:00",
+      "receipt_no": "20240509900540",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "198940"
+    },
+    {
+      "event_date": "2024-06-27",
+      "receipt_datetime": "2024-06-27T00:00:00",
+      "receipt_no": "20240627900743",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "198940"
+    },
+    {
+      "event_date": "2026-02-09",
+      "receipt_datetime": "2026-02-09T00:00:00",
+      "receipt_no": "20260209901268",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "199550"
+    },
+    {
+      "event_date": "2024-05-20",
+      "receipt_datetime": "2024-05-20T00:00:00",
+      "receipt_no": "20240520900360",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "199820"
+    },
+    {
+      "event_date": "2025-07-03",
+      "receipt_datetime": "2025-07-03T00:00:00",
+      "receipt_no": "20250703900572",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "200230"
+    },
+    {
+      "event_date": "2025-08-21",
+      "receipt_datetime": "2025-08-21T00:00:00",
+      "receipt_no": "20250821900469",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "200230"
+    },
+    {
+      "event_date": "2022-11-03",
+      "receipt_datetime": "2022-11-03T00:00:00",
+      "receipt_no": "20221103900436",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "200470"
+    },
+    {
+      "event_date": "2025-09-29",
+      "receipt_datetime": "2025-09-29T00:00:00",
+      "receipt_no": "20250929900519",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "203400"
+    },
+    {
+      "event_date": "2025-11-28",
+      "receipt_datetime": "2025-11-28T00:00:00",
+      "receipt_no": "20251128901058",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "203400"
+    },
+    {
+      "event_date": "2025-11-17",
+      "receipt_datetime": "2025-11-17T00:00:00",
+      "receipt_no": "20251117900413",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "203650"
+    },
+    {
+      "event_date": "2024-12-27",
+      "receipt_datetime": "2024-12-27T00:00:00",
+      "receipt_no": "20241227900822",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "204620"
+    },
+    {
+      "event_date": "2022-12-14",
+      "receipt_datetime": "2022-12-14T00:00:00",
+      "receipt_no": "20221214900932",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "204630"
+    },
+    {
+      "event_date": "2023-05-04",
+      "receipt_datetime": "2023-05-04T00:00:00",
+      "receipt_no": "20230504900589",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "204630"
+    },
+    {
+      "event_date": "2023-10-06",
+      "receipt_datetime": "2023-10-06T00:00:00",
+      "receipt_no": "20231006900466",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "205100"
+    },
+    {
+      "event_date": "2023-03-23",
+      "receipt_datetime": "2023-03-23T00:00:00",
+      "receipt_no": "20230323901829",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "205470"
+    },
+    {
+      "event_date": "2022-12-16",
+      "receipt_datetime": "2022-12-16T00:00:00",
+      "receipt_no": "20221216901285",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "207760"
+    },
+    {
+      "event_date": "2021-07-05",
+      "receipt_datetime": "2021-07-05T00:00:00",
+      "receipt_no": "20210705900444",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "208340"
+    },
+    {
+      "event_date": "2021-08-18",
+      "receipt_datetime": "2021-08-18T00:00:00",
+      "receipt_no": "20210818900432",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "208340"
+    },
+    {
+      "event_date": "2023-05-10",
+      "receipt_datetime": "2023-05-10T00:00:00",
+      "receipt_no": "20230510900622",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "208370"
+    },
+    {
+      "event_date": "2025-09-03",
+      "receipt_datetime": "2025-09-03T00:00:00",
+      "receipt_no": "20250903900318",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "209640"
+    },
+    {
+      "event_date": "2025-01-24",
+      "receipt_datetime": "2025-01-24T00:00:00",
+      "receipt_no": "20250124900977",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "210120"
+    },
+    {
+      "event_date": "2022-06-21",
+      "receipt_datetime": "2022-06-21T00:00:00",
+      "receipt_no": "20220621900375",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "211050"
+    },
+    {
+      "event_date": "2025-07-11",
+      "receipt_datetime": "2025-07-11T00:00:00",
+      "receipt_no": "20250711900396",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "212560"
+    },
+    {
+      "event_date": "2023-09-25",
+      "receipt_datetime": "2023-09-25T00:00:00",
+      "receipt_no": "20230925900565",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "214610"
+    },
+    {
+      "event_date": "2023-11-15",
+      "receipt_datetime": "2023-11-15T00:00:00",
+      "receipt_no": "20231115900548",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "214610"
+    },
+    {
+      "event_date": "2024-05-08",
+      "receipt_datetime": "2024-05-08T00:00:00",
+      "receipt_no": "20240508900504",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "215600"
+    },
+    {
+      "event_date": "2022-06-20",
+      "receipt_datetime": "2022-06-20T00:00:00",
+      "receipt_no": "20220620900592",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "216050"
+    },
+    {
+      "event_date": "2025-01-02",
+      "receipt_datetime": "2025-01-02T00:00:00",
+      "receipt_no": "20250102900587",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "216080"
+    },
+    {
+      "event_date": "2025-11-21",
+      "receipt_datetime": "2025-11-21T00:00:00",
+      "receipt_no": "20251121900555",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "217190"
+    },
+    {
+      "event_date": "2022-09-27",
+      "receipt_datetime": "2022-09-27T00:00:00",
+      "receipt_no": "20220927900480",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "217330"
+    },
+    {
+      "event_date": "2022-08-31",
+      "receipt_datetime": "2022-08-31T00:00:00",
+      "receipt_no": "20220831900653",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "217480"
+    },
+    {
+      "event_date": "2021-09-01",
+      "receipt_datetime": "2021-09-01T00:00:00",
+      "receipt_no": "20210901900476",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "217730"
+    },
+    {
+      "event_date": "2023-09-14",
+      "receipt_datetime": "2023-09-14T00:00:00",
+      "receipt_no": "20230914900384",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "217730"
+    },
+    {
+      "event_date": "2025-07-09",
+      "receipt_datetime": "2025-07-09T00:00:00",
+      "receipt_no": "20250709900468",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "217730"
+    },
+    {
+      "event_date": "2023-09-19",
+      "receipt_datetime": "2023-09-19T00:00:00",
+      "receipt_no": "20230919900419",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "217820"
+    },
+    {
+      "event_date": "2024-02-13",
+      "receipt_datetime": "2024-02-13T00:00:00",
+      "receipt_no": "20240213600979",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "217880"
+    },
+    {
+      "event_date": "2022-09-01",
+      "receipt_datetime": "2022-09-01T00:00:00",
+      "receipt_no": "20220901900426",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "220100"
+    },
+    {
+      "event_date": "2022-10-21",
+      "receipt_datetime": "2022-10-21T00:00:00",
+      "receipt_no": "20221021900393",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "220100"
+    },
+    {
+      "event_date": "2023-02-22",
+      "receipt_datetime": "2023-02-22T00:00:00",
+      "receipt_no": "20230222600642",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "221800"
+    },
+    {
+      "event_date": "2022-10-25",
+      "receipt_datetime": "2022-10-25T00:00:00",
+      "receipt_no": "20221025900542",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "222810"
+    },
+    {
+      "event_date": "2023-10-06",
+      "receipt_datetime": "2023-10-06T00:00:00",
+      "receipt_no": "20231006900461",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "223250"
+    },
+    {
+      "event_date": "2021-09-13",
+      "receipt_datetime": "2021-09-13T00:00:00",
+      "receipt_no": "20210913600425",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "224020"
+    },
+    {
+      "event_date": "2025-09-29",
+      "receipt_datetime": "2025-09-29T00:00:00",
+      "receipt_no": "20250929900518",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "225190"
+    },
+    {
+      "event_date": "2023-04-18",
+      "receipt_datetime": "2023-04-18T00:00:00",
+      "receipt_no": "20230418900493",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "225220"
+    },
+    {
+      "event_date": "2025-11-05",
+      "receipt_datetime": "2025-11-05T00:00:00",
+      "receipt_no": "20251105900617",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "226330"
+    },
+    {
+      "event_date": "2021-11-23",
+      "receipt_datetime": "2021-11-23T00:00:00",
+      "receipt_no": "20211123900344",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "227100"
+    },
+    {
+      "event_date": "2022-09-13",
+      "receipt_datetime": "2022-09-13T00:00:00",
+      "receipt_no": "20220913600353",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "227420"
+    },
+    {
+      "event_date": "2023-03-06",
+      "receipt_datetime": "2023-03-06T00:00:00",
+      "receipt_no": "20230306900865",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "229000"
+    },
+    {
+      "event_date": "2022-05-26",
+      "receipt_datetime": "2022-05-26T00:00:00",
+      "receipt_no": "20220526600346",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "232530"
+    },
+    {
+      "event_date": "2022-04-18",
+      "receipt_datetime": "2022-04-18T00:00:00",
+      "receipt_no": "20220418900441",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "232680"
+    },
+    {
+      "event_date": "2022-06-07",
+      "receipt_datetime": "2022-06-07T00:00:00",
+      "receipt_no": "20220607900409",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "234100"
+    },
+    {
+      "event_date": "2021-11-11",
+      "receipt_datetime": "2021-11-11T00:00:00",
+      "receipt_no": "20211111900437",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "234300"
+    },
+    {
+      "event_date": "2021-12-24",
+      "receipt_datetime": "2021-12-24T00:00:00",
+      "receipt_no": "20211224900649",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "234300"
+    },
+    {
+      "event_date": "2025-07-23",
+      "receipt_datetime": "2025-07-23T00:00:00",
+      "receipt_no": "20250723900424",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "234340"
+    },
+    {
+      "event_date": "2023-09-27",
+      "receipt_datetime": "2023-09-27T00:00:00",
+      "receipt_no": "20230927900807",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "235980"
+    },
+    {
+      "event_date": "2022-05-27",
+      "receipt_datetime": "2022-05-27T00:00:00",
+      "receipt_no": "20220527900359",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "236810"
+    },
+    {
+      "event_date": "2023-11-06",
+      "receipt_datetime": "2023-11-06T00:00:00",
+      "receipt_no": "20231106900567",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "238120"
+    },
+    {
+      "event_date": "2021-12-28",
+      "receipt_datetime": "2021-12-28T00:00:00",
+      "receipt_no": "20211228900892",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "239890"
+    },
+    {
+      "event_date": "2023-07-13",
+      "receipt_datetime": "2023-07-13T00:00:00",
+      "receipt_no": "20230713900435",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "241820"
+    },
+    {
+      "event_date": "2023-09-13",
+      "receipt_datetime": "2023-09-13T00:00:00",
+      "receipt_no": "20230913900380",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "241820"
+    },
+    {
+      "event_date": "2023-09-15",
+      "receipt_datetime": "2023-09-15T00:00:00",
+      "receipt_no": "20230915900477",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "245620"
+    },
+    {
+      "event_date": "2024-07-11",
+      "receipt_datetime": "2024-07-11T00:00:00",
+      "receipt_no": "20240711900268",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "246250"
+    },
+    {
+      "event_date": "2022-04-04",
+      "receipt_datetime": "2022-04-04T00:00:00",
+      "receipt_no": "20220404900695",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "246710"
+    },
+    {
+      "event_date": "2025-09-08",
+      "receipt_datetime": "2025-09-08T00:00:00",
+      "receipt_no": "20250908900447",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "246710"
+    },
+    {
+      "event_date": "2025-10-28",
+      "receipt_datetime": "2025-10-28T00:00:00",
+      "receipt_no": "20251028900648",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "246710"
+    },
+    {
+      "event_date": "2025-06-27",
+      "receipt_datetime": "2025-06-27T00:00:00",
+      "receipt_no": "20250627900914",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "246960"
+    },
+    {
+      "event_date": "2022-05-06",
+      "receipt_datetime": "2022-05-06T00:00:00",
+      "receipt_no": "20220506900376",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "247540"
+    },
+    {
+      "event_date": "2022-06-24",
+      "receipt_datetime": "2022-06-24T00:00:00",
+      "receipt_no": "20220624900454",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "247540"
+    },
+    {
+      "event_date": "2021-09-16",
+      "receipt_datetime": "2021-09-16T00:00:00",
+      "receipt_no": "20210916900371",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "252500"
+    },
+    {
+      "event_date": "2023-03-27",
+      "receipt_datetime": "2023-03-27T00:00:00",
+      "receipt_no": "20230327901002",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "254120"
+    },
+    {
+      "event_date": "2024-05-09",
+      "receipt_datetime": "2024-05-09T00:00:00",
+      "receipt_no": "20240509900605",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "255220"
+    },
+    {
+      "event_date": "2022-01-24",
+      "receipt_datetime": "2022-01-24T00:00:00",
+      "receipt_no": "20220124900721",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "256840"
+    },
+    {
+      "event_date": "2022-07-13",
+      "receipt_datetime": "2022-07-13T00:00:00",
+      "receipt_no": "20220713900263",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "257720"
+    },
+    {
+      "event_date": "2022-02-04",
+      "receipt_datetime": "2022-02-04T00:00:00",
+      "receipt_no": "20220204900774",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "262260"
+    },
+    {
+      "event_date": "2024-04-17",
+      "receipt_datetime": "2024-04-17T00:00:00",
+      "receipt_no": "20240417900459",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "262840"
+    },
+    {
+      "event_date": "2025-04-25",
+      "receipt_datetime": "2025-04-25T00:00:00",
+      "receipt_no": "20250425900713",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "262840"
+    },
+    {
+      "event_date": "2021-11-24",
+      "receipt_datetime": "2021-11-24T00:00:00",
+      "receipt_no": "20211124900342",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "263020"
+    },
+    {
+      "event_date": "2022-05-23",
+      "receipt_datetime": "2022-05-23T00:00:00",
+      "receipt_no": "20220523900295",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "263050"
+    },
+    {
+      "event_date": "2022-07-11",
+      "receipt_datetime": "2022-07-11T00:00:00",
+      "receipt_no": "20220711900630",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "263050"
+    },
+    {
+      "event_date": "2024-11-12",
+      "receipt_datetime": "2024-11-12T00:00:00",
+      "receipt_no": "20241112900598",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "264450"
+    },
+    {
+      "event_date": "2025-08-18",
+      "receipt_datetime": "2025-08-18T00:00:00",
+      "receipt_no": "20250818900420",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "265740"
+    },
+    {
+      "event_date": "2022-07-22",
+      "receipt_datetime": "2022-07-22T00:00:00",
+      "receipt_no": "20220722900437",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "268600"
+    },
+    {
+      "event_date": "2022-01-20",
+      "receipt_datetime": "2022-01-20T00:00:00",
+      "receipt_no": "20220120600340",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "270210"
+    },
+    {
+      "event_date": "2023-11-10",
+      "receipt_datetime": "2023-11-10T00:00:00",
+      "receipt_no": "20231110900774",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "270520"
+    },
+    {
+      "event_date": "2022-09-05",
+      "receipt_datetime": "2022-09-05T00:00:00",
+      "receipt_no": "20220905900530",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "270660"
+    },
+    {
+      "event_date": "2021-08-31",
+      "receipt_datetime": "2021-08-31T00:00:00",
+      "receipt_no": "20210831900470",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "272290"
+    },
+    {
+      "event_date": "2025-06-16",
+      "receipt_datetime": "2025-06-16T00:00:00",
+      "receipt_no": "20250616900518",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "276040"
+    },
+    {
+      "event_date": "2022-05-30",
+      "receipt_datetime": "2022-05-30T00:00:00",
+      "receipt_no": "20220530900671",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "278650"
+    },
+    {
+      "event_date": "2022-07-22",
+      "receipt_datetime": "2022-07-22T00:00:00",
+      "receipt_no": "20220722900436",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "284620"
+    },
+    {
+      "event_date": "2024-06-12",
+      "receipt_datetime": "2024-06-12T00:00:00",
+      "receipt_no": "20240612900456",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "288330"
+    },
+    {
+      "event_date": "2024-07-26",
+      "receipt_datetime": "2024-07-26T00:00:00",
+      "receipt_no": "20240726900724",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "288330"
+    },
+    {
+      "event_date": "2022-07-18",
+      "receipt_datetime": "2022-07-18T00:00:00",
+      "receipt_no": "20220718900416",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "288980"
+    },
+    {
+      "event_date": "2021-11-04",
+      "receipt_datetime": "2021-11-04T00:00:00",
+      "receipt_no": "20211104900468",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "289220"
+    },
+    {
+      "event_date": "2021-12-17",
+      "receipt_datetime": "2021-12-17T00:00:00",
+      "receipt_no": "20211217900462",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "289220"
+    },
+    {
+      "event_date": "2021-12-30",
+      "receipt_datetime": "2021-12-30T00:00:00",
+      "receipt_no": "20211230900984",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "290380"
+    },
+    {
+      "event_date": "2022-05-10",
+      "receipt_datetime": "2022-05-10T00:00:00",
+      "receipt_no": "20220510900585",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "290520"
+    },
+    {
+      "event_date": "2021-08-13",
+      "receipt_datetime": "2021-08-13T00:00:00",
+      "receipt_no": "20210813901168",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "290550"
+    },
+    {
+      "event_date": "2023-12-22",
+      "receipt_datetime": "2023-12-22T00:00:00",
+      "receipt_no": "20231222900732",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "290690"
+    },
+    {
+      "event_date": "2022-12-28",
+      "receipt_datetime": "2022-12-28T00:00:00",
+      "receipt_no": "20221228900840",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "290720"
+    },
+    {
+      "event_date": "2023-02-27",
+      "receipt_datetime": "2023-02-27T00:00:00",
+      "receipt_no": "20230227901031",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "291650"
+    },
+    {
+      "event_date": "2024-10-28",
+      "receipt_datetime": "2024-10-28T00:00:00",
+      "receipt_no": "20241028900484",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "291650"
+    },
+    {
+      "event_date": "2021-08-23",
+      "receipt_datetime": "2021-08-23T00:00:00",
+      "receipt_no": "20210823900296",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "293780"
+    },
+    {
+      "event_date": "2021-12-01",
+      "receipt_datetime": "2021-12-01T00:00:00",
+      "receipt_no": "20211201900461",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "294090"
+    },
+    {
+      "event_date": "2022-01-14",
+      "receipt_datetime": "2022-01-14T00:00:00",
+      "receipt_no": "20220114900469",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "294090"
+    },
+    {
+      "event_date": "2024-10-29",
+      "receipt_datetime": "2024-10-29T00:00:00",
+      "receipt_no": "20241029900536",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "294090"
+    },
+    {
+      "event_date": "2023-08-29",
+      "receipt_datetime": "2023-08-29T00:00:00",
+      "receipt_no": "20230829900456",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "294140"
+    },
+    {
+      "event_date": "2021-11-17",
+      "receipt_datetime": "2021-11-17T00:00:00",
+      "receipt_no": "20211117900352",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "294570"
+    },
+    {
+      "event_date": "2022-06-17",
+      "receipt_datetime": "2022-06-17T00:00:00",
+      "receipt_no": "20220617900528",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "297090"
+    },
+    {
+      "event_date": "2021-12-01",
+      "receipt_datetime": "2021-12-01T00:00:00",
+      "receipt_no": "20211201900462",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "297570"
+    },
+    {
+      "event_date": "2023-07-11",
+      "receipt_datetime": "2023-07-11T00:00:00",
+      "receipt_no": "20230711900365",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "297890"
+    },
+    {
+      "event_date": "2023-07-10",
+      "receipt_datetime": "2023-07-10T00:00:00",
+      "receipt_no": "20230710900612",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "298060"
+    },
+    {
+      "event_date": "2023-09-14",
+      "receipt_datetime": "2023-09-14T00:00:00",
+      "receipt_no": "20230914900419",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "298060"
+    },
+    {
+      "event_date": "2021-07-30",
+      "receipt_datetime": "2021-07-30T00:00:00",
+      "receipt_no": "20210730900412",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "298540"
+    },
+    {
+      "event_date": "2023-07-17",
+      "receipt_datetime": "2023-07-17T00:00:00",
+      "receipt_no": "20230717900585",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "299660"
+    },
+    {
+      "event_date": "2024-06-26",
+      "receipt_datetime": "2024-06-26T00:00:00",
+      "receipt_no": "20240626900589",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "299660"
+    },
+    {
+      "event_date": "2025-05-02",
+      "receipt_datetime": "2025-05-02T00:00:00",
+      "receipt_no": "20250502900490",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "299660"
+    },
+    {
+      "event_date": "2023-04-28",
+      "receipt_datetime": "2023-04-28T00:00:00",
+      "receipt_no": "20230428900779",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "299900"
+    },
+    {
+      "event_date": "2025-06-23",
+      "receipt_datetime": "2025-06-23T00:00:00",
+      "receipt_no": "20250623900404",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "300080"
+    },
+    {
+      "event_date": "2022-07-18",
+      "receipt_datetime": "2022-07-18T00:00:00",
+      "receipt_no": "20220718900481",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "300120"
+    },
+    {
+      "event_date": "2026-01-07",
+      "receipt_datetime": "2026-01-07T00:00:00",
+      "receipt_no": "20260107900678",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "300120"
+    },
+    {
+      "event_date": "2026-02-26",
+      "receipt_datetime": "2026-02-26T00:00:00",
+      "receipt_no": "20260226901417",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "300120"
+    },
+    {
+      "event_date": "2023-04-12",
+      "receipt_datetime": "2023-04-12T00:00:00",
+      "receipt_no": "20230412900499",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "301300"
+    },
+    {
+      "event_date": "2025-08-06",
+      "receipt_datetime": "2025-08-06T00:00:00",
+      "receipt_no": "20250806900481",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "303810"
+    },
+    {
+      "event_date": "2021-10-21",
+      "receipt_datetime": "2021-10-21T00:00:00",
+      "receipt_no": "20211021900309",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "304100"
+    },
+    {
+      "event_date": "2023-08-30",
+      "receipt_datetime": "2023-08-30T00:00:00",
+      "receipt_no": "20230830900530",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "304840"
+    },
+    {
+      "event_date": "2023-10-20",
+      "receipt_datetime": "2023-10-20T00:00:00",
+      "receipt_no": "20231020900663",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "304840"
+    },
+    {
+      "event_date": "2022-05-25",
+      "receipt_datetime": "2022-05-25T00:00:00",
+      "receipt_no": "20220525900422",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "305090"
+    },
+    {
+      "event_date": "2022-06-07",
+      "receipt_datetime": "2022-06-07T00:00:00",
+      "receipt_no": "20220607900410",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "308080"
+    },
+    {
+      "event_date": "2025-06-02",
+      "receipt_datetime": "2025-06-02T00:00:00",
+      "receipt_no": "20250602900641",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "308100"
+    },
+    {
+      "event_date": "2025-07-21",
+      "receipt_datetime": "2025-07-21T00:00:00",
+      "receipt_no": "20250721900432",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "308100"
+    },
+    {
+      "event_date": "2023-07-20",
+      "receipt_datetime": "2023-07-20T00:00:00",
+      "receipt_no": "20230720900668",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "310210"
+    },
+    {
+      "event_date": "2023-09-12",
+      "receipt_datetime": "2023-09-12T00:00:00",
+      "receipt_no": "20230912900368",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "310210"
+    },
+    {
+      "event_date": "2024-01-24",
+      "receipt_datetime": "2024-01-24T00:00:00",
+      "receipt_no": "20240124600388",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "311060"
+    },
+    {
+      "event_date": "2023-01-10",
+      "receipt_datetime": "2023-01-10T00:00:00",
+      "receipt_no": "20230110900596",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "311320"
+    },
+    {
+      "event_date": "2023-07-06",
+      "receipt_datetime": "2023-07-06T00:00:00",
+      "receipt_no": "20230706900303",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "311690"
+    },
+    {
+      "event_date": "2024-08-05",
+      "receipt_datetime": "2024-08-05T00:00:00",
+      "receipt_no": "20240805900776",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "314130"
+    },
+    {
+      "event_date": "2024-02-27",
+      "receipt_datetime": "2024-02-27T00:00:00",
+      "receipt_no": "20240227900922",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "314930"
+    },
+    {
+      "event_date": "2021-12-03",
+      "receipt_datetime": "2021-12-03T00:00:00",
+      "receipt_no": "20211203900386",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "315640"
+    },
+    {
+      "event_date": "2023-08-31",
+      "receipt_datetime": "2023-08-31T00:00:00",
+      "receipt_no": "20230831900654",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "315640"
+    },
+    {
+      "event_date": "2024-04-05",
+      "receipt_datetime": "2024-04-05T00:00:00",
+      "receipt_no": "20240405900844",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "315640"
+    },
+    {
+      "event_date": "2025-10-28",
+      "receipt_datetime": "2025-10-28T00:00:00",
+      "receipt_no": "20251028900647",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "315640"
+    },
+    {
+      "event_date": "2025-05-30",
+      "receipt_datetime": "2025-05-30T00:00:00",
+      "receipt_no": "20250530901189",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "317120"
+    },
+    {
+      "event_date": "2023-06-22",
+      "receipt_datetime": "2023-06-22T00:00:00",
+      "receipt_no": "20230622900415",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "317770"
+    },
+    {
+      "event_date": "2022-09-20",
+      "receipt_datetime": "2022-09-20T00:00:00",
+      "receipt_no": "20220920900378",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "319660"
+    },
+    {
+      "event_date": "2024-11-07",
+      "receipt_datetime": "2024-11-07T00:00:00",
+      "receipt_no": "20241107900457",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "321370"
+    },
+    {
+      "event_date": "2023-08-11",
+      "receipt_datetime": "2023-08-11T00:00:00",
+      "receipt_no": "20230811901094",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "322180"
+    },
+    {
+      "event_date": "2024-08-13",
+      "receipt_datetime": "2024-08-13T00:00:00",
+      "receipt_no": "20240813900950",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "322510"
+    },
+    {
+      "event_date": "2024-10-16",
+      "receipt_datetime": "2024-10-16T00:00:00",
+      "receipt_no": "20241016900387",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "322510"
+    },
+    {
+      "event_date": "2021-10-14",
+      "receipt_datetime": "2021-10-14T00:00:00",
+      "receipt_no": "20211014900362",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "323230"
+    },
+    {
+      "event_date": "2025-01-02",
+      "receipt_datetime": "2025-01-02T00:00:00",
+      "receipt_no": "20250102900580",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "323280"
+    },
+    {
+      "event_date": "2023-09-19",
+      "receipt_datetime": "2023-09-19T00:00:00",
+      "receipt_no": "20230919900389",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "323990"
+    },
+    {
+      "event_date": "2023-11-09",
+      "receipt_datetime": "2023-11-09T00:00:00",
+      "receipt_no": "20231109900486",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "323990"
+    },
+    {
+      "event_date": "2021-12-16",
+      "receipt_datetime": "2021-12-16T00:00:00",
+      "receipt_no": "20211216901389",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "327260"
+    },
+    {
+      "event_date": "2026-05-11",
+      "receipt_datetime": "2026-05-11T00:00:00",
+      "receipt_no": "20260511900970",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "327260"
+    },
+    {
+      "event_date": "2021-07-21",
+      "receipt_datetime": "2021-07-21T00:00:00",
+      "receipt_no": "20210721600476",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "327610"
+    },
+    {
+      "event_date": "2023-09-21",
+      "receipt_datetime": "2023-09-21T00:00:00",
+      "receipt_no": "20230921900481",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "328130"
+    },
+    {
+      "event_date": "2023-11-08",
+      "receipt_datetime": "2023-11-08T00:00:00",
+      "receipt_no": "20231108900624",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "328130"
+    },
+    {
+      "event_date": "2026-03-17",
+      "receipt_datetime": "2026-03-17T00:00:00",
+      "receipt_no": "20260317901036",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "328130"
+    },
+    {
+      "event_date": "2026-04-30",
+      "receipt_datetime": "2026-04-30T00:00:00",
+      "receipt_no": "20260430901423",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "328130"
+    },
+    {
+      "event_date": "2022-09-08",
+      "receipt_datetime": "2022-09-08T00:00:00",
+      "receipt_no": "20220908900477",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "332370"
+    },
+    {
+      "event_date": "2025-05-28",
+      "receipt_datetime": "2025-05-28T00:00:00",
+      "receipt_no": "20250528900424",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "336680"
+    },
+    {
+      "event_date": "2021-08-30",
+      "receipt_datetime": "2021-08-30T00:00:00",
+      "receipt_no": "20210830900376",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "337930"
+    },
+    {
+      "event_date": "2021-07-02",
+      "receipt_datetime": "2021-07-02T00:00:00",
+      "receipt_no": "20210702900503",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "340570"
+    },
+    {
+      "event_date": "2024-04-15",
+      "receipt_datetime": "2024-04-15T00:00:00",
+      "receipt_no": "20240415900633",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "340930"
+    },
+    {
+      "event_date": "2025-11-11",
+      "receipt_datetime": "2025-11-11T00:00:00",
+      "receipt_no": "20251111900579",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "340930"
+    },
+    {
+      "event_date": "2026-01-06",
+      "receipt_datetime": "2026-01-06T00:00:00",
+      "receipt_no": "20260106900581",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "340930"
+    },
+    {
+      "event_date": "2023-05-11",
+      "receipt_datetime": "2023-05-11T00:00:00",
+      "receipt_no": "20230511900599",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "347000"
+    },
+    {
+      "event_date": "2023-10-31",
+      "receipt_datetime": "2023-10-31T00:00:00",
+      "receipt_no": "20231031900524",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "347700"
+    },
+    {
+      "event_date": "2022-07-25",
+      "receipt_datetime": "2022-07-25T00:00:00",
+      "receipt_no": "20220725900350",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "347740"
+    },
+    {
+      "event_date": "2023-08-17",
+      "receipt_datetime": "2023-08-17T00:00:00",
+      "receipt_no": "20230817900374",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "347770"
+    },
+    {
+      "event_date": "2025-11-12",
+      "receipt_datetime": "2025-11-12T00:00:00",
+      "receipt_no": "20251112900695",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "347850"
+    },
+    {
+      "event_date": "2022-09-20",
+      "receipt_datetime": "2022-09-20T00:00:00",
+      "receipt_no": "20220920900377",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "347860"
+    },
+    {
+      "event_date": "2022-11-08",
+      "receipt_datetime": "2022-11-08T00:00:00",
+      "receipt_no": "20221108900448",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "347860"
+    },
+    {
+      "event_date": "2024-12-20",
+      "receipt_datetime": "2024-12-20T00:00:00",
+      "receipt_no": "20241220900741",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "347860"
+    },
+    {
+      "event_date": "2026-06-18",
+      "receipt_datetime": "2026-06-18T00:00:00",
+      "receipt_no": "20260618900730",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "348340"
+    },
+    {
+      "event_date": "2024-08-29",
+      "receipt_datetime": "2024-08-29T00:00:00",
+      "receipt_no": "20240829900344",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "352090"
+    },
+    {
+      "event_date": "2021-09-01",
+      "receipt_datetime": "2021-09-01T00:00:00",
+      "receipt_no": "20210901900475",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "352480"
+    },
+    {
+      "event_date": "2021-12-08",
+      "receipt_datetime": "2021-12-08T00:00:00",
+      "receipt_no": "20211208900318",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "352700"
+    },
+    {
+      "event_date": "2023-06-26",
+      "receipt_datetime": "2023-06-26T00:00:00",
+      "receipt_no": "20230626900443",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "352770"
+    },
+    {
+      "event_date": "2023-08-09",
+      "receipt_datetime": "2023-08-09T00:00:00",
+      "receipt_no": "20230809900559",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "352770"
+    },
+    {
+      "event_date": "2024-10-31",
+      "receipt_datetime": "2024-10-31T00:00:00",
+      "receipt_no": "20241031900752",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "354200"
+    },
+    {
+      "event_date": "2025-07-03",
+      "receipt_datetime": "2025-07-03T00:00:00",
+      "receipt_no": "20250703900573",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "355390"
+    },
+    {
+      "event_date": "2026-03-13",
+      "receipt_datetime": "2026-03-13T00:00:00",
+      "receipt_no": "20260313901848",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "355690"
+    },
+    {
+      "event_date": "2022-11-15",
+      "receipt_datetime": "2022-11-15T00:00:00",
+      "receipt_no": "20221115900435",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "356860"
+    },
+    {
+      "event_date": "2026-05-28",
+      "receipt_datetime": "2026-05-28T00:00:00",
+      "receipt_no": "20260528900983",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "356860"
+    },
+    {
+      "event_date": "2024-03-05",
+      "receipt_datetime": "2024-03-05T00:00:00",
+      "receipt_no": "20240305900870",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "357230"
+    },
+    {
+      "event_date": "2024-09-12",
+      "receipt_datetime": "2024-09-12T00:00:00",
+      "receipt_no": "20240912900472",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "357880"
+    },
+    {
+      "event_date": "2024-11-06",
+      "receipt_datetime": "2024-11-06T00:00:00",
+      "receipt_no": "20241106900369",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "357880"
+    },
+    {
+      "event_date": "2024-01-18",
+      "receipt_datetime": "2024-01-18T00:00:00",
+      "receipt_no": "20240118900392",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "358570"
+    },
+    {
+      "event_date": "2025-02-10",
+      "receipt_datetime": "2025-02-10T00:00:00",
+      "receipt_no": "20250210901590",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "358570"
+    },
+    {
+      "event_date": "2025-04-01",
+      "receipt_datetime": "2025-04-01T00:00:00",
+      "receipt_no": "20250401901130",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "358570"
+    },
+    {
+      "event_date": "2021-11-26",
+      "receipt_datetime": "2021-11-26T00:00:00",
+      "receipt_no": "20211126900354",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "361390"
+    },
+    {
+      "event_date": "2023-07-03",
+      "receipt_datetime": "2023-07-03T00:00:00",
+      "receipt_no": "20230703900488",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "361570"
+    },
+    {
+      "event_date": "2025-07-04",
+      "receipt_datetime": "2025-07-04T00:00:00",
+      "receipt_no": "20250704900705",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "365270"
+    },
+    {
+      "event_date": "2025-07-28",
+      "receipt_datetime": "2025-07-28T00:00:00",
+      "receipt_no": "20250728900449",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "365330"
+    },
+    {
+      "event_date": "2025-09-11",
+      "receipt_datetime": "2025-09-11T00:00:00",
+      "receipt_no": "20250911900406",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "365330"
+    },
+    {
+      "event_date": "2022-06-28",
+      "receipt_datetime": "2022-06-28T00:00:00",
+      "receipt_no": "20220628900575",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "366030"
+    },
+    {
+      "event_date": "2022-11-02",
+      "receipt_datetime": "2022-11-02T00:00:00",
+      "receipt_no": "20221102900438",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "368600"
+    },
+    {
+      "event_date": "2025-12-22",
+      "receipt_datetime": "2025-12-22T00:00:00",
+      "receipt_no": "20251222900721",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "368600"
+    },
+    {
+      "event_date": "2026-06-18",
+      "receipt_datetime": "2026-06-18T00:00:00",
+      "receipt_no": "20260618900729",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "368970"
+    },
+    {
+      "event_date": "2025-09-30",
+      "receipt_datetime": "2025-09-30T00:00:00",
+      "receipt_no": "20250930900744",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "373110"
+    },
+    {
+      "event_date": "2026-02-06",
+      "receipt_datetime": "2026-02-06T00:00:00",
+      "receipt_no": "20260206902199",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "373170"
+    },
+    {
+      "event_date": "2024-02-20",
+      "receipt_datetime": "2024-02-20T00:00:00",
+      "receipt_no": "20240220900683",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "373200"
+    },
+    {
+      "event_date": "2022-11-18",
+      "receipt_datetime": "2022-11-18T00:00:00",
+      "receipt_no": "20221118900485",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "376180"
+    },
+    {
+      "event_date": "2023-08-03",
+      "receipt_datetime": "2023-08-03T00:00:00",
+      "receipt_no": "20230803900554",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "376930"
+    },
+    {
+      "event_date": "2023-09-22",
+      "receipt_datetime": "2023-09-22T00:00:00",
+      "receipt_no": "20230922900573",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "376930"
+    },
+    {
+      "event_date": "2025-10-29",
+      "receipt_datetime": "2025-10-29T00:00:00",
+      "receipt_no": "20251029900583",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "376930"
+    },
+    {
+      "event_date": "2021-10-07",
+      "receipt_datetime": "2021-10-07T00:00:00",
+      "receipt_no": "20211007900421",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "376980"
+    },
+    {
+      "event_date": "2022-02-24",
+      "receipt_datetime": "2022-02-24T00:00:00",
+      "receipt_no": "20220224900789",
+      "report_name": "권리락(유상증자)",
+      "stock_code": "377030"
+    },
+    {
+      "event_date": "2022-04-15",
+      "receipt_datetime": "2022-04-15T00:00:00",
+      "receipt_no": "20220415900820",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "377030"
+    },
+    {
+      "event_date": "2024-09-26",
+      "receipt_datetime": "2024-09-26T00:00:00",
+      "receipt_no": "20240926900509",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "377030"
+    },
+    {
+      "event_date": "2024-03-12",
+      "receipt_datetime": "2024-03-12T00:00:00",
+      "receipt_no": "20240312901143",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "377220"
+    },
+    {
+      "event_date": "2023-09-26",
+      "receipt_datetime": "2023-09-26T00:00:00",
+      "receipt_no": "20230926900711",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "378340"
+    },
+    {
+      "event_date": "2025-09-16",
+      "receipt_datetime": "2025-09-16T00:00:00",
+      "receipt_no": "20250916900359",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "378800"
+    },
+    {
+      "event_date": "2025-01-23",
+      "receipt_datetime": "2025-01-23T00:00:00",
+      "receipt_no": "20250123900638",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "381620"
+    },
+    {
+      "event_date": "2023-10-25",
+      "receipt_datetime": "2023-10-25T00:00:00",
+      "receipt_no": "20231025900502",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "382800"
+    },
+    {
+      "event_date": "2022-07-11",
+      "receipt_datetime": "2022-07-11T00:00:00",
+      "receipt_no": "20220711900628",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "382840"
+    },
+    {
+      "event_date": "2021-07-28",
+      "receipt_datetime": "2021-07-28T00:00:00",
+      "receipt_no": "20210728900355",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "383310"
+    },
+    {
+      "event_date": "2024-10-10",
+      "receipt_datetime": "2024-10-10T00:00:00",
+      "receipt_no": "20241010900584",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "383310"
+    },
+    {
+      "event_date": "2023-03-08",
+      "receipt_datetime": "2023-03-08T00:00:00",
+      "receipt_no": "20230308901115",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "383930"
+    },
+    {
+      "event_date": "2025-04-21",
+      "receipt_datetime": "2025-04-21T00:00:00",
+      "receipt_no": "20250421900684",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "384470"
+    },
+    {
+      "event_date": "2022-08-09",
+      "receipt_datetime": "2022-08-09T00:00:00",
+      "receipt_no": "20220809900394",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "388050"
+    },
+    {
+      "event_date": "2023-07-21",
+      "receipt_datetime": "2023-07-21T00:00:00",
+      "receipt_no": "20230721600523",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "388610"
+    },
+    {
+      "event_date": "2022-07-12",
+      "receipt_datetime": "2022-07-12T00:00:00",
+      "receipt_no": "20220712900393",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "389030"
+    },
+    {
+      "event_date": "2025-10-13",
+      "receipt_datetime": "2025-10-13T00:00:00",
+      "receipt_no": "20251013900481",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "389140"
+    },
+    {
+      "event_date": "2023-06-26",
+      "receipt_datetime": "2023-06-26T00:00:00",
+      "receipt_no": "20230626900484",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "393210"
+    },
+    {
+      "event_date": "2025-10-20",
+      "receipt_datetime": "2025-10-20T00:00:00",
+      "receipt_no": "20251020900504",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "396270"
+    },
+    {
+      "event_date": "2023-10-30",
+      "receipt_datetime": "2023-10-30T00:00:00",
+      "receipt_no": "20231030900530",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "397030"
+    },
+    {
+      "event_date": "2023-10-10",
+      "receipt_datetime": "2023-10-10T00:00:00",
+      "receipt_no": "20231010900627",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "402030"
+    },
+    {
+      "event_date": "2025-08-29",
+      "receipt_datetime": "2025-08-29T00:00:00",
+      "receipt_no": "20250829900748",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "402030"
+    },
+    {
+      "event_date": "2025-08-18",
+      "receipt_datetime": "2025-08-18T00:00:00",
+      "receipt_no": "20250818900419",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "402490"
+    },
+    {
+      "event_date": "2023-03-15",
+      "receipt_datetime": "2023-03-15T00:00:00",
+      "receipt_no": "20230315902060",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "403870"
+    },
+    {
+      "event_date": "2022-12-16",
+      "receipt_datetime": "2022-12-16T00:00:00",
+      "receipt_no": "20221216901284",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "405100"
+    },
+    {
+      "event_date": "2023-08-07",
+      "receipt_datetime": "2023-08-07T00:00:00",
+      "receipt_no": "20230807900428",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "405920"
+    },
+    {
+      "event_date": "2026-01-06",
+      "receipt_datetime": "2026-01-06T00:00:00",
+      "receipt_no": "20260106900579",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "406820"
+    },
+    {
+      "event_date": "2023-06-23",
+      "receipt_datetime": "2023-06-23T00:00:00",
+      "receipt_no": "20230623900503",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "407400"
+    },
+    {
+      "event_date": "2024-04-04",
+      "receipt_datetime": "2024-04-04T00:00:00",
+      "receipt_no": "20240404900537",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "408900"
+    },
+    {
+      "event_date": "2025-11-07",
+      "receipt_datetime": "2025-11-07T00:00:00",
+      "receipt_no": "20251107900727",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "412350"
+    },
+    {
+      "event_date": "2025-09-05",
+      "receipt_datetime": "2025-09-05T00:00:00",
+      "receipt_no": "20250905900431",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "415380"
+    },
+    {
+      "event_date": "2023-05-19",
+      "receipt_datetime": "2023-05-19T00:00:00",
+      "receipt_no": "20230519900510",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "417500"
+    },
+    {
+      "event_date": "2025-12-29",
+      "receipt_datetime": "2025-12-29T00:00:00",
+      "receipt_no": "20251229900726",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "417840"
+    },
+    {
+      "event_date": "2025-02-04",
+      "receipt_datetime": "2025-02-04T00:00:00",
+      "receipt_no": "20250204900898",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "418620"
+    },
+    {
+      "event_date": "2025-11-06",
+      "receipt_datetime": "2025-11-06T00:00:00",
+      "receipt_no": "20251106900561",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "418620"
+    },
+    {
+      "event_date": "2023-08-30",
+      "receipt_datetime": "2023-08-30T00:00:00",
+      "receipt_no": "20230830900523",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "419050"
+    },
+    {
+      "event_date": "2025-08-04",
+      "receipt_datetime": "2025-08-04T00:00:00",
+      "receipt_no": "20250804900413",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "419120"
+    },
+    {
+      "event_date": "2026-04-02",
+      "receipt_datetime": "2026-04-02T00:00:00",
+      "receipt_no": "20260402901007",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "424870"
+    },
+    {
+      "event_date": "2023-12-28",
+      "receipt_datetime": "2023-12-28T00:00:00",
+      "receipt_no": "20231228900852",
+      "report_name": "권리락(무상증자)",
+      "stock_code": "425040"
+    },
+    {
+      "event_date": "2025-11-13",
+      "receipt_datetime": "2025-11-13T00:00:00",
+      "receipt_no": "20251113901084",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "429270"
+    },
+    {
+      "event_date": "2024-04-26",
+      "receipt_datetime": "2024-04-26T00:00:00",
+      "receipt_no": "20240426900746",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "430690"
+    },
+    {
+      "event_date": "2024-06-28",
+      "receipt_datetime": "2024-06-28T00:00:00",
+      "receipt_no": "20240628900964",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "432470"
+    },
+    {
+      "event_date": "2024-06-07",
+      "receipt_datetime": "2024-06-07T00:00:00",
+      "receipt_no": "20240607900335",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "432720"
+    },
+    {
+      "event_date": "2024-10-16",
+      "receipt_datetime": "2024-10-16T00:00:00",
+      "receipt_no": "20241016900384",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "437730"
+    },
+    {
+      "event_date": "2025-05-07",
+      "receipt_datetime": "2025-05-07T00:00:00",
+      "receipt_no": "20250507900722",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "439580"
+    },
+    {
+      "event_date": "2024-08-05",
+      "receipt_datetime": "2024-08-05T00:00:00",
+      "receipt_no": "20240805900781",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "445680"
+    },
+    {
+      "event_date": "2025-05-07",
+      "receipt_datetime": "2025-05-07T00:00:00",
+      "receipt_no": "20250507900723",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "448280"
+    },
+    {
+      "event_date": "2024-06-27",
+      "receipt_datetime": "2024-06-27T00:00:00",
+      "receipt_no": "20240627900740",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "450520"
+    },
+    {
+      "event_date": "2025-11-04",
+      "receipt_datetime": "2025-11-04T00:00:00",
+      "receipt_no": "20251104900404",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "456160"
+    },
+    {
+      "event_date": "2026-03-23",
+      "receipt_datetime": "2026-03-23T00:00:00",
+      "receipt_no": "20260323901827",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "458870"
+    },
+    {
+      "event_date": "2025-11-06",
+      "receipt_datetime": "2025-11-06T00:00:00",
+      "receipt_no": "20251106900564",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "460940"
+    },
+    {
+      "event_date": "2025-09-24",
+      "receipt_datetime": "2025-09-24T00:00:00",
+      "receipt_no": "20250924900512",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "462350"
+    },
+    {
+      "event_date": "2025-11-19",
+      "receipt_datetime": "2025-11-19T00:00:00",
+      "receipt_no": "20251119900416",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "462350"
+    },
+    {
+      "event_date": "2026-04-23",
+      "receipt_datetime": "2026-04-23T00:00:00",
+      "receipt_no": "20260423900924",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "462350"
+    },
+    {
+      "event_date": "2026-06-17",
+      "receipt_datetime": "2026-06-17T00:00:00",
+      "receipt_no": "20260617900526",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "462350"
+    },
+    {
+      "event_date": "2025-04-18",
+      "receipt_datetime": "2025-04-18T00:00:00",
+      "receipt_no": "20250418900945",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "462860"
+    },
+    {
+      "event_date": "2025-06-11",
+      "receipt_datetime": "2025-06-11T00:00:00",
+      "receipt_no": "20250611900588",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "464580"
+    },
+    {
+      "event_date": "2025-12-30",
+      "receipt_datetime": "2025-12-30T00:00:00",
+      "receipt_no": "20251230900950",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "472850"
+    },
+    {
+      "event_date": "2025-10-02",
+      "receipt_datetime": "2025-10-02T00:00:00",
+      "receipt_no": "20251002900645",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "476060"
+    },
+    {
+      "event_date": "2026-06-26",
+      "receipt_datetime": "2026-06-26T00:00:00",
+      "receipt_no": "20260626901004",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "476830"
+    },
+    {
+      "event_date": "2026-02-19",
+      "receipt_datetime": "2026-02-19T00:00:00",
+      "receipt_no": "20260219900712",
+      "report_name": "권리락              (무상증자)",
+      "stock_code": "482630"
+    },
+    {
+      "event_date": "2025-07-30",
+      "receipt_datetime": "2025-07-30T00:00:00",
+      "receipt_no": "20250730900590",
+      "report_name": "권리락              (유상증자)",
+      "stock_code": "950220"
+    }
+  ],
+  "schema_version": 1,
+  "source_snapshot": {
+    "kind": "local_dart_sqlite_snapshot",
+    "query": "SELECT receipt_no, stock_code, report_name, receipt_datetime\nFROM disclosures\nWHERE report_name LIKE '%권리락%'\n  AND stock_code IS NOT NULL\n  AND trim(stock_code) <> ''\nORDER BY stock_code, receipt_datetime, receipt_no",
+    "receipt_datetime_max": "2026-08-26T00:00:00",
+    "receipt_datetime_min": "2021-06-28T00:00:00",
+    "table": "disclosures",
+    "table_rows": 1209249
+  }
+}

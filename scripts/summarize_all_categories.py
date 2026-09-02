@@ -30,12 +30,13 @@ def _table_row(r: dict) -> str:
     if "error" in r:
         return f"  {r['category']:>20}  ERROR: {r['error']}"
     a = r["aggregate"]
-    real = r["realistic"].get("realistic", {})
-    wf_pos = sum(1 for w in r["walk_forward"]
+    real_raw = r["realistic"].get("realistic", {})
+    real_abnormal = r["realistic_abnormal"].get("realistic", {})
+    wf_pos = sum(1 for w in r["walk_forward_abnormal"]
                  if w.get("n", 0) >= MIN_WINDOW_EVENTS and w.get("mean_pct", 0) > 0)
-    wf_total = sum(1 for w in r["walk_forward"] if w.get("n", 0) >= MIN_WINDOW_EVENTS)
-    pf_t5 = a["t5_net"].get("pf")
-    pf_real = real.get("pf")
+    wf_total = sum(1 for w in r["walk_forward_abnormal"] if w.get("n", 0) >= MIN_WINDOW_EVENTS)
+    pf_abnormal = a["t5_abnormal_net"].get("pf")
+    pf_real_abnormal = real_abnormal.get("pf")
 
     def pct(x): return f"{x:+.2f}%" if isinstance(x, (int, float)) else "n/a"
     def num(x): return f"{x:.2f}" if isinstance(x, (int, float)) else "n/a"
@@ -43,11 +44,10 @@ def _table_row(r: dict) -> str:
     return (
         f"  {r['category']:>20}  "
         f"n={r['n_events']:>5}  "
-        f"T+5_net={pct(a['t5_net'].get('mean_pct', 0)):>8}  "
-        f"med={pct(a['t5_net'].get('median_pct', 0)):>8}  "
-        f"win%={a['t5_net'].get('win_pct', 0):>5.1f}  "
-        f"PF={num(pf_t5):>5}  "
-        f"realistic={pct(real.get('mean_pct', 0)):>8}/PF{num(pf_real):>5}  "
+        f"T+5_raw={pct(a['t5_net'].get('mean_pct', 0)):>8}  "
+        f"T+5_abn={pct(a['t5_abnormal_net'].get('mean_pct', 0)):>8}/PF{num(pf_abnormal):>5}  "
+        f"real_raw={pct(real_raw.get('mean_pct', 0)):>8}  "
+        f"real_abn={pct(real_abnormal.get('mean_pct', 0)):>8}/PF{num(pf_real_abnormal):>5}  "
         f"WF={wf_pos}/{wf_total}  "
         f"=> {r['verdict']}"
     )
@@ -73,7 +73,7 @@ def main() -> int:
 
     print()
     print("=" * 160)
-    print("CROSS-CATEGORY EVENT STUDY SUMMARY  (KOSPI+KOSDAQ disclosures, 0.313% roundtrip cost)")
+    print("CROSS-CATEGORY EVENT STUDY SUMMARY  (raw + KOSPI/KOSDAQ-adjusted, dated costs)")
     print(f"WF = walk-forward windows positive / windows SCORED "
           f"(a window needs >={MIN_WINDOW_EVENTS} events to be scored)")
     print("=" * 160)

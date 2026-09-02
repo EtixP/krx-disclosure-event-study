@@ -1,0 +1,466 @@
+{
+  "buyback_intraday": {
+    "events_with_filing_time": 3562,
+    "learned_selector": {
+      "abnormal_model_mean_net_pct": -0.026270792,
+      "abnormal_selection_lift_pct": -0.0870660365,
+      "abnormal_verdict": "no_selection_edge",
+      "raw_model_mean_net_pct": 0.8280398645,
+      "raw_selection_lift_pct": 0.0678186096,
+      "raw_verdict": "positive_selective_edge"
+    },
+    "metrics": {
+      "entry_timing_delta_pct": {
+        "abnormal_minus_raw_pct_points": -0.0599957995,
+        "abnormal_net_pct": 0.2567288958,
+        "current_raw_net_pct": 0.3167246953,
+        "m0_2_raw_net_pct": 0.3167246953,
+        "raw_unchanged_from_m0_2": true
+      },
+      "timeaware_mean_net_pct": {
+        "abnormal_minus_raw_pct_points": -0.2942353245,
+        "abnormal_net_pct": 0.1635477146,
+        "current_raw_net_pct": 0.4577830391,
+        "m0_2_raw_net_pct": 0.4577830391,
+        "raw_unchanged_from_m0_2": true
+      },
+      "uniform_mean_net_pct": {
+        "abnormal_minus_raw_pct_points": -0.234239525,
+        "abnormal_net_pct": -0.0931811812,
+        "current_raw_net_pct": 0.1410583438,
+        "m0_2_raw_net_pct": 0.1410583438,
+        "raw_unchanged_from_m0_2": true
+      }
+    },
+    "positive_folds": {
+      "abnormal_timeaware": 7,
+      "abnormal_timing_delta": 9,
+      "abnormal_uniform": 5,
+      "raw_timeaware": 9,
+      "raw_timing_delta": 10,
+      "raw_uniform": 7,
+      "scored": 10
+    }
+  },
+  "buyback_learner": {
+    "abnormal_model_trades": 2427,
+    "abnormal_promotions": 6,
+    "abnormal_verdict": "no_selection_edge",
+    "metrics": {
+      "always_all_mean_net_pct": {
+        "abnormal_minus_raw_pct_points": -0.214487863,
+        "abnormal_net_pct": -0.0514040249,
+        "current_raw_net_pct": 0.1630838381,
+        "m0_2_raw_net_pct": 0.1630838381,
+        "raw_unchanged_from_m0_2": true
+      },
+      "matched_always_mean_net_pct": {
+        "abnormal_minus_raw_pct_points": -0.3424131818,
+        "abnormal_net_pct": -0.044517184,
+        "current_raw_net_pct": 0.2978959979,
+        "m0_2_raw_net_pct": 0.2978959979,
+        "raw_unchanged_from_m0_2": true
+      },
+      "model_mean_net_pct": {
+        "abnormal_minus_raw_pct_points": -0.4021760732,
+        "abnormal_net_pct": -0.0819371174,
+        "current_raw_net_pct": 0.3202389558,
+        "m0_2_raw_net_pct": 0.3202389558,
+        "raw_unchanged_from_m0_2": true
+      },
+      "selection_lift_pct": {
+        "abnormal_minus_raw_pct_points": -0.0597628914,
+        "abnormal_net_pct": -0.0374199335,
+        "current_raw_net_pct": 0.022342958,
+        "m0_2_raw_net_pct": 0.022342958,
+        "raw_unchanged_from_m0_2": true
+      }
+    },
+    "mock_trades": 4801,
+    "raw_model_trades": 2577,
+    "raw_promotions": 3,
+    "raw_verdict": "positive_selective_edge"
+  },
+  "categories": [
+    {
+      "category": "supply_contract",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": -0.0792,
+          "abnormal_net_pct": -0.2527,
+          "current_raw_net_pct": -0.1735,
+          "m0_2_raw_net_pct": -0.1735,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.3105,
+          "abnormal_net_pct": -0.4372,
+          "current_raw_net_pct": -0.1267,
+          "m0_2_raw_net_pct": -0.1267,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.2333,
+          "abnormal_net_pct": -0.5419,
+          "current_raw_net_pct": -0.3086,
+          "m0_2_raw_net_pct": -0.3086,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 8585,
+      "verdict": {
+        "abnormal": "neutral",
+        "raw": "neutral"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 3,
+        "raw_positive_folds": 6,
+        "scored_folds": 11
+      }
+    },
+    {
+      "category": "buyback",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": -0.0956,
+          "abnormal_net_pct": 0.5991,
+          "current_raw_net_pct": 0.6947,
+          "m0_2_raw_net_pct": 0.6947,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.2645,
+          "abnormal_net_pct": 0.9171,
+          "current_raw_net_pct": 1.1816,
+          "m0_2_raw_net_pct": 1.1816,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.1709,
+          "abnormal_net_pct": -0.0277,
+          "current_raw_net_pct": 0.1432,
+          "m0_2_raw_net_pct": 0.1432,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 4801,
+      "verdict": {
+        "abnormal": "neutral",
+        "raw": "positive_noisy"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 9,
+        "raw_positive_folds": 10,
+        "scored_folds": 10
+      }
+    },
+    {
+      "category": "bonus_issue",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": 0.0224,
+          "abnormal_net_pct": 0.74,
+          "current_raw_net_pct": 0.7176,
+          "m0_2_raw_net_pct": 0.7176,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.0908,
+          "abnormal_net_pct": 1.1245,
+          "current_raw_net_pct": 1.2153,
+          "m0_2_raw_net_pct": 1.2153,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.1149,
+          "abnormal_net_pct": 0.093,
+          "current_raw_net_pct": 0.2079,
+          "m0_2_raw_net_pct": 0.2079,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 828,
+      "verdict": {
+        "abnormal": "neutral",
+        "raw": "positive_noisy"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 6,
+        "raw_positive_folds": 6,
+        "scored_folds": 10
+      }
+    },
+    {
+      "category": "rights_offering",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": 0.0149,
+          "abnormal_net_pct": -0.2659,
+          "current_raw_net_pct": -0.2808,
+          "m0_2_raw_net_pct": -0.2808,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.1084,
+          "abnormal_net_pct": 0.2742,
+          "current_raw_net_pct": 0.3826,
+          "m0_2_raw_net_pct": 0.3826,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.1269,
+          "abnormal_net_pct": 0.1107,
+          "current_raw_net_pct": 0.2376,
+          "m0_2_raw_net_pct": 0.2376,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 5911,
+      "verdict": {
+        "abnormal": "positive_noisy",
+        "raw": "neutral"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 7,
+        "raw_positive_folds": 6,
+        "scored_folds": 11
+      }
+    },
+    {
+      "category": "convertible_bond",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": -0.0389,
+          "abnormal_net_pct": 0.1309,
+          "current_raw_net_pct": 0.1698,
+          "m0_2_raw_net_pct": 0.1698,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.0533,
+          "abnormal_net_pct": 0.5642,
+          "current_raw_net_pct": 0.6175,
+          "m0_2_raw_net_pct": 0.6175,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.0176,
+          "abnormal_net_pct": -0.0446,
+          "current_raw_net_pct": -0.027,
+          "m0_2_raw_net_pct": -0.027,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 4175,
+      "verdict": {
+        "abnormal": "neutral",
+        "raw": "neutral"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 5,
+        "raw_positive_folds": 7,
+        "scored_folds": 11
+      }
+    },
+    {
+      "category": "halt_resumption",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": -0.0894,
+          "abnormal_net_pct": -1.7105,
+          "current_raw_net_pct": -1.6211,
+          "m0_2_raw_net_pct": -1.6211,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.1492,
+          "abnormal_net_pct": -1.3376,
+          "current_raw_net_pct": -1.1884,
+          "m0_2_raw_net_pct": -1.1884,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.0631,
+          "abnormal_net_pct": -0.022,
+          "current_raw_net_pct": 0.0411,
+          "m0_2_raw_net_pct": 0.0411,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 2570,
+      "verdict": {
+        "abnormal": "neutral",
+        "raw": "neutral"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 4,
+        "raw_positive_folds": 4,
+        "scored_folds": 10
+      }
+    },
+    {
+      "category": "shareholder_change",
+      "metrics": {
+        "idealized_t1": {
+          "abnormal_minus_raw_pct_points": -0.1181,
+          "abnormal_net_pct": -0.6451,
+          "current_raw_net_pct": -0.527,
+          "m0_2_raw_net_pct": -0.527,
+          "raw_unchanged_from_m0_2": true
+        },
+        "idealized_t5": {
+          "abnormal_minus_raw_pct_points": -0.4083,
+          "abnormal_net_pct": -1.639,
+          "current_raw_net_pct": -1.2307,
+          "m0_2_raw_net_pct": -1.2307,
+          "raw_unchanged_from_m0_2": true
+        },
+        "realistic_t1_to_t5": {
+          "abnormal_minus_raw_pct_points": -0.2936,
+          "abnormal_net_pct": -1.3963,
+          "current_raw_net_pct": -1.1027,
+          "m0_2_raw_net_pct": -1.1027,
+          "raw_unchanged_from_m0_2": true
+        }
+      },
+      "n_events": 1858,
+      "verdict": {
+        "abnormal": "negative",
+        "raw": "negative"
+      },
+      "walk_forward": {
+        "abnormal_positive_folds": 1,
+        "raw_positive_folds": 2,
+        "scored_folds": 10
+      }
+    }
+  ],
+  "comparison": "historical_cost_raw_returns_vs_broad_market_abnormal_returns",
+  "generator_sources": [
+    {
+      "path": "src/kdtb/backtest/cost_model.py",
+      "sha256": "0953db78021ad90bf09f413b71e5631d954aa56e87c0fc3b7a946cda7eca67a3"
+    },
+    {
+      "path": "src/kdtb/backtest/metrics.py",
+      "sha256": "0c56dce287cb0d6e10ce5f62e83c29452154d66621b49e8069e4264b6b107fe6"
+    },
+    {
+      "path": "src/kdtb/data/benchmarks.py",
+      "sha256": "0f36cb42f5566ac8b8f7638c5df6b229e6e106a641a049eccd08d8967be08f8c"
+    },
+    {
+      "path": "src/kdtb/learning/dataset.py",
+      "sha256": "0e0a3e8698c5e209a41387ee71193090f83de51879c29d0d6e48a648c7e3494d"
+    },
+    {
+      "path": "src/kdtb/learning/features.py",
+      "sha256": "f26aebcff0341ce03d3db7eb35181edb38f2125463faf22d25c8e6afdacf0150"
+    },
+    {
+      "path": "src/kdtb/learning/policy.py",
+      "sha256": "60dff77d4572a375367b1af142ddd7e07897bee14144182f0f6e410a356c0700"
+    },
+    {
+      "path": "src/kdtb/learning/walk_forward_trainer.py",
+      "sha256": "8a9ea157599872b1e46b37dc5a017c2cf981722269416353ca0fad84d9b35138"
+    },
+    {
+      "path": "scripts/analyze_event_category.py",
+      "sha256": "31efd7455184aa66735b57c3d697e14a260b0dbd5138f954ad5e6479c2a1a318"
+    },
+    {
+      "path": "scripts/backfill_event_study_benchmarks.py",
+      "sha256": "3a84d413757127baa7a7f64877715225662a6b288b04448e96b14a0c1d3ecd18"
+    },
+    {
+      "path": "scripts/compare_benchmark_adjustment.py",
+      "sha256": "c3abc14cc4e7695c4eb27b926652dc7c2b84200e451fdd4f4b25adc3be14ad00"
+    },
+    {
+      "path": "scripts/run_intraday_walkforward.py",
+      "sha256": "a25f1b9335631bbc442437f3d8ffebdc131e19fe3937c115f89db30ee90e8e3b"
+    },
+    {
+      "path": "scripts/summarize_all_categories.py",
+      "sha256": "42e00eba5c7b6902e5a9a0901700d705c00ce20e2e2b6d8ad240c0fcce5c25d6"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/event_study_supply_contract.csv",
+      "sha256": "115ee82455c22309e4c2aea052d4d0f7a1012946c52cc74e19a02865ec648bb2"
+    },
+    {
+      "path": "data/event_study_buyback.csv",
+      "sha256": "0eb9f0c29a75243c132f89ce60026e3d41f25a6609db270a10513706c8c21d27"
+    },
+    {
+      "path": "data/event_study_bonus_issue.csv",
+      "sha256": "76edf1f5b37a42fd9b38b19ec2a711acf421ba9abf00ee66e78095747ed2d03a"
+    },
+    {
+      "path": "data/event_study_rights_offering.csv",
+      "sha256": "a572efb8abceeee5889f24472521ac93caaa4ec04f946e1c6f997a45c4e2b6b3"
+    },
+    {
+      "path": "data/event_study_convertible_bond.csv",
+      "sha256": "39d9afbb8f585e8f7cc54907c57cc21c0a016d6cceaad83b03c238d68725168c"
+    },
+    {
+      "path": "data/event_study_halt_resumption.csv",
+      "sha256": "f9e4061c8dc73e08a0231fdc204f9fcd1417646bc7ef9209665699c78365a20c"
+    },
+    {
+      "path": "data/event_study_shareholder_change.csv",
+      "sha256": "350c3427a5bc4ab93084e4adbfdbb8a9796158908db8702812afe2eeb470194f"
+    },
+    {
+      "path": "data/benchmark_indices.csv",
+      "sha256": "a70c5f9ae3ae7b8349fe489b720bb01411ba60437b4a85927b87c6a6acc7e062"
+    },
+    {
+      "path": "data/benchmark_indices.meta.json",
+      "sha256": "d9ba4ba90f0a16afdc0772aac04bd27636beed41c47acc958cda11c85c3ed282"
+    },
+    {
+      "path": "artifacts/m0_2/historical_cost_comparison.json",
+      "sha256": "b529d30ef58606ebff1fec2507a644b8851e6dc921c5bdb57ca5fdf4ded7dc77"
+    },
+    {
+      "path": "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
+      "sha256": "0c61572d3e128a82b0b7d79c236541d0f5940db7a4fe1d1dd3ae061fa0ee99e5"
+    }
+  ],
+  "methodology": {
+    "alignment": "same exact stock observation entry/exit dates; no fill",
+    "assignment": {
+      "KOSDAQ": {
+        "benchmark_symbol": "KOSDAQ",
+        "pykrx_ticker_reference": "2001"
+      },
+      "KOSPI": {
+        "benchmark_symbol": "KOSPI",
+        "pykrx_ticker_reference": "1001"
+      }
+    },
+    "benchmark_ranges": {
+      "KOSDAQ": {
+        "end": "2026-07-01",
+        "rows": 1226,
+        "start": "2021-06-28"
+      },
+      "KOSPI": {
+        "end": "2026-07-01",
+        "rows": 1226,
+        "start": "2021-06-28"
+      }
+    },
+    "benchmark_source": "NAVER_FINANCE_DOMESTIC_INDEX_DAILY",
+    "decision_time_use": "outcome attribution only; not a decision feature",
+    "return_formula": "stock_simple_return - benchmark_simple_return",
+    "transaction_costs": "subtracted once after benchmark adjustment"
+  },
+  "milestone": "M0.3",
+  "schema_version": 1
+}

@@ -1,7 +1,8 @@
 # Intraday / Execution-Speed Feasibility — what I could determine autonomously
 
-The research phase established that the disclosure edge is real at the
-**event-day close** but dies by the **T+1 close** (buyback: +1.6% → +0.16%).
+The pre-M0.3 raw-return research found a large event-day reaction that died by
+the **T+1 close** (buyback: +1.5% → +0.14%). Broad-market adjustment later
+showed the realistic buyback mean is −0.03% abnormal.
 The proposed escape hatch was *execution speed* — entering faster than next-day
 close, which the user can do via a Korean broker API. This document records
 what I could verify without any of the user's credentials or paid data.
@@ -107,29 +108,37 @@ Then put the result through a 4-skeptic adversarial workflow
 ([`scripts/run_intraday_walkforward.py`](scripts/run_intraday_walkforward.py),
 snapshot [`data/intraday_buyback_skeptics_2026-06-30.json`](data/intraday_buyback_skeptics_2026-06-30.json)).
 
-| | Mean net / trade | Folds positive |
-|---|---|---|
-| Uniform T+1 entry (old assumption) | +0.157% | 7/10 |
-| **Time-aware entry** | **+0.473%** | 9/10 |
-| **Entry-timing delta** | **+0.317%** | **10/10** |
-| Learned selector lift | +0.06% (≈0) | — |
+M0.2 re-priced every row using its exact exit date and market. This lowers both
+absolute entry variants by about 1.56bps but leaves the entry-timing delta
+unchanged, because uniform and time-aware entries share the same exit cost.
 
-**Verdict: `real_delta_untradable_level`** — the entry-timing effect is real,
-but the deployable strategy is not (3 of 4 skeptics refuted; the coverage-bias
-attack failed, i.e. coverage is clean).
+M0.3 then subtracts KOSPI/KOSDAQ over the exact dates of each entry variant and
+the common T+5 exit. Unlike transaction costs, the market adjustment differs
+between t0 and T+1 entries, so it can change the timing delta itself.
 
-**What is real (keep it):** The +0.317% delta is positive in **10/10 folds**,
-stable at +0.29%–0.33% across 15:00/15:20/15:25 cutoffs (fold-level t = 7.6),
-and the mechanism is cleanly identified — it is *entirely* the event-day-close →
-next-close overnight gap, captured by buying one session earlier on
-intraday-published buybacks. Coverage is unbiased (matched vs unmatched uniform
-returns +0.157% vs +0.159%, p = 0.99). The learned selector adds nothing
-(+0.06%) — this is a **deterministic entry rule**, not ML.
+| | Raw mean | Raw WF+ | Abnormal mean | Abnormal WF+ |
+|---|---:|---:|---:|---:|
+| Uniform T+1 entry (old assumption) | +0.141% | 7/10 | −0.093% | 5/10 |
+| **Time-aware entry** | **+0.458%** | 9/10 | **+0.164%** | 7/10 |
+| **Entry-timing delta** | **+0.317%** | **10/10** | **+0.257%** | **9/10** |
+| Learned selector lift | +0.068% | — | −0.087% | — |
+
+The pre-M0.3 verdict was `real_delta_untradable_level`. The current status is a
+**provisional positive timing effect, not abnormal-return alpha and not a
+deployable strategy**. Coverage remains clean, but market attribution refutes
+the learned-selection claim and weakens fold stability.
+
+**What remains (keep it cautiously):** The raw +0.317% timing delta is positive
+in 10/10 folds. After removing broad-market movement, it is +0.257% and positive
+in 9/10; 2026H1 is slightly negative. The mechanism remains the event-day-close
+→ next-close gap captured by buying one session earlier, but the earlier claim
+of regime independence no longer holds. The learned selector has −0.087%
+abnormal lift, so there is no ML selection edge.
 
 **Why it is not tradable today:**
 1. **Positive-skew lottery, not a robust mean.** Median trade *loses*
-   (−0.044%), win rate 49.6%; removing the top 5% of trades flips the mean to
-   **−0.42%**. The PnL lives in extreme up-moves — the hardest names to fill.
+   (−0.062%), win rate 49.4%; removing the top 5% of trades flips the mean to
+   **−0.43%**. The PnL lives in extreme up-moves — the hardest names to fill.
 2. **Fill-fragile at exactly the required fill.** The median capturable
    overnight gap is **~20bps** — smaller than one KOSDAQ small-cap tick — and
    concentrates in low-price/KOSDAQ names where transacting at the closing
@@ -137,21 +146,20 @@ returns +0.157% vs +0.159%, p = 0.99). The learned selector adds nothing
    slippage halves the delta and flips a fold.
 3. **Capacity is decisive.** Under the project's own `max_open_positions=1`
    with a 5-day hold, only **~6% of signals (~41/year)** are reachable;
-   Monte-Carlo over tie-breaks gives a capacity-realistic median of **~+0.25%
-   /trade** (55% of paths below the +0.30% bar), and at the ₩30,000 order cap
-   the economics are **~$2–9/year**.
+   The pre-M0.3 raw-return Monte Carlo over tie-breaks gave **~+0.25%/trade**
+   (55% of paths below the +0.30% bar), and at the ₩30,000 order cap the
+   economics were only **~$2–9/year** even before benchmark adjustment.
 
 ## Bottom line
 
 - **Filing times: solved, free, historical** — scraper built, tested, and the
   full buyback history is backfilled.
-- **The entry-timing effect is genuinely real** — the first robust, mechanism-
-  identified positive finding in the project. It is a *deterministic* rule
-  (enter the same-day close on intraday-published buybacks), worth keeping as a
-  documented research result.
+- **The entry-timing effect remains positive but provisional** — market
+  adjustment reduces it to +0.257% and 9/10 positive fold deltas. It is a
+  deterministic chronology effect, not validated stock-selection alpha.
 - **It is not deployable at retail scale** — capacity (1-position cap), fill
-  fragility at the closing auction, and fat-tail dependence reduce a +0.47%
-  headline to ~$2–9/year. The historical daily-close data **cannot** answer the
+  fragility at the closing auction, and fat-tail dependence reduce even the
+  +0.164% abnormal headline further. The historical daily-close data **cannot** answer the
   one decisive question: whether the ~20bps median gap is actually fillable at
   `t0_close` in the low-price/KOSDAQ names that carry it.
 - **The only way to resolve it** is forward, live: collect real closing-auction

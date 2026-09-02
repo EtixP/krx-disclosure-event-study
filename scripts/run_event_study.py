@@ -3,7 +3,9 @@
 Walks all disclosures whose `report_name` starts with '단일판매' and isn't a
 revision/cancellation, fetches OHLCV around the disclosure date for each
 stock, and computes T+1/T+2/T+5 close-to-close returns measured from the
-event-day close. Output: CSV of per-event rows + a printed summary.
+event-day close. Exact-date KOSPI/KOSDAQ benchmark and abnormal returns are
+then attached from the normalized benchmark cache. Output: CSV of per-event
+rows + a printed raw/abnormal summary.
 
 This is a *naive* event study — it uses only the disclosure title for
 filtering. The proper version (Milestone 3+) requires LLM-extracted contract
@@ -24,7 +26,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from kdtb.data.market_data_client import MarketDataClient
+from kdtb.data.benchmarks import add_benchmark_context
+from kdtb.data.market_data_client import (
+    RESEARCH_PRICE_ADJUSTMENT,
+    MarketDataClient,
+)
 from kdtb.logging_setup import setup_logging
 
 from kdtb.data.event_categories import CATEGORIES
@@ -50,6 +56,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--category", default="supply_contract", choices=sorted(CATEGORIES.keys()))
     p.add_argument("--limit", type=int, default=None, help="limit number of unique stocks (testing)")
     p.add_argument("--sleep", type=float, default=0.15, help="seconds between pykrx fetches")
+    p.add_argument(
+        "--benchmark-cache",
+        default="data/benchmark_indices.csv",
+        help="normalized exact-date broad-index history",
+    )
     return p.parse_args()
 
 
@@ -77,6 +88,10 @@ def main() -> int:
         log.info("Limited to first %d stocks for testing", len(stocks))
 
     client = MarketDataClient()
+    price_context = {
+        "price_adjustment": RESEARCH_PRICE_ADJUSTMENT.value,
+        "price_source": RESEARCH_PRICE_ADJUSTMENT.source,
+    }
     rows: list[dict] = []
     failed = 0
 
@@ -87,23 +102,36 @@ def main() -> int:
         start = event_dates[0] - timedelta(days=3)
         end = event_dates[-1] + timedelta(days=12)
         try:
-            prices = client.fetch_ohlcv(stock_code, start, end)
+            prices = client.fetch_ohlcv(
+                stock_code,
+                start,
+                end,
+                adjustment=RESEARCH_PRICE_ADJUSTMENT,
+            )
         except Exception as e:
             log.warning("Fetch failed for %s: %s", stock_code, e)
             failed += 1
             for ev in stock_events:
-                rows.append({**ev, "error": f"fetch_failed:{type(e).__name__}"})
+                rows.append(
+                    {
+                        **ev,
+                        **price_context,
+                        "error": f"fetch_failed:{type(e).__name__}",
+                    }
+                )
             time.sleep(args.sleep)
             continue
 
         if prices.empty:
             for ev in stock_events:
-                rows.append({**ev, "error": "no_price_data"})
+                rows.append({**ev, **price_context, "error": "no_price_data"})
         else:
             for ev in stock_events:
                 event_date = datetime.strptime(ev["event_date"], "%Y-%m-%d").date()
                 returns = MarketDataClient.event_returns(prices, event_date)
-                rows.append({**ev, **returns, "error": None})
+                rows.append(
+                    {**ev, **returns, **price_context, "error": None}
+                )
 
         time.sleep(args.sleep)
         if i % 25 == 0:
@@ -114,6 +142,15 @@ def main() -> int:
             log.info("  checkpoint saved -> %s", out_path)
 
     df = pd.DataFrame(rows)
+    benchmark_path = Path(args.benchmark_cache)
+    if not benchmark_path.exists():
+        raise FileNotFoundError(
+            f"benchmark cache not found: {benchmark_path}; run "
+            "python -m scripts.backfill_event_study_benchmarks --refresh"
+        )
+    df = add_benchmark_context(
+        df, pd.read_csv(benchmark_path), strict=True
+    )
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(out_path, index=False)
     log.info("Wrote %s (%d rows)", out_path, len(df))
@@ -129,7 +166,11 @@ def main() -> int:
     print()
     print(f"{'horizon':>8} {'n':>5} {'mean':>8} {'median':>8} {'std':>8} {'win%':>6} {'p25':>8} {'p75':>8}")
     print("-" * 64)
-    for col in ["ret_1d", "ret_2d", "ret_5d"]:
+    for col in [
+        "ret_1d", "abnormal_ret_1d",
+        "ret_2d", "abnormal_ret_2d",
+        "ret_5d", "abnormal_ret_5d",
+    ]:
         if col not in df.columns:
             continue
         s = df[col].dropna()

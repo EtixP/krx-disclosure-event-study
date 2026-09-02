@@ -1,5 +1,4 @@
-"""Comprehensive analysis of one event category — aggregate, walk-forward,
-realistic-execution, and market split.
+"""Comprehensive raw and benchmark-adjusted analysis of one event category.
 
 Used as a uniform analyzer across all event types so results are directly
 comparable. Operates on the CSV that scripts/run_event_study.py produced for
@@ -25,6 +24,7 @@ from kdtb.backtest.cost_model import (
     CostModel,
 )
 from kdtb.backtest.metrics import compute
+from kdtb.data.benchmarks import require_benchmark_columns
 
 
 def _auto_windows(df: pd.DataFrame, months_per_window: int = 6) -> list[tuple[str, str, str]]:
@@ -48,11 +48,12 @@ def _auto_windows(df: pd.DataFrame, months_per_window: int = 6) -> list[tuple[st
         cur = pd.Timestamp(year=start_year - 1 if start_half == 1 else start_year,
                            month=7 if start_half == 1 else 1, day=1)
     out: list[tuple[str, str, str]] = []
+    one_day = pd.Timedelta(1, unit="D")
     while cur < last_dt:
         nxt = cur + pd.DateOffset(months=months_per_window)
-        last_day = nxt - pd.Timedelta(days=1)
+        last_day = nxt - one_day
         # Drop trailing partial windows where we don't have enough data to fill
-        if (min(nxt, last_dt + pd.Timedelta(days=1)) - cur).days >= 28:
+        if (min(nxt, last_dt + one_day) - cur).days >= 28:
             mlabel = "Jan" if cur.month == 1 else "Jul"
             # Window ends at (nxt - 1 day). If that's in Jun -> 'Jun'; if in Dec -> 'Dec'.
             mnxt = "Dec" if last_day.month == 12 else "Jun"
@@ -96,28 +97,72 @@ def _stats(series: pd.Series) -> dict:
     }
 
 
-def _walk_forward(df: pd.DataFrame, cost: float, windows: list[tuple[str, str, str]] | None = None) -> list[dict]:
+def _cost_series(
+    df: pd.DataFrame,
+    *,
+    buy_close: str,
+    sell_close: str,
+    cost_model: CostModel,
+    flat_cost_fraction: float | None,
+) -> pd.Series:
+    if flat_cost_fraction is not None:
+        return pd.Series(float(flat_cost_fraction), index=df.index, dtype=float)
+    buy_date = buy_close.replace("close", "date")
+    sell_date = sell_close.replace("close", "date")
+    missing = [
+        column
+        for column in (buy_date, sell_date, "market")
+        if column not in df.columns
+    ]
+    if missing:
+        raise ValueError(
+            "dated transaction costs require event-study columns: "
+            + ", ".join(missing)
+        )
+    if df[[buy_date, sell_date, "market"]].isna().any().any():
+        raise ValueError("dated transaction-cost inputs contain missing values")
+    return pd.Series(
+        cost_model.roundtrip_cost_fractions(
+            buy_dates=df[buy_date],
+            sell_dates=df[sell_date],
+            markets=df["market"],
+        ),
+        index=df.index,
+        dtype=float,
+    )
+
+
+def _walk_forward(
+    df: pd.DataFrame,
+    windows: list[tuple[str, str, str]] | None = None,
+    *,
+    return_column: str = "_t5_net",
+) -> list[dict]:
     if windows is None:
         windows = _auto_windows(df)
     out = []
     for start, end, label in windows:
         sub = df[(df["event_dt"] >= start) & (df["event_dt"] < end)]
-        net5 = (sub["ret_5d"] - cost).dropna()
-        s = _stats(net5)
+        s = _stats(sub[return_column])
         s["window"] = label
         out.append(s)
     return out
 
 
-def _split_by_market(df: pd.DataFrame, cost: float) -> dict:
+def _split_by_market(df: pd.DataFrame, *, return_column: str = "_t5_net") -> dict:
     out = {}
     for market, sub in df.groupby("market"):
-        net5 = (sub["ret_5d"] - cost).dropna()
-        out[str(market)] = _stats(net5)
+        out[str(market)] = _stats(sub[return_column])
     return out
 
 
-def _realistic_scenarios(df: pd.DataFrame, cost: float) -> dict:
+def _realistic_scenarios(
+    df: pd.DataFrame,
+    *,
+    cost_model: CostModel,
+    flat_cost_fraction: float | None,
+    benchmark_adjusted: bool = False,
+) -> dict:
     out = {}
     scenarios = [
         ("idealized",    "t0_close",  "t+5_close"),
@@ -130,7 +175,27 @@ def _realistic_scenarios(df: pd.DataFrame, cost: float) -> dict:
             continue
         sub = df.dropna(subset=[buy, sell]).copy()
         sub["gross"] = (sub[sell] - sub[buy]) / sub[buy]
-        sub["net"] = sub["gross"] - cost
+        if benchmark_adjusted:
+            buy_token = buy.removesuffix("_close").replace("+", "")
+            sell_token = sell.removesuffix("_close").replace("+", "")
+            benchmark_buy = f"benchmark_{buy_token}_close"
+            benchmark_sell = f"benchmark_{sell_token}_close"
+            if sub[[benchmark_buy, benchmark_sell]].isna().any().any():
+                raise ValueError(
+                    f"benchmark-adjusted scenario {name} has missing exact-date closes"
+                )
+            benchmark_gross = (
+                (sub[benchmark_sell] - sub[benchmark_buy]) / sub[benchmark_buy]
+            )
+            sub["gross"] = sub["gross"] - benchmark_gross
+        sub["cost"] = _cost_series(
+            sub,
+            buy_close=buy,
+            sell_close=sell,
+            cost_model=cost_model,
+            flat_cost_fraction=flat_cost_fraction,
+        )
+        sub["net"] = sub["gross"] - sub["cost"]
         out[name] = _stats(sub["net"])
     return out
 
@@ -166,7 +231,13 @@ def _verdict(walk_forward: list[dict], realistic: dict) -> str:
     return "neutral"
 
 
-def analyze(category: str, csv_path: str | None = None) -> dict:
+def analyze(
+    category: str,
+    csv_path: str | None = None,
+    *,
+    flat_cost_fraction: float | None = None,
+    include_abnormal: bool = True,
+) -> dict:
     if csv_path is None:
         csv_path = f"data/event_study_{category}.csv"
     if not Path(csv_path).exists():
@@ -178,23 +249,76 @@ def analyze(category: str, csv_path: str | None = None) -> dict:
         return {"category": category, "error": "no rows with ret_5d"}
     df["event_dt"] = pd.to_datetime(df["event_date"])
 
-    cost = CostModel().roundtrip_cost(1.0)
-    net5 = (df["ret_5d"] - cost).dropna()
-    net1 = (df["ret_1d"] - cost).dropna()
+    cost_model = CostModel()
+    df["_t1_cost"] = _cost_series(
+        df,
+        buy_close="t0_close",
+        sell_close="t+1_close",
+        cost_model=cost_model,
+        flat_cost_fraction=flat_cost_fraction,
+    )
+    df["_t5_cost"] = _cost_series(
+        df,
+        buy_close="t0_close",
+        sell_close="t+5_close",
+        cost_model=cost_model,
+        flat_cost_fraction=flat_cost_fraction,
+    )
+    df["_t1_net"] = df["ret_1d"] - df["_t1_cost"]
+    df["_t5_net"] = df["ret_5d"] - df["_t5_cost"]
 
     aggregate = {
         "t1_gross": _stats(df["ret_1d"]),
-        "t1_net":   _stats(net1),
+        "t1_net":   _stats(df["_t1_net"]),
         "t5_gross": _stats(df["ret_5d"]),
-        "t5_net":   _stats(net5),
+        "t5_net":   _stats(df["_t5_net"]),
     }
 
-    walk_forward = _walk_forward(df, cost)
-    by_market = _split_by_market(df, cost)
-    realistic = _realistic_scenarios(df, cost)
-    verdict = _verdict(walk_forward, realistic)
+    walk_forward = _walk_forward(df)
+    by_market = _split_by_market(df)
+    realistic = _realistic_scenarios(
+        df,
+        cost_model=cost_model,
+        flat_cost_fraction=flat_cost_fraction,
+    )
+    raw_verdict = _verdict(walk_forward, realistic)
 
-    return {
+    if include_abnormal:
+        require_benchmark_columns(df)
+        if df[["abnormal_ret_1d", "abnormal_ret_5d"]].isna().any().any():
+            raise ValueError("benchmark-adjusted returns contain missing values")
+        df["_t1_abnormal_net"] = df["abnormal_ret_1d"] - df["_t1_cost"]
+        df["_t5_abnormal_net"] = df["abnormal_ret_5d"] - df["_t5_cost"]
+        aggregate.update(
+            {
+                "t1_abnormal_gross": _stats(df["abnormal_ret_1d"]),
+                "t1_abnormal_net": _stats(df["_t1_abnormal_net"]),
+                "t5_abnormal_gross": _stats(df["abnormal_ret_5d"]),
+                "t5_abnormal_net": _stats(df["_t5_abnormal_net"]),
+            }
+        )
+        walk_forward_abnormal = _walk_forward(
+            df, return_column="_t5_abnormal_net"
+        )
+        by_market_abnormal = _split_by_market(
+            df, return_column="_t5_abnormal_net"
+        )
+        realistic_abnormal = _realistic_scenarios(
+            df,
+            cost_model=cost_model,
+            flat_cost_fraction=flat_cost_fraction,
+            benchmark_adjusted=True,
+        )
+        abnormal_verdict = _verdict(
+            walk_forward_abnormal, realistic_abnormal
+        )
+    else:
+        walk_forward_abnormal = None
+        by_market_abnormal = None
+        realistic_abnormal = None
+        abnormal_verdict = None
+
+    result = {
         "category": category,
         "csv_path": csv_path,
         "n_events": len(df),
@@ -203,8 +327,25 @@ def analyze(category: str, csv_path: str | None = None) -> dict:
         "walk_forward": walk_forward,
         "by_market": by_market,
         "realistic": realistic,
-        "verdict": verdict,
+        "cost_fraction": {
+            "t1_min": float(df["_t1_cost"].min()),
+            "t1_max": float(df["_t1_cost"].max()),
+            "t5_min": float(df["_t5_cost"].min()),
+            "t5_max": float(df["_t5_cost"].max()),
+        },
+        "verdict": abnormal_verdict if include_abnormal else raw_verdict,
     }
+    if include_abnormal:
+        result.update(
+            {
+                "walk_forward_abnormal": walk_forward_abnormal,
+                "by_market_abnormal": by_market_abnormal,
+                "realistic_abnormal": realistic_abnormal,
+                "verdict_raw": raw_verdict,
+                "verdict_basis": "benchmark_adjusted_net",
+            }
+        )
+    return result
 
 
 def _human_report(result: dict) -> str:
@@ -214,30 +355,33 @@ def _human_report(result: dict) -> str:
     lines = [
         f"=== {result['category']}  |  n={result['n_events']}  unique stocks={result['n_unique_stocks']} ===",
         f"  aggregate:",
-        f"    T+1 net:  mean={a['t1_net'].get('mean_pct', 0):+.3f}%  median={a['t1_net'].get('median_pct', 0):+.3f}%  win%={a['t1_net'].get('win_pct', 0):.1f}  PF={a['t1_net'].get('pf', 'n/a')}",
-        f"    T+5 net:  mean={a['t5_net'].get('mean_pct', 0):+.3f}%  median={a['t5_net'].get('median_pct', 0):+.3f}%  win%={a['t5_net'].get('win_pct', 0):.1f}  PF={a['t5_net'].get('pf', 'n/a')}",
-        f"  realistic execution (T+1 close -> T+5 close):",
-        f"    mean={result['realistic'].get('realistic', {}).get('mean_pct', 'n/a')}%  win%={result['realistic'].get('realistic', {}).get('win_pct', 'n/a')}  PF={result['realistic'].get('realistic', {}).get('pf', 'n/a')}",
-        f"  walk-forward (T+5 net mean / pos_windows):",
+        f"    T+1 raw net:       mean={a['t1_net'].get('mean_pct', 0):+.3f}%  median={a['t1_net'].get('median_pct', 0):+.3f}%  win%={a['t1_net'].get('win_pct', 0):.1f}  PF={a['t1_net'].get('pf', 'n/a')}",
+        f"    T+1 abnormal net:  mean={a['t1_abnormal_net'].get('mean_pct', 0):+.3f}%  median={a['t1_abnormal_net'].get('median_pct', 0):+.3f}%  win%={a['t1_abnormal_net'].get('win_pct', 0):.1f}  PF={a['t1_abnormal_net'].get('pf', 'n/a')}",
+        f"    T+5 raw net:       mean={a['t5_net'].get('mean_pct', 0):+.3f}%  median={a['t5_net'].get('median_pct', 0):+.3f}%  win%={a['t5_net'].get('win_pct', 0):.1f}  PF={a['t5_net'].get('pf', 'n/a')}",
+        f"    T+5 abnormal net:  mean={a['t5_abnormal_net'].get('mean_pct', 0):+.3f}%  median={a['t5_abnormal_net'].get('median_pct', 0):+.3f}%  win%={a['t5_abnormal_net'].get('win_pct', 0):.1f}  PF={a['t5_abnormal_net'].get('pf', 'n/a')}",
+        f"  realistic execution (T+1 close -> T+5 close), raw / abnormal:",
+        f"    raw mean={result['realistic'].get('realistic', {}).get('mean_pct', 'n/a')}%  abnormal mean={result['realistic_abnormal'].get('realistic', {}).get('mean_pct', 'n/a')}%",
+        f"  walk-forward (T+5 abnormal net mean / pos_windows):",
     ]
     pos = 0
     valid = 0
-    for w in result["walk_forward"]:
+    for w in result["walk_forward_abnormal"]:
         if w.get("n", 0) >= MIN_WINDOW_EVENTS:
             valid += 1
             if w.get("mean_pct", 0) > 0:
                 pos += 1
         m = w.get("mean_pct", "n/a")
         m_str = f"{m:+.3f}%" if isinstance(m, (int, float)) else m
-        lines.append(f"    {w['window']:>15}  n={w.get('n', 0):>4}  T+5 net={m_str}")
-    skipped = len(result["walk_forward"]) - valid
+        lines.append(f"    {w['window']:>15}  n={w.get('n', 0):>4}  T+5 abnormal net={m_str}")
+    skipped = len(result["walk_forward_abnormal"]) - valid
     note = f"  ({skipped} window(s) skipped: fewer than {MIN_WINDOW_EVENTS} events)" if skipped else ""
     lines.append(f"    => {pos}/{valid} scored windows positive{note}")
     lines.append(f"  by market:")
-    for mk, st in result["by_market"].items():
+    for mk, st in result["by_market_abnormal"].items():
         if st.get("n", 0) >= 5:
-            lines.append(f"    {mk:>8}  n={st['n']:>4}  T+5 net={st.get('mean_pct', 0):+.3f}%  win%={st.get('win_pct', 0):.1f}  PF={st.get('pf', 'n/a')}")
-    lines.append(f"  verdict: {result['verdict']}")
+            lines.append(f"    {mk:>8}  n={st['n']:>4}  T+5 abnormal net={st.get('mean_pct', 0):+.3f}%  win%={st.get('win_pct', 0):.1f}  PF={st.get('pf', 'n/a')}")
+    lines.append(f"  verdict (benchmark-adjusted): {result['verdict']}")
+    lines.append(f"  raw-return verdict (diagnostic): {result['verdict_raw']}")
     return "\n".join(lines)
 
 

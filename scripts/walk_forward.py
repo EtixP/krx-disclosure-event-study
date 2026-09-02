@@ -17,6 +17,7 @@ from pathlib import Path
 import pandas as pd
 
 from kdtb.backtest.cost_model import CostModel
+from kdtb.data.benchmarks import require_benchmark_columns
 from kdtb.logging_setup import setup_logging
 
 
@@ -84,43 +85,55 @@ def main() -> int:
     m["event_dt"] = pd.to_datetime(m["event_date"])
     log.info("Joined: %d events", len(m))
 
-    cost = CostModel().roundtrip_cost(1.0)
+    model = CostModel()
+    require_benchmark_columns(m, tokens=("t0", "t5"))
+    required = ["t0_date", "t+5_date", "market"]
+    if m[required].isna().any().any():
+        raise ValueError("dated transaction-cost inputs contain missing values")
+    m["_t5_net"] = m["ret_5d"] - model.roundtrip_cost_fractions(
+        buy_dates=m["t0_date"], sell_dates=m["t+5_date"], markets=m["market"]
+    )
+    m["_t5_abnormal_net"] = m["abnormal_ret_5d"] - model.roundtrip_cost_fractions(
+        buy_dates=m["t0_date"], sell_dates=m["t+5_date"], markets=m["market"]
+    )
 
     print()
-    print(f"{'window':>16} | {'v0_n':>5} {'v0_T5':>9} {'v0_PF':>7} | {'v1_n':>5} {'v1_T5':>9} {'v1_PF':>7} | {'v2_n':>5} {'v2_T5':>9} {'v2_PF':>7}")
+    print(f"{'window':>16} | {'v0_n':>5} {'v0_raw':>9} {'v0_abn':>9} | {'v1_n':>5} {'v1_raw':>9} {'v1_abn':>9} | {'v2_n':>5} {'v2_raw':>9} {'v2_abn':>9}")
     print("-" * 114)
 
-    agg: dict[str, dict] = {name: {"n": 0, "sum_net": 0.0, "wins": 0.0, "losses": 0.0, "win_count": 0, "pos_windows": 0} for name in VARIANTS}
+    agg: dict[str, dict] = {name: {"n": 0, "sum_raw": 0.0, "sum_abnormal": 0.0, "wins": 0.0, "losses": 0.0, "win_count": 0, "pos_windows": 0} for name in VARIANTS}
 
     for start, end, label in WINDOWS:
         window = m[(m["event_dt"] >= start) & (m["event_dt"] < end)]
         parts: list[str] = []
         for vname, vfn in VARIANTS.items():
             sub = vfn(window)
-            t5_net = (sub["ret_5d"] - cost).dropna()
-            if len(t5_net) < 5:
-                parts.append(f"{len(t5_net):>5} {'—':>9} {'—':>7}")
+            t5_raw = sub["_t5_net"].dropna()
+            t5_abnormal = sub["_t5_abnormal_net"].dropna()
+            if len(t5_abnormal) < 5:
+                parts.append(f"{len(t5_abnormal):>5} {'—':>9} {'—':>9}")
                 continue
-            s = _stats(t5_net)
-            agg[vname]["n"] += len(t5_net)
-            agg[vname]["sum_net"] += t5_net.sum()
-            agg[vname]["wins"] += t5_net[t5_net > 0].sum()
-            agg[vname]["losses"] += -t5_net[t5_net < 0].sum() if (t5_net < 0).any() else 0
-            agg[vname]["win_count"] += int((t5_net > 0).sum())
-            if t5_net.mean() > 0:
+            agg[vname]["n"] += len(t5_abnormal)
+            agg[vname]["sum_raw"] += t5_raw.sum()
+            agg[vname]["sum_abnormal"] += t5_abnormal.sum()
+            agg[vname]["wins"] += t5_abnormal[t5_abnormal > 0].sum()
+            agg[vname]["losses"] += -t5_abnormal[t5_abnormal < 0].sum() if (t5_abnormal < 0).any() else 0
+            agg[vname]["win_count"] += int((t5_abnormal > 0).sum())
+            if t5_abnormal.mean() > 0:
                 agg[vname]["pos_windows"] += 1
-            parts.append(f"{s['n']:>5} {s['mean_pct']:>+8.3f}% {s['pf']:>7.3f}")
+            parts.append(f"{len(t5_abnormal):>5} {t5_raw.mean()*100:>+8.3f}% {t5_abnormal.mean()*100:>+8.3f}%")
         print(f"{label:>16} | {parts[0]} | {parts[1]} | {parts[2]}")
 
     print()
-    print(f"{'variant':>40} {'n':>5} {'T+5 mean':>10} {'win%':>8} {'PF':>7} {'pos_windows':>13}")
+    print(f"{'variant':>40} {'n':>5} {'raw mean':>10} {'abn mean':>10} {'abn win%':>9} {'abn PF':>8} {'abn pos_windows':>16}")
     for vname, a in agg.items():
         if a["n"] == 0:
             continue
-        mean = a["sum_net"] / a["n"]
+        raw_mean = a["sum_raw"] / a["n"]
+        abnormal_mean = a["sum_abnormal"] / a["n"]
         pf = a["wins"] / a["losses"] if a["losses"] > 0 else float("inf")
         winp = a["win_count"] / a["n"] * 100
-        print(f"{vname:>40} {a['n']:>5} {mean * 100:>+9.3f}% {winp:>7.1f}% {pf:>7.3f} {a['pos_windows']:>5}/4")
+        print(f"{vname:>40} {a['n']:>5} {raw_mean * 100:>+9.3f}% {abnormal_mean * 100:>+9.3f}% {winp:>8.1f}% {pf:>8.3f} {a['pos_windows']:>8}/4")
 
     return 0
 

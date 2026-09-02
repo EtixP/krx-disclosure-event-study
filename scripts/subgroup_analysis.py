@@ -30,6 +30,7 @@ from pathlib import Path
 import pandas as pd
 
 from kdtb.backtest.cost_model import CostModel
+from kdtb.data.benchmarks import require_benchmark_columns
 from kdtb.logging_setup import setup_logging
 
 
@@ -69,26 +70,30 @@ def classify_counterparty(summary: str | None) -> str:
     return "unknown"
 
 
-def summarize(df: pd.DataFrame, label: str, cost: float) -> dict | None:
+def summarize(df: pd.DataFrame, label: str) -> dict | None:
     """Compute key stats for a subgroup. Returns None if too small to be meaningful."""
     if len(df) < 20:
         return None
-    t5 = df["ret_5d"].dropna()
+    t5 = df["_t5_net"].dropna()
     if len(t5) < 20:
         return None
-    net = t5 - cost
-    wins = net[net > 0]
-    losses = -net[net < 0]
+    abnormal = df["_t5_abnormal_net"].dropna()
+    if len(abnormal) < 20:
+        return None
+    wins = abnormal[abnormal > 0]
+    losses = -abnormal[abnormal < 0]
     return {
         "subgroup": label,
         "n": len(t5),
-        "t1_net_pct": (df["ret_1d"].dropna() - cost).mean() * 100 if len(df["ret_1d"].dropna()) > 0 else None,
-        "t5_net_pct": net.mean() * 100,
-        "t5_med_pct": net.median() * 100,
-        "t5_win_pct": (net > 0).mean() * 100,
-        "t5_std_pct": net.std() * 100,
+        "t1_net_pct": df["_t1_net"].dropna().mean() * 100 if len(df["_t1_net"].dropna()) > 0 else None,
+        "t5_net_pct": t5.mean() * 100,
+        "t1_abnormal_net_pct": df["_t1_abnormal_net"].dropna().mean() * 100 if len(df["_t1_abnormal_net"].dropna()) > 0 else None,
+        "t5_abnormal_net_pct": abnormal.mean() * 100,
+        "t5_med_pct": abnormal.median() * 100,
+        "t5_win_pct": (abnormal > 0).mean() * 100,
+        "t5_std_pct": abnormal.std() * 100,
         "profit_factor_5d": (wins.sum() / losses.sum()) if len(losses) > 0 and losses.sum() > 0 else None,
-        "sharpe_ish": (net.mean() / net.std()) if net.std() > 0 else None,
+        "sharpe_ish": (abnormal.mean() / abnormal.std()) if abnormal.std() > 0 else None,
     }
 
 
@@ -97,13 +102,14 @@ def print_table(rows: list[dict], title: str) -> None:
         print(f"\n=== {title}: no subgroups had n >= 20 ===")
         return
     print(f"\n=== {title} (n>=20 only) ===")
-    print(f"{'subgroup':>28} {'n':>5} {'T+1_net':>10} {'T+5_net':>10} {'T+5_med':>10} {'T+5_win%':>10} {'pf_5d':>8} {'sharpe-ish':>11}")
-    print("-" * 100)
-    for r in sorted(rows, key=lambda x: -x["t5_net_pct"]):
+    print(f"{'subgroup':>28} {'n':>5} {'T+1_raw':>10} {'T+5_raw':>10} {'T+1_abn':>10} {'T+5_abn':>10} {'abn_win%':>10} {'abn_pf':>8}")
+    print("-" * 112)
+    for r in sorted(rows, key=lambda x: -x["t5_abnormal_net_pct"]):
         sharp = f"{r['sharpe_ish']:+.4f}" if r['sharpe_ish'] is not None else "—"
         pf = f"{r['profit_factor_5d']:.3f}" if r['profit_factor_5d'] is not None else "—"
         t1 = f"{r['t1_net_pct']:+.3f}%" if r['t1_net_pct'] is not None else "—"
-        print(f"{r['subgroup'][:28]:>28} {r['n']:>5} {t1:>10} {r['t5_net_pct']:>+9.3f}% {r['t5_med_pct']:>+9.3f}% {r['t5_win_pct']:>9.1f}% {pf:>8} {sharp:>11}")
+        t1_abnormal = f"{r['t1_abnormal_net_pct']:+.3f}%" if r['t1_abnormal_net_pct'] is not None else "—"
+        print(f"{r['subgroup'][:28]:>28} {r['n']:>5} {t1:>10} {r['t5_net_pct']:>+9.3f}% {t1_abnormal:>10} {r['t5_abnormal_net_pct']:>+9.3f}% {r['t5_win_pct']:>9.1f}% {pf:>8}")
 
 
 def main() -> int:
@@ -118,12 +124,28 @@ def main() -> int:
     m = m.dropna(subset=["ret_5d"])
     log.info("Joined: %d events with both prices and parser output", len(m))
 
-    cost = CostModel().roundtrip_cost(1.0)
+    required = ["t0_date", "t+1_date", "t+5_date", "market"]
+    if m[required].isna().any().any():
+        raise ValueError("dated transaction-cost inputs contain missing values")
+    model = CostModel()
+    require_benchmark_columns(m)
+    m["_t1_net"] = m["ret_1d"] - model.roundtrip_cost_fractions(
+        buy_dates=m["t0_date"], sell_dates=m["t+1_date"], markets=m["market"]
+    )
+    m["_t5_net"] = m["ret_5d"] - model.roundtrip_cost_fractions(
+        buy_dates=m["t0_date"], sell_dates=m["t+5_date"], markets=m["market"]
+    )
+    m["_t1_abnormal_net"] = m["abnormal_ret_1d"] - model.roundtrip_cost_fractions(
+        buy_dates=m["t0_date"], sell_dates=m["t+1_date"], markets=m["market"]
+    )
+    m["_t5_abnormal_net"] = m["abnormal_ret_5d"] - model.roundtrip_cost_fractions(
+        buy_dates=m["t0_date"], sell_dates=m["t+5_date"], markets=m["market"]
+    )
 
     # === Subgroup 1: Market ===
     rows = []
     for market, sub in m.groupby("market"):
-        r = summarize(sub, str(market), cost)
+        r = summarize(sub, str(market))
         if r:
             rows.append(r)
     print_table(rows, "Market")
@@ -134,7 +156,7 @@ def main() -> int:
     m["ratio_bucket"] = pd.cut(m["contract_to_revenue_ratio"], bins=bins, labels=labels, right=False)
     rows = []
     for bucket, sub in m.groupby("ratio_bucket", observed=True):
-        r = summarize(sub, f"ratio {bucket}", cost)
+        r = summarize(sub, f"ratio {bucket}")
         if r:
             rows.append(r)
     print_table(rows, "Ratio bucket")
@@ -145,7 +167,7 @@ def main() -> int:
     m["value_bucket"] = pd.cut(m["contract_value_krw"], bins=bins_v, labels=labels_v, right=False)
     rows = []
     for bucket, sub in m.groupby("value_bucket", observed=True):
-        r = summarize(sub, f"value {bucket}", cost)
+        r = summarize(sub, f"value {bucket}")
         if r:
             rows.append(r)
     print_table(rows, "Contract value bucket (KRW)")
@@ -155,7 +177,7 @@ def main() -> int:
     m["dow"] = m["event_dt"].dt.day_name()
     rows = []
     for dow, sub in m.groupby("dow"):
-        r = summarize(sub, str(dow), cost)
+        r = summarize(sub, str(dow))
         if r:
             rows.append(r)
     print_table(rows, "Day of week (event_date)")
@@ -164,7 +186,7 @@ def main() -> int:
     m["quarter"] = m["event_dt"].dt.to_period("Q").astype(str)
     rows = []
     for q, sub in m.groupby("quarter"):
-        r = summarize(sub, str(q), cost)
+        r = summarize(sub, str(q))
         if r:
             rows.append(r)
     print_table(rows, "Calendar quarter (regime check)")
@@ -173,21 +195,21 @@ def main() -> int:
     m["counterparty_type"] = m["summary"].apply(classify_counterparty)
     rows = []
     for ct, sub in m.groupby("counterparty_type"):
-        r = summarize(sub, ct, cost)
+        r = summarize(sub, ct)
         if r:
             rows.append(r)
     print_table(rows, "Counterparty type (regex heuristic)")
 
     # === Subgroup 7: Cross of market × ratio bucket (the most interesting cut) ===
     print("\n=== Market × Ratio (≥0.15 only, n>=20) ===")
-    print(f"{'market':>8} {'ratio_bucket':>15} {'n':>5} {'T+5_net':>10} {'T+5_win%':>10} {'pf_5d':>8}")
+    print(f"{'market':>8} {'ratio_bucket':>15} {'n':>5} {'T+5_raw':>10} {'T+5_abn':>10} {'abn_win%':>10} {'abn_pf':>8}")
     print("-" * 70)
     for (mkt, bucket), sub in m.groupby(["market", "ratio_bucket"], observed=True):
         if bucket not in ["0.15-0.30", "0.30-0.50", "0.50-1.00", "1.00+"]:
             continue
-        r = summarize(sub, f"{mkt}/{bucket}", cost)
+        r = summarize(sub, f"{mkt}/{bucket}")
         if r:
-            print(f"{mkt:>8} {str(bucket):>15} {r['n']:>5} {r['t5_net_pct']:>+9.3f}% {r['t5_win_pct']:>9.1f}% {r['profit_factor_5d'] or 0:>8.3f}")
+            print(f"{mkt:>8} {str(bucket):>15} {r['n']:>5} {r['t5_net_pct']:>+9.3f}% {r['t5_abnormal_net_pct']:>+9.3f}% {r['t5_win_pct']:>9.1f}% {r['profit_factor_5d'] or 0:>8.3f}")
 
     # Save consolidated CSV
     out_csv = Path("data/subgroup_analysis.csv")

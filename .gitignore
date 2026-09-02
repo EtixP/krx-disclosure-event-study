@@ -23,6 +23,8 @@ data/*.log
 # ...but the derived event-study results are the research deliverable: they
 # let a reader reproduce the findings table without a 5-year DART re-ingest.
 !data/event_study_*.csv
+# M0.3 pins normalized benchmark closes needed to regenerate adjusted results.
+!data/benchmark_indices.csv
 
 # Python
 __pycache__/

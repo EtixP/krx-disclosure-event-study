@@ -1,0 +1,437 @@
+{
+  "assumptions": {
+    "commission_per_side": 0.00015,
+    "same_notional_approximation": true,
+    "slippage_bps_per_side": 5.0,
+    "slippage_semantics": "basis points per side",
+    "tradability_bar_changed": false,
+    "vat_on_commission": 0.1
+  },
+  "buyback_intraday": {
+    "events_with_filing_time": 3562,
+    "learned_selector": {
+      "model_mean_net_pct_after": 0.8280398645,
+      "selection_lift_pct_after": 0.0678186096
+    },
+    "metrics": {
+      "entry_timing_delta_pct": {
+        "after": 0.3167246953,
+        "before": 0.3167246953,
+        "delta_pct_points": 0.0
+      },
+      "timeaware_mean_net_pct": {
+        "after": 0.4577830391,
+        "before": 0.4733585585,
+        "delta_pct_points": -0.0155755194
+      },
+      "uniform_mean_net_pct": {
+        "after": 0.1410583438,
+        "before": 0.1566338631,
+        "delta_pct_points": -0.0155755193
+      }
+    },
+    "positive_folds": {
+      "scored_folds": 10,
+      "timeaware_after": 9,
+      "timeaware_before": 9,
+      "uniform_after": 7,
+      "uniform_before": 7
+    }
+  },
+  "buyback_learner": {
+    "after_model_trades": 2577,
+    "after_promotions": 3,
+    "after_verdict": "positive_selective_edge",
+    "before_verdict": "no_selection_edge",
+    "metrics": {
+      "always_all_mean_net_pct": {
+        "after": 0.1630838381,
+        "before": 0.1738954455,
+        "delta_pct_points": -0.0108116074
+      },
+      "matched_always_mean_net_pct": {
+        "after": 0.2978959979,
+        "before": 0.3154271211,
+        "delta_pct_points": -0.0175311232
+      },
+      "model_mean_net_pct": {
+        "after": 0.3202389558,
+        "before": 0.2987998736,
+        "delta_pct_points": 0.0214390822
+      },
+      "selection_lift_pct": {
+        "after": 0.022342958,
+        "before": -0.0166272475,
+        "delta_pct_points": 0.0389702055
+      }
+    },
+    "mock_trades": 4801
+  },
+  "categories": [
+    {
+      "category": "supply_contract",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": -0.1735,
+          "before": -0.1568,
+          "delta_pct_points": -0.0167
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": -0.1267,
+          "before": -0.1101,
+          "delta_pct_points": -0.0166
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": -0.3086,
+          "before": -0.292,
+          "delta_pct_points": -0.0166
+        }
+      },
+      "n_events": 8585,
+      "verdict": {
+        "after": "neutral",
+        "before": "neutral"
+      },
+      "walk_forward": {
+        "after_positive_folds": 6,
+        "before_positive_folds": 6,
+        "scored_folds": 11
+      }
+    },
+    {
+      "category": "buyback",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": 0.6947,
+          "before": 0.7089,
+          "delta_pct_points": -0.0142
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": 1.1816,
+          "before": 1.1956,
+          "delta_pct_points": -0.014
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": 0.1432,
+          "before": 0.1572,
+          "delta_pct_points": -0.014
+        }
+      },
+      "n_events": 4801,
+      "verdict": {
+        "after": "positive_noisy",
+        "before": "positive_noisy"
+      },
+      "walk_forward": {
+        "after_positive_folds": 10,
+        "before_positive_folds": 10,
+        "scored_folds": 10
+      }
+    },
+    {
+      "category": "bonus_issue",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": 0.7176,
+          "before": 0.7356,
+          "delta_pct_points": -0.018
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": 1.2153,
+          "before": 1.2333,
+          "delta_pct_points": -0.018
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": 0.2079,
+          "before": 0.2259,
+          "delta_pct_points": -0.018
+        }
+      },
+      "n_events": 828,
+      "verdict": {
+        "after": "positive_noisy",
+        "before": "positive_noisy"
+      },
+      "walk_forward": {
+        "after_positive_folds": 6,
+        "before_positive_folds": 7,
+        "scored_folds": 10
+      }
+    },
+    {
+      "category": "rights_offering",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": -0.2808,
+          "before": -0.2665,
+          "delta_pct_points": -0.0143
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": 0.3826,
+          "before": 0.3968,
+          "delta_pct_points": -0.0142
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": 0.2376,
+          "before": 0.2518,
+          "delta_pct_points": -0.0142
+        }
+      },
+      "n_events": 5911,
+      "verdict": {
+        "after": "neutral",
+        "before": "neutral"
+      },
+      "walk_forward": {
+        "after_positive_folds": 6,
+        "before_positive_folds": 6,
+        "scored_folds": 11
+      }
+    },
+    {
+      "category": "convertible_bond",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": 0.1698,
+          "before": 0.1813,
+          "delta_pct_points": -0.0115
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": 0.6175,
+          "before": 0.6288,
+          "delta_pct_points": -0.0113
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": -0.027,
+          "before": -0.0156,
+          "delta_pct_points": -0.0114
+        }
+      },
+      "n_events": 4175,
+      "verdict": {
+        "after": "neutral",
+        "before": "neutral"
+      },
+      "walk_forward": {
+        "after_positive_folds": 7,
+        "before_positive_folds": 7,
+        "scored_folds": 11
+      }
+    },
+    {
+      "category": "halt_resumption",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": -1.6211,
+          "before": -1.6079,
+          "delta_pct_points": -0.0132
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": -1.1884,
+          "before": -1.1753,
+          "delta_pct_points": -0.0131
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": 0.0411,
+          "before": 0.0542,
+          "delta_pct_points": -0.0131
+        }
+      },
+      "n_events": 2570,
+      "verdict": {
+        "after": "neutral",
+        "before": "neutral"
+      },
+      "walk_forward": {
+        "after_positive_folds": 4,
+        "before_positive_folds": 4,
+        "scored_folds": 10
+      }
+    },
+    {
+      "category": "shareholder_change",
+      "cost_fraction": {
+        "t1_max": 0.00363,
+        "t1_min": 0.00283,
+        "t5_max": 0.00363,
+        "t5_min": 0.00283
+      },
+      "metrics": {
+        "idealized_t1_mean_net_pct": {
+          "after": -0.527,
+          "before": -0.5148,
+          "delta_pct_points": -0.0122
+        },
+        "idealized_t5_mean_net_pct": {
+          "after": -1.2307,
+          "before": -1.2185,
+          "delta_pct_points": -0.0122
+        },
+        "realistic_t1_to_t5_mean_net_pct": {
+          "after": -1.1027,
+          "before": -1.0905,
+          "delta_pct_points": -0.0122
+        }
+      },
+      "n_events": 1858,
+      "verdict": {
+        "after": "negative",
+        "before": "negative"
+      },
+      "walk_forward": {
+        "after_positive_folds": 2,
+        "before_positive_folds": 2,
+        "scored_folds": 10
+      }
+    }
+  ],
+  "comparison": "pre_revision_flat_cost_vs_historical_cost_schedule",
+  "generator_sources": [
+    {
+      "path": "src/kdtb/backtest/cost_model.py",
+      "sha256": "0953db78021ad90bf09f413b71e5631d954aa56e87c0fc3b7a946cda7eca67a3"
+    },
+    {
+      "path": "src/kdtb/backtest/metrics.py",
+      "sha256": "0c56dce287cb0d6e10ce5f62e83c29452154d66621b49e8069e4264b6b107fe6"
+    },
+    {
+      "path": "src/kdtb/learning/dataset.py",
+      "sha256": "e2ed6a1846bebe626697cd37ae5160af5b7f1051a4d251a7aae55907ec65622e"
+    },
+    {
+      "path": "src/kdtb/learning/features.py",
+      "sha256": "f26aebcff0341ce03d3db7eb35181edb38f2125463faf22d25c8e6afdacf0150"
+    },
+    {
+      "path": "src/kdtb/learning/policy.py",
+      "sha256": "60dff77d4572a375367b1af142ddd7e07897bee14144182f0f6e410a356c0700"
+    },
+    {
+      "path": "src/kdtb/learning/walk_forward_trainer.py",
+      "sha256": "8a9ea157599872b1e46b37dc5a017c2cf981722269416353ca0fad84d9b35138"
+    },
+    {
+      "path": "scripts/analyze_event_category.py",
+      "sha256": "a186ad6f80b8801458aa4c73478842c7db0fe2607377687526dc4ef80d14c558"
+    },
+    {
+      "path": "scripts/compare_cost_revision.py",
+      "sha256": "5ee79ee2b58b654957fd4dfb8b12442cd780a75a0dced7c2cc800f62db468fd0"
+    },
+    {
+      "path": "scripts/run_intraday_walkforward.py",
+      "sha256": "6e362a11dd9d0c94e193bc6f6ebdca721183abf3ef53d7c76f0840f271bc210a"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/event_study_supply_contract.csv",
+      "sha256": "83fb5cd114f99be17877e9c3b5a522994f7c038fa878864b5036538f7b99373e"
+    },
+    {
+      "path": "data/event_study_buyback.csv",
+      "sha256": "a21f79c3b4730797c0efc38f75057e8ec79a7052e6857fa5bb7e4028e8be33c1"
+    },
+    {
+      "path": "data/event_study_bonus_issue.csv",
+      "sha256": "e1327699acaee7a4e5788cdfc2f25db7e9287fb9829e800f8c0a60136ebaff83"
+    },
+    {
+      "path": "data/event_study_rights_offering.csv",
+      "sha256": "d31020e3cfd0d1b7f0606d0ecb6456cfb61cc07ca4052822e4e4742ae0b11893"
+    },
+    {
+      "path": "data/event_study_convertible_bond.csv",
+      "sha256": "3d39d268ab65663d0ded9b03e425eb89786fbcb1e474e83a08b086456e108e83"
+    },
+    {
+      "path": "data/event_study_halt_resumption.csv",
+      "sha256": "02b29ff6e7162883f90468859d1e98917b3df9fb0e6b82350e7eee2a4f6c68d1"
+    },
+    {
+      "path": "data/event_study_shareholder_change.csv",
+      "sha256": "38a6fe671b6e335861c21d678a0d95a928990a0adc5a4a113906549177de8663"
+    }
+  ],
+  "milestone": "M0.2",
+  "schema_version": 1,
+  "tax_schedule": [
+    {
+      "end": "2022-12-31",
+      "kosdaq_special_rural_tax": 0.0,
+      "kosdaq_transaction_tax": 0.0023,
+      "kospi_special_rural_tax": 0.0015,
+      "kospi_transaction_tax": 0.0008,
+      "start": "2021-01-01"
+    },
+    {
+      "end": "2023-12-31",
+      "kosdaq_special_rural_tax": 0.0,
+      "kosdaq_transaction_tax": 0.002,
+      "kospi_special_rural_tax": 0.0015,
+      "kospi_transaction_tax": 0.0005,
+      "start": "2023-01-01"
+    },
+    {
+      "end": "2024-12-31",
+      "kosdaq_special_rural_tax": 0.0,
+      "kosdaq_transaction_tax": 0.0018,
+      "kospi_special_rural_tax": 0.0015,
+      "kospi_transaction_tax": 0.0003,
+      "start": "2024-01-01"
+    },
+    {
+      "end": "2025-12-31",
+      "kosdaq_special_rural_tax": 0.0,
+      "kosdaq_transaction_tax": 0.0015,
+      "kospi_special_rural_tax": 0.0015,
+      "kospi_transaction_tax": 0.0,
+      "start": "2025-01-01"
+    },
+    {
+      "end": "2026-12-31",
+      "kosdaq_special_rural_tax": 0.0,
+      "kosdaq_transaction_tax": 0.002,
+      "kospi_special_rural_tax": 0.0015,
+      "kospi_transaction_tax": 0.0005,
+      "start": "2026-01-01"
+    }
+  ]
+}

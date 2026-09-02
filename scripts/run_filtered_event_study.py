@@ -22,6 +22,7 @@ import pandas as pd
 
 from kdtb.backtest.cost_model import CostModel
 from kdtb.backtest.metrics import compute
+from kdtb.data.benchmarks import require_benchmark_columns
 from kdtb.logging_setup import setup_logging
 
 
@@ -80,35 +81,61 @@ def main() -> int:
     log.info("Wrote %s", args.out)
 
     model = CostModel()
-    cost = model.roundtrip_cost(1.0)
+    horizon_dates = {
+        "ret_1d": "t+1_date",
+        "ret_2d": "t+2_date",
+        "ret_5d": "t+5_date",
+    }
 
     def _summarize(df: pd.DataFrame, label: str) -> None:
         print(f"\n=== {label}: n={len(df)} ===")
         if len(df) == 0:
             print("  (empty)")
             return
-        print(f"{'horizon':>8} {'n':>4} {'gross_mean':>11} {'net_mean':>10} {'gross_win%':>10} {'net_win%':>9} {'profit_factor':>14} {'sharpe-ish':>11}")
-        print("-" * 88)
+        print(f"{'horizon':>8} {'n':>4} {'raw_gross':>10} {'raw_net':>10} {'abn_gross':>10} {'abn_net':>10} {'abn_win%':>9} {'abn_PF':>8}")
+        print("-" * 86)
         for col in ["ret_1d", "ret_2d", "ret_5d"]:
-            s = df[col].dropna()
-            if len(s) == 0:
+            sub = df.dropna(subset=[col]).copy()
+            if len(sub) == 0:
                 continue
-            net = (s - cost).tolist()
-            m = compute(net)
-            print(f"{col:>8} {len(s):>4} {s.mean()*100:>+10.3f}% {m.mean_return*100:>+9.3f}% "
-                  f"{(s>0).mean()*100:>9.1f}% {m.win_rate*100:>8.1f}% "
-                  f"{(m.profit_factor or 0):>14.3f} {(m.sharpe_like or 0):>+11.4f}")
+            dated = ["t0_date", horizon_dates[col], "market"]
+            if sub[dated].isna().any().any():
+                raise ValueError("dated transaction-cost inputs contain missing values")
+            require_benchmark_columns(
+                sub,
+                tokens=("t0", horizon_dates[col].removesuffix("_date").replace("+", "")),
+            )
+            abnormal_col = f"abnormal_{col}"
+            if abnormal_col not in sub or sub[abnormal_col].isna().any():
+                raise ValueError(f"missing benchmark-adjusted returns for {col}")
+            raw = sub[col]
+            abnormal = sub[abnormal_col]
+            costs = model.roundtrip_cost_fractions(
+                buy_dates=sub["t0_date"],
+                sell_dates=sub[horizon_dates[col]],
+                markets=sub["market"],
+            )
+            raw_net = compute((raw - costs).tolist())
+            abnormal_net = compute((abnormal - costs).tolist())
+            print(
+                f"{col:>8} {len(raw):>4} {raw.mean()*100:>+9.3f}% "
+                f"{raw_net.mean_return*100:>+9.3f}% {abnormal.mean()*100:>+9.3f}% "
+                f"{abnormal_net.mean_return*100:>+9.3f}% "
+                f"{abnormal_net.win_rate*100:>8.1f}% "
+                f"{(abnormal_net.profit_factor or 0):>8.3f}"
+            )
 
     _summarize(unfiltered, "ALL TITLE-FILTERED EVENTS (baseline)")
     _summarize(filtered, f"RATIO >= {args.min_ratio:.2f} (proper filter)")
 
     # Top winners and losers
     if len(filtered) > 0:
-        winners = filtered.nlargest(5, "ret_5d")[["corp_name", "stock_code", "event_date", "contract_to_revenue_ratio", "ret_1d", "ret_5d"]]
-        losers = filtered.nsmallest(5, "ret_5d")[["corp_name", "stock_code", "event_date", "contract_to_revenue_ratio", "ret_1d", "ret_5d"]]
-        print("\n=== TOP 5 5-day WINNERS (filtered) ===")
+        detail_columns = ["corp_name", "stock_code", "event_date", "contract_to_revenue_ratio", "ret_5d", "abnormal_ret_5d"]
+        winners = filtered.nlargest(5, "abnormal_ret_5d")[detail_columns]
+        losers = filtered.nsmallest(5, "abnormal_ret_5d")[detail_columns]
+        print("\n=== TOP 5 5-day ABNORMAL-RETURN WINNERS (filtered) ===")
         print(winners.to_string(index=False))
-        print("\n=== BOTTOM 5 5-day LOSERS (filtered) ===")
+        print("\n=== BOTTOM 5 5-day ABNORMAL-RETURN LOSERS (filtered) ===")
         print(losers.to_string(index=False))
 
     return 0

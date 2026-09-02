@@ -1,0 +1,142 @@
+{
+  "captured_at": "2026-09-02T09:11:19-04:00",
+  "cases": [
+    {
+      "case_id": "later_consolidation_uniform_revision",
+      "event_date": "2026-02-26",
+      "fresh_closes": {
+        "2026-02-26": 8035,
+        "2026-02-27": 8675,
+        "2026-03-03": 7925,
+        "2026-03-06": 5445
+      },
+      "stock_code": "300120",
+      "stored_closes": {
+        "2026-02-26": 1607,
+        "2026-02-27": 1735,
+        "2026-03-03": 1585,
+        "2026-03-06": 1089
+      }
+    },
+    {
+      "case_id": "cross_category_rights_window_uniform_revision_300120",
+      "event_date": "2026-02-19",
+      "fresh_closes": {
+        "2026-02-19": 7835,
+        "2026-02-20": 7640,
+        "2026-02-23": 7660,
+        "2026-02-26": 8035
+      },
+      "stock_code": "300120",
+      "stored_closes": {
+        "2026-02-19": 1567,
+        "2026-02-20": 1528,
+        "2026-02-23": 1532,
+        "2026-02-26": 1607
+      }
+    },
+    {
+      "case_id": "bonus_rights_drop_inside_window_223250",
+      "event_date": "2023-09-25",
+      "fresh_closes": {
+        "2023-09-25": 7196,
+        "2023-09-26": 5194,
+        "2023-09-27": 5970,
+        "2023-10-06": 5770
+      },
+      "stock_code": "223250",
+      "stored_closes": {
+        "2023-09-25": 7196,
+        "2023-09-26": 5194,
+        "2023-09-27": 5970,
+        "2023-10-06": 5770
+      }
+    },
+    {
+      "case_id": "bonus_rights_drop_inside_window_205100",
+      "event_date": "2023-09-26",
+      "fresh_closes": {
+        "2023-09-26": 2946,
+        "2023-09-27": 2886,
+        "2023-10-04": 2744,
+        "2023-10-10": 2570
+      },
+      "stock_code": "205100",
+      "stored_closes": {
+        "2023-09-26": 2946,
+        "2023-09-27": 2886,
+        "2023-10-04": 2744,
+        "2023-10-10": 2570
+      }
+    },
+    {
+      "case_id": "rights_drop_inside_window_294140",
+      "event_date": "2023-08-28",
+      "fresh_closes": {
+        "2023-08-28": 9598,
+        "2023-08-29": 9381,
+        "2023-08-30": 9352,
+        "2023-09-04": 8052
+      },
+      "stock_code": "294140",
+      "stored_closes": {
+        "2023-08-28": 9598,
+        "2023-08-29": 9381,
+        "2023-08-30": 9352,
+        "2023-09-04": 8052
+      }
+    },
+    {
+      "case_id": "rights_drop_inside_window_185490",
+      "event_date": "2025-10-22",
+      "fresh_closes": {
+        "2025-10-22": 1988,
+        "2025-10-23": 2015,
+        "2025-10-24": 2045,
+        "2025-10-29": 1924
+      },
+      "stock_code": "185490",
+      "stored_closes": {
+        "2025-10-22": 1988,
+        "2025-10-23": 2015,
+        "2025-10-24": 2045,
+        "2025-10-29": 1924
+      }
+    },
+    {
+      "case_id": "rights_drop_inside_window_323280",
+      "event_date": "2024-12-31",
+      "fresh_closes": {
+        "2025-01-02": 25150,
+        "2025-01-03": 24500,
+        "2025-01-06": 24850,
+        "2025-01-09": 28650
+      },
+      "stock_code": "323280",
+      "stored_closes": {
+        "2025-01-02": 25150,
+        "2025-01-03": 24500,
+        "2025-01-06": 24850,
+        "2025-01-09": 28650
+      }
+    }
+  ],
+  "price_request": {
+    "adjusted": true,
+    "freq": "d",
+    "name_display": false
+  },
+  "provider_route": "NAVER_FINANCE_VIA_PYKRX",
+  "pykrx_version": "1.2.8",
+  "related_local_dart_filing": {
+    "filing_date": "2026-05-19",
+    "receipt_no": "20260519900417",
+    "report_name": "주식병합결정",
+    "stock_code": "300120"
+  },
+  "unadjusted_probe": {
+    "credentials_present": false,
+    "outcome": "provider_error",
+    "route": "KRX_VIA_PYKRX"
+  }
+}

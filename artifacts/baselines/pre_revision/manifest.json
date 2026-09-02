@@ -1,0 +1,143 @@
+{
+  "artifact": "manifest",
+  "artifacts": [
+    {
+      "bytes": 37742,
+      "path": "cross_category_summary.json",
+      "sha256": "ebaf67bf0eed41aa1cfaf97d6aceaddeed9af55d755918f42ce68e9c1b98460d"
+    },
+    {
+      "bytes": 8952,
+      "path": "buyback_intraday_summary.json",
+      "sha256": "208c9f6348a2504b6d9484711ef15d56c987247681db2f3b60151f437c64cf30"
+    },
+    {
+      "bytes": 7390,
+      "path": "learner_buyback_summary.json",
+      "sha256": "9e90548f0d2c5929d6d758967b0fcc89ea64c64d03fc1014184ef4cb9577baa6"
+    },
+    {
+      "bytes": 5180,
+      "path": "shareholder_change_summary.json",
+      "sha256": "cf7c8700588b0075e39e84fcb7a5b221d423ff1dd3bec88b8966abd78b3e5acb"
+    }
+  ],
+  "external_inputs": [
+    {
+      "bytes": 1735477,
+      "path": "data/event_study_supply_contract.csv",
+      "sha256": "7233bd8eaca935c887bddfcce8237ab15ebf0abc89bfc5d4c7f0148b83deed81"
+    },
+    {
+      "bytes": 1074558,
+      "path": "data/event_study_buyback.csv",
+      "sha256": "9ee78d4e554ebea674854648d294b7617fba414fac7e958e0ed5fa6e7e681866"
+    },
+    {
+      "bytes": 170033,
+      "path": "data/event_study_bonus_issue.csv",
+      "sha256": "fe1b0064dd817bc1db2eb2d5272b54db9425d25ef40f61b393d22bdd724c34db"
+    },
+    {
+      "bytes": 1283405,
+      "path": "data/event_study_rights_offering.csv",
+      "sha256": "4c16bff9537f275a1041a0d8048904e4e727abf3d97632c9331ca6dc6a12c235"
+    },
+    {
+      "bytes": 947824,
+      "path": "data/event_study_convertible_bond.csv",
+      "sha256": "502070b5550c7e308712f5acb1a6ea6eeff4bffa76f5347b5717e709e8d2c6cb"
+    },
+    {
+      "bytes": 553487,
+      "path": "data/event_study_halt_resumption.csv",
+      "sha256": "b7899de911681081feac70330179bc23e83be4889a2179d5da4685ba7c807d47"
+    },
+    {
+      "bytes": 381834,
+      "path": "data/event_study_shareholder_change.csv",
+      "sha256": "167dc49ef9ab9d229406dde853b8be58e4f441d18bde51c52fbead6ec7fab3d1"
+    }
+  ],
+  "generation_command": "python -m scripts.verify_research_state --generate",
+  "generator_sources": [
+    {
+      "bytes": 32852,
+      "path": "src/kdtb/research/baseline.py",
+      "sha256": "457ab781f6e4a45c4a7baec423b7d94fb1973f3a5d49bb1d445c9e8ad21f167d"
+    },
+    {
+      "bytes": 4301,
+      "path": "src/kdtb/backtest/cost_model.py",
+      "sha256": "11893d46d199882d558bfb64f5848f207e0a6c1fdbc7f7712a69eb864ac2eea0"
+    },
+    {
+      "bytes": 3015,
+      "path": "src/kdtb/backtest/metrics.py",
+      "sha256": "0c56dce287cb0d6e10ce5f62e83c29452154d66621b49e8069e4264b6b107fe6"
+    },
+    {
+      "bytes": 2936,
+      "path": "src/kdtb/learning/dataset.py",
+      "sha256": "54e1968ce0baee3d290132ac87a138abc19234ab90db9debe4f7198caf93c65a"
+    },
+    {
+      "bytes": 3331,
+      "path": "src/kdtb/learning/features.py",
+      "sha256": "f26aebcff0341ce03d3db7eb35181edb38f2125463faf22d25c8e6afdacf0150"
+    },
+    {
+      "bytes": 4465,
+      "path": "src/kdtb/learning/policy.py",
+      "sha256": "60dff77d4572a375367b1af142ddd7e07897bee14144182f0f6e410a356c0700"
+    },
+    {
+      "bytes": 4881,
+      "path": "src/kdtb/learning/walk_forward_trainer.py",
+      "sha256": "8a9ea157599872b1e46b37dc5a017c2cf981722269416353ca0fad84d9b35138"
+    },
+    {
+      "bytes": 10487,
+      "path": "scripts/analyze_event_category.py",
+      "sha256": "cbe43159f54f3fd0afb6ee16e38f4c83cb2c38ddf7ec49207e9b5334072b6a25"
+    },
+    {
+      "bytes": 8741,
+      "path": "scripts/run_intraday_walkforward.py",
+      "sha256": "05a5f336a29a1877d0220ea771caebff585029c184f4caa7aa39af24b91564ce"
+    },
+    {
+      "bytes": 2831,
+      "path": "scripts/summarize_all_categories.py",
+      "sha256": "9ac4bd971f95466e204c764e6bb14601890d362b538c3efccc608acbe51934fa"
+    },
+    {
+      "bytes": 8316,
+      "path": "scripts/train_learner.py",
+      "sha256": "bc3cf23431b355ada729326ddb82ce1fe350da913c606eccdb62a0f6c3c97d14"
+    },
+    {
+      "bytes": 3518,
+      "path": "scripts/verify_research_state.py",
+      "sha256": "3a4faae0c577c4b7cf2dabab67cd624a00ad429cfe9f87335eaa8b64477a8b96"
+    }
+  ],
+  "pinned_inputs": [
+    {
+      "bytes": 75707,
+      "path": "inputs/buyback_filing_times.csv",
+      "records": 3604,
+      "sha256": "0c61572d3e128a82b0b7d79c236541d0f5940db7a4fe1d1dd3ae061fa0ee99e5",
+      "source": "data/kdtb.db disclosures(receipt_no, filing_time)"
+    }
+  ],
+  "runtime": {
+    "numpy": "2.5.0",
+    "pandas": "2.3.3",
+    "python": "3.13.2",
+    "scikit-learn": "1.9.0"
+  },
+  "schema_version": 1,
+  "snapshot": "pre_revision",
+  "verification_semantics": "artifact hashes and arithmetic invariants; no equality assertion against future corrected research outputs"
+}

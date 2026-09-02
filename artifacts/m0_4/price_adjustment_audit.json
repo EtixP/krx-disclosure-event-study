@@ -1,0 +1,2680 @@
+{
+  "categories": [
+    {
+      "all_complete_returns": {
+        "abnormal_mean_pct": {
+          "t1": 1.0710920892,
+          "t2": 1.2790901269,
+          "t5": 1.4554823954
+        },
+        "n": 828,
+        "raw_mean_pct": {
+          "t1": 1.0486400739,
+          "t2": 1.265207953,
+          "t5": 1.5463153627
+        }
+      },
+      "category": "bonus_issue",
+      "complete_rows": 828,
+      "explicit_right_drop_returns": {
+        "abnormal_mean_pct": {
+          "t1": 4.3578713088,
+          "t2": 5.5354757463,
+          "t5": 3.6086493738
+        },
+        "n": 242,
+        "raw_mean_pct": {
+          "t1": 4.3604169683,
+          "t2": 5.519819112,
+          "t5": 3.6947904367
+        }
+      },
+      "m0_3_headline": {
+        "metrics": {
+          "idealized_t1": {
+            "abnormal_net_pct": 0.74,
+            "current_raw_net_pct": 0.7176
+          },
+          "idealized_t5": {
+            "abnormal_net_pct": 1.1245,
+            "current_raw_net_pct": 1.2153
+          },
+          "realistic_t1_to_t5": {
+            "abnormal_net_pct": 0.093,
+            "current_raw_net_pct": 0.2079
+          }
+        },
+        "n_events": 828,
+        "verdict": {
+          "abnormal": "neutral",
+          "raw": "positive_noisy"
+        },
+        "walk_forward": {
+          "abnormal_positive_folds": 6,
+          "raw_positive_folds": 6,
+          "scored_folds": 10
+        }
+      },
+      "m0_3_headline_unchanged": true,
+      "right_drop_crossings": {
+        "committed_category_union": [
+          {
+            "event_date": "2023-09-25",
+            "receipt_no": "20230925000338",
+            "report_name": "주요사항보고서(무상증자결정)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_no": "20231006900461",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "223250"
+              }
+            ],
+            "stock_code": "223250",
+            "t+5_date": "2023-10-06",
+            "t0_date": "2023-09-25"
+          },
+          {
+            "event_date": "2023-09-25",
+            "receipt_no": "20230925900380",
+            "report_name": "주권매매거래정지(무상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_no": "20231006900461",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "223250"
+              }
+            ],
+            "stock_code": "223250",
+            "t+5_date": "2023-10-06",
+            "t0_date": "2023-09-25"
+          },
+          {
+            "event_date": "2023-09-26",
+            "receipt_no": "20230926000614",
+            "report_name": "주요사항보고서(무상증자결정)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_no": "20231006900466",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "205100"
+              }
+            ],
+            "stock_code": "205100",
+            "t+5_date": "2023-10-10",
+            "t0_date": "2023-09-26"
+          },
+          {
+            "event_date": "2023-09-26",
+            "receipt_no": "20230926900688",
+            "report_name": "주권매매거래정지(무상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_no": "20231006900466",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "205100"
+              }
+            ],
+            "stock_code": "205100",
+            "t+5_date": "2023-10-10",
+            "t0_date": "2023-09-26"
+          }
+        ],
+        "pinned_local_dart": [
+          {
+            "event_date": "2023-09-25",
+            "receipt_no": "20230925000338",
+            "report_name": "주요사항보고서(무상증자결정)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_datetime": "2023-10-06T00:00:00",
+                "receipt_no": "20231006900461",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "223250"
+              }
+            ],
+            "stock_code": "223250",
+            "t+5_date": "2023-10-06",
+            "t0_date": "2023-09-25"
+          },
+          {
+            "event_date": "2023-09-25",
+            "receipt_no": "20230925900380",
+            "report_name": "주권매매거래정지(무상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_datetime": "2023-10-06T00:00:00",
+                "receipt_no": "20231006900461",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "223250"
+              }
+            ],
+            "stock_code": "223250",
+            "t+5_date": "2023-10-06",
+            "t0_date": "2023-09-25"
+          },
+          {
+            "event_date": "2023-09-26",
+            "receipt_no": "20230926000614",
+            "report_name": "주요사항보고서(무상증자결정)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_datetime": "2023-10-06T00:00:00",
+                "receipt_no": "20231006900466",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "205100"
+              }
+            ],
+            "stock_code": "205100",
+            "t+5_date": "2023-10-10",
+            "t0_date": "2023-09-26"
+          },
+          {
+            "event_date": "2023-09-26",
+            "receipt_no": "20230926900688",
+            "report_name": "주권매매거래정지(무상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-06",
+                "receipt_datetime": "2023-10-06T00:00:00",
+                "receipt_no": "20231006900466",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "205100"
+              }
+            ],
+            "stock_code": "205100",
+            "t+5_date": "2023-10-10",
+            "t0_date": "2023-09-26"
+          }
+        ]
+      },
+      "rows": 840,
+      "unique_stocks": 297
+    },
+    {
+      "all_complete_returns": {
+        "abnormal_mean_pct": {
+          "t1": 0.0614016858,
+          "t2": 0.1667072747,
+          "t5": 0.6013994202
+        },
+        "n": 5911,
+        "raw_mean_pct": {
+          "t1": 0.0465088928,
+          "t2": 0.1882751773,
+          "t5": 0.7097773126
+        }
+      },
+      "category": "rights_offering",
+      "complete_rows": 5911,
+      "explicit_right_drop_returns": {
+        "abnormal_mean_pct": {
+          "t1": 3.6777940797,
+          "t2": 3.5222856992,
+          "t5": 3.7925516061
+        },
+        "n": 192,
+        "raw_mean_pct": {
+          "t1": 3.5162954619,
+          "t2": 3.3988746176,
+          "t5": 3.628106327
+        }
+      },
+      "m0_3_headline": {
+        "metrics": {
+          "idealized_t1": {
+            "abnormal_net_pct": -0.2659,
+            "current_raw_net_pct": -0.2808
+          },
+          "idealized_t5": {
+            "abnormal_net_pct": 0.2742,
+            "current_raw_net_pct": 0.3826
+          },
+          "realistic_t1_to_t5": {
+            "abnormal_net_pct": 0.1107,
+            "current_raw_net_pct": 0.2376
+          }
+        },
+        "n_events": 5911,
+        "verdict": {
+          "abnormal": "positive_noisy",
+          "raw": "neutral"
+        },
+        "walk_forward": {
+          "abnormal_positive_folds": 7,
+          "raw_positive_folds": 6,
+          "scored_folds": 11
+        }
+      },
+      "m0_3_headline_unchanged": true,
+      "right_drop_crossings": {
+        "committed_category_union": [
+          {
+            "event_date": "2023-10-13",
+            "receipt_no": "20231013900093",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-20",
+                "receipt_no": "20231020900663",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "304840"
+              }
+            ],
+            "stock_code": "304840",
+            "t+5_date": "2023-10-20",
+            "t0_date": "2023-10-13"
+          },
+          {
+            "event_date": "2023-10-18",
+            "receipt_no": "20231018900237",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-20",
+                "receipt_no": "20231020900663",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "304840"
+              }
+            ],
+            "stock_code": "304840",
+            "t+5_date": "2023-10-25",
+            "t0_date": "2023-10-18"
+          },
+          {
+            "event_date": "2023-10-19",
+            "receipt_no": "20231019900212",
+            "report_name": "증권발행결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-20",
+                "receipt_no": "20231020900663",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "304840"
+              }
+            ],
+            "stock_code": "304840",
+            "t+5_date": "2023-10-26",
+            "t0_date": "2023-10-19"
+          },
+          {
+            "event_date": "2022-06-20",
+            "receipt_no": "20220620900322",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-24",
+                "receipt_no": "20220624900454",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "247540"
+              }
+            ],
+            "stock_code": "247540",
+            "t+5_date": "2022-06-27",
+            "t0_date": "2022-06-20"
+          },
+          {
+            "event_date": "2025-11-24",
+            "receipt_no": "20251124900145",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-28",
+                "receipt_no": "20251128901058",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "203400"
+              }
+            ],
+            "stock_code": "203400",
+            "t+5_date": "2025-12-01",
+            "t0_date": "2025-11-24"
+          },
+          {
+            "event_date": "2025-11-27",
+            "receipt_no": "20251127900371",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-28",
+                "receipt_no": "20251128901058",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "203400"
+              }
+            ],
+            "stock_code": "203400",
+            "t+5_date": "2025-12-04",
+            "t0_date": "2025-11-27"
+          },
+          {
+            "event_date": "2023-12-06",
+            "receipt_no": "20231206900158",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-12-12",
+                "receipt_no": "20231212900691",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "092040"
+              }
+            ],
+            "stock_code": "092040",
+            "t+5_date": "2023-12-13",
+            "t0_date": "2023-12-06"
+          },
+          {
+            "event_date": "2022-01-07",
+            "receipt_no": "20220107900721",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-01-14",
+                "receipt_no": "20220114900469",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "294090"
+              }
+            ],
+            "stock_code": "294090",
+            "t+5_date": "2022-01-14",
+            "t0_date": "2022-01-07"
+          },
+          {
+            "event_date": "2022-06-10",
+            "receipt_no": "20220610900102",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-16",
+                "receipt_no": "20220616900343",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "142210"
+              }
+            ],
+            "stock_code": "142210",
+            "t+5_date": "2022-06-17",
+            "t0_date": "2022-06-10"
+          },
+          {
+            "event_date": "2021-12-10",
+            "receipt_no": "20211210900181",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-12-15",
+                "receipt_no": "20211215901370",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "067310"
+              }
+            ],
+            "stock_code": "067310",
+            "t+5_date": "2021-12-17",
+            "t0_date": "2021-12-10"
+          },
+          {
+            "event_date": "2024-07-31",
+            "receipt_no": "20240731900046",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-08-07",
+                "receipt_no": "20240807900536",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "067310"
+              }
+            ],
+            "stock_code": "067310",
+            "t+5_date": "2024-08-07",
+            "t0_date": "2024-07-31"
+          },
+          {
+            "event_date": "2024-08-05",
+            "receipt_no": "20240805900149",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-08-07",
+                "receipt_no": "20240807900536",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "067310"
+              }
+            ],
+            "stock_code": "067310",
+            "t+5_date": "2024-08-12",
+            "t0_date": "2024-08-05"
+          },
+          {
+            "event_date": "2021-12-13",
+            "receipt_no": "20211213900418",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-12-17",
+                "receipt_no": "20211217900462",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "289220"
+              }
+            ],
+            "stock_code": "289220",
+            "t+5_date": "2021-12-20",
+            "t0_date": "2021-12-13"
+          },
+          {
+            "event_date": "2021-12-21",
+            "receipt_no": "20211221900134",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-12-24",
+                "receipt_no": "20211224900649",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "234300"
+              }
+            ],
+            "stock_code": "234300",
+            "t+5_date": "2021-12-28",
+            "t0_date": "2021-12-21"
+          },
+          {
+            "event_date": "2023-12-11",
+            "receipt_no": "20231211900240",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주우선공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-12-15",
+                "receipt_no": "20231215901939",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "115180"
+              }
+            ],
+            "stock_code": "115180",
+            "t+5_date": "2023-12-18",
+            "t0_date": "2023-12-11"
+          },
+          {
+            "event_date": "2023-12-14",
+            "receipt_no": "20231214900146",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주우선공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-12-15",
+                "receipt_no": "20231215901939",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "115180"
+              }
+            ],
+            "stock_code": "115180",
+            "t+5_date": "2023-12-21",
+            "t0_date": "2023-12-14"
+          },
+          {
+            "event_date": "2022-06-03",
+            "receipt_no": "20220603900264",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-10",
+                "receipt_no": "20220610900529",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "128540"
+              }
+            ],
+            "stock_code": "128540",
+            "t+5_date": "2022-06-13",
+            "t0_date": "2022-06-03"
+          },
+          {
+            "event_date": "2022-06-09",
+            "receipt_no": "20220609900129",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-10",
+                "receipt_no": "20220610900529",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "128540"
+              }
+            ],
+            "stock_code": "128540",
+            "t+5_date": "2022-06-16",
+            "t0_date": "2022-06-09"
+          },
+          {
+            "event_date": "2022-04-13",
+            "receipt_no": "20220413900300",
+            "report_name": "증권발행결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-04-15",
+                "receipt_no": "20220415900820",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "377030"
+              }
+            ],
+            "stock_code": "377030",
+            "t+5_date": "2022-04-20",
+            "t0_date": "2022-04-13"
+          },
+          {
+            "event_date": "2024-07-19",
+            "receipt_no": "20240719900100",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-07-26",
+                "receipt_no": "20240726900724",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "288330"
+              }
+            ],
+            "stock_code": "288330",
+            "t+5_date": "2024-07-26",
+            "t0_date": "2024-07-19"
+          },
+          {
+            "event_date": "2022-07-04",
+            "receipt_no": "20220704900298",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-07-11",
+                "receipt_no": "20220711900630",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "263050"
+              }
+            ],
+            "stock_code": "263050",
+            "t+5_date": "2022-07-11",
+            "t0_date": "2022-07-04"
+          },
+          {
+            "event_date": "2022-07-07",
+            "receipt_no": "20220707900118",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-07-11",
+                "receipt_no": "20220711900630",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "263050"
+              }
+            ],
+            "stock_code": "263050",
+            "t+5_date": "2022-07-14",
+            "t0_date": "2022-07-07"
+          },
+          {
+            "event_date": "2022-06-13",
+            "receipt_no": "20220613900076",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-17",
+                "receipt_no": "20220617900528",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "297090"
+              }
+            ],
+            "stock_code": "297090",
+            "t+5_date": "2022-06-20",
+            "t0_date": "2022-06-13"
+          },
+          {
+            "event_date": "2022-08-11",
+            "receipt_no": "20220811900175",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-08-17",
+                "receipt_no": "20220817900317",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "194700"
+              }
+            ],
+            "stock_code": "194700",
+            "t+5_date": "2022-08-19",
+            "t0_date": "2022-08-11"
+          },
+          {
+            "event_date": "2022-10-14",
+            "receipt_no": "20221014900102",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-10-21",
+                "receipt_no": "20221021900393",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "220100"
+              }
+            ],
+            "stock_code": "220100",
+            "t+5_date": "2022-10-21",
+            "t0_date": "2022-10-14"
+          },
+          {
+            "event_date": "2022-11-02",
+            "receipt_no": "20221102900097",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(구주주배정분)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-11-08",
+                "receipt_no": "20221108900448",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "347860"
+              }
+            ],
+            "stock_code": "347860",
+            "t+5_date": "2022-11-09",
+            "t0_date": "2022-11-02"
+          },
+          {
+            "event_date": "2022-11-07",
+            "receipt_no": "20221107900127",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(실권주 일반공모분)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-11-08",
+                "receipt_no": "20221108900448",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "347860"
+              }
+            ],
+            "stock_code": "347860",
+            "t+5_date": "2022-11-14",
+            "t0_date": "2022-11-07"
+          },
+          {
+            "event_date": "2022-12-07",
+            "receipt_no": "20221207900104",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-12-13",
+                "receipt_no": "20221213900697",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "175250"
+              }
+            ],
+            "stock_code": "175250",
+            "t+5_date": "2022-12-14",
+            "t0_date": "2022-12-07"
+          },
+          {
+            "event_date": "2022-12-12",
+            "receipt_no": "20221212900070",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-12-13",
+                "receipt_no": "20221213900697",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "175250"
+              }
+            ],
+            "stock_code": "175250",
+            "t+5_date": "2022-12-19",
+            "t0_date": "2022-12-12"
+          },
+          {
+            "event_date": "2023-01-04",
+            "receipt_no": "20230104900087",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-01-10",
+                "receipt_no": "20230110900595",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "095700"
+              }
+            ],
+            "stock_code": "095700",
+            "t+5_date": "2023-01-11",
+            "t0_date": "2023-01-04"
+          },
+          {
+            "event_date": "2023-01-09",
+            "receipt_no": "20230109900120",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-01-10",
+                "receipt_no": "20230110900595",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "095700"
+              }
+            ],
+            "stock_code": "095700",
+            "t+5_date": "2023-01-16",
+            "t0_date": "2023-01-09"
+          },
+          {
+            "event_date": "2023-09-06",
+            "receipt_no": "20230906900086",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-13",
+                "receipt_no": "20230913900380",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "241820"
+              }
+            ],
+            "stock_code": "241820",
+            "t+5_date": "2023-09-13",
+            "t0_date": "2023-09-06"
+          },
+          {
+            "event_date": "2023-09-12",
+            "receipt_no": "20230912900149",
+            "report_name": "증권발행결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-13",
+                "receipt_no": "20230913900380",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "241820"
+              }
+            ],
+            "stock_code": "241820",
+            "t+5_date": "2023-09-19",
+            "t0_date": "2023-09-12"
+          },
+          {
+            "event_date": "2023-08-02",
+            "receipt_no": "20230802900620",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-08-09",
+                "receipt_no": "20230809900559",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "352770"
+              }
+            ],
+            "stock_code": "352770",
+            "t+5_date": "2023-08-09",
+            "t0_date": "2023-08-02"
+          },
+          {
+            "event_date": "2023-08-08",
+            "receipt_no": "20230808900482",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-08-09",
+                "receipt_no": "20230809900559",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "352770"
+              }
+            ],
+            "stock_code": "352770",
+            "t+5_date": "2023-08-16",
+            "t0_date": "2023-08-08"
+          },
+          {
+            "event_date": "2024-06-21",
+            "receipt_no": "20240621900587",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)              (주주배정 후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-06-27",
+                "receipt_no": "20240627900743",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "198940"
+              }
+            ],
+            "stock_code": "198940",
+            "t+5_date": "2024-06-28",
+            "t0_date": "2024-06-21"
+          },
+          {
+            "event_date": "2023-09-07",
+            "receipt_no": "20230907900171",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-14",
+                "receipt_no": "20230914900419",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "298060"
+              }
+            ],
+            "stock_code": "298060",
+            "t+5_date": "2023-09-14",
+            "t0_date": "2023-09-07"
+          },
+          {
+            "event_date": "2023-09-13",
+            "receipt_no": "20230913900066",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-14",
+                "receipt_no": "20230914900419",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "298060"
+              }
+            ],
+            "stock_code": "298060",
+            "t+5_date": "2023-09-20",
+            "t0_date": "2023-09-13"
+          },
+          {
+            "event_date": "2023-06-21",
+            "receipt_no": "20230621900234",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(일반공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-06-23",
+                "receipt_no": "20230623900503",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "407400"
+              }
+            ],
+            "stock_code": "407400",
+            "t+5_date": "2023-06-28",
+            "t0_date": "2023-06-21"
+          },
+          {
+            "event_date": "2023-06-22",
+            "receipt_no": "20230622900228",
+            "report_name": "증권발행결과(자율공시)(일반공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-06-23",
+                "receipt_no": "20230623900503",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "407400"
+              }
+            ],
+            "stock_code": "407400",
+            "t+5_date": "2023-06-29",
+            "t0_date": "2023-06-22"
+          },
+          {
+            "event_date": "2025-11-12",
+            "receipt_no": "20251112900241",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)              (주주배정후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-19",
+                "receipt_no": "20251119900416",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "462350"
+              }
+            ],
+            "stock_code": "462350",
+            "t+5_date": "2025-11-19",
+            "t0_date": "2025-11-12"
+          },
+          {
+            "event_date": "2025-11-17",
+            "receipt_no": "20251117900217",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)              (주주배정후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-19",
+                "receipt_no": "20251119900416",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "462350"
+              }
+            ],
+            "stock_code": "462350",
+            "t+5_date": "2025-11-24",
+            "t0_date": "2025-11-17"
+          },
+          {
+            "event_date": "2023-08-28",
+            "receipt_no": "20230828900564",
+            "report_name": "유상증자1차발행가액결정",
+            "right_drop_events": [
+              {
+                "event_date": "2023-08-29",
+                "receipt_no": "20230829900456",
+                "report_name": "권리락(유상증자)",
+                "stock_code": "294140"
+              }
+            ],
+            "stock_code": "294140",
+            "t+5_date": "2023-09-04",
+            "t0_date": "2023-08-28"
+          },
+          {
+            "event_date": "2023-09-06",
+            "receipt_no": "20230906900099",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-12",
+                "receipt_no": "20230912900368",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "310210"
+              }
+            ],
+            "stock_code": "310210",
+            "t+5_date": "2023-09-13",
+            "t0_date": "2023-09-06"
+          },
+          {
+            "event_date": "2023-09-18",
+            "receipt_no": "20230918900103",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-22",
+                "receipt_no": "20230922900573",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "376930"
+              }
+            ],
+            "stock_code": "376930",
+            "t+5_date": "2023-09-25",
+            "t0_date": "2023-09-18"
+          },
+          {
+            "event_date": "2023-11-03",
+            "receipt_no": "20231103900070",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-09",
+                "receipt_no": "20231109900486",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "323990"
+              }
+            ],
+            "stock_code": "323990",
+            "t+5_date": "2023-11-10",
+            "t0_date": "2023-11-03"
+          },
+          {
+            "event_date": "2023-11-08",
+            "receipt_no": "20231108900160",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-09",
+                "receipt_no": "20231109900486",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "323990"
+              }
+            ],
+            "stock_code": "323990",
+            "t+5_date": "2023-11-15",
+            "t0_date": "2023-11-08"
+          },
+          {
+            "event_date": "2023-11-03",
+            "receipt_no": "20231103900131",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-08",
+                "receipt_no": "20231108900624",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "328130"
+              }
+            ],
+            "stock_code": "328130",
+            "t+5_date": "2023-11-10",
+            "t0_date": "2023-11-03"
+          },
+          {
+            "event_date": "2026-04-24",
+            "receipt_no": "20260424900103",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-04-30",
+                "receipt_no": "20260430901423",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "328130"
+              }
+            ],
+            "stock_code": "328130",
+            "t+5_date": "2026-05-04",
+            "t0_date": "2026-04-24"
+          },
+          {
+            "event_date": "2023-11-08",
+            "receipt_no": "20231108900142",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-15",
+                "receipt_no": "20231115900548",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "214610"
+              }
+            ],
+            "stock_code": "214610",
+            "t+5_date": "2023-11-15",
+            "t0_date": "2023-11-08"
+          },
+          {
+            "event_date": "2023-11-13",
+            "receipt_no": "20231113900596",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주배정 후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-15",
+                "receipt_no": "20231115900548",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "214610"
+              }
+            ],
+            "stock_code": "214610",
+            "t+5_date": "2023-11-20",
+            "t0_date": "2023-11-13"
+          },
+          {
+            "event_date": "2025-10-22",
+            "receipt_no": "20251022900593",
+            "report_name": "유상증자1차발행가액결정",
+            "right_drop_events": [
+              {
+                "event_date": "2025-10-23",
+                "receipt_no": "20251023900466",
+                "report_name": "권리락              (유상증자)",
+                "stock_code": "185490"
+              }
+            ],
+            "stock_code": "185490",
+            "t+5_date": "2025-10-29",
+            "t0_date": "2025-10-22"
+          },
+          {
+            "event_date": "2025-10-22",
+            "receipt_no": "20251022900110",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-10-28",
+                "receipt_no": "20251028900648",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "246710"
+              }
+            ],
+            "stock_code": "246710",
+            "t+5_date": "2025-10-29",
+            "t0_date": "2025-10-22"
+          },
+          {
+            "event_date": "2026-06-16",
+            "receipt_no": "20260616000257",
+            "report_name": "[첨부추가]주요사항보고서(유상증자결정)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-06-18",
+                "receipt_no": "20260618900729",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "368970"
+              }
+            ],
+            "stock_code": "368970",
+            "t+5_date": "2026-06-23",
+            "t0_date": "2026-06-16"
+          },
+          {
+            "event_date": "2026-03-18",
+            "receipt_no": "20260318901111",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-03-23",
+                "receipt_no": "20260323901834",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "062970"
+              }
+            ],
+            "stock_code": "062970",
+            "t+5_date": "2026-03-25",
+            "t0_date": "2026-03-18"
+          },
+          {
+            "event_date": "2025-03-27",
+            "receipt_no": "20250327901460",
+            "report_name": "증권발행결과(자율공시)              (주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-04-01",
+                "receipt_no": "20250401901130",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "358570"
+              }
+            ],
+            "stock_code": "358570",
+            "t+5_date": "2025-04-03",
+            "t0_date": "2025-03-27"
+          },
+          {
+            "event_date": "2024-10-10",
+            "receipt_no": "20241010900093",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-10-16",
+                "receipt_no": "20241016900387",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "322510"
+              }
+            ],
+            "stock_code": "322510",
+            "t+5_date": "2024-10-17",
+            "t0_date": "2024-10-10"
+          },
+          {
+            "event_date": "2024-10-30",
+            "receipt_no": "20241030900094",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-11-06",
+                "receipt_no": "20241106900369",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "357880"
+              }
+            ],
+            "stock_code": "357880",
+            "t+5_date": "2024-11-06",
+            "t0_date": "2024-10-30"
+          },
+          {
+            "event_date": "2024-11-04",
+            "receipt_no": "20241104900583",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-11-06",
+                "receipt_no": "20241106900369",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "357880"
+              }
+            ],
+            "stock_code": "357880",
+            "t+5_date": "2024-11-11",
+            "t0_date": "2024-11-04"
+          },
+          {
+            "event_date": "2024-12-31",
+            "receipt_no": "20241231900070",
+            "report_name": "유상증자1차발행가액결정              (주주배정후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-01-02",
+                "receipt_no": "20250102900580",
+                "report_name": "권리락              (유상증자)",
+                "stock_code": "323280"
+              }
+            ],
+            "stock_code": "323280",
+            "t+5_date": "2025-01-09",
+            "t0_date": "2025-01-02"
+          },
+          {
+            "event_date": "2025-07-14",
+            "receipt_no": "20250714900108",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-07-21",
+                "receipt_no": "20250721900432",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "308100"
+              }
+            ],
+            "stock_code": "308100",
+            "t+5_date": "2025-07-21",
+            "t0_date": "2025-07-14"
+          },
+          {
+            "event_date": "2025-07-17",
+            "receipt_no": "20250717900147",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-07-21",
+                "receipt_no": "20250721900432",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "308100"
+              }
+            ],
+            "stock_code": "308100",
+            "t+5_date": "2025-07-24",
+            "t0_date": "2025-07-17"
+          },
+          {
+            "event_date": "2025-08-18",
+            "receipt_no": "20250818900075",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-08-21",
+                "receipt_no": "20250821900469",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "200230"
+              }
+            ],
+            "stock_code": "200230",
+            "t+5_date": "2025-08-25",
+            "t0_date": "2025-08-18"
+          },
+          {
+            "event_date": "2025-09-05",
+            "receipt_no": "20250905900088",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-09-11",
+                "receipt_no": "20250911900406",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "365330"
+              }
+            ],
+            "stock_code": "365330",
+            "t+5_date": "2025-09-12",
+            "t0_date": "2025-09-05"
+          },
+          {
+            "event_date": "2025-12-26",
+            "receipt_no": "20251226900644",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-01-06",
+                "receipt_no": "20260106900581",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "340930"
+              }
+            ],
+            "stock_code": "340930",
+            "t+5_date": "2026-01-06",
+            "t0_date": "2025-12-26"
+          },
+          {
+            "event_date": "2026-02-19",
+            "receipt_no": "20260219900633",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-02-26",
+                "receipt_no": "20260226901417",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "300120"
+              }
+            ],
+            "stock_code": "300120",
+            "t+5_date": "2026-02-26",
+            "t0_date": "2026-02-19"
+          }
+        ],
+        "pinned_local_dart": [
+          {
+            "event_date": "2023-10-13",
+            "receipt_no": "20231013900093",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-20",
+                "receipt_datetime": "2023-10-20T00:00:00",
+                "receipt_no": "20231020900663",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "304840"
+              }
+            ],
+            "stock_code": "304840",
+            "t+5_date": "2023-10-20",
+            "t0_date": "2023-10-13"
+          },
+          {
+            "event_date": "2023-10-18",
+            "receipt_no": "20231018900237",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-20",
+                "receipt_datetime": "2023-10-20T00:00:00",
+                "receipt_no": "20231020900663",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "304840"
+              }
+            ],
+            "stock_code": "304840",
+            "t+5_date": "2023-10-25",
+            "t0_date": "2023-10-18"
+          },
+          {
+            "event_date": "2023-10-19",
+            "receipt_no": "20231019900212",
+            "report_name": "증권발행결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-10-20",
+                "receipt_datetime": "2023-10-20T00:00:00",
+                "receipt_no": "20231020900663",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "304840"
+              }
+            ],
+            "stock_code": "304840",
+            "t+5_date": "2023-10-26",
+            "t0_date": "2023-10-19"
+          },
+          {
+            "event_date": "2022-06-20",
+            "receipt_no": "20220620900322",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-24",
+                "receipt_datetime": "2022-06-24T00:00:00",
+                "receipt_no": "20220624900454",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "247540"
+              }
+            ],
+            "stock_code": "247540",
+            "t+5_date": "2022-06-27",
+            "t0_date": "2022-06-20"
+          },
+          {
+            "event_date": "2021-09-06",
+            "receipt_no": "20210906900214",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-09-10",
+                "receipt_datetime": "2021-09-10T00:00:00",
+                "receipt_no": "20210910900437",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "033310"
+              }
+            ],
+            "stock_code": "033310",
+            "t+5_date": "2021-09-13",
+            "t0_date": "2021-09-06"
+          },
+          {
+            "event_date": "2021-09-09",
+            "receipt_no": "20210909900068",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-09-10",
+                "receipt_datetime": "2021-09-10T00:00:00",
+                "receipt_no": "20210910900437",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "033310"
+              }
+            ],
+            "stock_code": "033310",
+            "t+5_date": "2021-09-16",
+            "t0_date": "2021-09-09"
+          },
+          {
+            "event_date": "2025-11-24",
+            "receipt_no": "20251124900145",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-28",
+                "receipt_datetime": "2025-11-28T00:00:00",
+                "receipt_no": "20251128901058",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "203400"
+              }
+            ],
+            "stock_code": "203400",
+            "t+5_date": "2025-12-01",
+            "t0_date": "2025-11-24"
+          },
+          {
+            "event_date": "2025-11-27",
+            "receipt_no": "20251127900371",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-28",
+                "receipt_datetime": "2025-11-28T00:00:00",
+                "receipt_no": "20251128901058",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "203400"
+              }
+            ],
+            "stock_code": "203400",
+            "t+5_date": "2025-12-04",
+            "t0_date": "2025-11-27"
+          },
+          {
+            "event_date": "2023-12-06",
+            "receipt_no": "20231206900158",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-12-12",
+                "receipt_datetime": "2023-12-12T00:00:00",
+                "receipt_no": "20231212900691",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "092040"
+              }
+            ],
+            "stock_code": "092040",
+            "t+5_date": "2023-12-13",
+            "t0_date": "2023-12-06"
+          },
+          {
+            "event_date": "2022-01-07",
+            "receipt_no": "20220107900721",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-01-14",
+                "receipt_datetime": "2022-01-14T00:00:00",
+                "receipt_no": "20220114900469",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "294090"
+              }
+            ],
+            "stock_code": "294090",
+            "t+5_date": "2022-01-14",
+            "t0_date": "2022-01-07"
+          },
+          {
+            "event_date": "2021-10-22",
+            "receipt_no": "20211022900092",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-10-28",
+                "receipt_datetime": "2021-10-28T00:00:00",
+                "receipt_no": "20211028900753",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "094860"
+              }
+            ],
+            "stock_code": "094860",
+            "t+5_date": "2021-10-29",
+            "t0_date": "2021-10-22"
+          },
+          {
+            "event_date": "2022-06-10",
+            "receipt_no": "20220610900102",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-16",
+                "receipt_datetime": "2022-06-16T00:00:00",
+                "receipt_no": "20220616900343",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "142210"
+              }
+            ],
+            "stock_code": "142210",
+            "t+5_date": "2022-06-17",
+            "t0_date": "2022-06-10"
+          },
+          {
+            "event_date": "2021-12-10",
+            "receipt_no": "20211210900181",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-12-15",
+                "receipt_datetime": "2021-12-15T00:00:00",
+                "receipt_no": "20211215901370",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "067310"
+              }
+            ],
+            "stock_code": "067310",
+            "t+5_date": "2021-12-17",
+            "t0_date": "2021-12-10"
+          },
+          {
+            "event_date": "2024-07-31",
+            "receipt_no": "20240731900046",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-08-07",
+                "receipt_datetime": "2024-08-07T00:00:00",
+                "receipt_no": "20240807900536",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "067310"
+              }
+            ],
+            "stock_code": "067310",
+            "t+5_date": "2024-08-07",
+            "t0_date": "2024-07-31"
+          },
+          {
+            "event_date": "2024-08-05",
+            "receipt_no": "20240805900149",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-08-07",
+                "receipt_datetime": "2024-08-07T00:00:00",
+                "receipt_no": "20240807900536",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "067310"
+              }
+            ],
+            "stock_code": "067310",
+            "t+5_date": "2024-08-12",
+            "t0_date": "2024-08-05"
+          },
+          {
+            "event_date": "2021-12-13",
+            "receipt_no": "20211213900418",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-12-17",
+                "receipt_datetime": "2021-12-17T00:00:00",
+                "receipt_no": "20211217900462",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "289220"
+              }
+            ],
+            "stock_code": "289220",
+            "t+5_date": "2021-12-20",
+            "t0_date": "2021-12-13"
+          },
+          {
+            "event_date": "2021-12-21",
+            "receipt_no": "20211221900134",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2021-12-24",
+                "receipt_datetime": "2021-12-24T00:00:00",
+                "receipt_no": "20211224900649",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "234300"
+              }
+            ],
+            "stock_code": "234300",
+            "t+5_date": "2021-12-28",
+            "t0_date": "2021-12-21"
+          },
+          {
+            "event_date": "2023-12-11",
+            "receipt_no": "20231211900240",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주우선공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-12-15",
+                "receipt_datetime": "2023-12-15T00:00:00",
+                "receipt_no": "20231215901939",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "115180"
+              }
+            ],
+            "stock_code": "115180",
+            "t+5_date": "2023-12-18",
+            "t0_date": "2023-12-11"
+          },
+          {
+            "event_date": "2023-12-14",
+            "receipt_no": "20231214900146",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주우선공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-12-15",
+                "receipt_datetime": "2023-12-15T00:00:00",
+                "receipt_no": "20231215901939",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "115180"
+              }
+            ],
+            "stock_code": "115180",
+            "t+5_date": "2023-12-21",
+            "t0_date": "2023-12-14"
+          },
+          {
+            "event_date": "2022-06-03",
+            "receipt_no": "20220603900264",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-10",
+                "receipt_datetime": "2022-06-10T00:00:00",
+                "receipt_no": "20220610900529",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "128540"
+              }
+            ],
+            "stock_code": "128540",
+            "t+5_date": "2022-06-13",
+            "t0_date": "2022-06-03"
+          },
+          {
+            "event_date": "2022-06-09",
+            "receipt_no": "20220609900129",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-10",
+                "receipt_datetime": "2022-06-10T00:00:00",
+                "receipt_no": "20220610900529",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "128540"
+              }
+            ],
+            "stock_code": "128540",
+            "t+5_date": "2022-06-16",
+            "t0_date": "2022-06-09"
+          },
+          {
+            "event_date": "2022-04-13",
+            "receipt_no": "20220413900300",
+            "report_name": "증권발행결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-04-15",
+                "receipt_datetime": "2022-04-15T00:00:00",
+                "receipt_no": "20220415900820",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "377030"
+              }
+            ],
+            "stock_code": "377030",
+            "t+5_date": "2022-04-20",
+            "t0_date": "2022-04-13"
+          },
+          {
+            "event_date": "2024-07-19",
+            "receipt_no": "20240719900100",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-07-26",
+                "receipt_datetime": "2024-07-26T00:00:00",
+                "receipt_no": "20240726900724",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "288330"
+              }
+            ],
+            "stock_code": "288330",
+            "t+5_date": "2024-07-26",
+            "t0_date": "2024-07-19"
+          },
+          {
+            "event_date": "2022-07-04",
+            "receipt_no": "20220704900298",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-07-11",
+                "receipt_datetime": "2022-07-11T00:00:00",
+                "receipt_no": "20220711900630",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "263050"
+              }
+            ],
+            "stock_code": "263050",
+            "t+5_date": "2022-07-11",
+            "t0_date": "2022-07-04"
+          },
+          {
+            "event_date": "2022-07-07",
+            "receipt_no": "20220707900118",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-07-11",
+                "receipt_datetime": "2022-07-11T00:00:00",
+                "receipt_no": "20220711900630",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "263050"
+              }
+            ],
+            "stock_code": "263050",
+            "t+5_date": "2022-07-14",
+            "t0_date": "2022-07-07"
+          },
+          {
+            "event_date": "2022-06-13",
+            "receipt_no": "20220613900076",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-06-17",
+                "receipt_datetime": "2022-06-17T00:00:00",
+                "receipt_no": "20220617900528",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "297090"
+              }
+            ],
+            "stock_code": "297090",
+            "t+5_date": "2022-06-20",
+            "t0_date": "2022-06-13"
+          },
+          {
+            "event_date": "2022-08-11",
+            "receipt_no": "20220811900175",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-08-17",
+                "receipt_datetime": "2022-08-17T00:00:00",
+                "receipt_no": "20220817900317",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "194700"
+              }
+            ],
+            "stock_code": "194700",
+            "t+5_date": "2022-08-19",
+            "t0_date": "2022-08-11"
+          },
+          {
+            "event_date": "2022-10-14",
+            "receipt_no": "20221014900102",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-10-21",
+                "receipt_datetime": "2022-10-21T00:00:00",
+                "receipt_no": "20221021900393",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "220100"
+              }
+            ],
+            "stock_code": "220100",
+            "t+5_date": "2022-10-21",
+            "t0_date": "2022-10-14"
+          },
+          {
+            "event_date": "2022-11-02",
+            "receipt_no": "20221102900097",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(구주주배정분)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-11-08",
+                "receipt_datetime": "2022-11-08T00:00:00",
+                "receipt_no": "20221108900448",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "347860"
+              }
+            ],
+            "stock_code": "347860",
+            "t+5_date": "2022-11-09",
+            "t0_date": "2022-11-02"
+          },
+          {
+            "event_date": "2022-11-07",
+            "receipt_no": "20221107900127",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(실권주 일반공모분)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-11-08",
+                "receipt_datetime": "2022-11-08T00:00:00",
+                "receipt_no": "20221108900448",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "347860"
+              }
+            ],
+            "stock_code": "347860",
+            "t+5_date": "2022-11-14",
+            "t0_date": "2022-11-07"
+          },
+          {
+            "event_date": "2022-12-07",
+            "receipt_no": "20221207900104",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-12-13",
+                "receipt_datetime": "2022-12-13T00:00:00",
+                "receipt_no": "20221213900697",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "175250"
+              }
+            ],
+            "stock_code": "175250",
+            "t+5_date": "2022-12-14",
+            "t0_date": "2022-12-07"
+          },
+          {
+            "event_date": "2022-12-12",
+            "receipt_no": "20221212900070",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2022-12-13",
+                "receipt_datetime": "2022-12-13T00:00:00",
+                "receipt_no": "20221213900697",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "175250"
+              }
+            ],
+            "stock_code": "175250",
+            "t+5_date": "2022-12-19",
+            "t0_date": "2022-12-12"
+          },
+          {
+            "event_date": "2023-01-04",
+            "receipt_no": "20230104900087",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-01-10",
+                "receipt_datetime": "2023-01-10T00:00:00",
+                "receipt_no": "20230110900595",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "095700"
+              }
+            ],
+            "stock_code": "095700",
+            "t+5_date": "2023-01-11",
+            "t0_date": "2023-01-04"
+          },
+          {
+            "event_date": "2023-01-09",
+            "receipt_no": "20230109900120",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-01-10",
+                "receipt_datetime": "2023-01-10T00:00:00",
+                "receipt_no": "20230110900595",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "095700"
+              }
+            ],
+            "stock_code": "095700",
+            "t+5_date": "2023-01-16",
+            "t0_date": "2023-01-09"
+          },
+          {
+            "event_date": "2023-09-06",
+            "receipt_no": "20230906900086",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-13",
+                "receipt_datetime": "2023-09-13T00:00:00",
+                "receipt_no": "20230913900380",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "241820"
+              }
+            ],
+            "stock_code": "241820",
+            "t+5_date": "2023-09-13",
+            "t0_date": "2023-09-06"
+          },
+          {
+            "event_date": "2023-09-12",
+            "receipt_no": "20230912900149",
+            "report_name": "증권발행결과(자율공시)(주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-13",
+                "receipt_datetime": "2023-09-13T00:00:00",
+                "receipt_no": "20230913900380",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "241820"
+              }
+            ],
+            "stock_code": "241820",
+            "t+5_date": "2023-09-19",
+            "t0_date": "2023-09-12"
+          },
+          {
+            "event_date": "2023-08-02",
+            "receipt_no": "20230802900620",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-08-09",
+                "receipt_datetime": "2023-08-09T00:00:00",
+                "receipt_no": "20230809900559",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "352770"
+              }
+            ],
+            "stock_code": "352770",
+            "t+5_date": "2023-08-09",
+            "t0_date": "2023-08-02"
+          },
+          {
+            "event_date": "2023-08-08",
+            "receipt_no": "20230808900482",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-08-09",
+                "receipt_datetime": "2023-08-09T00:00:00",
+                "receipt_no": "20230809900559",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "352770"
+              }
+            ],
+            "stock_code": "352770",
+            "t+5_date": "2023-08-16",
+            "t0_date": "2023-08-08"
+          },
+          {
+            "event_date": "2024-06-21",
+            "receipt_no": "20240621900587",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)              (주주배정 후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-06-27",
+                "receipt_datetime": "2024-06-27T00:00:00",
+                "receipt_no": "20240627900743",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "198940"
+              }
+            ],
+            "stock_code": "198940",
+            "t+5_date": "2024-06-28",
+            "t0_date": "2024-06-21"
+          },
+          {
+            "event_date": "2023-09-07",
+            "receipt_no": "20230907900171",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-14",
+                "receipt_datetime": "2023-09-14T00:00:00",
+                "receipt_no": "20230914900419",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "298060"
+              }
+            ],
+            "stock_code": "298060",
+            "t+5_date": "2023-09-14",
+            "t0_date": "2023-09-07"
+          },
+          {
+            "event_date": "2023-09-13",
+            "receipt_no": "20230913900066",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-14",
+                "receipt_datetime": "2023-09-14T00:00:00",
+                "receipt_no": "20230914900419",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "298060"
+              }
+            ],
+            "stock_code": "298060",
+            "t+5_date": "2023-09-20",
+            "t0_date": "2023-09-13"
+          },
+          {
+            "event_date": "2023-06-21",
+            "receipt_no": "20230621900234",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(일반공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-06-23",
+                "receipt_datetime": "2023-06-23T00:00:00",
+                "receipt_no": "20230623900503",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "407400"
+              }
+            ],
+            "stock_code": "407400",
+            "t+5_date": "2023-06-28",
+            "t0_date": "2023-06-21"
+          },
+          {
+            "event_date": "2023-06-22",
+            "receipt_no": "20230622900228",
+            "report_name": "증권발행결과(자율공시)(일반공모 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-06-23",
+                "receipt_datetime": "2023-06-23T00:00:00",
+                "receipt_no": "20230623900503",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "407400"
+              }
+            ],
+            "stock_code": "407400",
+            "t+5_date": "2023-06-29",
+            "t0_date": "2023-06-22"
+          },
+          {
+            "event_date": "2025-11-12",
+            "receipt_no": "20251112900241",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)              (주주배정후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-19",
+                "receipt_datetime": "2025-11-19T00:00:00",
+                "receipt_no": "20251119900416",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "462350"
+              }
+            ],
+            "stock_code": "462350",
+            "t+5_date": "2025-11-19",
+            "t0_date": "2025-11-12"
+          },
+          {
+            "event_date": "2025-11-17",
+            "receipt_no": "20251117900217",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)              (주주배정후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-11-19",
+                "receipt_datetime": "2025-11-19T00:00:00",
+                "receipt_no": "20251119900416",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "462350"
+              }
+            ],
+            "stock_code": "462350",
+            "t+5_date": "2025-11-24",
+            "t0_date": "2025-11-17"
+          },
+          {
+            "event_date": "2023-08-28",
+            "receipt_no": "20230828900564",
+            "report_name": "유상증자1차발행가액결정",
+            "right_drop_events": [
+              {
+                "event_date": "2023-08-29",
+                "receipt_datetime": "2023-08-29T00:00:00",
+                "receipt_no": "20230829900456",
+                "report_name": "권리락(유상증자)",
+                "stock_code": "294140"
+              }
+            ],
+            "stock_code": "294140",
+            "t+5_date": "2023-09-04",
+            "t0_date": "2023-08-28"
+          },
+          {
+            "event_date": "2023-09-06",
+            "receipt_no": "20230906900099",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-12",
+                "receipt_datetime": "2023-09-12T00:00:00",
+                "receipt_no": "20230912900368",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "310210"
+              }
+            ],
+            "stock_code": "310210",
+            "t+5_date": "2023-09-13",
+            "t0_date": "2023-09-06"
+          },
+          {
+            "event_date": "2023-09-18",
+            "receipt_no": "20230918900103",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-09-22",
+                "receipt_datetime": "2023-09-22T00:00:00",
+                "receipt_no": "20230922900573",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "376930"
+              }
+            ],
+            "stock_code": "376930",
+            "t+5_date": "2023-09-25",
+            "t0_date": "2023-09-18"
+          },
+          {
+            "event_date": "2023-11-03",
+            "receipt_no": "20231103900070",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-09",
+                "receipt_datetime": "2023-11-09T00:00:00",
+                "receipt_no": "20231109900486",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "323990"
+              }
+            ],
+            "stock_code": "323990",
+            "t+5_date": "2023-11-10",
+            "t0_date": "2023-11-03"
+          },
+          {
+            "event_date": "2023-11-08",
+            "receipt_no": "20231108900160",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-09",
+                "receipt_datetime": "2023-11-09T00:00:00",
+                "receipt_no": "20231109900486",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "323990"
+              }
+            ],
+            "stock_code": "323990",
+            "t+5_date": "2023-11-15",
+            "t0_date": "2023-11-08"
+          },
+          {
+            "event_date": "2023-11-03",
+            "receipt_no": "20231103900131",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-08",
+                "receipt_datetime": "2023-11-08T00:00:00",
+                "receipt_no": "20231108900624",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "328130"
+              }
+            ],
+            "stock_code": "328130",
+            "t+5_date": "2023-11-10",
+            "t0_date": "2023-11-03"
+          },
+          {
+            "event_date": "2026-04-24",
+            "receipt_no": "20260424900103",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-04-30",
+                "receipt_datetime": "2026-04-30T00:00:00",
+                "receipt_no": "20260430901423",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "328130"
+              }
+            ],
+            "stock_code": "328130",
+            "t+5_date": "2026-05-04",
+            "t0_date": "2026-04-24"
+          },
+          {
+            "event_date": "2023-11-08",
+            "receipt_no": "20231108900142",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-15",
+                "receipt_datetime": "2023-11-15T00:00:00",
+                "receipt_no": "20231115900548",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "214610"
+              }
+            ],
+            "stock_code": "214610",
+            "t+5_date": "2023-11-15",
+            "t0_date": "2023-11-08"
+          },
+          {
+            "event_date": "2023-11-13",
+            "receipt_no": "20231113900596",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)(주주배정 후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2023-11-15",
+                "receipt_datetime": "2023-11-15T00:00:00",
+                "receipt_no": "20231115900548",
+                "report_name": "권리락(무상증자)",
+                "stock_code": "214610"
+              }
+            ],
+            "stock_code": "214610",
+            "t+5_date": "2023-11-20",
+            "t0_date": "2023-11-13"
+          },
+          {
+            "event_date": "2025-10-22",
+            "receipt_no": "20251022900593",
+            "report_name": "유상증자1차발행가액결정",
+            "right_drop_events": [
+              {
+                "event_date": "2025-10-23",
+                "receipt_datetime": "2025-10-23T00:00:00",
+                "receipt_no": "20251023900466",
+                "report_name": "권리락              (유상증자)",
+                "stock_code": "185490"
+              }
+            ],
+            "stock_code": "185490",
+            "t+5_date": "2025-10-29",
+            "t0_date": "2025-10-22"
+          },
+          {
+            "event_date": "2025-10-22",
+            "receipt_no": "20251022900110",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-10-28",
+                "receipt_datetime": "2025-10-28T00:00:00",
+                "receipt_no": "20251028900648",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "246710"
+              }
+            ],
+            "stock_code": "246710",
+            "t+5_date": "2025-10-29",
+            "t0_date": "2025-10-22"
+          },
+          {
+            "event_date": "2026-06-16",
+            "receipt_no": "20260616000257",
+            "report_name": "[첨부추가]주요사항보고서(유상증자결정)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-06-18",
+                "receipt_datetime": "2026-06-18T00:00:00",
+                "receipt_no": "20260618900729",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "368970"
+              }
+            ],
+            "stock_code": "368970",
+            "t+5_date": "2026-06-23",
+            "t0_date": "2026-06-16"
+          },
+          {
+            "event_date": "2026-03-18",
+            "receipt_no": "20260318901111",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-03-23",
+                "receipt_datetime": "2026-03-23T00:00:00",
+                "receipt_no": "20260323901834",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "062970"
+              }
+            ],
+            "stock_code": "062970",
+            "t+5_date": "2026-03-25",
+            "t0_date": "2026-03-18"
+          },
+          {
+            "event_date": "2025-03-27",
+            "receipt_no": "20250327901460",
+            "report_name": "증권발행결과(자율공시)              (주주배정 유상증자)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-04-01",
+                "receipt_datetime": "2025-04-01T00:00:00",
+                "receipt_no": "20250401901130",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "358570"
+              }
+            ],
+            "stock_code": "358570",
+            "t+5_date": "2025-04-03",
+            "t0_date": "2025-03-27"
+          },
+          {
+            "event_date": "2024-10-10",
+            "receipt_no": "20241010900093",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-10-16",
+                "receipt_datetime": "2024-10-16T00:00:00",
+                "receipt_no": "20241016900387",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "322510"
+              }
+            ],
+            "stock_code": "322510",
+            "t+5_date": "2024-10-17",
+            "t0_date": "2024-10-10"
+          },
+          {
+            "event_date": "2024-10-30",
+            "receipt_no": "20241030900094",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-11-06",
+                "receipt_datetime": "2024-11-06T00:00:00",
+                "receipt_no": "20241106900369",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "357880"
+              }
+            ],
+            "stock_code": "357880",
+            "t+5_date": "2024-11-06",
+            "t0_date": "2024-10-30"
+          },
+          {
+            "event_date": "2024-11-04",
+            "receipt_no": "20241104900583",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2024-11-06",
+                "receipt_datetime": "2024-11-06T00:00:00",
+                "receipt_no": "20241106900369",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "357880"
+              }
+            ],
+            "stock_code": "357880",
+            "t+5_date": "2024-11-11",
+            "t0_date": "2024-11-04"
+          },
+          {
+            "event_date": "2024-12-31",
+            "receipt_no": "20241231900070",
+            "report_name": "유상증자1차발행가액결정              (주주배정후 실권주 일반공모)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-01-02",
+                "receipt_datetime": "2025-01-02T00:00:00",
+                "receipt_no": "20250102900580",
+                "report_name": "권리락              (유상증자)",
+                "stock_code": "323280"
+              }
+            ],
+            "stock_code": "323280",
+            "t+5_date": "2025-01-09",
+            "t0_date": "2025-01-02"
+          },
+          {
+            "event_date": "2025-07-14",
+            "receipt_no": "20250714900108",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-07-21",
+                "receipt_datetime": "2025-07-21T00:00:00",
+                "receipt_no": "20250721900432",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "308100"
+              }
+            ],
+            "stock_code": "308100",
+            "t+5_date": "2025-07-21",
+            "t0_date": "2025-07-14"
+          },
+          {
+            "event_date": "2025-07-17",
+            "receipt_no": "20250717900147",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-07-21",
+                "receipt_datetime": "2025-07-21T00:00:00",
+                "receipt_no": "20250721900432",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "308100"
+              }
+            ],
+            "stock_code": "308100",
+            "t+5_date": "2025-07-24",
+            "t0_date": "2025-07-17"
+          },
+          {
+            "event_date": "2025-08-18",
+            "receipt_no": "20250818900075",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-08-21",
+                "receipt_datetime": "2025-08-21T00:00:00",
+                "receipt_no": "20250821900469",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "200230"
+              }
+            ],
+            "stock_code": "200230",
+            "t+5_date": "2025-08-25",
+            "t0_date": "2025-08-18"
+          },
+          {
+            "event_date": "2025-09-05",
+            "receipt_no": "20250905900088",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2025-09-11",
+                "receipt_datetime": "2025-09-11T00:00:00",
+                "receipt_no": "20250911900406",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "365330"
+              }
+            ],
+            "stock_code": "365330",
+            "t+5_date": "2025-09-12",
+            "t0_date": "2025-09-05"
+          },
+          {
+            "event_date": "2025-12-26",
+            "receipt_no": "20251226900644",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-01-06",
+                "receipt_datetime": "2026-01-06T00:00:00",
+                "receipt_no": "20260106900581",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "340930"
+              }
+            ],
+            "stock_code": "340930",
+            "t+5_date": "2026-01-06",
+            "t0_date": "2025-12-26"
+          },
+          {
+            "event_date": "2026-02-19",
+            "receipt_no": "20260219900633",
+            "report_name": "유상증자또는주식관련사채등의청약결과(자율공시)",
+            "right_drop_events": [
+              {
+                "event_date": "2026-02-26",
+                "receipt_datetime": "2026-02-26T00:00:00",
+                "receipt_no": "20260226901417",
+                "report_name": "권리락              (무상증자)",
+                "stock_code": "300120"
+              }
+            ],
+            "stock_code": "300120",
+            "t+5_date": "2026-02-26",
+            "t0_date": "2026-02-19"
+          }
+        ]
+      },
+      "rows": 5991,
+      "unique_stocks": 1119
+    }
+  ],
+  "generator_sources": [
+    {
+      "path": "pyproject.toml",
+      "sha256": "6aa619db005f6ee1de335cf1fa4627623a15f2c73f419322973db986586eca92"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "3f3b652e5b0dd3f996e5832b0e9f33ab6916a46c690a34d9fe002809306a872e"
+    },
+    {
+      "path": "src/kdtb/backtest/cost_model.py",
+      "sha256": "0953db78021ad90bf09f413b71e5631d954aa56e87c0fc3b7a946cda7eca67a3"
+    },
+    {
+      "path": "src/kdtb/backtest/metrics.py",
+      "sha256": "0c56dce287cb0d6e10ce5f62e83c29452154d66621b49e8069e4264b6b107fe6"
+    },
+    {
+      "path": "src/kdtb/data/benchmarks.py",
+      "sha256": "0f36cb42f5566ac8b8f7638c5df6b229e6e106a641a049eccd08d8967be08f8c"
+    },
+    {
+      "path": "src/kdtb/data/market_data_client.py",
+      "sha256": "11544f3ea92b585b410e5fcfa9082f30805de05d305a699e937bc982446bdc7d"
+    },
+    {
+      "path": "scripts/analyze_event_category.py",
+      "sha256": "31efd7455184aa66735b57c3d697e14a260b0dbd5138f954ad5e6479c2a1a318"
+    },
+    {
+      "path": "scripts/audit_price_adjustments.py",
+      "sha256": "c641995cfb5d98b7d1da0f033c972f2f9bb6d5165ddd4911f06e17e11acc3c7e"
+    },
+    {
+      "path": "scripts/backfill_event_study_dates.py",
+      "sha256": "331f4cf52000e739c8bede8c1a03ccee392d5b48e3b36a585cb2791067148b45"
+    },
+    {
+      "path": "scripts/run_event_study.py",
+      "sha256": "f1f78a1491f33ea9a7eac95c53ea9268853282ba72afde07ddfeafc634634722"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/event_study_bonus_issue.csv",
+      "sha256": "76edf1f5b37a42fd9b38b19ec2a711acf421ba9abf00ee66e78095747ed2d03a"
+    },
+    {
+      "path": "data/event_study_rights_offering.csv",
+      "sha256": "a572efb8abceeee5889f24472521ac93caaa4ec04f946e1c6f997a45c4e2b6b3"
+    },
+    {
+      "path": "artifacts/m0_3/benchmark_adjustment_comparison.json",
+      "sha256": "0ac51cc563114f2b57c0fc6987a5984889fb4dd78bfb4643f6c9882879820abf"
+    },
+    {
+      "path": "artifacts/m0_4/provider_observations.json",
+      "sha256": "12a03256f3a0d7659761294dbbb147184c84b01dd46072a69269e96a439b1d7c"
+    },
+    {
+      "path": "artifacts/m0_4/dart_right_drop_calendar.json",
+      "sha256": "ed66c1cfd77a8cc4ffbf355716647e1dfa1f5a096c80a6b65edae4374b58bf50"
+    }
+  ],
+  "methodology": {
+    "provider_route": "NAVER_FINANCE_VIA_PYKRX",
+    "pykrx_adjusted_argument": true,
+    "pykrx_version_pin": "1.2.8",
+    "reason": "announcement returns use a continuity-preserving adjusted series; stored observations pin the provider vintage",
+    "research_policy": "vendor_adjusted"
+  },
+  "milestone": "M0.4",
+  "provider_observation_summary": {
+    "captured_at": "2026-09-02T09:11:19-04:00",
+    "cases": [
+      {
+        "case_id": "later_consolidation_uniform_revision",
+        "matched_categories": [
+          "bonus_issue"
+        ],
+        "matched_category_rows": 1,
+        "max_absolute_return_change": 0.0,
+        "relationship": "uniform_scale_revision",
+        "scale_factor": 5.0
+      },
+      {
+        "case_id": "cross_category_rights_window_uniform_revision_300120",
+        "matched_categories": [
+          "rights_offering"
+        ],
+        "matched_category_rows": 1,
+        "max_absolute_return_change": 0.0,
+        "relationship": "uniform_scale_revision",
+        "scale_factor": 5.0
+      },
+      {
+        "case_id": "bonus_rights_drop_inside_window_223250",
+        "matched_categories": [
+          "bonus_issue"
+        ],
+        "matched_category_rows": 2,
+        "max_absolute_return_change": 0.0,
+        "relationship": "exact_match",
+        "scale_factor": 1.0
+      },
+      {
+        "case_id": "bonus_rights_drop_inside_window_205100",
+        "matched_categories": [
+          "bonus_issue"
+        ],
+        "matched_category_rows": 2,
+        "max_absolute_return_change": 0.0,
+        "relationship": "exact_match",
+        "scale_factor": 1.0
+      },
+      {
+        "case_id": "rights_drop_inside_window_294140",
+        "matched_categories": [
+          "rights_offering"
+        ],
+        "matched_category_rows": 1,
+        "max_absolute_return_change": 0.0,
+        "relationship": "exact_match",
+        "scale_factor": 1.0
+      },
+      {
+        "case_id": "rights_drop_inside_window_185490",
+        "matched_categories": [
+          "rights_offering"
+        ],
+        "matched_category_rows": 1,
+        "max_absolute_return_change": 0.0,
+        "relationship": "exact_match",
+        "scale_factor": 1.0
+      },
+      {
+        "case_id": "rights_drop_inside_window_323280",
+        "matched_categories": [
+          "rights_offering"
+        ],
+        "matched_category_rows": 1,
+        "max_absolute_return_change": 0.0,
+        "relationship": "exact_match",
+        "scale_factor": 1.0
+      }
+    ],
+    "pykrx_version": "1.2.8",
+    "unadjusted_probe": {
+      "credentials_present": false,
+      "outcome": "provider_error",
+      "route": "KRX_VIA_PYKRX"
+    }
+  },
+  "result_change": "none; the prior implicit pykrx default was adjusted=True",
+  "right_drop_calendar_summary": {
+    "committed_category_union": {
+      "crossed_complete_windows": 70,
+      "crossed_complete_windows_by_category": {
+        "bonus_issue": 4,
+        "rights_offering": 66
+      },
+      "records": 441
+    },
+    "comparison": {
+      "dart_crossed_windows_beyond_committed_union": 3,
+      "dart_records_absent_from_committed_categories": 58
+    },
+    "pinned_local_dart": {
+      "crossed_complete_windows": 73,
+      "crossed_complete_windows_by_category": {
+        "bonus_issue": 4,
+        "rights_offering": 69
+      },
+      "records": 499,
+      "source_snapshot": {
+        "kind": "local_dart_sqlite_snapshot",
+        "query": "SELECT receipt_no, stock_code, report_name, receipt_datetime\nFROM disclosures\nWHERE report_name LIKE '%권리락%'\n  AND stock_code IS NOT NULL\n  AND trim(stock_code) <> ''\nORDER BY stock_code, receipt_datetime, receipt_no",
+        "receipt_datetime_max": "2026-08-26T00:00:00",
+        "receipt_datetime_min": "2021-06-28T00:00:00",
+        "table": "disclosures",
+        "table_rows": 1209249
+      }
+    }
+  },
+  "schema_version": 2
+}
