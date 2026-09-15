@@ -13,21 +13,21 @@ drift after realistic transaction costs?
 (28,728 scored event rows, 21 adversarial verifications), zero
 categories are tradable long after realistic T+1-close execution and broad-
 market adjustment.
-One category — **shareholder_change** — is a well-supported negative
-signal, useful as a long-side risk filter even though Korean retail
-accounts can't easily short to monetize it directly.
+One exploratory category — **shareholder_change** — is a well-supported
+negative class and remains useful as a conservative long-side risk filter,
+not as a promoted short strategy.
 
 ## Final per-category verdict (5-year sample)
 
-| Category | n | Raw idealized net | Abnormal idealized net | Raw realistic | Abnormal realistic | Abnormal WF+ | Verdict |
-|---|---:|---:|---:|---:|---:|---:|---|
-| supply_contract | 8,585 | −0.13% | −0.44% | −0.31% | −0.54% | 3/11 | neutral |
-| **buyback** | 4,801 | +1.18% | +0.92% | +0.14% | −0.03% | 9/10 | neutral |
-| bonus_issue | 828 | +1.22% | +1.12% | +0.21% | +0.09% | 6/10 | neutral |
-| rights_offering | 5,911 | +0.38% | +0.27% | +0.24% | +0.11% | 7/11 | positive_noisy |
-| convertible_bond | 4,175 | +0.62% | +0.56% | −0.03% | −0.04% | 5/11 | neutral |
-| halt_resumption | 2,570 | −1.19% | −1.34% | +0.04% | −0.02% | 4/10 | neutral |
-| **shareholder_change** | **1,858** | **−1.23%** | **−1.64%** | **−1.10%** | **−1.40%** | **1/10** | **negative → blacklist** |
+| Category | n | Raw idealized net | Abnormal idealized net | Raw realistic | Abnormal realistic | Issuer-clustered 95% CI | Abnormal WF+ | Verdict |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| supply_contract | 8,585 | −0.13% | −0.44% | −0.31% | −0.54% | [−0.74%, −0.34%] | 3/11 | neutral |
+| **buyback** | 4,801 | +1.18% | +0.92% | +0.14% | −0.03% | [−0.21%, +0.16%] | 9/10 | neutral |
+| bonus_issue | 828 | +1.22% | +1.12% | +0.21% | +0.09% | [−0.71%, +0.95%] | 6/10 | neutral |
+| rights_offering | 5,911 | +0.38% | +0.27% | +0.24% | +0.11% | [−0.32%, +0.58%] | 7/11 | positive_noisy |
+| convertible_bond | 4,175 | +0.62% | +0.56% | −0.03% | −0.04% | [−0.53%, +0.53%] | 5/11 | neutral |
+| halt_resumption | 2,570 | −1.19% | −1.34% | +0.04% | −0.02% | [−1.41%, +1.95%] | 4/10 | neutral |
+| **shareholder_change** | **1,858** | **−1.23%** | **−1.64%** | **−1.10%** | **−1.40%** | **[−2.04%, −0.75%]** | **1/10** | **negative → blacklist** |
 
 Roundtrip costs are now selected from the exact sell date and market: **0.363%**
 in 2021–2022, **0.333%** in 2023 and 2026, **0.313%** in 2024, and **0.283%**
@@ -98,6 +98,21 @@ share-consolidation filing, while T+1, T+2, and T+5 returns were unchanged.
 Therefore the explicit price policy and corrected calendar census cause no
 M0.3 headline or verdict change. Evidence and reproducible summaries are in
 [`artifacts/m0_4/price_adjustment_audit.json`](artifacts/m0_4/price_adjustment_audit.json).
+
+**Inference hardening, 2026-09-04 (M0.5).** Pointwise 95% intervals now
+resample whole issuer histories rather than treating repeat filings as
+independent. All positive category means remain compatible with zero. Supply
+contract and shareholder change remain negative under issuer clustering, but
+they are still exploratory historical findings, not multiplicity-adjusted
+confirmatory tests.
+
+Every current category, timing, blacklist, and subgroup claim is explicitly
+`exploratory`. There are no pre-specified or confirmatory hypotheses on this
+repeatedly inspected sample. The fixed M0.5 procedure makes the reanalysis
+reproducible; it does not retroactively preregister earlier hypotheses. Formal
+familywise error control belongs in a future experiment whose hypotheses are
+frozen before outcomes arrive. The deterministic report is
+[`artifacts/m0_5/research_inference.json`](artifacts/m0_5/research_inference.json).
 
 ## How the methodology evolved
 
@@ -179,10 +194,11 @@ multiple intermediate "discoveries" that didn't survive scale.
 1. **Historically applicable costs are a decisive filter.** The modeled
    roundtrip spans 0.283%–0.363% across the sample; a flat current-year rate is
    not a valid historical assumption.
-2. **shareholder_change is consistently negative** (n=1,858, 9 of 10
-   abnormal-return walk-forward windows negative, with an abnormal realistic
-   mean of −1.40%). Used as a
-   long-side blacklist with 60-day lookback in
+2. **The exploratory shareholder_change class is consistently negative**
+   (n=1,858, 9 of 10 abnormal-return walk-forward windows negative, abnormal
+   realistic mean −1.40%, pointwise issuer-clustered 95% interval
+   [−2.04%, −0.75%]). It is used conservatively as a long-side blacklist with
+   60-day lookback, not promoted as a short strategy, in
    [`risk/event_blacklist.py`](src/kdtb/risk/event_blacklist.py).
 3. **The deterministic parser** extracts contract value + prior-year
    revenue from the standard 단일판매ㆍ공급계약체결 form with **96.6%
@@ -208,19 +224,19 @@ multiple intermediate "discoveries" that didn't survive scale.
 
 Listed in increasing order of effort and uncertainty:
 
-1. **Audit corporate-action price adjustment.** Bonus issues and rights
-   offerings are not interpretable until adjusted-versus-unadjusted OHLCV
-   behavior is explicit (roadmap M0.4).
-2. **Test genuinely new event types**: earnings surprise proxy, large M&A,
+1. **Freeze and prospectively test the buyback timing hypothesis.** Historical
+   issuer clustering does not remove the average paired effect, but tail
+   deletion flips it and daily bars cannot validate closing-auction fills.
+2. **Test genuinely new event types under a pre-specified plan**: earnings
+   surprise proxy, large M&A,
    delisting/relisting. DESIGN.md mentioned these but the work was
    never done. The methodology infrastructure (event-study runner,
    analyzer, walk-forward, adversarial workflow) handles any new
    category with a one-line SQL fragment addition to
    [`data/event_categories.py`](src/kdtb/data/event_categories.py).
-3. **Prospectively test faster-than-T+1 execution.** The time-aware abnormal
-   mean is positive but sub-threshold and fill-fragile. A frozen forward
-   experiment with actual closing-auction observations can answer what the
-   historical daily bars cannot.
+3. **Build the shared event-normalization and live-intelligence foundation.**
+   New forward evidence needs canonical events, immutable experiment versions,
+   and decision records stored before outcomes.
 
 ## Reproducibility
 
@@ -229,13 +245,16 @@ Every result in this document is reproducible from the committed code:
 ```bash
 # Verify the dataset
 sqlite3 data/kdtb.db "SELECT COUNT(*), MIN(DATE(receipt_datetime)), MAX(DATE(receipt_datetime)) FROM disclosures"
-# Expected: 1119270, 2021-12-29, 2026-06-24
+# Current local snapshot: 1209249, 2021-06-28, 2026-08-26
 
 # Reproduce per-category analysis
 .venv/bin/python scripts/analyze_event_category.py --category buyback
 
 # Reproduce the M0.3 raw-versus-abnormal comparison
 .venv/bin/python -m scripts.compare_benchmark_adjustment
+
+# Reproduce M0.5 issuer-clustered intervals and tail sensitivity
+.venv/bin/python -m scripts.analyze_research_inference
 
 # Reproduce 4-window walk-forward of v0/v1/v2
 .venv/bin/python scripts/walk_forward.py
@@ -332,12 +351,12 @@ skill.
 Adversarial-verification snapshot:
 [`data/buyback_learner_skeptics_2026-06-29.json`](data/buyback_learner_skeptics_2026-06-29.json).
 
-## Intraday execution speed — the one real positive effect
+## Intraday execution speed — one exploratory positive effect
 
 The research and learning phases all assumed next-day-close (T+1) entry, an
 artifact of the free daily-bar data, not the user's actual capability (they can
 trade intraday via a Korean broker API). Investigating that gap produced the
-project's first robust positive finding — and, on honest examination, the
+project's strongest exploratory positive finding — and, on honest examination, the
 reason it still isn't tradable. Full detail in
 [INTRADAY_FEASIBILITY.md](INTRADAY_FEASIBILITY.md).
 
@@ -359,22 +378,27 @@ The deterministic timing difference remains positive after market adjustment,
 but it is no longer regime-independent: 9/10 adjusted fold deltas are positive
 and the 2026H1 delta is slightly negative. The learned selector's lift reverses
 from +0.068% raw to −0.087% abnormal. The evidence supports an entry-timing
-effect, not stock-selection alpha, and the +0.164% adjusted absolute level does
-not clear the tradability bar.
+effect, not stock-selection alpha. The issuer-clustered pointwise 95% interval
+is [−0.059%, +0.395%] for the +0.164% adjusted absolute level and
+[+0.184%, +0.331%] for the paired +0.257% timing delta. The first includes
+zero; the second does not, but neither is confirmatory.
 
 **Why it still isn't tradable.** A 4-skeptic adversarial pass (3 of 4 refuted)
-showed the absolute level collapses under real constraints: the median trade
-loses (−0.062%, 49.4% win) and removing the top 5% of trades flips the mean to
-−0.43% (positive-skew lottery); the median capturable gap is ~20bps, smaller
-than one KOSDAQ tick and concentrated in the low-price names hardest to fill at
-the closing auction; and under `max_open_positions=1` with a 5-day hold only ~6%
-of signals are reachable, giving a capacity-realistic ~+0.25%/trade and ~$2–9/yr
-at the ₩30k cap. Verdict: **`real_delta_untradable_level`** — keep the
-entry-timing insight as a documented edge; do not deploy it without a
+showed the absolute level collapses under real constraints. The previously
+reported −0.062% median, 49.4% win rate, and −0.43% top-5%-excluded mean are
+raw-return diagnostics. The abnormal equivalents are −0.410%, 46.1%, and
+−0.693%; removing the top 5% of paired abnormal timing deltas also changes
++0.257% to −0.073%. The median capturable gap is ~20bps, smaller than one
+KOSDAQ tick and concentrated in the low-price names hardest to fill at the
+closing auction. Under `max_open_positions=1` with a 5-day hold, only ~6% of
+signals are reachable, giving a capacity-realistic raw estimate of
+~+0.25%/trade and ~$2–9/yr at the ₩30k cap. Verdict:
+**`real_delta_untradable_level`** — keep the timing effect exploratory; do not
+deploy it without a
 capacity-aware, closing-auction-fill-realistic *forward* test, the one thing no
 historical daily-close dataset can answer.
 
-**The lesson.** Even the project's single robust positive effect dissolved into
+**The lesson.** Even the project's strongest apparent positive effect dissolved into
 "not deployable at retail scale" once capacity and fill realism were modeled —
 the same efficiency wall, now met one layer deeper. The honest output is a
 precisely characterized effect plus the exact, narrow experiment that could

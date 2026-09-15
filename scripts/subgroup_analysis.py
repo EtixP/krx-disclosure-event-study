@@ -14,10 +14,13 @@ Subgroups:
 - Counterparty type (regex: 정부/공단/공사 = government, 주식회사 = corporate, else = other)
 - Recent KOSPI volatility (low/med/high — proxied by close-to-close vol over event-window)
 
+All subgroup outputs are exploratory screens over repeatedly inspected history;
+none is a confirmatory result or a strategy promotion.
+
 Output:
 - Per-subgroup table to stdout
 - Heatmaps to data/subgroup_*.csv
-- Highlights any subgroup with statistically interesting numbers
+- Describes exploratory subgroup estimates without promoting them
 """
 from __future__ import annotations
 
@@ -41,6 +44,7 @@ FROM extractions e
 WHERE e.model_name = 'deterministic_supply_contract_v1'
   AND e.validation_status = 'ok'
 """
+HYPOTHESIS_STATUS = "exploratory"
 
 
 def classify_counterparty(summary: str | None) -> str:
@@ -84,6 +88,7 @@ def summarize(df: pd.DataFrame, label: str) -> dict | None:
     losses = -abnormal[abnormal < 0]
     return {
         "subgroup": label,
+        "hypothesis_status": HYPOTHESIS_STATUS,
         "n": len(t5),
         "t1_net_pct": df["_t1_net"].dropna().mean() * 100 if len(df["_t1_net"].dropna()) > 0 else None,
         "t5_net_pct": t5.mean() * 100,
@@ -101,7 +106,7 @@ def print_table(rows: list[dict], title: str) -> None:
     if not rows:
         print(f"\n=== {title}: no subgroups had n >= 20 ===")
         return
-    print(f"\n=== {title} (n>=20 only) ===")
+    print(f"\n=== {title} (EXPLORATORY; n>=20 only) ===")
     print(f"{'subgroup':>28} {'n':>5} {'T+1_raw':>10} {'T+5_raw':>10} {'T+1_abn':>10} {'T+5_abn':>10} {'abn_win%':>10} {'abn_pf':>8}")
     print("-" * 112)
     for r in sorted(rows, key=lambda x: -x["t5_abnormal_net_pct"]):
@@ -201,7 +206,7 @@ def main() -> int:
     print_table(rows, "Counterparty type (regex heuristic)")
 
     # === Subgroup 7: Cross of market × ratio bucket (the most interesting cut) ===
-    print("\n=== Market × Ratio (≥0.15 only, n>=20) ===")
+    print("\n=== Market × Ratio (EXPLORATORY; ≥0.15 only, n>=20) ===")
     print(f"{'market':>8} {'ratio_bucket':>15} {'n':>5} {'T+5_raw':>10} {'T+5_abn':>10} {'abn_win%':>10} {'abn_pf':>8}")
     print("-" * 70)
     for (mkt, bucket), sub in m.groupby(["market", "ratio_bucket"], observed=True):

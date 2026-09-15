@@ -1,0 +1,953 @@
+{
+  "buyback_timing_inference": {
+    "all_matched_event_inference": {
+      "abnormal": {
+        "paired_entry_timing_delta": {
+          "bootstrap_standard_error_pct": 0.0378299969,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": 0.1839823298,
+          "ci_upper_pct": 0.3314482438,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.2567288958,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 42,
+          "n_events": 3562,
+          "n_issuers": 937,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 2625,
+          "resampling_unit": "issuer"
+        },
+        "timeaware_entry": {
+          "bootstrap_standard_error_pct": 0.1158225302,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.0591437282,
+          "ci_upper_pct": 0.3948636392,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.1633930779,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 42,
+          "n_events": 3562,
+          "n_issuers": 937,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 2625,
+          "resampling_unit": "issuer"
+        },
+        "uniform_entry": {
+          "bootstrap_standard_error_pct": 0.1052645947,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.2936273693,
+          "ci_upper_pct": 0.1153131531,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.0933358179,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 42,
+          "n_events": 3562,
+          "n_issuers": 937,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 2625,
+          "resampling_unit": "issuer"
+        }
+      },
+      "raw": {
+        "paired_entry_timing_delta": {
+          "bootstrap_standard_error_pct": 0.0416328328,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": 0.2360685585,
+          "ci_upper_pct": 0.3986735531,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.3167246953,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 42,
+          "n_events": 3562,
+          "n_issuers": 937,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 2625,
+          "resampling_unit": "issuer"
+        },
+        "timeaware_entry": {
+          "bootstrap_standard_error_pct": 0.1239425324,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": 0.2167943907,
+          "ci_upper_pct": 0.70608887,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.4577848772,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 42,
+          "n_events": 3562,
+          "n_issuers": 937,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 2625,
+          "resampling_unit": "issuer"
+        },
+        "uniform_entry": {
+          "bootstrap_standard_error_pct": 0.112383635,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.0803045302,
+          "ci_upper_pct": 0.3616606052,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.1410601818,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 42,
+          "n_events": 3562,
+          "n_issuers": 937,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 2625,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    "hypothesis_id": "historical_buyback_entry_timing",
+    "hypothesis_status": "exploratory",
+    "interpretation_boundary": "historical exploratory timing effect; not confirmatory alpha and not evidence of executable closing-auction fills",
+    "legacy_headline_reconciliation": {
+      "abnormal": {
+        "delta_positive_folds": 9,
+        "generated_folds": 11,
+        "paired_delta_pct": 0.2567288958,
+        "scored_folds": 10,
+        "timeaware_mean_pct": 0.1635477146,
+        "timeaware_positive_folds": 7,
+        "uniform_mean_pct": -0.0931811812,
+        "uniform_positive_folds": 5
+      },
+      "raw": {
+        "delta_positive_folds": 10,
+        "generated_folds": 11,
+        "paired_delta_pct": 0.3167246953,
+        "scored_folds": 10,
+        "timeaware_mean_pct": 0.4577830391,
+        "timeaware_positive_folds": 9,
+        "uniform_mean_pct": 0.1410583438,
+        "uniform_positive_folds": 7
+      }
+    },
+    "sample": {
+      "event_date_max": "2026-06-19",
+      "event_date_min": "2021-06-28",
+      "events": 3562,
+      "filing_time_input": "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
+      "issuers": 937
+    },
+    "tail_sensitivity": {
+      "paired_entry_timing_delta_abnormal": {
+        "full_sample": {
+          "mean_pct": 0.2567288958,
+          "median_pct": 0.0,
+          "n": 3562,
+          "win_rate_pct": 24.9859629422
+        },
+        "quantiles_pct": {
+          "p01": -5.0039182545,
+          "p05": -2.3510207835,
+          "p95": 3.8383165541,
+          "p99": 8.4237110452
+        },
+        "scenarios": [
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.1468017491,
+            "median_pct": 0.0,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_top",
+            "win_rate_pct": 24.2415650695
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.3290898447,
+            "median_pct": 0.0,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 25.2339098384
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.2187861753,
+            "median_pct": 0.0,
+            "n": 3492,
+            "removed_per_selected_tail": 35,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 24.4845360825
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": -0.0728039826,
+            "median_pct": 0.0,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_top",
+            "win_rate_pct": 21.0401891253
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 0.4785599523,
+            "median_pct": 0.0,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 26.3002364066
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 0.1430473721,
+            "median_pct": 0.0,
+            "n": 3206,
+            "removed_per_selected_tail": 178,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 22.2083593263
+          }
+        ]
+      },
+      "paired_entry_timing_delta_raw": {
+        "full_sample": {
+          "mean_pct": 0.3167246953,
+          "median_pct": 0.0,
+          "n": 3562,
+          "win_rate_pct": 24.7894441325
+        },
+        "quantiles_pct": {
+          "p01": -5.3533236403,
+          "p05": -2.3401704296,
+          "p95": 4.0064842799,
+          "p99": 8.9316907789
+        },
+        "scenarios": [
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.1977987118,
+            "median_pct": 0.0,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_top",
+            "win_rate_pct": 24.0430961157
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.398716935,
+            "median_pct": 0.0,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 25.0354408846
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.2794207679,
+            "median_pct": 0.0,
+            "n": 3492,
+            "removed_per_selected_tail": 35,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 24.2840778923
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": -0.0312040478,
+            "median_pct": 0.0,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_top",
+            "win_rate_pct": 20.8333333333
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 0.5599133168,
+            "median_pct": 0.0,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 26.0933806147
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 0.206169308,
+            "median_pct": 0.0,
+            "n": 3206,
+            "removed_per_selected_tail": 178,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 21.9900187149
+          }
+        ]
+      },
+      "timeaware_abnormal_net": {
+        "full_sample": {
+          "mean_pct": 0.1633930779,
+          "median_pct": -0.4100747276,
+          "n": 3562,
+          "win_rate_pct": 46.0976979225
+        },
+        "quantiles_pct": {
+          "p01": -13.6165987957,
+          "p05": -7.9817657284,
+          "p95": 10.0929438024,
+          "p99": 19.4115400307
+        },
+        "scenarios": [
+          {
+            "fraction": 0.01,
+            "mean_pct": -0.1302406733,
+            "median_pct": -0.4392306262,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_top",
+            "win_rate_pct": 45.5628012475
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.3387764436,
+            "median_pct": -0.3685542561,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 46.5551460164
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.0439574795,
+            "median_pct": -0.4100747276,
+            "n": 3492,
+            "removed_per_selected_tail": 35,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 46.0194730813
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": -0.6929402046,
+            "median_pct": -0.6163742026,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_top",
+            "win_rate_pct": 43.2624113475
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 0.7780161105,
+            "median_pct": -0.1555016228,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 48.5224586288
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": -0.0917371422,
+            "median_pct": -0.4100747276,
+            "n": 3206,
+            "removed_per_selected_tail": 178,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 45.6643792888
+          }
+        ]
+      },
+      "timeaware_raw_net": {
+        "full_sample": {
+          "mean_pct": 0.4577848772,
+          "median_pct": -0.0620653923,
+          "n": 3562,
+          "win_rate_pct": 49.3542953397
+        },
+        "quantiles_pct": {
+          "p01": -14.9407605795,
+          "p05": -8.8301177099,
+          "p95": 10.8375618884,
+          "p99": 19.701482206
+        },
+        "scenarios": [
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.1572228543,
+            "median_pct": -0.0946593886,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_top",
+            "win_rate_pct": 48.8517153388
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.6518405219,
+            "median_pct": -0.0126996997,
+            "n": 3527,
+            "removed_per_selected_tail": 35,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 49.8440601077
+          },
+          {
+            "fraction": 0.01,
+            "mean_pct": 0.3502109953,
+            "median_pct": -0.0620653923,
+            "n": 3492,
+            "removed_per_selected_tail": 35,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 49.3413516609
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": -0.4329479771,
+            "median_pct": -0.283,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_top",
+            "win_rate_pct": 46.6903073286
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 1.1503670316,
+            "median_pct": 0.1586192863,
+            "n": 3384,
+            "removed_per_selected_tail": 178,
+            "scenario": "exclude_bottom",
+            "win_rate_pct": 51.9503546099
+          },
+          {
+            "fraction": 0.05,
+            "mean_pct": 0.2486326726,
+            "median_pct": -0.0620653923,
+            "n": 3206,
+            "removed_per_selected_tail": 178,
+            "scenario": "symmetric_trim",
+            "win_rate_pct": 49.2825951341
+          }
+        ]
+      }
+    }
+  },
+  "category_headline_inference": [
+    {
+      "category": "supply_contract",
+      "hypothesis_id": "historical_category_screen:supply_contract",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": -0.5419,
+          "n": 8585,
+          "raw_mean_pct": -0.3086,
+          "verdict": "neutral"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": -0.5419040133,
+          "n": 8585,
+          "raw_mean_pct": -0.3085997589
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.1008737038,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": -0.7347149528,
+          "ci_upper_pct": -0.3425863861,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.5419040133,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 163,
+          "n_events": 8585,
+          "n_issuers": 927,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 7658,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.1036365216,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": -0.5068864647,
+          "ci_upper_pct": -0.1009266075,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.3085997589,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 163,
+          "n_events": 8585,
+          "n_issuers": 927,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 7658,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    {
+      "category": "buyback",
+      "hypothesis_id": "historical_category_screen:buyback",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": -0.0277,
+          "n": 4801,
+          "raw_mean_pct": 0.1432,
+          "verdict": "neutral"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": -0.0276836072,
+          "n": 4801,
+          "raw_mean_pct": 0.1432406724
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.0935568375,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.2099111388,
+          "ci_upper_pct": 0.1570222824,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.0276836072,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 56,
+          "n_events": 4801,
+          "n_issuers": 1012,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 3789,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.1016509913,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.0542420307,
+          "ci_upper_pct": 0.3452065229,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.1432406724,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 56,
+          "n_events": 4801,
+          "n_issuers": 1012,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 3789,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    {
+      "category": "bonus_issue",
+      "hypothesis_id": "historical_category_screen:bonus_issue",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": 0.093,
+          "n": 828,
+          "raw_mean_pct": 0.2079,
+          "verdict": "neutral"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": 0.0930131649,
+          "n": 828,
+          "raw_mean_pct": 0.2078885554
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.4177731523,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.704761595,
+          "ci_upper_pct": 0.9462659707,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.0930131649,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 10,
+          "n_events": 828,
+          "n_issuers": 292,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 536,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.4339518581,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.6271838709,
+          "ci_upper_pct": 1.0791395229,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.2078885554,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 10,
+          "n_events": 828,
+          "n_issuers": 292,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 536,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    {
+      "category": "rights_offering",
+      "hypothesis_id": "historical_category_screen:rights_offering",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": 0.1107,
+          "n": 5911,
+          "raw_mean_pct": 0.2376,
+          "verdict": "positive_noisy"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": 0.1107495474,
+          "n": 5911,
+          "raw_mean_pct": 0.2376339525
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.2317336418,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.3237444048,
+          "ci_upper_pct": 0.5820142612,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.1107495474,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 39,
+          "n_events": 5911,
+          "n_issuers": 1093,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 4818,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.2290008833,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.1914532306,
+          "ci_upper_pct": 0.7023009889,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.2376339525,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 39,
+          "n_events": 5911,
+          "n_issuers": 1093,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 4818,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    {
+      "category": "convertible_bond",
+      "hypothesis_id": "historical_category_screen:convertible_bond",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": -0.0446,
+          "n": 4175,
+          "raw_mean_pct": -0.027,
+          "verdict": "neutral"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": -0.0446256235,
+          "n": 4175,
+          "raw_mean_pct": -0.0270016139
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.2714273132,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.5293893879,
+          "ci_upper_pct": 0.5289775152,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.0446256235,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 48,
+          "n_events": 4175,
+          "n_issuers": 864,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 3311,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.2765837796,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -0.5269037029,
+          "ci_upper_pct": 0.5606620578,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.0270016139,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 48,
+          "n_events": 4175,
+          "n_issuers": 864,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 3311,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    {
+      "category": "halt_resumption",
+      "hypothesis_id": "historical_category_screen:halt_resumption",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": -0.022,
+          "n": 2570,
+          "raw_mean_pct": 0.0411,
+          "verdict": "neutral"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": -0.0220300656,
+          "n": 2570,
+          "raw_mean_pct": 0.0410849353
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.8680603551,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -1.4123486793,
+          "ci_upper_pct": 1.9457568894,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -0.0220300656,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 24,
+          "n_events": 2570,
+          "n_issuers": 864,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 1706,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.8690766558,
+          "ci_excludes_zero": false,
+          "ci_lower_pct": -1.3610614449,
+          "ci_upper_pct": 2.0246529793,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": 0.0410849353,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 24,
+          "n_events": 2570,
+          "n_issuers": 864,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 1706,
+          "resampling_unit": "issuer"
+        }
+      }
+    },
+    {
+      "category": "shareholder_change",
+      "hypothesis_id": "historical_category_screen:shareholder_change",
+      "hypothesis_status": "exploratory",
+      "point_reconciliation": {
+        "current_headline": {
+          "abnormal_mean_pct": -1.3963,
+          "n": 1858,
+          "raw_mean_pct": -1.1027,
+          "verdict": "negative"
+        },
+        "independent_formula": {
+          "abnormal_mean_pct": -1.396297341,
+          "n": 1858,
+          "raw_mean_pct": -1.1026849091
+        }
+      },
+      "realistic_t1_to_t5": {
+        "abnormal_net": {
+          "bootstrap_standard_error_pct": 0.3279024357,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": -2.0354499253,
+          "ci_upper_pct": -0.7478417321,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -1.396297341,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 18,
+          "n_events": 1858,
+          "n_issuers": 677,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 1181,
+          "resampling_unit": "issuer"
+        },
+        "raw_net": {
+          "bootstrap_standard_error_pct": 0.3309268532,
+          "ci_excludes_zero": true,
+          "ci_lower_pct": -1.7474838256,
+          "ci_upper_pct": -0.4421582402,
+          "confidence_level": 0.95,
+          "estimand": "event_weighted_mean",
+          "estimate_pct": -1.1026849091,
+          "interval": "percentile_cluster_bootstrap",
+          "largest_issuer_cluster": 18,
+          "n_events": 1858,
+          "n_issuers": 677,
+          "n_resamples": 10000,
+          "random_state": 0,
+          "repeated_event_rows": 1181,
+          "resampling_unit": "issuer"
+        }
+      }
+    }
+  ],
+  "generator_sources": [
+    {
+      "path": "pyproject.toml",
+      "sha256": "6aa619db005f6ee1de335cf1fa4627623a15f2c73f419322973db986586eca92"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "3f3b652e5b0dd3f996e5832b0e9f33ab6916a46c690a34d9fe002809306a872e"
+    },
+    {
+      "path": "src/kdtb/backtest/cost_model.py",
+      "sha256": "0953db78021ad90bf09f413b71e5631d954aa56e87c0fc3b7a946cda7eca67a3"
+    },
+    {
+      "path": "src/kdtb/backtest/metrics.py",
+      "sha256": "0c56dce287cb0d6e10ce5f62e83c29452154d66621b49e8069e4264b6b107fe6"
+    },
+    {
+      "path": "src/kdtb/data/benchmarks.py",
+      "sha256": "0f36cb42f5566ac8b8f7638c5df6b229e6e106a641a049eccd08d8967be08f8c"
+    },
+    {
+      "path": "src/kdtb/learning/walk_forward_trainer.py",
+      "sha256": "8a9ea157599872b1e46b37dc5a017c2cf981722269416353ca0fad84d9b35138"
+    },
+    {
+      "path": "src/kdtb/research/baseline.py",
+      "sha256": "51a405a23eaef9974d1c8a35eba51c5a377ab1a954ddd56e0488d0d30d12a2df"
+    },
+    {
+      "path": "src/kdtb/research/inference.py",
+      "sha256": "b9159f2b5fef578271bf65eb162ea237ec1786d14bff6427a2e960df0579787f"
+    },
+    {
+      "path": "scripts/analyze_event_category.py",
+      "sha256": "31efd7455184aa66735b57c3d697e14a260b0dbd5138f954ad5e6479c2a1a318"
+    },
+    {
+      "path": "scripts/analyze_research_inference.py",
+      "sha256": "96a8fd0663aef0cfbda499c78d18354c11a7ee8c939cfd0635a050de43b718d2"
+    },
+    {
+      "path": "scripts/run_intraday_walkforward.py",
+      "sha256": "a25f1b9335631bbc442437f3d8ffebdc131e19fe3937c115f89db30ee90e8e3b"
+    },
+    {
+      "path": "scripts/summarize_all_categories.py",
+      "sha256": "42e00eba5c7b6902e5a9a0901700d705c00ce20e2e2b6d8ad240c0fcce5c25d6"
+    }
+  ],
+  "hypothesis_governance": {
+    "analysis_procedure_status": "fixed_reanalysis_not_preregistration",
+    "current_classification": {
+      "confirmatory": [],
+      "exploratory": [
+        "historical_category_screen:*",
+        "historical_buyback_entry_timing",
+        "historical_shareholder_change_blacklist",
+        "legacy_subgroup_screens:*"
+      ],
+      "pre_specified": []
+    },
+    "multiple_testing": "Intervals are pointwise descriptive intervals for an exploratory family of seven categories. They are not multiplicity-adjusted and must not be read as familywise confirmatory tests. Formal correction belongs with a prospectively frozen hypothesis family.",
+    "promotion_rule": "No historical category or subgroup becomes a strategy from these intervals; confirmatory status requires untouched future data.",
+    "status_definitions": {
+      "confirmatory": "pre-specified hypothesis evaluated once on data not used to form it",
+      "exploratory": "hypothesis formed, selected, or repeatedly examined using the same historical sample",
+      "pre_specified": "hypothesis and decision rule frozen before inspecting the evaluation outcomes"
+    }
+  },
+  "inputs": [
+    {
+      "path": "data/event_study_supply_contract.csv",
+      "sha256": "115ee82455c22309e4c2aea052d4d0f7a1012946c52cc74e19a02865ec648bb2"
+    },
+    {
+      "path": "data/event_study_buyback.csv",
+      "sha256": "0eb9f0c29a75243c132f89ce60026e3d41f25a6609db270a10513706c8c21d27"
+    },
+    {
+      "path": "data/event_study_bonus_issue.csv",
+      "sha256": "76edf1f5b37a42fd9b38b19ec2a711acf421ba9abf00ee66e78095747ed2d03a"
+    },
+    {
+      "path": "data/event_study_rights_offering.csv",
+      "sha256": "a572efb8abceeee5889f24472521ac93caaa4ec04f946e1c6f997a45c4e2b6b3"
+    },
+    {
+      "path": "data/event_study_convertible_bond.csv",
+      "sha256": "39d9afbb8f585e8f7cc54907c57cc21c0a016d6cceaad83b03c238d68725168c"
+    },
+    {
+      "path": "data/event_study_halt_resumption.csv",
+      "sha256": "f9e4061c8dc73e08a0231fdc204f9fcd1417646bc7ef9209665699c78365a20c"
+    },
+    {
+      "path": "data/event_study_shareholder_change.csv",
+      "sha256": "350c3427a5bc4ab93084e4adbfdbb8a9796158908db8702812afe2eeb470194f"
+    },
+    {
+      "path": "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
+      "sha256": "0c61572d3e128a82b0b7d79c236541d0f5940db7a4fe1d1dd3ae061fa0ee99e5"
+    }
+  ],
+  "methodology": {
+    "confidence_level": 0.95,
+    "dependence_unit": "issuer_stock_code",
+    "headline_estimand": "event_weighted_mean_realistic_t1_to_t5_net_return",
+    "interval": "percentile_cluster_bootstrap",
+    "n_resamples": 10000,
+    "random_state": 0,
+    "tail_fractions": [
+      0.01,
+      0.05
+    ],
+    "tail_scenarios": [
+      "exclude_top",
+      "exclude_bottom",
+      "symmetric_trim"
+    ]
+  },
+  "milestone": "M0.5",
+  "result_change": "point estimates are unchanged; inference now measures issuer dependence and separates raw, abnormal, and paired timing tails",
+  "runtime_versions": {
+    "numpy": "2.5.0",
+    "pandas": "2.3.3",
+    "python": "3.13.2"
+  },
+  "schema_version": 1,
+  "verified_upstream_artifacts": [
+    {
+      "path": "artifacts/baselines/pre_revision/manifest.json",
+      "sha256": "7618e0d62028d44fea96edc496adb7fc0ada1f6a063ca3aee1e680f8b8c81776"
+    },
+    {
+      "path": "artifacts/m0_2/historical_cost_comparison.json",
+      "sha256": "b529d30ef58606ebff1fec2507a644b8851e6dc921c5bdb57ca5fdf4ded7dc77"
+    },
+    {
+      "path": "artifacts/m0_3/benchmark_adjustment_comparison.json",
+      "sha256": "0ac51cc563114f2b57c0fc6987a5984889fb4dd78bfb4643f6c9882879820abf"
+    },
+    {
+      "path": "artifacts/m0_4/price_adjustment_audit.json",
+      "sha256": "1acf9366a9147fa78835270d90db7dad8fae9a4a8e9c90018e1a4fa92bac254b"
+    }
+  ]
+}

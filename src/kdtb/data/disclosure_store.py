@@ -18,7 +18,7 @@ def dart_record_to_disclosure(rec: dict) -> Disclosure:
     if len(rcept_dt) == 8 and rcept_dt.isdigit():
         receipt_datetime = datetime.strptime(rcept_dt, "%Y%m%d")
     else:
-        receipt_datetime = datetime.utcnow()
+        raise ValueError("OPEN DART record is missing a valid rcept_dt source date")
     return Disclosure(
         receipt_no=rec["rcept_no"],
         corp_code=rec["corp_code"],

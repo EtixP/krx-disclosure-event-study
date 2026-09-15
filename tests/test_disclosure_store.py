@@ -54,6 +54,14 @@ def test_empty_stock_code_becomes_none():
     assert d.stock_code is None
 
 
+def test_invalid_source_date_is_rejected_instead_of_fabricated():
+    record = _sample_record()
+    record["rcept_dt"] = ""
+
+    with pytest.raises(ValueError, match="rcept_dt"):
+        dart_record_to_disclosure(record)
+
+
 def test_upsert_deduplicates(conn):
     store = DisclosureStore(conn)
     new, total = store.ingest_records([_sample_record(), _sample_record()])

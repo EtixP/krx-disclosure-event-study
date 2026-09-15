@@ -123,10 +123,17 @@ between t0 and T+1 entries, so it can change the timing delta itself.
 | **Entry-timing delta** | **+0.317%** | **10/10** | **+0.257%** | **9/10** |
 | Learned selector lift | +0.068% | — | −0.087% | — |
 
-The pre-M0.3 verdict was `real_delta_untradable_level`. The current status is a
-**provisional positive timing effect, not abnormal-return alpha and not a
-deployable strategy**. Coverage remains clean, but market attribution refutes
-the learned-selection claim and weakens fold stability.
+The pre-M0.3 verdict was `real_delta_untradable_level`. M0.5 classifies the
+historical timing hypothesis as **exploratory**: it is not confirmatory
+abnormal-return alpha and not a deployable strategy. Coverage remains clean,
+but market attribution refutes the learned-selection claim and weakens fold
+stability.
+
+Issuer-clustered pointwise 95% intervals are [−0.059%, +0.395%] for the
++0.164% time-aware abnormal level and [+0.184%, +0.331%] for the paired
++0.257% abnormal timing delta. Repeated issuers alone therefore do not explain
+the average paired difference, but the absolute abnormal level remains
+compatible with zero and the intervals do not correct for historical search.
 
 **What remains (keep it cautiously):** The raw +0.317% timing delta is positive
 in 10/10 folds. After removing broad-market movement, it is +0.257% and positive
@@ -137,8 +144,11 @@ abnormal lift, so there is no ML selection edge.
 
 **Why it is not tradable today:**
 1. **Positive-skew lottery, not a robust mean.** Median trade *loses*
-   (−0.062%), win rate 49.4%; removing the top 5% of trades flips the mean to
-   **−0.43%**. The PnL lives in extreme up-moves — the hardest names to fill.
+   on both bases. The prior −0.062% median, 49.4% win rate, and −0.43%
+   top-5%-excluded mean are raw diagnostics; abnormal values are −0.410%,
+   46.1%, and −0.693%. Removing the top 5% of paired abnormal timing deltas
+   also flips +0.257% to **−0.073%**. The mean lives in extreme up-moves — the
+   hardest names to fill.
 2. **Fill-fragile at exactly the required fill.** The median capturable
    overnight gap is **~20bps** — smaller than one KOSDAQ small-cap tick — and
    concentrates in low-price/KOSDAQ names where transacting at the closing
@@ -154,9 +164,10 @@ abnormal lift, so there is no ML selection edge.
 
 - **Filing times: solved, free, historical** — scraper built, tested, and the
   full buyback history is backfilled.
-- **The entry-timing effect remains positive but provisional** — market
-  adjustment reduces it to +0.257% and 9/10 positive fold deltas. It is a
-  deterministic chronology effect, not validated stock-selection alpha.
+- **The entry-timing effect remains positive but exploratory** — market
+  adjustment reduces it to +0.257% and 9/10 positive fold deltas. Its
+  issuer-clustered interval excludes zero, but its top-5% exclusion flips sign;
+  neither result is confirmatory stock-selection alpha.
 - **It is not deployable at retail scale** — capacity (1-position cap), fill
   fragility at the closing auction, and fat-tail dependence reduce even the
   +0.164% abnormal headline further. The historical daily-close data **cannot** answer the

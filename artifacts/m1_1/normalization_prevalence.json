@@ -1,0 +1,93 @@
+{
+  "corpus": {
+    "disclosures": 1209249,
+    "first_receipt_datetime": "2021-06-28T00:00:00",
+    "last_receipt_datetime": "2026-08-26T00:00:00"
+  },
+  "generator_sources": [
+    {
+      "path": "scripts/audit_event_normalization.py",
+      "sha256": "93e86eb82d6f1115bb09c9e8864f6017a71e73d2f7474fdb70b45b5692e2a4f9"
+    },
+    {
+      "path": "src/kdtb/events/audit.py",
+      "sha256": "35f4832aca19cacc72e4a3b6f68cca9432fb871798a0653357df54086743d93c"
+    },
+    {
+      "path": "src/kdtb/events/normalizer.py",
+      "sha256": "78976376752ace4cfb7153792eff4197c483f82a504e252fbf68b4bd96a937e0"
+    }
+  ],
+  "input": {
+    "path": "data/kdtb.db",
+    "sha256": "265d888ac2ba4e205c95a1611e0ba260dbea5e5a5237761995bbd9444fef5137"
+  },
+  "method": {
+    "authoritative_lineage": "DART viewer family/att/ref receipt relationships",
+    "non_authoritative_diagnostics": "same-title and same-date counts measure prevalence only"
+  },
+  "milestone": "M1.1",
+  "purpose": "measure normalization need before storage or lineage overengineering",
+  "same_issuer_title_date_collisions": {
+    "groups": 54526,
+    "rows": 196387,
+    "rows_beyond_one_per_group": 141861,
+    "warning": "Collision counts are a prevalence proxy, not duplicate labels."
+  },
+  "schema_version": 1,
+  "status_markers": {
+    "dart_rm_contains_later_correction_flag": 185870,
+    "dart_rm_contains_withdrawal_flag": 446,
+    "title_contains_cancellation_marker": 5281,
+    "warning": "rm flags describe later provider state and are not used as decision-time event status."
+  },
+  "title_based_linkage_diagnostic_only": {
+    "updates_in_title_groups_larger_than_two": 179868,
+    "updates_unresolved_by_that_rule": 79850,
+    "updates_with_prior_same_issuer_exact_normalized_title": 123776,
+    "warning": "Exact-title proximity is not lineage. DART viewer family/att/ref relationships are required for canonical assignment."
+  },
+  "update_actions": {
+    "amendment": 7191,
+    "correction": 196363,
+    "correction_required": 72
+  },
+  "update_prefixes": {
+    "[기재정정]": {
+      "action": "correction",
+      "filings": 191595
+    },
+    "[발행조건확정]": {
+      "action": "amendment",
+      "filings": 3980
+    },
+    "[변경등록]": {
+      "action": "amendment",
+      "filings": 1026
+    },
+    "[연장결정]": {
+      "action": "amendment",
+      "filings": 655
+    },
+    "[정정명령부과]": {
+      "action": "correction_required",
+      "filings": 28
+    },
+    "[정정제출요구]": {
+      "action": "correction_required",
+      "filings": 44
+    },
+    "[첨부정정]": {
+      "action": "correction",
+      "filings": 4768
+    },
+    "[첨부추가]": {
+      "action": "amendment",
+      "filings": 1530
+    }
+  },
+  "update_prevalence": {
+    "filings": 203626,
+    "fraction_of_corpus": 0.16839046
+  }
+}
