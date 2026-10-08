@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import numpy as np
+import pandas as pd
 
 from kdtb.learning.policy import (
     AlwaysTrade,
@@ -8,6 +9,16 @@ from kdtb.learning.policy import (
     NeverTrade,
     policy_pnl,
 )
+
+
+def _dates(n):
+    decisions = pd.bdate_range("2022-01-03", periods=n)
+    return dict(
+        decision_dates=decisions,
+        label_end_dates=decisions + pd.offsets.BDay(4),
+        row_ids=[f"sample:{index:05d}" for index in range(n)],
+        cutoff=decisions[-1] + pd.offsets.BDay(10),
+    )
 
 
 def test_never_trade_decides_all_false():
@@ -35,7 +46,7 @@ def test_policy_pnl_sums_only_traded_rows():
 def test_learned_policy_abstains_with_too_little_data():
     X = np.random.RandomState(1).rand(10, 8)
     returns = np.random.RandomState(2).randn(10) * 0.02
-    p = LearnedPolicy(min_train=60).fit(X, returns)
+    p = LearnedPolicy(min_train=60).fit(X, returns, **_dates(len(X)))
     assert p.model is None
     assert p.decide(X).sum() == 0
 
@@ -52,7 +63,7 @@ def test_learned_policy_learns_planted_edge():
     returns = base + rng.randn(n) * 0.003
 
     split = 450
-    p = LearnedPolicy(random_state=0).fit(X[:split], returns[:split])
+    p = LearnedPolicy(random_state=0).fit(X[:split], returns[:split], **_dates(split))
     assert p.model is not None
 
     # On held-out data, the learned policy should beat always-trade and be positive.
@@ -73,7 +84,7 @@ def test_learned_policy_abstains_on_pure_noise():
     returns = rng.randn(n) * 0.02  # zero-mean noise, no relationship to X
 
     split = 450
-    p = LearnedPolicy(random_state=0).fit(X[:split], returns[:split])
+    p = LearnedPolicy(random_state=0).fit(X[:split], returns[:split], **_dates(split))
     Xte, rte = X[split:], returns[split:]
     model_pnl, _ = policy_pnl(p, Xte, rte)
     always_pnl, _ = policy_pnl(AlwaysTrade(), Xte, rte)

@@ -1,27 +1,18 @@
-"""Time-aware walk-forward: does entering at the same-day close for
-intraday-published events hold an edge ACROSS folds (not just recently)?
+"""Legacy exploratory buyback timing replay from hash-pinned filing times.
 
-Joins scraped filing times onto an event category, assigns each event its
-earliest realistically-tradable entry:
-  - published intraday (filing_time < 15:20 KST) -> enter at the SAME-DAY close
-  - published after close                        -> enter at the T+1 close
-exits at the T+5 close, nets the date/market-aware roundtrip cost, then walks forward
-across half-year folds. Reports, per fold:
-  - always-trade with the OLD uniform T+1 entry
-  - always-trade with the TIME-AWARE entry
-and whether a learned policy adds selection lift on the time-aware returns.
+This reproduces historical same-day-close/T+1-close assumptions and uncorrected
+learner chronology. It is not evidence of intraday execution or original source
+availability. No database is read. Other categories lack this pinned input and
+supply-contract enrichment lacks original-version provenance.
 
-This is the validation gate the intraday lead must pass: the prior buyback
-"edge" died because it was recent-window-only. If the time-aware edge is real
-it should be positive across most folds, including the older ones.
-
-Usage:
-    python scripts/run_intraday_walkforward.py --category buyback
+Usage: python -m scripts.run_intraday_walkforward --category buyback
 """
+
 from __future__ import annotations
 
 import argparse
-import sqlite3
+import hashlib
+from pathlib import Path
 import sys
 
 import numpy as np
@@ -30,7 +21,16 @@ import pandas as pd
 from kdtb.backtest.cost_model import TRADABILITY_BAR_PCT, CostModel
 from kdtb.data.benchmarks import require_benchmark_columns
 from kdtb.learning.features import FEATURE_NAMES, extract_features
-from kdtb.learning.walk_forward_trainer import make_folds, run_walk_forward
+from kdtb.research.historical_learning import make_folds, run_walk_forward
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+BUYBACK_CSV = PROJECT_ROOT / "data/event_study_buyback.csv"
+PINNED_FILING_TIMES = (
+    PROJECT_ROOT / "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv"
+)
+PINNED_FILING_TIMES_SHA256 = (
+    "0c61572d3e128a82b0b7d79c236541d0f5940db7a4fe1d1dd3ae061fa0ee99e5"
+)
 
 INTRADAY_CUTOFF_MIN = 15 * 60 + 20  # 15:20 KST — need a few minutes to reach the close
 
@@ -45,7 +45,9 @@ def _mins(t: str | None):
         return None
 
 
-def classify_entry(filing_mins, t0_close: float, t1_close: float, cutoff: int = INTRADAY_CUTOFF_MIN):
+def classify_entry(
+    filing_mins, t0_close: float, t1_close: float, cutoff: int = INTRADAY_CUTOFF_MIN
+):
     """Return (entry_price, mode) for the earliest REALISTICALLY tradable entry.
 
     Integrity rule (no look-ahead): an after-close (or unknown-time) event must
@@ -70,8 +72,7 @@ def apply_timeaware_returns(
     missing = [column for column in required if column not in df.columns]
     if missing:
         raise ValueError(
-            "dated transaction costs require event-study columns: "
-            + ", ".join(missing)
+            "dated transaction costs require event-study columns: " + ", ".join(missing)
         )
     if df[required].isna().any().any():
         raise ValueError("dated transaction-cost inputs contain missing values")
@@ -82,9 +83,7 @@ def apply_timeaware_returns(
     if return_basis == "abnormal":
         require_benchmark_columns(out, tokens=("t0", "t1", "t5"))
     model = cost_model or CostModel()
-    intraday = out["filing_mins"].notna() & (
-        out["filing_mins"] < INTRADAY_CUTOFF_MIN
-    )
+    intraday = out["filing_mins"].notna() & (out["filing_mins"] < INTRADAY_CUTOFF_MIN)
     entry = np.where(intraday, out["t0_close"], out["t+1_close"])
     entry_dates = np.where(intraday, out["t0_date"], out["t+1_date"])
     uniform_costs = model.roundtrip_cost_fractions(
@@ -97,29 +96,23 @@ def apply_timeaware_returns(
         sell_dates=out["t+5_date"],
         markets=out["market"],
     )
-    out["ret_uniform_raw"] = (
-        (out["t+5_close"] - out["t+1_close"]) / out["t+1_close"]
-        - uniform_costs
-    )
+    out["ret_uniform_raw"] = (out["t+5_close"] - out["t+1_close"]) / out[
+        "t+1_close"
+    ] - uniform_costs
     out["entry_mode"] = np.where(intraday, "intraday", "afterclose")
-    out["ret_timeaware_raw"] = (
-        (out["t+5_close"] - entry) / entry - timeaware_costs
-    )
+    out["ret_timeaware_raw"] = (out["t+5_close"] - entry) / entry - timeaware_costs
     if return_basis == "abnormal":
         benchmark_entry = np.where(
             intraday, out["benchmark_t0_close"], out["benchmark_t1_close"]
         )
         benchmark_uniform = (
-            (out["benchmark_t5_close"] - out["benchmark_t1_close"])
-            / out["benchmark_t1_close"]
-        )
+            out["benchmark_t5_close"] - out["benchmark_t1_close"]
+        ) / out["benchmark_t1_close"]
         benchmark_timeaware = (
-            (out["benchmark_t5_close"] - benchmark_entry) / benchmark_entry
-        )
+            out["benchmark_t5_close"] - benchmark_entry
+        ) / benchmark_entry
         out["ret_uniform_abnormal"] = out["ret_uniform_raw"] - benchmark_uniform
-        out["ret_timeaware_abnormal"] = (
-            out["ret_timeaware_raw"] - benchmark_timeaware
-        )
+        out["ret_timeaware_abnormal"] = out["ret_timeaware_raw"] - benchmark_timeaware
         out["ret_uniform"] = out["ret_uniform_abnormal"]
         out["ret_timeaware"] = out["ret_timeaware_abnormal"]
     else:
@@ -131,58 +124,92 @@ def apply_timeaware_returns(
     return out
 
 
-def load_timeaware(category: str, db_path: str) -> pd.DataFrame:
-    csv = "data/event_study_supply_contract.csv" if category == "supply_contract" else f"data/event_study_{category}.csv"
-    df = pd.read_csv(csv)
+def load_timeaware(category: str = "buyback") -> pd.DataFrame:
+    """Load the pinned historical buyback cohort; never query current DB state."""
+    if category == "supply_contract":
+        raise ValueError(
+            "supply_contract_unversioned_enrichment: historical supply learning "
+            "requires unavailable original-version extraction provenance"
+        )
+    if category != "buyback":
+        raise ValueError(
+            "historical_filing_times_unavailable: only buyback has a pinned filing-time snapshot"
+        )
+    actual = hashlib.sha256(PINNED_FILING_TIMES.read_bytes()).hexdigest()
+    if actual != PINNED_FILING_TIMES_SHA256:
+        raise ValueError("pinned_filing_times_hash_mismatch")
+    times = pd.read_csv(
+        PINNED_FILING_TIMES, dtype={"receipt_no": "string", "filing_time": "string"}
+    )
+    if (
+        set(times.columns) != {"receipt_no", "filing_time"}
+        or times.isna().any().any()
+        or times["receipt_no"].duplicated().any()
+        or not times["receipt_no"].str.fullmatch(r"[0-9]{14}").all()
+        or not times["filing_time"]
+        .str.fullmatch(r"(?:[01][0-9]|2[0-3]):[0-5][0-9]")
+        .all()
+    ):
+        raise ValueError("invalid_pinned_filing_times")
+    df = pd.read_csv(
+        BUYBACK_CSV,
+        dtype={
+            "id": "string",
+            "receipt_no": "string",
+            "corp_code": "string",
+            "stock_code": "string",
+        },
+    )
     df = df.dropna(subset=["t0_close", "t+1_close", "t+5_close"]).copy()
     df = df[df["t+1_close"] > 0]
-    df["receipt_no"] = df["receipt_no"].astype(str)
-
-    conn = sqlite3.connect(db_path)
-    times = dict(conn.execute(
-        "SELECT receipt_no, filing_time FROM disclosures WHERE filing_time IS NOT NULL"
-    ).fetchall())
-    # join extraction features for supply_contract enrichment
-    if category == "supply_contract":
-        ex = pd.read_sql_query(
-            "SELECT disclosure_id, contract_to_revenue_ratio, contract_value_krw, counterparty_type "
-            "FROM extractions WHERE model_name='deterministic_supply_contract_v1' AND validation_status='ok'",
-            conn,
-        )
-        df = df.merge(ex, left_on="id", right_on="disclosure_id", how="left")
-    conn.close()
-
-    df["filing_time"] = df["receipt_no"].map(times)
+    time_map = dict(zip(times["receipt_no"], times["filing_time"]))
+    df["filing_time"] = df["receipt_no"].map(time_map)
     df["filing_mins"] = df["filing_time"].map(_mins)
     df = apply_timeaware_returns(df)
     df["event_date"] = pd.to_datetime(df["event_date"])
+    df.attrs["filing_times_sha256"] = actual
+    df.attrs["db_used"] = False
     return df
 
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--category", default="buyback")
-    p.add_argument("--db", default="data/kdtb.db")
     return p.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    df = load_timeaware(args.category, args.db)
+    print("LEGACY EXPLORATORY REPRODUCTION: this timing script retains pre-M0.6")
+    print("learner chronology and assumed closing fills; it is not the strict learner.")
+    print(
+        "Use scripts/train_learner.py --category buyback for bounded daily chronology."
+    )
+    try:
+        df = load_timeaware(args.category)
+    except (FileNotFoundError, ValueError) as exc:
+        print(f"error: {exc}")
+        return 1
     have_time = df["filing_mins"].notna()
     matched = df[have_time].copy()
     print(f"\n=== Time-aware walk-forward — {args.category} (benchmark-adjusted) ===")
-    print(f"events with prices: {len(df)}  |  with filing_time: {have_time.sum()} "
-          f"({have_time.mean()*100:.0f}% coverage)")
+    print(
+        f"events with prices: {len(df)}  |  with filing_time: {have_time.sum()} "
+        f"({have_time.mean()*100:.0f}% coverage)"
+    )
     if have_time.sum() < 100:
-        print("Too few matched filing times yet — run scripts/backfill_disclosure_times.py first.")
+        print(
+            "Insufficient coverage in the pinned filing-time snapshot; no current-DB fallback is allowed."
+        )
         return 1
     intr = (matched["entry_mode"] == "intraday").mean()
     print(f"intraday-published: {intr*100:.0f}%   after-close: {(1-intr)*100:.0f}%")
 
     folds = make_folds(matched.rename(columns={"ret_timeaware": "realized_net_return"}))
 
-    print(f"\n{'fold':>9} {'n':>5} {'always_uniform':>15} {'always_timeaware':>17} {'intraday%':>10} {'delta':>8}")
+    print(
+        f"\n{'fold':>9} {'n':>5} {'always_uniform':>15} {'always_timeaware':>17} {'intraday%':>10} {'delta':>8}"
+    )
     print("-" * 72)
     pos_uniform = pos_timeaware = 0
     cu = ct = 0.0
@@ -192,54 +219,93 @@ def main() -> int:
         au = sub["ret_uniform"].mean() if "ret_uniform" in sub else np.nan
         at = sub["realized_net_return"].mean()
         intr_f = (sub["entry_mode"] == "intraday").mean()
-        cu += sub["ret_uniform"].sum(); ct += sub["realized_net_return"].sum()
-        pos_uniform += int(au > 0); pos_timeaware += int(at > 0)
-        print(f"{period:>9} {len(sub):>5} {au*100:>+14.3f}% {at*100:>+16.3f}% {intr_f*100:>9.0f}% {(at-au)*100:>+7.3f}%")
+        cu += sub["ret_uniform"].sum()
+        ct += sub["realized_net_return"].sum()
+        pos_uniform += int(au > 0)
+        pos_timeaware += int(at > 0)
+        print(
+            f"{period:>9} {len(sub):>5} {au*100:>+14.3f}% {at*100:>+16.3f}% {intr_f*100:>9.0f}% {(at-au)*100:>+7.3f}%"
+        )
 
     n_folds = sum(1 for _, s in folds if len(s) >= 5)
     print("-" * 72)
     um = cu / len(matched) * 100
     tm = ct / len(matched) * 100
-    print(f"{'MEAN/trade':>9} {len(matched):>5} {um:>+14.3f}% {tm:>+16.3f}% {intr*100:>9.0f}% {(tm-um):>+7.3f}%")
-    print(f"\npositive folds: uniform {pos_uniform}/{n_folds}  |  time-aware {pos_timeaware}/{n_folds}")
+    print(
+        f"{'MEAN/trade':>9} {len(matched):>5} {um:>+14.3f}% {tm:>+16.3f}% {intr*100:>9.0f}% {(tm-um):>+7.3f}%"
+    )
+    print(
+        f"\npositive folds: uniform {pos_uniform}/{n_folds}  |  time-aware {pos_timeaware}/{n_folds}"
+    )
 
     # Learned-policy selection lift on TIME-AWARE returns (does a selector add value?)
-    feat_df = pd.DataFrame([extract_features(r) for r in matched.to_dict("records")],
-                           columns=FEATURE_NAMES, index=matched.index)
+    feat_df = pd.DataFrame(
+        [extract_features(r) for r in matched.to_dict("records")],
+        columns=FEATURE_NAMES,
+        index=matched.index,
+    )
     learn_df = pd.concat([feat_df, matched[["event_date"]].copy()], axis=1)
     learn_df["realized_net_return"] = matched["ret_timeaware"].values
     learn_df["label"] = (learn_df["realized_net_return"] > 0).astype(int)
-    report = run_walk_forward(learn_df.sort_values("event_date").reset_index(drop=True), random_state=0)
+    report = run_walk_forward(
+        learn_df.sort_values("event_date").reset_index(drop=True), random_state=0
+    )
     model_trades = report.total_model_trades
     if model_trades:
         model_avg = report.cumulative_model_pnl / model_trades * 100
-        matched_always_pnl = sum(f.always_pnl for f in report.folds if f.model_trades > 0)
+        matched_always_pnl = sum(
+            f.always_pnl for f in report.folds if f.model_trades > 0
+        )
         matched_always_n = sum(f.test_n for f in report.folds if f.model_trades > 0)
-        matched_always_avg = matched_always_pnl / matched_always_n * 100 if matched_always_n else 0.0
+        matched_always_avg = (
+            matched_always_pnl / matched_always_n * 100 if matched_always_n else 0.0
+        )
         lift = model_avg - matched_always_avg
     else:
         model_avg = matched_always_avg = lift = 0.0
 
     print()
     print("=== Verdict ===")
-    print(f"  Always-trade, time-aware entry : {tm:+.3f}%/trade, {pos_timeaware}/{n_folds} folds positive")
-    print(f"  Always-trade, old uniform T+1  : {um:+.3f}%/trade, {pos_uniform}/{n_folds} folds positive")
-    print(f"  Learned selector on time-aware : {model_avg:+.3f}%/trade vs matched always {matched_always_avg:+.3f}%  "
-          f"=> selection lift {lift:+.3f}%")
+    print(
+        f"  Always-trade, time-aware entry : {tm:+.3f}%/trade, {pos_timeaware}/{n_folds} folds positive"
+    )
+    print(
+        f"  Always-trade, old uniform T+1  : {um:+.3f}%/trade, {pos_uniform}/{n_folds} folds positive"
+    )
+    print(
+        f"  Learned selector on time-aware : {model_avg:+.3f}%/trade vs matched always {matched_always_avg:+.3f}%  "
+        f"=> selection lift {lift:+.3f}%"
+    )
     print()
     edge = tm
     if pos_timeaware >= 0.7 * n_folds and edge > TRADABILITY_BAR_PCT:
-        print(f"  VERDICT: TIME-AWARE EDGE HOLDS across folds and clears the "
-              f"+{TRADABILITY_BAR_PCT:.2f}%/trade bar.")
-        print("  This is the first effect to survive walk-forward AND adversarial review. It is\n  characterized, not deployed: capacity and closing-auction fill realism (see\n  INTRADAY_FEASIBILITY.md) put the realizable level below the bar.")
+        print(
+            f"  VERDICT: TIME-AWARE EDGE HOLDS across folds and clears the "
+            f"+{TRADABILITY_BAR_PCT:.2f}%/trade bar."
+        )
+        print(
+            "  This is the first effect to survive walk-forward AND adversarial review. It is\n  characterized, not deployed: capacity and closing-auction fill realism (see\n  INTRADAY_FEASIBILITY.md) put the realizable level below the bar."
+        )
     elif pos_timeaware >= 0.6 * n_folds and edge > 0:
-        print("  VERDICT: PROMISING but sub-threshold/borderline. Time-aware entry helps, but the edge")
-        print("  is thin after costs — verify with realistic slippage + live forward data before trusting.")
+        print(
+            "  VERDICT: PROMISING but sub-threshold/borderline. Time-aware entry helps, but the edge"
+        )
+        print(
+            "  is thin after costs — verify with realistic slippage + live forward data before trusting."
+        )
     else:
-        print("  VERDICT: DOES NOT HOLD across folds. The recent-window POC was regime-dependent, like")
-        print("  the earlier buyback leads. Time-aware entry alone is not a durable edge.")
-    print("\n  (Reminder: same-day-close fill assumes you can transact at the close after an intraday")
-    print("   disclosure; real slippage and the single-position capacity limit still apply.)")
+        print(
+            "  VERDICT: DOES NOT HOLD across folds. The recent-window POC was regime-dependent, like"
+        )
+        print(
+            "  the earlier buyback leads. Time-aware entry alone is not a durable edge."
+        )
+    print(
+        "\n  (Reminder: same-day-close fill assumes you can transact at the close after an intraday"
+    )
+    print(
+        "   disclosure; real slippage and the single-position capacity limit still apply.)"
+    )
     return 0
 
 

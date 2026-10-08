@@ -1,0 +1,25 @@
+{
+  "archive_manifest_sha256": "5d229eb48cff47d74c56c0a51aeb5001f1f8c0d447532ed3b0e930a12bcd02df",
+  "db_exposed": false,
+  "results": {
+    "m0_1_learner": {
+      "byte_identical": true,
+      "sha256": "9e90548f0d2c5929d6d758967b0fcc89ea64c64d03fc1014184ef4cb9577baa6"
+    },
+    "m0_2": {
+      "byte_identical": false,
+      "reason": "pre-existing input enrichment/source drift since M0.2",
+      "scientific_payload_identical": true
+    },
+    "m0_3": {
+      "byte_identical": true,
+      "sha256": "0ac51cc563114f2b57c0fc6987a5984889fb4dd78bfb4643f6c9882879820abf"
+    },
+    "m0_5": {
+      "byte_identical": true,
+      "sha256": "3677a4c236d176779ba0130e6b5dba63e9b770d77998ce4de7494465e3524310"
+    }
+  },
+  "runner_sha256": "01087e3c2249776a116dafb14308fd6b8766de2eaf481158b6501a0636b8d3bc",
+  "schema_version": "m0.6_preserved_source_replay_v1"
+}

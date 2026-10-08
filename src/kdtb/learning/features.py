@@ -1,15 +1,11 @@
-"""Decision-time feature extraction.
+"""Fixed research feature vector, with no outcome-derived inputs.
 
-Every feature here must be knowable AT THE MOMENT WE DECIDE TO TRADE. Because
-the mock trade enters at the T+1 close, everything from the event day and
-earlier is fair game (the event-day close `t0_close`, the contract terms, the
-calendar). Nothing computed from T+1 or later may appear — that would be
-look-ahead.
-
-The feature order is FIXED. A trained model is scored on exactly this order.
-New features must be appended at the END so previously-pickled models stay
-loadable.
+Strict admission requires the reconstructed T0 observation before the decision
+DAY. This is a daily historical constraint, not evidence that the provider's
+adjusted price or extracted filing version was originally available then.
+The feature order remains fixed; M0.6 adds no features.
 """
+
 from __future__ import annotations
 
 import math
@@ -17,14 +13,14 @@ from datetime import date, datetime
 from typing import Optional
 
 FEATURE_NAMES: list[str] = [
-    "market_is_kospi",            # 1.0 if KOSPI else 0.0
-    "day_of_week",                # 0=Mon .. 4=Fri
-    "month",                      # 1..12
-    "log_t0_close",               # log of event-day close (price-level / penny-stock proxy)
+    "market_is_kospi",  # 1.0 if KOSPI else 0.0
+    "day_of_week",  # 0=Mon .. 4=Fri
+    "month",  # 1..12
+    "log_t0_close",  # log of event-day close (price-level / penny-stock proxy)
     "contract_to_revenue_ratio",  # supply-contract only; 0.0 otherwise
-    "log_contract_value",         # supply-contract only; 0.0 otherwise
-    "counterparty_ordinal",       # gov=0, unknown/other=1, large_corp=2, foreign=3
-    "has_extraction",             # 1.0 if the row had parser-extracted fields
+    "log_contract_value",  # supply-contract only; 0.0 otherwise
+    "counterparty_ordinal",  # gov=0, unknown/other=1, large_corp=2, foreign=3
+    "has_extraction",  # 1.0 if the row had parser-extracted fields
 ]
 
 # Ordinal ranking loosely follows the Loop-6 finding that government

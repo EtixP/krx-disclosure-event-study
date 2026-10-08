@@ -304,6 +304,207 @@ BEGIN
     SELECT RAISE(ABORT, 'forward event decisions are immutable');
 END;
 
+-- M2.3 realized outcomes are a separate append-only layer. They bind the exact
+-- immutable decision hash and never add future data to the decision table.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_forward_event_decisions_identity_hash
+ON forward_event_decisions(decision_id, decision_sha256);
+
+CREATE TABLE IF NOT EXISTS forward_event_outcomes (
+    outcome_id TEXT PRIMARY KEY,
+    decision_id TEXT NOT NULL UNIQUE,
+    decision_sha256 TEXT NOT NULL,
+    experiment_id TEXT NOT NULL,
+    experiment_version INTEGER NOT NULL CHECK(experiment_version >= 1),
+    trigger_receipt_no TEXT NOT NULL,
+    outcome_sha256 TEXT NOT NULL UNIQUE,
+    outcome_json TEXT NOT NULL,
+    evaluated_at TEXT NOT NULL,
+    recorded_at TEXT NOT NULL,
+    UNIQUE(experiment_id, experiment_version, trigger_receipt_no),
+    FOREIGN KEY(decision_id, decision_sha256)
+        REFERENCES forward_event_decisions(decision_id, decision_sha256)
+);
+
+CREATE INDEX IF NOT EXISTS idx_forward_event_outcomes_experiment
+ON forward_event_outcomes(
+    experiment_id, experiment_version, evaluated_at, trigger_receipt_no
+);
+
+CREATE TRIGGER IF NOT EXISTS forward_event_outcomes_no_update
+BEFORE UPDATE ON forward_event_outcomes
+BEGIN
+    SELECT RAISE(ABORT, 'forward event outcomes are immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS forward_event_outcomes_no_delete
+BEFORE DELETE ON forward_event_outcomes
+BEGIN
+    SELECT RAISE(ABORT, 'forward event outcomes are immutable');
+END;
+
+-- M3.1 prospective intraday collection. Target identity is immutable while a
+-- separate state row supports safe claiming and restart recovery.
+CREATE TABLE IF NOT EXISTS intraday_collection_targets (
+    target_id TEXT PRIMARY KEY,
+    trigger_receipt_no TEXT NOT NULL,
+    event_sha256 TEXT NOT NULL,
+    economic_event_id TEXT NOT NULL,
+    stock_code TEXT,
+    source_event_date TEXT NOT NULL,
+    event_observed_at TEXT NOT NULL,
+    event_normalized_at TEXT NOT NULL,
+    target_date TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    provider_endpoint TEXT NOT NULL,
+    target_sha256 TEXT NOT NULL UNIQUE,
+    target_json TEXT NOT NULL,
+    registered_at TEXT NOT NULL,
+    FOREIGN KEY(trigger_receipt_no, event_sha256)
+        REFERENCES canonical_event_snapshots(trigger_receipt_no, event_sha256)
+);
+
+CREATE INDEX IF NOT EXISTS idx_intraday_targets_event
+ON intraday_collection_targets(economic_event_id, target_date, stock_code);
+
+CREATE TRIGGER IF NOT EXISTS intraday_collection_targets_no_update
+BEFORE UPDATE ON intraday_collection_targets
+BEGIN
+    SELECT RAISE(ABORT, 'intraday collection targets are immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS intraday_collection_targets_no_delete
+BEFORE DELETE ON intraday_collection_targets
+BEGIN
+    SELECT RAISE(ABORT, 'intraday collection targets are immutable');
+END;
+
+CREATE TABLE IF NOT EXISTS intraday_collection_state (
+    target_id TEXT PRIMARY KEY REFERENCES intraday_collection_targets(target_id),
+    status TEXT NOT NULL CHECK(status IN ('pending', 'collecting', 'complete', 'failed')),
+    attempts INTEGER NOT NULL DEFAULT 0 CHECK(attempts >= 0),
+    last_started_at TEXT,
+    completed_at TEXT,
+    last_error_type TEXT,
+    last_error_message TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_intraday_collection_state_status
+ON intraday_collection_state(status, target_id);
+
+CREATE TRIGGER IF NOT EXISTS intraday_collection_state_no_delete
+BEFORE DELETE ON intraday_collection_state
+BEGIN
+    SELECT RAISE(ABORT, 'intraday collection state cannot be deleted');
+END;
+
+CREATE TABLE IF NOT EXISTS intraday_collection_runs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    target_id TEXT NOT NULL REFERENCES intraday_collection_targets(target_id),
+    started_at TEXT NOT NULL,
+    initial_cursor TEXT NOT NULL,
+    finished_at TEXT,
+    status TEXT NOT NULL CHECK(status IN ('running', 'succeeded', 'failed')),
+    observations_seen INTEGER NOT NULL DEFAULT 0 CHECK(observations_seen >= 0),
+    error_type TEXT,
+    error_message TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_intraday_collection_runs_target
+ON intraday_collection_runs(target_id, started_at);
+
+CREATE TRIGGER IF NOT EXISTS intraday_collection_runs_no_delete
+BEFORE DELETE ON intraday_collection_runs
+BEGIN
+    SELECT RAISE(ABORT, 'intraday collection runs cannot be deleted');
+END;
+
+-- Exact provider bytes are committed before parsing. Credentials and bearer
+-- tokens are deliberately absent; request_json contains public query fields.
+CREATE TABLE IF NOT EXISTS intraday_provider_captures (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id INTEGER NOT NULL REFERENCES intraday_collection_runs(id),
+    page_number INTEGER NOT NULL CHECK(page_number >= 1),
+    source_url TEXT NOT NULL,
+    requested_at TEXT NOT NULL,
+    received_at TEXT NOT NULL,
+    http_status INTEGER NOT NULL,
+    request_sha256 TEXT NOT NULL,
+    request_json TEXT NOT NULL,
+    raw_sha256 TEXT NOT NULL,
+    raw_content BLOB NOT NULL,
+    UNIQUE(run_id, page_number),
+    UNIQUE(id, raw_sha256)
+);
+
+CREATE TRIGGER IF NOT EXISTS intraday_provider_captures_no_update
+BEFORE UPDATE ON intraday_provider_captures
+BEGIN
+    SELECT RAISE(ABORT, 'intraday provider captures are immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS intraday_provider_captures_no_delete
+BEFORE DELETE ON intraday_provider_captures
+BEGIN
+    SELECT RAISE(ABORT, 'intraday provider captures are immutable');
+END;
+
+CREATE TABLE IF NOT EXISTS intraday_bar_observations (
+    observation_id TEXT PRIMARY KEY,
+    target_id TEXT NOT NULL REFERENCES intraday_collection_targets(target_id),
+    capture_id INTEGER NOT NULL,
+    capture_sha256 TEXT NOT NULL,
+    market_timestamp TEXT NOT NULL,
+    captured_at TEXT NOT NULL,
+    observation_sha256 TEXT NOT NULL UNIQUE,
+    observation_json TEXT NOT NULL,
+    FOREIGN KEY(capture_id, capture_sha256)
+        REFERENCES intraday_provider_captures(id, raw_sha256)
+);
+
+CREATE INDEX IF NOT EXISTS idx_intraday_observations_target_time
+ON intraday_bar_observations(target_id, market_timestamp, captured_at);
+
+CREATE TRIGGER IF NOT EXISTS intraday_bar_observations_no_update
+BEFORE UPDATE ON intraday_bar_observations
+BEGIN
+    SELECT RAISE(ABORT, 'intraday bar observations are immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS intraday_bar_observations_no_delete
+BEFORE DELETE ON intraday_bar_observations
+BEGIN
+    SELECT RAISE(ABORT, 'intraday bar observations are immutable');
+END;
+
+CREATE TABLE IF NOT EXISTS market_data_gaps (
+    gap_id TEXT PRIMARY KEY,
+    target_id TEXT NOT NULL REFERENCES intraday_collection_targets(target_id),
+    run_id INTEGER REFERENCES intraday_collection_runs(id),
+    capture_id INTEGER,
+    capture_sha256 TEXT,
+    reason TEXT NOT NULL CHECK(reason IN ('missing_stock_code', 'provider_no_rows')),
+    gap_sha256 TEXT NOT NULL UNIQUE,
+    gap_json TEXT NOT NULL,
+    recorded_at TEXT NOT NULL,
+    FOREIGN KEY(capture_id, capture_sha256)
+        REFERENCES intraday_provider_captures(id, raw_sha256)
+);
+
+CREATE INDEX IF NOT EXISTS idx_market_data_gaps_target
+ON market_data_gaps(target_id, recorded_at);
+
+CREATE TRIGGER IF NOT EXISTS market_data_gaps_no_update
+BEFORE UPDATE ON market_data_gaps
+BEGIN
+    SELECT RAISE(ABORT, 'market data gaps are immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS market_data_gaps_no_delete
+BEFORE DELETE ON market_data_gaps
+BEGIN
+    SELECT RAISE(ABORT, 'market data gaps are immutable');
+END;
+
 """
 
 MIGRATIONS = [
@@ -314,7 +515,44 @@ MIGRATIONS = [
     # Exact disclosure filing time (HH:MM, KST) scraped from the DART website —
     # the OpenAPI only gives the date. Enables intraday / execution-speed analysis.
     "ALTER TABLE disclosures ADD COLUMN filing_time TEXT",
+    # M3.1 freezes the first KIS through-time at claim time. Existing M3.1 tables
+    # may predate the column; any such unfinished run fails closed on NULL.
+    "ALTER TABLE intraday_collection_runs ADD COLUMN initial_cursor TEXT",
+    """
+    CREATE TRIGGER IF NOT EXISTS intraday_collection_runs_identity_no_update
+    BEFORE UPDATE OF id, target_id, started_at, initial_cursor
+    ON intraday_collection_runs
+    BEGIN
+        SELECT RAISE(ABORT, 'intraday collection run identity is immutable');
+    END
+    """,
 ]
+
+
+def open_readonly_db(path: str | Path) -> sqlite3.Connection:
+    """Open an existing SQLite database without creating or migrating it."""
+
+    db_path = Path(path).resolve()
+    if not db_path.is_file():
+        raise FileNotFoundError(f"SQLite database does not exist: {db_path}")
+    conn = sqlite3.connect(
+        f"{db_path.as_uri()}?mode=ro",
+        uri=True,
+        timeout=30.0,
+    )
+    conn.execute("PRAGMA foreign_keys = ON")
+    if conn.execute("PRAGMA foreign_keys").fetchone() != (1,):
+        conn.close()
+        raise RuntimeError("SQLite foreign-key enforcement could not be enabled")
+    conn.execute("PRAGMA recursive_triggers = ON")
+    if conn.execute("PRAGMA recursive_triggers").fetchone() != (1,):
+        conn.close()
+        raise RuntimeError("SQLite recursive-trigger enforcement could not be enabled")
+    conn.execute("PRAGMA query_only = ON")
+    if conn.execute("PRAGMA query_only").fetchone() != (1,):
+        conn.close()
+        raise RuntimeError("SQLite query-only mode could not be enabled")
+    return conn
 
 
 def init_db(path: str | Path) -> sqlite3.Connection:

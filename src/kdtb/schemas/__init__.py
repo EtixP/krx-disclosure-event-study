@@ -50,6 +50,12 @@ from kdtb.schemas.forward_decision import (
     DecisionRejectionReason,
     ForwardDecision,
 )
+from kdtb.schemas.forward_outcome import (
+    DailyCloseObservation,
+    ForwardOutcome,
+    TradingSession,
+    TradingSessionCalendar,
+)
 
 __all__ = [
     "Disclosure",
@@ -57,6 +63,10 @@ __all__ = [
     "DecisionInputSnapshot",
     "DecisionRejectionReason",
     "ForwardDecision",
+    "DailyCloseObservation",
+    "ForwardOutcome",
+    "TradingSession",
+    "TradingSessionCalendar",
     "AlertHistoricalContext",
     "AlertImportantField",
     "AlertStrategyDisposition",

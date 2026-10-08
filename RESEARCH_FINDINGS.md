@@ -9,15 +9,34 @@ event categories — major supply contracts, share buybacks, dilutive
 financing, halts, etc. — produce a tradable post-disclosure price
 drift after realistic transaction costs?
 
-**Answer:** No. Across 7 categories tested on 5 years of data
-(28,728 scored event rows, 21 adversarial verifications), zero
-categories are tradable long after realistic T+1-close execution and broad-
-market adjustment.
-One exploratory category — **shareholder_change** — is a well-supported
-negative class and remains useful as a conservative long-side risk filter,
-not as a promoted short strategy.
+**Current interpretation (M0.6):** the inspected research has not validated a
+tradable strategy. The frozen category/timing/blacklist findings below remain
+exploratory and require a broader stock-window, security-master and historical
+source-availability audit. The daily learner correction does not repair those
+underlying datasets or establish intraday executability.
 
-## Final per-category verdict (5-year sample)
+M0.6 preserves the earlier outputs and compares one bounded correction:
+
+| Buyback abnormal daily replay | Admitted events | Selected trades | Promotions | Mean net bp/trade | Matched lift bp/trade |
+|---|---:|---:|---:|---:|---:|
+| Historical learner, original eligible cohort | 4,801 | 2,427 | 6 | −8.194 | −3.742 |
+| Historical learner, corrected admission | 4,800 | 1,889 | 3 | −6.042 | +2.555 |
+| Strict decision dates and mature outcomes | 4,800 | 2,393 | 4 | −1.350 | +1.349 |
+
+The observed horizon quarantines 46 source rows: 36 unusable prices, 9 missing
+date windows and one anomalous T0; 45 were already absent from the old learner.
+The change after excluding one additional row reveals training/order/promotion
+sensitivity. The corrected small positive selection lift accompanies negative
+mean reward; it does not justify a strategy. Original adjusted-price vintages,
+filing-version availability, survivorship, lineage and intraday execution remain
+unresolved. Supply-contract strict learning refuses unversioned enrichment.
+See [M0.6 methodology](docs/history/M0.6.md) and its
+[source-hashed comparison](artifacts/m0_6/learner_chronology_v1.json).
+
+All later category and learner numbers are preserved historical findings unless
+explicitly labeled M0.6. They are not newly verified corrected-window estimates.
+
+## Preserved historical per-category verdict (5-year sample)
 
 | Category | n | Raw idealized net | Abnormal idealized net | Raw realistic | Abnormal realistic | Issuer-clustered 95% CI | Abnormal WF+ | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
@@ -289,19 +308,20 @@ and trades when its PnL-optimal threshold is cleared. The learning loop is a
 **champion/challenger walk-forward**: each half-year fold, a challenger trains
 only on strictly-earlier folds, both models are scored on a held-out
 validation fold, and the challenger is promoted only if it wins. The champion
-starts as "never trade." There is **no look-ahead** — enforced structurally
-and asserted in tests.
+starts as "never trade." The former claim that event-date sorting established
+**no look-ahead was incorrect**. M0.6 supersedes this historical implementation
+with decision-day cohorts and three outcome-maturity purges, while original
+source-version availability remains unresolved.
 
 **Two independent claims.**
 
-1. *The machine works* — **TRUE**, a software/methodology result. It is
-   leak-free and seed-stable, and on a planted-edge synthetic dataset it
-   learns and earns **+2.02%/trade** with a **+2.16% selection lift** over
-   trade-everything. The synthetic path (`--synthetic-edge`) is the proof the
-   machine *can* learn when edge exists.
+1. The preserved historical synthetic example reported **+2.02%/trade** and
+   **+2.16% selection lift**. The current strict synthetic path has explicit
+   dates and tests planted-edge and null behavior. Neither example establishes
+   original source availability or tradability of actual disclosure data.
 
-2. *Korean disclosure events are tradable* — **FALSE**, the edge claim. On
-   real data the category-level realistic returns remain below the bar:
+2. The earlier historical evidence did not validate a trading strategy. These
+   results are preserved for attribution, pending broader data reconstruction:
    - **supply_contract**: traded only 2 of 9 folds (the recent regime) →
      *insufficient breadth*, the same recency artifact found in the research
      phase.

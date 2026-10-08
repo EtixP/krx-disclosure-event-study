@@ -8,6 +8,7 @@ Usage:
     python -m scripts.compare_cost_revision
     python -m scripts.compare_cost_revision --output /tmp/m0_2_replay.json
 """
+
 from __future__ import annotations
 
 import argparse
@@ -18,10 +19,15 @@ from typing import Any
 import pandas as pd
 
 from kdtb.backtest.cost_model import TAX_REGIMES, CostModel
-from kdtb.learning.dataset import load_mock_trades
+from kdtb.research.historical_learning import load_mock_trades
 from kdtb.learning.features import FEATURE_NAMES, extract_features
-from kdtb.learning.walk_forward_trainer import make_folds
-from kdtb.research.baseline import sha256_file, summarize_learner, write_json
+from kdtb.research.historical_learning import make_folds
+from kdtb.research.baseline import (
+    require_new_research_output,
+    sha256_file,
+    summarize_learner,
+    write_json,
+)
 from scripts.analyze_event_category import MIN_WINDOW_EVENTS, analyze
 from scripts.run_intraday_walkforward import (
     INTRADAY_CUTOFF_MIN,
@@ -38,6 +44,8 @@ IMMUTABLE_ARTIFACT_SHA256 = (
     "b529d30ef58606ebff1fec2507a644b8851e6dc921c5bdb57ca5fdf4ded7dc77"
 )
 GENERATOR_SOURCES = (
+    "src/kdtb/research/baseline.py",
+    "src/kdtb/research/historical_learning.py",
     "src/kdtb/backtest/cost_model.py",
     "src/kdtb/backtest/metrics.py",
     "src/kdtb/learning/dataset.py",
@@ -59,9 +67,7 @@ def _delta(after: float, before: float) -> float:
     return float(after) - float(before)
 
 
-def _category_comparison(
-    *, before_cross: dict[str, Any]
-) -> list[dict[str, Any]]:
+def _category_comparison(*, before_cross: dict[str, Any]) -> list[dict[str, Any]]:
     prior = {row["category"]: row for row in before_cross["categories"]}
     rows = []
     for category in CATEGORIES:
@@ -155,7 +161,9 @@ def _corrected_intraday(before_dir: Path) -> dict[str, Any]:
         filing_times_csv,
         dtype={"receipt_no": "string", "filing_time": "string"},
     )
-    time_map = dict(zip(times["receipt_no"].astype(str), times["filing_time"].astype(str)))
+    time_map = dict(
+        zip(times["receipt_no"].astype(str), times["filing_time"].astype(str))
+    )
     frame["filing_time"] = frame["receipt_no"].astype(str).map(time_map)
     frame["filing_mins"] = frame["filing_time"].map(_mins)
     frame = apply_timeaware_returns(frame, return_basis="raw")
@@ -164,11 +172,11 @@ def _corrected_intraday(before_dir: Path) -> dict[str, Any]:
 
     folds = make_folds(matched.rename(columns={"ret_timeaware": "realized_net_return"}))
     scored = [fold for _, fold in folds if len(fold) >= MIN_WINDOW_EVENTS]
-    uniform_mean = sum(fold["ret_uniform"].sum() for fold in scored) / len(matched) * 100
+    uniform_mean = (
+        sum(fold["ret_uniform"].sum() for fold in scored) / len(matched) * 100
+    )
     timeaware_mean = (
-        sum(fold["realized_net_return"].sum() for fold in scored)
-        / len(matched)
-        * 100
+        sum(fold["realized_net_return"].sum() for fold in scored) / len(matched) * 100
     )
 
     feature_frame = pd.DataFrame(
@@ -176,9 +184,7 @@ def _corrected_intraday(before_dir: Path) -> dict[str, Any]:
         columns=FEATURE_NAMES,
         index=matched.index,
     )
-    learner_frame = pd.concat(
-        [feature_frame, matched[["event_date"]].copy()], axis=1
-    )
+    learner_frame = pd.concat([feature_frame, matched[["event_date"]].copy()], axis=1)
     learner_frame["realized_net_return"] = matched["ret_timeaware"].values
     learner_frame["label"] = (learner_frame["realized_net_return"] > 0).astype(int)
     learner = summarize_learner(
@@ -192,7 +198,9 @@ def _corrected_intraday(before_dir: Path) -> dict[str, Any]:
         "uniform_mean_net_pct": uniform_mean,
         "timeaware_mean_net_pct": timeaware_mean,
         "entry_timing_delta_pct": timeaware_mean - uniform_mean,
-        "uniform_positive_folds": sum(fold["ret_uniform"].mean() > 0 for fold in scored),
+        "uniform_positive_folds": sum(
+            fold["ret_uniform"].mean() > 0 for fold in scored
+        ),
         "timeaware_positive_folds": sum(
             fold["realized_net_return"].mean() > 0 for fold in scored
         ),
@@ -228,12 +236,8 @@ def _intraday_comparison(*, before_dir: Path) -> dict[str, Any]:
             "scored_folds": after["scored_folds"],
         },
         "learned_selector": {
-            "model_mean_net_pct_after": after[
-                "learned_selector_model_mean_net_pct"
-            ],
-            "selection_lift_pct_after": after[
-                "learned_selector_selection_lift_pct"
-            ],
+            "model_mean_net_pct_after": after["learned_selector_model_mean_net_pct"],
+            "selection_lift_pct_after": after["learned_selector_selection_lift_pct"],
         },
     }
 
@@ -297,11 +301,8 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def require_nonhistorical_output(output: Path) -> None:
-    if output.resolve() == DEFAULT_OUTPUT.resolve():
-        raise ValueError(
-            "the verified M0.2 comparison is immutable; choose a different --output"
-        )
+def require_nonhistorical_output(output: Path) -> Path:
+    return require_new_research_output(output, project_root=PROJECT_ROOT)
 
 
 def main() -> int:
@@ -309,9 +310,7 @@ def main() -> int:
     if args.output is None:
         actual = sha256_file(DEFAULT_OUTPUT)
         if actual != IMMUTABLE_ARTIFACT_SHA256:
-            raise ValueError(
-                f"immutable M0.2 artifact hash mismatch: {actual}"
-            )
+            raise ValueError(f"immutable M0.2 artifact hash mismatch: {actual}")
         print(
             json.dumps(
                 {
@@ -323,10 +322,15 @@ def main() -> int:
             )
         )
         return 0
-    require_nonhistorical_output(args.output)
+    output = require_nonhistorical_output(args.output)
     payload = build_comparison(before_dir=args.before_dir)
-    write_json(args.output, payload)
-    print(json.dumps({"output": str(args.output), "categories": len(payload["categories"])}, indent=2))
+    write_json(output, payload, overwrite=False)
+    print(
+        json.dumps(
+            {"output": str(output), "categories": len(payload["categories"])},
+            indent=2,
+        )
+    )
     return 0
 
 

@@ -7,6 +7,11 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from tests.historical_artifact_assertions import (
+    assert_current_replay,
+    assert_historical_source_record,
+)
+
 from kdtb.research.baseline import sha256_file, write_json
 from kdtb.research.inference import issuer_clustered_mean_ci, tail_sensitivity
 from scripts.analyze_research_inference import VERIFIED_UPSTREAM_SHA256, build_report
@@ -90,7 +95,9 @@ def test_committed_inference_report_regenerates_and_is_semantic(tmp_path):
     recorded = json.loads(ARTIFACT.read_text(encoding="utf-8"))
     regenerated = tmp_path / "research_inference.json"
     write_json(regenerated, build_report())
-    assert json.loads(regenerated.read_text(encoding="utf-8")) == recorded
+    assert_current_replay(
+        PROJECT_ROOT, recorded, json.loads(regenerated.read_text(encoding="utf-8"))
+    )
 
     assert recorded["methodology"] == {
         "confidence_level": 0.95,
@@ -156,7 +163,10 @@ def test_committed_inference_report_regenerates_and_is_semantic(tmp_path):
 
     for group in ("inputs", "generator_sources", "verified_upstream_artifacts"):
         for record in recorded[group]:
-            assert sha256_file(PROJECT_ROOT / record["path"]) == record["sha256"]
+            if group == "generator_sources":
+                assert_historical_source_record(PROJECT_ROOT, record)
+            else:
+                assert sha256_file(PROJECT_ROOT / record["path"]) == record["sha256"]
     assert {
         record["path"]: record["sha256"]
         for record in recorded["verified_upstream_artifacts"]

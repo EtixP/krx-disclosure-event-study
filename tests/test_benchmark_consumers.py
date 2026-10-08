@@ -12,12 +12,15 @@ from scripts.run_intraday_walkforward import apply_timeaware_returns
 
 def _row() -> dict:
     return {
-        "id": 1,
-        "event_date": "2025-06-02",
+        "id": "1",
+        "receipt_no": "20240102000001",
+        "corp_code": "00123456",
+        "stock_code": "001234",
+        "event_date": "2024-01-02",
         "market": "KOSPI",
-        "t0_date": "2025-06-02",
-        "t+1_date": "2025-06-03",
-        "t+5_date": "2025-06-10",
+        "t0_date": "2024-01-02",
+        "t+1_date": "2024-01-03",
+        "t+5_date": "2024-01-09",
         "t0_close": 95.0,
         "t+1_close": 100.0,
         "t+5_close": 110.0,
@@ -38,7 +41,7 @@ def test_mock_trade_exposes_raw_and_uses_abnormal_reward_by_default(tmp_path):
         "buyback", csv_path=str(path), db_path=str(tmp_path / "missing.db")
     )
     cost = CostModel().roundtrip_cost(
-        1.0, buy_date="2025-06-03", sell_date="2025-06-10", market="KOSPI"
+        1.0, buy_date="2024-01-03", sell_date="2024-01-09", market="KOSPI"
     )
 
     assert result.loc[0, "realized_raw_net_return"] == pytest.approx(0.10 - cost)
@@ -51,7 +54,7 @@ def test_mock_trade_exposes_raw_and_uses_abnormal_reward_by_default(tmp_path):
     assert result.loc[0, "return_basis"] == "abnormal"
 
 
-def test_explicit_raw_mock_trade_mode_preserves_legacy_reproduction(tmp_path):
+def test_explicit_raw_reward_retains_strict_chronology(tmp_path):
     path = tmp_path / "events.csv"
     row = _row()
     for key in list(row):

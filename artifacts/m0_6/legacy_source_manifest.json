@@ -1,0 +1,45 @@
+{
+  "semantics": "Byte-exact pre-M0.6 source snapshots, for separate historical execution/provenance only. Not current generator hashes.",
+  "sources": [
+    {
+      "path": "scripts/analyze_research_inference.py",
+      "sha256": "96a8fd0663aef0cfbda499c78d18354c11a7ee8c939cfd0635a050de43b718d2"
+    },
+    {
+      "path": "scripts/compare_benchmark_adjustment.py",
+      "sha256": "c3abc14cc4e7695c4eb27b926652dc7c2b84200e451fdd4f4b25adc3be14ad00"
+    },
+    {
+      "path": "scripts/compare_cost_revision.py",
+      "sha256": "7bd10d9b81f137318e3f86a420d826f7559b1a614621908cb5817efe87dbdbe4"
+    },
+    {
+      "path": "scripts/run_intraday_walkforward.py",
+      "sha256": "a25f1b9335631bbc442437f3d8ffebdc131e19fe3937c115f89db30ee90e8e3b"
+    },
+    {
+      "path": "scripts/train_learner.py",
+      "sha256": "14890a2f3d30999e86aca1f393cfb6dab12f2ec5b830561c796c53521a88d609"
+    },
+    {
+      "path": "src/kdtb/learning/dataset.py",
+      "sha256": "0e0a3e8698c5e209a41387ee71193090f83de51879c29d0d6e48a648c7e3494d"
+    },
+    {
+      "path": "src/kdtb/learning/features.py",
+      "sha256": "f26aebcff0341ce03d3db7eb35181edb38f2125463faf22d25c8e6afdacf0150"
+    },
+    {
+      "path": "src/kdtb/learning/policy.py",
+      "sha256": "60dff77d4572a375367b1af142ddd7e07897bee14144182f0f6e410a356c0700"
+    },
+    {
+      "path": "src/kdtb/learning/walk_forward_trainer.py",
+      "sha256": "8a9ea157599872b1e46b37dc5a017c2cf981722269416353ca0fad84d9b35138"
+    },
+    {
+      "path": "src/kdtb/research/baseline.py",
+      "sha256": "51a405a23eaef9974d1c8a35eba51c5a377ab1a954ddd56e0488d0d30d12a2df"
+    }
+  ]
+}

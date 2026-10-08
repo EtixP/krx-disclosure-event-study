@@ -1,4 +1,5 @@
 """Generate the deterministic M0.3 raw-versus-abnormal comparison artifact."""
+
 from __future__ import annotations
 
 import argparse
@@ -8,11 +9,15 @@ from typing import Any
 
 import pandas as pd
 
-from kdtb.data.benchmarks import BENCHMARKS, BENCHMARK_SOURCE, normalize_benchmark_history
-from kdtb.learning.dataset import load_mock_trades
+from kdtb.data.benchmarks import (
+    BENCHMARKS,
+    BENCHMARK_SOURCE,
+    normalize_benchmark_history,
+)
+from kdtb.research.historical_learning import load_mock_trades
 from kdtb.learning.features import FEATURE_NAMES, extract_features
-from kdtb.learning.walk_forward_trainer import make_folds
-from kdtb.research.baseline import sha256_file, write_json
+from kdtb.research.historical_learning import make_folds
+from kdtb.research.baseline import require_new_research_output, sha256_file, write_json
 from kdtb.research.baseline import summarize_learner
 from scripts.analyze_event_category import MIN_WINDOW_EVENTS, analyze
 from scripts.run_intraday_walkforward import _mins, apply_timeaware_returns
@@ -22,9 +27,14 @@ from scripts.summarize_all_categories import CATEGORIES
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_M0_2 = PROJECT_ROOT / "artifacts/m0_2/historical_cost_comparison.json"
 DEFAULT_OUTPUT = PROJECT_ROOT / "artifacts/m0_3/benchmark_adjustment_comparison.json"
+IMMUTABLE_ARTIFACT_SHA256 = (
+    "0ac51cc563114f2b57c0fc6987a5984889fb4dd78bfb4643f6c9882879820abf"
+)
 BENCHMARK_CACHE = PROJECT_ROOT / "data/benchmark_indices.csv"
 BENCHMARK_META = PROJECT_ROOT / "data/benchmark_indices.meta.json"
 GENERATOR_SOURCES = (
+    "src/kdtb/research/baseline.py",
+    "src/kdtb/research/historical_learning.py",
     "src/kdtb/backtest/cost_model.py",
     "src/kdtb/backtest/metrics.py",
     "src/kdtb/data/benchmarks.py",
@@ -83,9 +93,7 @@ def _learner_comparison(prior: dict[str, Any]) -> dict[str, Any]:
     return {
         "mock_trades": abnormal["mock_trades"],
         "metrics": {
-            key: _metric(
-                raw[key], abnormal[key], prior["metrics"][key]["after"]
-            )
+            key: _metric(raw[key], abnormal[key], prior["metrics"][key]["after"])
             for key in keys
         },
         "raw_verdict": raw["verdict"],
@@ -109,7 +117,9 @@ def _intraday_summary(return_basis: str) -> dict[str, Any]:
         / "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
         dtype={"receipt_no": "string", "filing_time": "string"},
     )
-    time_map = dict(zip(times["receipt_no"].astype(str), times["filing_time"].astype(str)))
+    time_map = dict(
+        zip(times["receipt_no"].astype(str), times["filing_time"].astype(str))
+    )
     frame["filing_time"] = frame["receipt_no"].astype(str).map(time_map)
     frame["filing_mins"] = frame["filing_time"].map(_mins)
     frame = apply_timeaware_returns(frame, return_basis=return_basis)
@@ -117,7 +127,9 @@ def _intraday_summary(return_basis: str) -> dict[str, Any]:
     matched = frame[frame["filing_mins"].notna()].copy()
     folds = make_folds(matched.rename(columns={"ret_timeaware": "realized_net_return"}))
     scored = [fold for _, fold in folds if len(fold) >= MIN_WINDOW_EVENTS]
-    uniform_mean = sum(fold["ret_uniform"].sum() for fold in scored) / len(matched) * 100
+    uniform_mean = (
+        sum(fold["ret_uniform"].sum() for fold in scored) / len(matched) * 100
+    )
     timeaware_mean = (
         sum(fold["realized_net_return"].sum() for fold in scored) / len(matched) * 100
     )
@@ -139,7 +151,9 @@ def _intraday_summary(return_basis: str) -> dict[str, Any]:
         "uniform_mean_net_pct": uniform_mean,
         "timeaware_mean_net_pct": timeaware_mean,
         "entry_timing_delta_pct": timeaware_mean - uniform_mean,
-        "uniform_positive_folds": sum(fold["ret_uniform"].mean() > 0 for fold in scored),
+        "uniform_positive_folds": sum(
+            fold["ret_uniform"].mean() > 0 for fold in scored
+        ),
         "timeaware_positive_folds": sum(
             fold["realized_net_return"].mean() > 0 for fold in scored
         ),
@@ -242,7 +256,8 @@ def build_comparison(*, m0_2_path: Path = DEFAULT_M0_2) -> dict[str, Any]:
         BENCHMARK_CACHE,
         BENCHMARK_META,
         m0_2_path,
-        PROJECT_ROOT / "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
+        PROJECT_ROOT
+        / "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
     ]
     ranges = {}
     for market, sub in history.groupby("market"):
@@ -293,15 +308,41 @@ def build_comparison(*, m0_2_path: Path = DEFAULT_M0_2) -> dict[str, Any]:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--m0-2", type=Path, default=DEFAULT_M0_2)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="write a current-source replay to a new path outside data/sources/artifacts; default verifies the frozen artifact only",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
+    if args.output is None:
+        actual = sha256_file(DEFAULT_OUTPUT)
+        if actual != IMMUTABLE_ARTIFACT_SHA256:
+            raise ValueError(f"immutable artifact hash mismatch: {actual}")
+        print(
+            json.dumps(
+                {
+                    "artifact": str(DEFAULT_OUTPUT),
+                    "sha256": actual,
+                    "status": "verified_immutable_artifact",
+                },
+                indent=2,
+            )
+        )
+        return 0
+    output = require_new_research_output(args.output, project_root=PROJECT_ROOT)
     payload = build_comparison(m0_2_path=args.m0_2)
-    write_json(args.output, payload)
-    print(json.dumps({"output": str(args.output), "categories": len(payload["categories"])}, indent=2))
+    write_json(output, payload, overwrite=False)
+    print(
+        json.dumps(
+            {"output": str(output), "categories": len(payload["categories"])},
+            indent=2,
+        )
+    )
     return 0
 
 

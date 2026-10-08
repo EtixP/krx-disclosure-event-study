@@ -5,6 +5,7 @@ headline category effects and fixed tail stress tests to the historical
 buyback timing result. It does not convert exploratory historical findings
 into confirmatory evidence.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -20,8 +21,8 @@ import pandas as pd
 
 from kdtb.backtest.cost_model import CostModel
 from kdtb.data.benchmarks import require_benchmark_columns
-from kdtb.learning.walk_forward_trainer import make_folds
-from kdtb.research.baseline import sha256_file, write_json
+from kdtb.research.historical_learning import make_folds
+from kdtb.research.baseline import require_new_research_output, sha256_file, write_json
 from kdtb.research.inference import issuer_clustered_mean_ci, tail_sensitivity
 from scripts.analyze_event_category import analyze
 from scripts.run_intraday_walkforward import apply_timeaware_returns, _mins
@@ -30,15 +31,18 @@ from scripts.summarize_all_categories import CATEGORIES
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_FILING_TIMES = (
-    PROJECT_ROOT
-    / "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv"
+    PROJECT_ROOT / "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv"
 )
 DEFAULT_OUTPUT = PROJECT_ROOT / "artifacts/m0_5/research_inference.json"
+IMMUTABLE_ARTIFACT_SHA256 = (
+    "3677a4c236d176779ba0130e6b5dba63e9b770d77998ce4de7494465e3524310"
+)
 CONFIDENCE_LEVEL = 0.95
 N_RESAMPLES = 10_000
 RANDOM_STATE = 0
 TAIL_FRACTIONS = (0.01, 0.05)
 GENERATOR_SOURCES = (
+    "src/kdtb/research/historical_learning.py",
     "pyproject.toml",
     "requirements.txt",
     "src/kdtb/backtest/cost_model.py",
@@ -110,8 +114,7 @@ def _tail_as_pct(summary: dict[str, Any]) -> dict[str, Any]:
     return {
         "full_sample": scale_distribution(summary["full_sample"]),
         "quantiles_pct": {
-            name: float(value * 100.0)
-            for name, value in summary["quantiles"].items()
+            name: float(value * 100.0) for name, value in summary["quantiles"].items()
         },
         "scenarios": [scale_distribution(row) for row in summary["scenarios"]],
     }
@@ -144,9 +147,7 @@ def _category_scenario_frame(category: str) -> pd.DataFrame:
         markets=frame["market"],
     )
     stock_gross = frame["t+5_close"] / frame["t+1_close"] - 1.0
-    benchmark_gross = (
-        frame["benchmark_t5_close"] / frame["benchmark_t1_close"] - 1.0
-    )
+    benchmark_gross = frame["benchmark_t5_close"] / frame["benchmark_t1_close"] - 1.0
     frame["realistic_raw_net"] = stock_gross - costs
     frame["realistic_abnormal_net"] = stock_gross - benchmark_gross - costs
     values = frame[["realistic_raw_net", "realistic_abnormal_net"]].to_numpy()
@@ -155,9 +156,7 @@ def _category_scenario_frame(category: str) -> pd.DataFrame:
     return frame
 
 
-def _reconcile_category_point(
-    category: str, frame: pd.DataFrame
-) -> dict[str, Any]:
+def _reconcile_category_point(category: str, frame: pd.DataFrame) -> dict[str, Any]:
     current = analyze(category)
     if "error" in current:
         raise ValueError(f"headline analysis failed for {category}: {current['error']}")
@@ -169,9 +168,7 @@ def _reconcile_category_point(
     }
     observed = {
         "raw_mean_pct": float(frame["realistic_raw_net"].mean() * 100.0),
-        "abnormal_mean_pct": float(
-            frame["realistic_abnormal_net"].mean() * 100.0
-        ),
+        "abnormal_mean_pct": float(frame["realistic_abnormal_net"].mean() * 100.0),
         "n": len(frame),
     }
     if observed["n"] != expected["n"]:
@@ -258,8 +255,8 @@ def _legacy_timing_headline(frame: pd.DataFrame, basis: str) -> dict[str, Any]:
     folds = make_folds(fold_input)
     scored = [fold for _, fold in folds if len(fold) >= 5]
     uniform_mean = sum(fold[uniform].sum() for fold in scored) / len(frame)
-    timeaware_mean = (
-        sum(fold["realized_net_return"].sum() for fold in scored) / len(frame)
+    timeaware_mean = sum(fold["realized_net_return"].sum() for fold in scored) / len(
+        frame
     )
     return {
         "uniform_mean_pct": float(uniform_mean * 100.0),
@@ -270,8 +267,7 @@ def _legacy_timing_headline(frame: pd.DataFrame, basis: str) -> dict[str, Any]:
             fold["realized_net_return"].mean() > 0 for fold in scored
         ),
         "delta_positive_folds": sum(
-            (fold["realized_net_return"] - fold[uniform]).mean() > 0
-            for fold in scored
+            (fold["realized_net_return"] - fold[uniform]).mean() > 0 for fold in scored
         ),
         "generated_folds": len(folds),
         "scored_folds": len(scored),
@@ -477,7 +473,9 @@ def _scenario_mean(tail: dict[str, Any], name: str, fraction: float) -> float:
 
 def _print_report(report: dict[str, Any]) -> None:
     print("\nM0.5 issuer-clustered headline inference (all hypotheses exploratory)")
-    print(f"{'category':>20} {'n':>6} {'issuers':>8} {'abn mean':>10} {'pointwise 95% CI':>25}")
+    print(
+        f"{'category':>20} {'n':>6} {'issuers':>8} {'abn mean':>10} {'pointwise 95% CI':>25}"
+    )
     for row in report["category_headline_inference"]:
         ci = row["realistic_t1_to_t5"]["abnormal_net"]
         print(
@@ -495,17 +493,19 @@ def _print_report(report: dict[str, Any]) -> None:
         f"  mean {delta['estimate_pct']:+.3f}% | pointwise 95% CI "
         f"[{delta['ci_lower_pct']:+.3f}%, {delta['ci_upper_pct']:+.3f}%]"
     )
-    print(
-        "  excluding top 5%: "
-        f"{_scenario_mean(tail, 'exclude_top', 0.05):+.3f}%"
-    )
+    print("  excluding top 5%: " f"{_scenario_mean(tail, 'exclude_top', 0.05):+.3f}%")
     print("  status: exploratory; no confirmatory historical claim")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--filing-times", type=Path, default=DEFAULT_FILING_TIMES)
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="write a current-source replay to a new path outside data/sources/artifacts; default verifies the frozen artifact only",
+    )
     parser.add_argument("--resamples", type=int, default=N_RESAMPLES)
     parser.add_argument("--random-state", type=int, default=RANDOM_STATE)
     return parser.parse_args()
@@ -513,14 +513,30 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    if args.output is None:
+        actual = sha256_file(DEFAULT_OUTPUT)
+        if actual != IMMUTABLE_ARTIFACT_SHA256:
+            raise ValueError(f"immutable artifact hash mismatch: {actual}")
+        print(
+            json.dumps(
+                {
+                    "artifact": str(DEFAULT_OUTPUT),
+                    "sha256": actual,
+                    "status": "verified_immutable_artifact",
+                },
+                indent=2,
+            )
+        )
+        return 0
+    output = require_new_research_output(args.output, project_root=PROJECT_ROOT)
     report = build_report(
         filing_times_path=args.filing_times,
         n_resamples=args.resamples,
         random_state=args.random_state,
     )
-    write_json(args.output, report)
+    write_json(output, report, overwrite=False)
     _print_report(report)
-    print(f"\nWrote {args.output}")
+    print(f"\nWrote {output}")
     return 0
 
 

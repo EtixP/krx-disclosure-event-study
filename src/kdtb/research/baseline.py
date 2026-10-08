@@ -5,6 +5,7 @@ does not change event definitions, costs, entries, learner features, or model
 selection. Its job is to preserve what the current implementation reports so
 later methodology milestones can explain their result changes.
 """
+
 from __future__ import annotations
 
 import csv
@@ -24,13 +25,13 @@ import numpy as np
 import pandas as pd
 
 from kdtb.backtest.cost_model import TRADABILITY_BAR_PCT
-from kdtb.learning.dataset import load_mock_trades
+from kdtb.research.historical_learning import load_mock_trades
 from kdtb.learning.features import FEATURE_NAMES, extract_features
-from kdtb.learning.walk_forward_trainer import make_folds, run_walk_forward
+from kdtb.research.historical_learning import make_folds, run_walk_forward
 from scripts.analyze_event_category import MIN_WINDOW_EVENTS, analyze
 from scripts.run_intraday_walkforward import INTRADAY_CUTOFF_MIN, _mins
 from scripts.summarize_all_categories import CATEGORIES
-from scripts.train_learner import _synthetic_edge_df
+from kdtb.research.historical_learning import synthetic_edge_df as _synthetic_edge_df
 
 
 SCHEMA_VERSION = 1
@@ -56,6 +57,7 @@ ARTIFACT_FILENAMES = (
 )
 
 GENERATOR_SOURCE_PATHS = (
+    "src/kdtb/research/historical_learning.py",
     "src/kdtb/research/baseline.py",
     "src/kdtb/backtest/cost_model.py",
     "src/kdtb/backtest/metrics.py",
@@ -115,22 +117,49 @@ def _json_ready(value: Any) -> Any:
     return value
 
 
-def write_json(path: Path, payload: dict[str, Any]) -> None:
-    """Write canonical, byte-stable JSON with an atomic replace."""
+def write_json(path: Path, payload: dict[str, Any], *, overwrite: bool = True) -> None:
+    """Write canonical JSON atomically; optional exclusive creation never replaces."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    encoded = json.dumps(
-        _json_ready(payload),
-        ensure_ascii=False,
-        indent=2,
-        sort_keys=True,
-        allow_nan=False,
-    ) + "\n"
+    encoded = (
+        json.dumps(
+            _json_ready(payload),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+            allow_nan=False,
+        )
+        + "\n"
+    )
     with tempfile.NamedTemporaryFile(
         "w", encoding="utf-8", dir=path.parent, delete=False, newline="\n"
     ) as handle:
         handle.write(encoded)
         temporary_path = Path(handle.name)
-    os.replace(temporary_path, path)
+    try:
+        if overwrite:
+            os.replace(temporary_path, path)
+        else:
+            # Linking a same-directory temporary file publishes complete bytes
+            # atomically and fails if another process created the destination.
+            os.link(temporary_path, path)
+    finally:
+        temporary_path.unlink(missing_ok=True)
+
+
+def require_new_research_output(path: Path, *, project_root: Path) -> Path:
+    """Historical replay outputs must be new files outside protected trees."""
+    resolved = path.resolve()
+    protected = (project_root / name for name in ("data", "sources", "artifacts"))
+    if (
+        path.is_symlink()
+        or resolved.exists()
+        or any(resolved.is_relative_to(root.resolve()) for root in protected)
+    ):
+        raise ValueError(
+            "historical inputs/artifacts and existing outputs are immutable; "
+            "choose a new --output outside data, sources and artifacts"
+        )
+    return resolved
 
 
 def _header(snapshot_name: str, artifact: str) -> dict[str, Any]:
@@ -147,9 +176,7 @@ def _event_csv_path(project_root: Path, category: str) -> Path:
 
 def _category_summary(result: dict[str, Any]) -> dict[str, Any]:
     valid_folds = [
-        fold
-        for fold in result["walk_forward"]
-        if fold.get("n", 0) >= MIN_WINDOW_EVENTS
+        fold for fold in result["walk_forward"] if fold.get("n", 0) >= MIN_WINDOW_EVENTS
     ]
     positive_folds = sum(fold.get("mean_pct", 0) > 0 for fold in valid_folds)
     return {
@@ -178,7 +205,9 @@ def build_cross_category_summary(
     for category in CATEGORIES:
         csv_path = _event_csv_path(project_root, category)
         if not csv_path.exists():
-            raise FileNotFoundError(f"required event-study input is missing: {csv_path}")
+            raise FileNotFoundError(
+                f"required event-study input is missing: {csv_path}"
+            )
         result = analyze(
             category,
             str(csv_path),
@@ -214,7 +243,9 @@ def build_shareholder_change_summary(
         if item["category"] == "shareholder_change"
     ]
     if len(matching) != 1:
-        raise ValueError("cross-category result must contain one shareholder_change row")
+        raise ValueError(
+            "cross-category result must contain one shareholder_change row"
+        )
     return {
         **_header(snapshot_name, "shareholder_change_summary"),
         "category_summary": matching[0],
@@ -240,7 +271,11 @@ def _fold_payload(fold: Any) -> dict[str, Any]:
 
 
 def _learner_verdict(
-    *, model_trades: int, breadth: float, selection_lift_pct: float, model_mean_pct: float
+    *,
+    model_trades: int,
+    breadth: float,
+    selection_lift_pct: float,
+    model_mean_pct: float,
 ) -> str:
     if model_trades == 0:
         return "learned_to_abstain"
@@ -352,7 +387,9 @@ def capture_buyback_filing_times(
                 f"WHERE filing_time IS NOT NULL AND receipt_no IN ({placeholders})",
                 chunk,
             ).fetchall()
-            found.update((str(receipt_no), str(filing_time)) for receipt_no, filing_time in rows)
+            found.update(
+                (str(receipt_no), str(filing_time)) for receipt_no, filing_time in rows
+            )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
@@ -379,15 +416,19 @@ def _load_timeaware_from_pinned_input(
         dtype={"receipt_no": "string", "filing_time": "string"},
     )
     if times["receipt_no"].duplicated().any():
-        raise ValueError("pinned buyback filing times contain duplicate receipt numbers")
-    time_map = dict(zip(times["receipt_no"].astype(str), times["filing_time"].astype(str)))
+        raise ValueError(
+            "pinned buyback filing times contain duplicate receipt numbers"
+        )
+    time_map = dict(
+        zip(times["receipt_no"].astype(str), times["filing_time"].astype(str))
+    )
     frame["filing_time"] = frame["receipt_no"].map(time_map)
     frame["filing_mins"] = frame["filing_time"].map(_mins)
 
     cost = PRE_REVISION_COST_FRACTION
-    frame["ret_uniform"] = (
-        (frame["t+5_close"] - frame["t+1_close"]) / frame["t+1_close"] - cost
-    )
+    frame["ret_uniform"] = (frame["t+5_close"] - frame["t+1_close"]) / frame[
+        "t+1_close"
+    ] - cost
     intraday = frame["filing_mins"].notna() & (
         frame["filing_mins"] < INTRADAY_CUTOFF_MIN
     )
@@ -435,9 +476,7 @@ def build_buyback_intraday_summary(
                 "n": len(fold),
                 "scored": len(fold) >= MIN_WINDOW_EVENTS,
                 "uniform_sum_net_return": float(fold["ret_uniform"].sum()),
-                "timeaware_sum_net_return": float(
-                    fold["realized_net_return"].sum()
-                ),
+                "timeaware_sum_net_return": float(fold["realized_net_return"].sum()),
                 "uniform_mean_net_pct": uniform_pct,
                 "timeaware_mean_net_pct": timeaware_pct,
                 "delta_pct": timeaware_pct - uniform_pct,
@@ -450,9 +489,7 @@ def build_buyback_intraday_summary(
         columns=FEATURE_NAMES,
         index=matched.index,
     )
-    learner_frame = pd.concat(
-        [feature_frame, matched[["event_date"]].copy()], axis=1
-    )
+    learner_frame = pd.concat([feature_frame, matched[["event_date"]].copy()], axis=1)
     learner_frame["realized_net_return"] = matched["ret_timeaware"].values
     learner_frame["label"] = (learner_frame["realized_net_return"] > 0).astype(int)
     learner = summarize_learner(
@@ -467,14 +504,10 @@ def build_buyback_intraday_summary(
     # remains the full matched sample. The first three-event fold is therefore
     # captured but not silently reinterpreted by the baseline harness.
     uniform_mean_pct = (
-        sum(row["uniform_sum_net_return"] for row in scored_rows)
-        / len(matched)
-        * 100
+        sum(row["uniform_sum_net_return"] for row in scored_rows) / len(matched) * 100
     )
     timeaware_mean_pct = (
-        sum(row["timeaware_sum_net_return"] for row in scored_rows)
-        / len(matched)
-        * 100
+        sum(row["timeaware_sum_net_return"] for row in scored_rows) / len(matched) * 100
     )
     return {
         **_header(snapshot_name, "buyback_intraday_summary"),
@@ -509,7 +542,9 @@ def build_buyback_intraday_summary(
         },
         "tail_diagnostics": {
             "timeaware_median_net_pct": float(matched["ret_timeaware"].median() * 100),
-            "timeaware_win_rate_pct": float((matched["ret_timeaware"] > 0).mean() * 100),
+            "timeaware_win_rate_pct": float(
+                (matched["ret_timeaware"] > 0).mean() * 100
+            ),
             "timeaware_mean_excluding_top_5pct_pct": _mean_without_top_fraction(
                 matched["ret_timeaware"], 0.05
             ),
@@ -529,7 +564,9 @@ def _runtime_versions() -> dict[str, str]:
     }
 
 
-def _records_for_paths(project_root: Path, paths: Iterable[str]) -> list[dict[str, Any]]:
+def _records_for_paths(
+    project_root: Path, paths: Iterable[str]
+) -> list[dict[str, Any]]:
     records = []
     for relative in paths:
         path = project_root / relative
@@ -731,8 +768,12 @@ def _verify_recorded_files(
     for record in records:
         path = base_dir / record["path"]
         _require(path.exists(), f"{label} is missing: {path}")
-        _require(path.stat().st_size == record["bytes"], f"{label} size mismatch: {path}")
-        _require(sha256_file(path) == record["sha256"], f"{label} hash mismatch: {path}")
+        _require(
+            path.stat().st_size == record["bytes"], f"{label} size mismatch: {path}"
+        )
+        _require(
+            sha256_file(path) == record["sha256"], f"{label} hash mismatch: {path}"
+        )
 
 
 def verify_snapshot(
@@ -743,7 +784,9 @@ def verify_snapshot(
 ) -> dict[str, Any]:
     """Verify artifact integrity and arithmetic without pinning future results."""
     manifest = _load_json(output_dir / "manifest.json")
-    _require(manifest.get("schema_version") == SCHEMA_VERSION, "manifest schema version")
+    _require(
+        manifest.get("schema_version") == SCHEMA_VERSION, "manifest schema version"
+    )
     snapshot_name = manifest.get("snapshot")
     _require(bool(snapshot_name), "manifest snapshot name")
 
@@ -767,7 +810,9 @@ def verify_snapshot(
     _require(len(pinned_times) == pinned_record["records"], "pinned input row count")
     _require(not pinned_times.isna().any().any(), "pinned input missing values")
     receipt_numbers = pinned_times["receipt_no"].astype(str).tolist()
-    _require(len(receipt_numbers) == len(set(receipt_numbers)), "pinned input duplicates")
+    _require(
+        len(receipt_numbers) == len(set(receipt_numbers)), "pinned input duplicates"
+    )
     _require(receipt_numbers == sorted(receipt_numbers), "pinned input sort order")
     _require(
         bool(

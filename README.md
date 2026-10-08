@@ -4,15 +4,22 @@ An event study of Korean corporate disclosures: does the market leave anything
 on the table after a company files a material disclosure, and can a retail
 trader capture it after costs?
 
-> **Research deliverable, not a profitable trading system.**
-> Per the 5-year empirical analysis ([RESEARCH_FINDINGS.md](RESEARCH_FINDINGS.md)),
-> **no Korean disclosure event category** tested here is tradable long after
-> realistic T+1-close execution costs and broad-market adjustment. Buyback's
-> realistic mean is +0.14% raw but −0.03% after its matching KOSPI/KOSDAQ move
-> is removed. **Shareholder change** is the one well-supported exploratory
-> negative class (used conservatively as a long-side blacklist, not promoted
-> as a strategy). The methodology — deterministic pipeline + walk-forward +
-> adversarial verification — is the project's primary value.
+> **Exploratory research; no validated trading strategy.**
+> Frozen historical category, timing and blacklist results remain subject to
+> unresolved stock-window, security-master and source-availability audits.
+> M0.6 corrects the daily learner's admission and outcome-maturity boundaries;
+> it does not establish that the wider historical dataset was available as used
+> or that historical closing prices were executable.
+
+M0.6's strict buyback replay admits 4,800 events and selects 2,393 trades with
+mean abnormal net reward **−1.350 bp/trade** and matched-period lift **+1.349
+bp/trade**. These are additive historical rewards, not compounded capital
+returns or validated alpha. The former implementation selected 2,427 trades at
+−8.194 bp/trade; excluding one anomalous T0 alone materially changes its model
+path. [Correction details and limitations](docs/history/M0.6.md) and the
+[new versioned comparison](artifacts/m0_6/learner_chronology_v1.json) preserve
+all prior artifacts. Unless labeled M0.6, later historical figures describe
+those frozen earlier outputs, not a completed dataset reconstruction.
 
 ## The question
 
@@ -22,9 +29,9 @@ short-horizon drift that a disciplined rule could trade. I wanted to know
 whether that drift exists in any event category, and whether it survives the
 historically applicable roundtrip cost of actually trading Korean equities.
 
-I set out to answer this honestly, including the possibility that the answer is
-no. It is no. What follows is how I established that, and how much of the
-apparent edge I found along the way turned out to be artifact.
+The inspected historical results have not validated a tradable strategy.
+The research records both apparent effects and corrections that changed them;
+remaining data-provenance and chronology limits prevent a stronger conclusion.
 
 ## Data
 
@@ -130,7 +137,9 @@ including one I had already written into the risk engine.
 
 All seven categories, 5-year sample. Point estimates and fold counts come from
 `python -m scripts.summarize_all_categories`; the interval column comes from
-`python -m scripts.analyze_research_inference`:
+the frozen M0.5 report (verify it with
+`python -m scripts.analyze_research_inference`; use an explicit new `--output`
+path to regenerate):
 
 | Category | n | Raw T+5 net | Abnormal T+5 net | Raw realistic | Abnormal realistic | Issuer-clustered 95% CI | Abnormal WF+ | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---|
@@ -265,37 +274,25 @@ After the event studies came back negative, I built the thing the project was
 originally imagined to be: a paper-trader that learns from its own mock trades
 ([src/kdtb/learning/](src/kdtb/learning/)).
 
-Each event is a mock trade — enter T+1 close, exit T+5 close, subtract the
-matching broad-index move and its dated market-aware cost. A gradient-boosted
-classifier predicts P(abnormal net > 0) from decision-time
-features and trades when its PnL-optimal threshold is cleared. The loop is
-champion/challenger walk-forward: each half-year fold, a challenger trains only
-on strictly earlier folds, both are scored on a held-out validation fold, and
-the challenger is promoted only if it wins. The champion starts as "never
-trade." There is no look-ahead, enforced structurally and asserted in tests.
+The strict daily learner simulates T+1-close entry and T+5-close exit, subtracts
+matching broad-index returns and dated costs, and retains source identity and
+reconstructed dates. Fixed features and the gradient-boosted classifier are
+unchanged. M0.6 groups by decision day, keeps same-day cohorts together, and
+requires outcomes to end strictly before the fit/calibration/promotion cutoff.
+The challenger freezes before the outer validation period; champion selection
+freezes before the test period. The initial champion is `NeverTrade`.
 
-Two claims, which I keep separate because they have different answers:
+Dated planted-edge and null fixtures test that the algorithm can select a
+specified signal without using unavailable labels. They do not prove that real
+historical source vintages were available when modeled. The previous claim of
+"no look-ahead" from event-date sorting alone was incorrect and is superseded
+by M0.6. Supply-contract learning now refuses unversioned enrichment.
 
-**"The machine works" — true.** It is leak-free and seed-stable, and on a
-synthetic dataset with a planted edge it finds it: **+2.021% per trade with
-+2.161% selection lift** over trade-everything, trading in 6 of 6 folds. The
-`--synthetic-edge` path exists precisely to prove the machine *can* learn when
-there is something to learn.
-
-**"Any Korean disclosure category is tradable" — still false.** The M0.2 raw
-buyback learner returned +0.320% per trade against matched +0.298%. With M0.3
-market adjustment it returns −0.082% against matched −0.045%: **selection lift
-−0.037%** and `NO SELECTION EDGE`. The whole-sample realistic buyback mean is
-−0.03% abnormal.
-On supply contracts it traded only 2 of 9 folds — insufficient breadth, the same
-recency artifact the event study found.
-
-That gap is the point. A learning system can only optimize edge that already
-exists in the data; it cannot manufacture edge from noise. Pointed at
-near-efficient Korean disclosure data, small methodology changes can move a
-learner across a hard threshold. The deliverable is the machine — reusable on
-any dataset — plus matched-period and benchmark-adjusted reporting that exposes
-the attribution error rather than overstating it.
+The M0.6 comparison at the top separates admission changes from temporal
+correction. Old M0.1–M0.3 learner results remain accessible through explicitly
+historical adapters; they are reproduction evidence. Repeatedly inspected
+results, a tiny positive matched lift, and a favorable synthetic example do not
+validate a disclosure trading strategy.
 
 ## Limitations
 
@@ -350,14 +347,19 @@ python -m scripts.verify_research_state
 # Verify the immutable M0.2 before/after comparison checksum
 python -m scripts.compare_cost_revision
 
-# Regenerate the M0.3 raw/abnormal comparison
+# Verify frozen M0.3 bytes; regeneration requires a new path
 python -m scripts.compare_benchmark_adjustment
+python -m scripts.compare_benchmark_adjustment --output /tmp/m0_3_new.json
 
 # Regenerate the M0.4 corporate-action price-policy audit
 python -m scripts.audit_price_adjustments
 
-# Regenerate issuer-clustered intervals and buyback tail sensitivity
+# Verify frozen M0.5 bytes; regenerate intervals/tails to a new path
 python -m scripts.analyze_research_inference
+python -m scripts.analyze_research_inference --output /tmp/m0_5_new.json
+
+# M0.2/M0.3/M0.5 and preserved-source replay output paths must be new and
+# outside the repository's data/, sources/, and artifacts/ trees.
 
 # The cross-category results table above
 python -m scripts.summarize_all_categories
@@ -367,7 +369,8 @@ python scripts/analyze_event_category.py --category buyback
 
 # The learning paper-trader
 python scripts/train_learner.py --synthetic-edge      # sanity: learns a planted edge
-python scripts/train_learner.py --category buyback    # abnormal-return reward
+python scripts/train_learner.py --category buyback    # strict daily research; abnormal reward
+PYTHONPATH=src:. python scripts/compare_learner_chronology.py --output /tmp/m0_6_new.json
 
 ```
 
@@ -379,7 +382,7 @@ returns. Running the live-database entry-timing command still requires that
 database:
 
 ```bash
-python scripts/run_intraday_walkforward.py --db data/kdtb.db
+python -m scripts.run_intraday_walkforward --category buyback  # pinned times; no DB
 ```
 
 Categories accepted by `--category`: `supply_contract`, `buyback`,
@@ -575,9 +578,9 @@ The first-recorded timestamp is database-level append-only under `init_db()`.
 
 Historical replay does not write forward decisions. No production experiment
 was activated, and M2.2 adds no outcomes, returns, PnL, fills, orders, broker
-calls, or execution authority. Prospective outcomes remain a separate M2.3
-layer. The independent exact-integer failure is corrected: numeric features
-retain arbitrary-precision integers without float conversion, and a full-path
+calls, or execution authority. Prospective outcomes live in the separate M2.3
+layer described below. The independent exact-integer failure is corrected:
+numeric features retain arbitrary-precision integers without float conversion, and a full-path
 regression records and reloads `10**1000` exactly. The subsequent non-finite
 coverage failures are also corrected. A strict-JSON extended canonical snapshot
 used only when necessary makes genuine `None`, `NaN`, and both infinities
@@ -593,8 +596,149 @@ normalization and integer/string key collisions therefore fail before
 persistence instead of creating an unreadable event. Those corrections are
 confirmed, and the conflict-replacement regression now preserves the original
 row and timestamp. Independent verification also covered replacement conflicts
-through every current unique boundary and database reopen. M2.2 is `VERIFIED`;
-M2.3 is `NOT STARTED`.
+through every current unique boundary and database reopen. M2.2 is `VERIFIED`.
+
+## Prospective forward outcomes
+
+M2.3 adds a strict evaluator and append-only outcome ledger without modifying
+M2.2 decisions. It evaluates only eligible decisions and currently supports the
+frozen `m2.1-v1` next-trading-day-close entry and trading-session-close exit
+rules. Unsupported rule or cost-policy versions fail explicitly.
+
+The calendar retains the exact UTF-8 response captured from KRX's official 2026
+holiday grid and pins it at SHA-256 `89ccce13…`. A source-specific parser checks
+the KRX response envelope and holiday fields, then derives open weekdays and
+closures. The calendar separately retains KRX's official regular-hours page at
+`c8b1bdbc…`; its own parser derives 15:30 KST only as the regular-session close.
+Normalized dates and hours cannot be independently reclassified. Entry offsets
+count strictly after the Korean disclosure date.
+Stock closes must exist on the selected exact entry/exit dates, while benchmark
+evidence must cover every derived session through the frozen exit; an omitted
+row fails rather than shifting the horizon. Each normalized close has a
+recomputable hash plus availability and capture timestamps, and cannot become
+available before its trading date or session close. The evaluator re-derives
+stock gross, benchmark gross, raw net, and abnormal net returns using the
+experiment's exact commission, VAT, slippage, and dated Korean transaction-tax
+assumptions.
+
+Outcomes are stored in `forward_event_outcomes` under the explicit
+`prospective_forward` label and a composite foreign key to the immutable
+decision ID/hash. Update, delete, and conflict replacement are blocked; exact
+retries preserve the first stored result. Canonical validation re-derives the
+selected dates from the embedded calendar and frozen rule objects, so a
+self-consistent wrong-horizon record is rejected before persistence. Rejected
+decisions and immature or incomplete horizons produce no simulated trade
+outcome. Historical artifacts and replay are not read or rewritten.
+
+The closure-substitution regression also fails before persistence: KRX marks
+September 24–25 closed and September 18 open, and altering either the normalized
+calendar or the retained body is rejected even after hashes are recomputed.
+The hours source and exceptional-session policy are also bound into the calendar
+hash. Retained official evidence records KRX's 15:30→16:30 change on the 2025
+CSAT day and the Ministry of Education's November 19 date for the 2026 exam.
+Because no KRX-specific close time for that date is retained, calendars spanning
+November 19 fail closed until a new evidence/parser version is added. The prior
+16:00-availability/16:05-evaluation attack now produces no outcome. Independent
+verification freshly reproduced the retained sources and the fail-closed path.
+Only the pinned 2026 evidence versions are supported. M2.3 is `VERIFIED`.
+
+## Forward experiment reporting
+
+M2.4 adds a deterministic, read-only report over one exact activated experiment
+version and an explicit UTC cutoff. The report embeds the immutable M2.2
+decision and M2.3 outcome records used to derive it. It renders historical M1.4
+context as `HISTORICAL — NOT FORWARD` and prospective outcomes as
+`FORWARD — PROSPECTIVE ONLY`; the two samples have separate observations,
+metrics, issuer-clustered intervals, and labels and are never pooled.
+
+Forward coverage reports all considered, eligible, rejected, realized, and
+still-unrealized decisions. Rejection reasons retain their structured codes.
+Zero observations produce unavailable return estimates and uncertainty rather
+than zero returns. The frozen M2.1 success/failure plan is classified only after
+its evaluation end and minimum event/issuer requirements; unknown metrics fail
+explicitly. Reports remain research-only and always render `NO_TRADE`.
+
+```bash
+python -m kdtb.cli forward-report EXPERIMENT_ID \
+  --version 1 \
+  --as-of 2026-09-16T00:00:00Z
+
+# Canonical source-embedded JSON
+python -m kdtb.cli forward-report EXPERIMENT_ID \
+  --version 1 \
+  --as-of 2026-09-16T00:00:00Z \
+  --json
+```
+
+The command opens the configured existing SQLite file in read-only mode; it
+does not initialize, migrate, or modify it. A trusted UTC service clock is
+embedded as `generated_at`; requested cutoffs later than that instant fail.
+Evaluation uses the fixed cohort of decisions recorded no later than the frozen
+evaluation end. Outcomes for that cohort may arrive later, but the verdict stays
+`awaiting_outcomes` and non-final until every eligible cohort decision resolves.
+No terminal-missing rule is assumed. Decisions recorded after the evaluation
+end remain visible in report coverage but are explicitly excluded from the
+frozen verdict, so a final classification cannot later change. M2.4 is
+`VERIFIED`.
+
+## Prospective intraday collection
+
+M3.1 adds a selected-event, raw-first collector for Korea Investment &
+Securities (KIS) dated KRX minute bars. The implemented endpoint is
+`inquire-time-dailychartprice` (`FHKST03010230`), not a quote or execution API.
+KIS's official examples document a maximum of 120 rows per request, explicit
+business-date/time inputs, and historical availability only to the extent the
+provider retains it (at most one year). The separate current-day endpoint is
+not used because it returns only 30 rows and warns that a future-time request
+can repeat the current price.
+
+Targets bind the exact canonical event hash, DART trigger, first retained DART
+observation time, normalization time, stock code, market date, and provider
+endpoint. DART's list response supplies only a filing date, so the collector
+does not mislabel that as an exact filing time: `event_observed_at` is the exact
+UTC time the watcher first retained the disclosure, while `source_event_date`
+preserves the provider's date precision. Each market row retains the KIS
+business date plus trade time as an exact KST timestamp and the UTC response
+capture time.
+
+Every KIS response page is committed as exact bytes and SHA-256 before parsing.
+The store re-parses those bytes itself and rejects wrong dates, later-than-cursor
+rows, non-canonical requests, invalid JSON, inconsistent OHLC, conflicting
+timestamps, and source/hash mismatches. Bars, raw captures, target definitions,
+and explicit gap records are append-only. Missing stock codes and successful
+responses with no rows are durable gaps; transport/provider/parser failures
+remain visible as failed runs. Interrupted work is recovered to the pending
+queue, failed work requires `--retry-failed`, and `--refresh` explicitly appends
+a later provider vintage without rewriting earlier observations.
+
+```bash
+# Add one canonical event and collect its first-seen KST market date.
+KIS_APP_KEY=... KIS_APP_SECRET=... \
+  python -m kdtb.cli collect-intraday --receipt-no 20260917000001
+
+# Retry failures, or explicitly capture a later response vintage.
+python -m kdtb.cli collect-intraday --retry-failed
+python -m kdtb.cli collect-intraday \
+  --receipt-no 20260917000001 --refresh
+```
+
+No KIS credentials are committed. No live provider call or production target
+was created during the milestone. M3.1 collects provider minute rows only: bid,
+ask, midpoint, spread, WebSocket ticks, fills, and event-relative derived
+snapshots remain unavailable here. It does not interpolate missing bars or
+invent historical intraday data. Run completion re-parses its retained pages,
+reconciles their exact canonical bars, derives its own observation count, and
+creates `provider_no_rows` only from a verified empty page. Terminal runs reject
+further capture normalization, and responses above KIS's documented 120-row
+maximum fail before bar persistence. Each run freezes its first request cursor
+at claim time; the collector uses it and completion requires page 1 to match.
+Completion, failure, and restart recovery also reject timestamps earlier than
+the run or any retained provider request/response. Claims now also reject starts
+earlier than immutable target registration, and every terminal route rechecks
+that boundary for legacy rows. Independent verification replayed the rejected
+pre-registration claim and separately exercised legacy success, failure, and
+recovery; all failed atomically without a false terminal state or gap. M3.1 is
+`VERIFIED`; M3.2 remains `NOT STARTED`.
 
 ### Pipeline liveness check
 

@@ -1,0 +1,3734 @@
+{
+  "counts": {
+    "base_krx_requests_three_endpoint_families": 1173,
+    "hard_core_krx_request_cap_including_retries": 1800,
+    "market_date_pairs_including_event_and_recorded_window_dates": 391,
+    "second_version_requests_two_market_dates_three_endpoint_families": 6,
+    "unique_receipts": 141
+  },
+  "definition_sha256": "ac94f3b62045823e759389bac641199571c4c034e9a823a5fce2dfb45df2f3f6",
+  "market_date_pairs": [
+    {
+      "date": "2021-08-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-05",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-06",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-09",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-12",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-13",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-18",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-08-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-15",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-18",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-20",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-10-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-12-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-12-08",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-12-09",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-12-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-12-30",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-01-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-01-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-01-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-01-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-02-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-02-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-02-09",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-02-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-02-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-02-16",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-04-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-06-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-06-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-06-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-06-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-08-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-08-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-08-24",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-08-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-09-20",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-09-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-09-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-09-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-10-12",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-10-13",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-10-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-10-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-12-16",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-12-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-12-20",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2022-12-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-05-24",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-05-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-05-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-06-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-12",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-17",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-07-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-02",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-08",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-08-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-09-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-09-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-09-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-09-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-09-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-09-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-10-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-10-05",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-10-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-11-17",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-12-15",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-12-18",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-12-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-12-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-12-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2023-12-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-01-02",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-02-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-02-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-02-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-02-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-02-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-03-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-03-13",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-03-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-03-15",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-03-20",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-04-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-04-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-04-30",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-08",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-13",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-16",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-17",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-05-31",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-08-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-08-08",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-08-09",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-08-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-07",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-08",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-15",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-16",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-10-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-12-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-12-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2024-12-30",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-01-06",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-01-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-01-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-01-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-01-24",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-01-31",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-02-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-02-05",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-02-06",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-03-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-03-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-03-12",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-03-17",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-03-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-03-31",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-04-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-04-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-04-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-04-24",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-04-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-04-30",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-05-12",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-05-13",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-05-14",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-05-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-08-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-08-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-08-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-09-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-09-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-09-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-09-30",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-10-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-10-02",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-10-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-10-15",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-11-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-11-20",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-11-21",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-11-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-11-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-11-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-12-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-12-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-12-18",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-12-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-12-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2025-12-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-01-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-01-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-01-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-09",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-24",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-02-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-03-03",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-05-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-05-27",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-05-28",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-02",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-04",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-05",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-08",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-09",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-10",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-11",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-12",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-15",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-16",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-17",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-18",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-19",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-22",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-23",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-24",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-25",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-26",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-29",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-06-30",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2026-07-01",
+      "market": "KOSDAQ"
+    },
+    {
+      "date": "2021-07-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-07-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-02",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-13",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-08-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-09-01",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-10-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-10-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-10-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-10-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-10-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-11-01",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-11-03",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-11-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-11-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-11-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-11-15",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-15",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2021-12-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-01-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-03-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-03-24",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-03-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-03-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-04-15",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-04-18",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-04-19",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-04-22",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-05-20",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-05-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-05-24",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-05-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-07-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-07-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-07-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-08-02",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-09-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-10-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-10-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-10-11",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-12-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-12-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-12-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-12-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2022-12-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-01-02",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-01-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-11",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-12",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-04-17",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-07-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-07-31",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-08-01",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-08-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-09-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-10-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-10-24",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-10-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-10-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-10-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-10-31",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-13",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-15",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-16",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-17",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2023-11-22",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-01-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-01-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-01-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-01-11",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-02-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-02-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-02-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-03-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-03-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-03-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-03-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-04-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-04-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-04-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-05-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-08-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-08-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-08-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-08-12",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-08-14",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-08-16",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-09-02",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-09-03",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-09-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-09-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-11",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-16",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-10-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2024-11-01",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-13",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-14",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-17",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-22",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-01-24",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-11",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-02-13",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-07-03",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-07-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-07-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-07-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-07-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-07-31",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-08-01",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-08-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-08-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-08-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-08-12",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-09-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-09-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-09-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-09-12",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-10-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-10-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-10-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2025-11-04",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-06",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-07",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-12",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-19",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-20",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-21",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-27",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-28",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-01-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-02",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-03",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-05",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-11",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-12",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-13",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-02-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-08",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-09",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-10",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-15",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-22",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-23",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-24",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-25",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-26",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-29",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-06-30",
+      "market": "KOSPI"
+    },
+    {
+      "date": "2026-07-01",
+      "market": "KOSPI"
+    }
+  ],
+  "schema_version": "m0.8_buyback_canary_definition_v1",
+  "second_version_market_date_pairs": [
+    {
+      "date": "2021-07-29",
+      "market": "KOSPI",
+      "purpose": "oldest_precommitted_pair"
+    },
+    {
+      "date": "2026-07-01",
+      "market": "KOSPI",
+      "purpose": "newest_precommitted_pair"
+    }
+  ],
+  "seed": "m0.8-buyback-canary-v1",
+  "selection": [
+    {
+      "event_date": "2021-07-29",
+      "market": "KOSPI",
+      "receipt_no": "20210729000290",
+      "recorded_dates": {
+        "t+1_date": "2021-07-30",
+        "t+2_date": "2021-08-02",
+        "t+5_date": "2021-08-05",
+        "t0_date": "2021-07-29"
+      },
+      "stock_code": "000100",
+      "strata": [
+        "seeded_missing_time_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-08-04",
+      "market": "KOSDAQ",
+      "receipt_no": "20210804000321",
+      "recorded_dates": {
+        "t+1_date": "2021-08-05",
+        "t+2_date": "2021-08-06",
+        "t+5_date": "2021-08-11",
+        "t0_date": "2021-08-04"
+      },
+      "stock_code": "230360",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2021-08-06",
+      "market": "KOSPI",
+      "receipt_no": "20210806000053",
+      "recorded_dates": {
+        "t+1_date": "2021-08-09",
+        "t+2_date": "2021-08-10",
+        "t+5_date": "2021-08-13",
+        "t0_date": "2021-08-06"
+      },
+      "stock_code": "017390",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-08-06",
+      "market": "KOSDAQ",
+      "receipt_no": "20210806000364",
+      "recorded_dates": {
+        "t+1_date": "2021-08-09",
+        "t+2_date": "2021-08-10",
+        "t+5_date": "2021-08-13",
+        "t0_date": "2021-08-06"
+      },
+      "stock_code": "177830",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2021-08-10",
+      "market": "KOSDAQ",
+      "receipt_no": "20210810000084",
+      "recorded_dates": {
+        "t+1_date": "2021-08-11",
+        "t+2_date": "2021-08-12",
+        "t+5_date": "2021-08-18",
+        "t0_date": "2021-08-10"
+      },
+      "stock_code": "049070",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2021-08-11",
+      "market": "KOSDAQ",
+      "receipt_no": "20210811000059",
+      "recorded_dates": {
+        "t+1_date": "2021-08-12",
+        "t+2_date": "2021-08-13",
+        "t+5_date": "2021-08-19",
+        "t0_date": "2021-08-11"
+      },
+      "stock_code": "054540",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2021-08-25",
+      "market": "KOSPI",
+      "receipt_no": "20210825000382",
+      "recorded_dates": {
+        "t+1_date": "2021-08-26",
+        "t+2_date": "2021-08-27",
+        "t+5_date": "2021-09-01",
+        "t0_date": "2021-08-25"
+      },
+      "stock_code": "010060",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-10-14",
+      "market": "KOSDAQ",
+      "receipt_no": "20211014000012",
+      "recorded_dates": {
+        "t+1_date": "2021-10-15",
+        "t+2_date": "2021-10-18",
+        "t+5_date": "2021-10-21",
+        "t0_date": "2021-10-14"
+      },
+      "stock_code": "014570",
+      "strata": [
+        "seeded_missing_time_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2021-10-19",
+      "market": "KOSDAQ",
+      "receipt_no": "20211019000133",
+      "recorded_dates": {
+        "t+1_date": "2021-10-20",
+        "t+2_date": "2021-10-21",
+        "t+5_date": "2021-10-26",
+        "t0_date": "2021-10-19"
+      },
+      "stock_code": "241840",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2021-10-25",
+      "market": "KOSPI",
+      "receipt_no": "20211025000193",
+      "recorded_dates": {
+        "t+1_date": "2021-10-26",
+        "t+2_date": "2021-10-27",
+        "t+5_date": "2021-11-01",
+        "t0_date": "2021-10-25"
+      },
+      "stock_code": "001720",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2021-10-27",
+      "market": "KOSPI",
+      "receipt_no": "20211027000308",
+      "recorded_dates": {
+        "t+1_date": "2021-10-28",
+        "t+2_date": "2021-10-29",
+        "t+5_date": "2021-11-03",
+        "t0_date": "2021-10-27"
+      },
+      "stock_code": "000270",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-11-08",
+      "market": "KOSPI",
+      "receipt_no": "20211108000099",
+      "recorded_dates": {
+        "t+1_date": "2021-11-09",
+        "t+2_date": "2021-11-10",
+        "t+5_date": "2021-11-15",
+        "t0_date": "2021-11-08"
+      },
+      "stock_code": "029530",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-12-07",
+      "market": "KOSDAQ",
+      "receipt_no": "20211207000252",
+      "recorded_dates": {
+        "t+1_date": "2021-12-08",
+        "t+2_date": "2021-12-09",
+        "t+5_date": "2021-12-14",
+        "t0_date": "2021-12-07"
+      },
+      "stock_code": "238090",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2021-12-08",
+      "market": "KOSPI",
+      "receipt_no": "20211208000151",
+      "recorded_dates": {
+        "t+1_date": "2021-12-09",
+        "t+2_date": "2021-12-10",
+        "t+5_date": "2021-12-15",
+        "t0_date": "2021-12-08"
+      },
+      "stock_code": "192650",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-12-28",
+      "market": "KOSPI",
+      "receipt_no": "20211228000522",
+      "recorded_dates": {
+        "t+1_date": "2021-12-29",
+        "t+2_date": "2021-12-30",
+        "t+5_date": "2022-01-05",
+        "t0_date": "2021-12-28"
+      },
+      "stock_code": "005810",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2021"
+      ]
+    },
+    {
+      "event_date": "2021-12-30",
+      "market": "KOSDAQ",
+      "receipt_no": "20211230000276",
+      "recorded_dates": {
+        "t+1_date": "2022-01-03",
+        "t+2_date": "2022-01-04",
+        "t+5_date": "2022-01-07",
+        "t0_date": "2021-12-30"
+      },
+      "stock_code": "317240",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2021"
+      ]
+    },
+    {
+      "event_date": "2022-01-28",
+      "market": "KOSDAQ",
+      "receipt_no": "20220128000650",
+      "recorded_dates": {
+        "t+1_date": "2022-02-03",
+        "t+2_date": "2022-02-04",
+        "t+5_date": "2022-02-09",
+        "t0_date": "2022-01-28"
+      },
+      "stock_code": "042500",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-02-09",
+      "market": "KOSDAQ",
+      "receipt_no": "20220209000063",
+      "recorded_dates": {
+        "t+1_date": "2022-02-10",
+        "t+2_date": "2022-02-11",
+        "t+5_date": "2022-02-16",
+        "t0_date": "2022-02-09"
+      },
+      "stock_code": "084850",
+      "strata": [
+        "seeded_missing_time_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-03-23",
+      "market": "KOSPI",
+      "receipt_no": "20220323000775",
+      "recorded_dates": {
+        "t+1_date": "2022-03-24",
+        "t+2_date": "2022-03-25",
+        "t+5_date": "2022-03-30",
+        "t0_date": "2022-03-23"
+      },
+      "stock_code": "103140",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2022-04-07",
+      "market": "KOSDAQ",
+      "receipt_no": "20220407001790",
+      "recorded_dates": {
+        "t+1_date": null,
+        "t+2_date": null,
+        "t+5_date": null,
+        "t0_date": null
+      },
+      "stock_code": "358570",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2022-04-15",
+      "market": "KOSPI",
+      "receipt_no": "20220415000296",
+      "recorded_dates": {
+        "t+1_date": "2022-04-18",
+        "t+2_date": "2022-04-19",
+        "t+5_date": "2022-04-22",
+        "t0_date": "2022-04-15"
+      },
+      "stock_code": "014830",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2022-05-20",
+      "market": "KOSPI",
+      "receipt_no": "20220520000183",
+      "recorded_dates": {
+        "t+1_date": "2022-05-23",
+        "t+2_date": "2022-05-24",
+        "t+5_date": "2022-05-27",
+        "t0_date": "2022-05-20"
+      },
+      "stock_code": "194370",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2022-06-21",
+      "market": "KOSDAQ",
+      "receipt_no": "20220621000056",
+      "recorded_dates": {
+        "t+1_date": "2022-06-22",
+        "t+2_date": "2022-06-23",
+        "t+5_date": "2022-06-28",
+        "t0_date": "2022-06-21"
+      },
+      "stock_code": "143540",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-07-26",
+      "market": "KOSPI",
+      "receipt_no": "20220726000295",
+      "recorded_dates": {
+        "t+1_date": "2022-07-27",
+        "t+2_date": "2022-07-28",
+        "t+5_date": "2022-08-02",
+        "t0_date": "2022-07-26"
+      },
+      "stock_code": "068270",
+      "strata": [
+        "seeded_missing_time_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2022-08-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20220822000354",
+      "recorded_dates": {
+        "t+1_date": "2022-08-23",
+        "t+2_date": "2022-08-24",
+        "t+5_date": "2022-08-29",
+        "t0_date": "2022-08-22"
+      },
+      "stock_code": "014100",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-09-20",
+      "market": "KOSDAQ",
+      "receipt_no": "20220920000142",
+      "recorded_dates": {
+        "t+1_date": "2022-09-21",
+        "t+2_date": "2022-09-22",
+        "t+5_date": "2022-09-27",
+        "t0_date": "2022-09-20"
+      },
+      "stock_code": "017650",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-09-30",
+      "market": "KOSPI",
+      "receipt_no": "20220930000240",
+      "recorded_dates": {
+        "t+1_date": "2022-10-04",
+        "t+2_date": "2022-10-05",
+        "t+5_date": "2022-10-11",
+        "t0_date": "2022-09-30"
+      },
+      "stock_code": "077500",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2022-10-12",
+      "market": "KOSDAQ",
+      "receipt_no": "20221012000159",
+      "recorded_dates": {
+        "t+1_date": "2022-10-13",
+        "t+2_date": "2022-10-14",
+        "t+5_date": "2022-10-19",
+        "t0_date": "2022-10-12"
+      },
+      "stock_code": "246690",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-12-16",
+      "market": "KOSDAQ",
+      "receipt_no": "20221216000134",
+      "recorded_dates": {
+        "t+1_date": "2022-12-19",
+        "t+2_date": "2022-12-20",
+        "t+5_date": "2022-12-23",
+        "t0_date": "2022-12-16"
+      },
+      "stock_code": "044340",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2022"
+      ]
+    },
+    {
+      "event_date": "2022-12-23",
+      "market": "KOSPI",
+      "receipt_no": "20221223000041",
+      "recorded_dates": {
+        "t+1_date": "2022-12-26",
+        "t+2_date": "2022-12-27",
+        "t+5_date": "2023-01-02",
+        "t0_date": "2022-12-23"
+      },
+      "stock_code": "003220",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2022-12-28",
+      "market": "KOSPI",
+      "receipt_no": "20221228000589",
+      "recorded_dates": {
+        "t+1_date": "2022-12-29",
+        "t+2_date": "2023-01-02",
+        "t+5_date": "2023-01-05",
+        "t0_date": "2022-12-28"
+      },
+      "stock_code": "033780",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2022"
+      ]
+    },
+    {
+      "event_date": "2023-04-04",
+      "market": "KOSPI",
+      "receipt_no": "20230404002955",
+      "recorded_dates": {
+        "t+1_date": "2023-04-05",
+        "t+2_date": "2023-04-06",
+        "t+5_date": "2023-04-11",
+        "t0_date": "2023-04-04"
+      },
+      "stock_code": "002170",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-04-10",
+      "market": "KOSPI",
+      "receipt_no": "20230410002657",
+      "recorded_dates": {
+        "t+1_date": "2023-04-11",
+        "t+2_date": "2023-04-12",
+        "t+5_date": "2023-04-17",
+        "t0_date": "2023-04-10"
+      },
+      "stock_code": "060980",
+      "strata": [
+        "seeded_missing_time_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-05-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20230524000431",
+      "recorded_dates": {
+        "t+1_date": "2023-05-25",
+        "t+2_date": "2023-05-26",
+        "t+5_date": "2023-06-01",
+        "t0_date": "2023-05-24"
+      },
+      "stock_code": "007820",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-07-07",
+      "market": "KOSDAQ",
+      "receipt_no": "20230707000012",
+      "recorded_dates": {
+        "t+1_date": "2023-07-10",
+        "t+2_date": "2023-07-11",
+        "t+5_date": "2023-07-14",
+        "t0_date": "2023-07-07"
+      },
+      "stock_code": "017650",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-07-10",
+      "market": "KOSDAQ",
+      "receipt_no": "20230710000063",
+      "recorded_dates": {
+        "t+1_date": "2023-07-11",
+        "t+2_date": "2023-07-12",
+        "t+5_date": "2023-07-17",
+        "t0_date": "2023-07-10"
+      },
+      "stock_code": "017650",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-07-26",
+      "market": "KOSDAQ",
+      "receipt_no": "20230726000310",
+      "recorded_dates": {
+        "t+1_date": "2023-07-27",
+        "t+2_date": "2023-07-28",
+        "t+5_date": "2023-08-02",
+        "t0_date": "2023-07-26"
+      },
+      "stock_code": "131090",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2023-07-28",
+      "market": "KOSPI",
+      "receipt_no": "20230728000216",
+      "recorded_dates": {
+        "t+1_date": "2023-07-31",
+        "t+2_date": "2023-08-01",
+        "t+5_date": "2023-08-04",
+        "t0_date": "2023-07-28"
+      },
+      "stock_code": "000100",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-08-01",
+      "market": "KOSDAQ",
+      "receipt_no": "20230801000246",
+      "recorded_dates": {
+        "t+1_date": "2023-08-02",
+        "t+2_date": "2023-08-03",
+        "t+5_date": "2023-08-08",
+        "t0_date": "2023-08-01"
+      },
+      "stock_code": "115310",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-08-25",
+      "market": "KOSDAQ",
+      "receipt_no": "20230825000180",
+      "recorded_dates": {
+        "t+1_date": "2023-08-28",
+        "t+2_date": "2023-08-29",
+        "t+5_date": "2023-09-01",
+        "t0_date": "2023-08-25"
+      },
+      "stock_code": "052330",
+      "strata": [
+        "seeded_missing_time_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-09-04",
+      "market": "KOSDAQ",
+      "receipt_no": "20230904000023",
+      "recorded_dates": {
+        "t+1_date": null,
+        "t+2_date": null,
+        "t+5_date": null,
+        "t0_date": null
+      },
+      "stock_code": "240600",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2023-09-21",
+      "market": "KOSDAQ",
+      "receipt_no": "20230921000107",
+      "recorded_dates": {
+        "t+1_date": "2023-09-22",
+        "t+2_date": "2023-09-25",
+        "t+5_date": "2023-10-04",
+        "t0_date": "2023-09-21"
+      },
+      "stock_code": "082800",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2023-09-25",
+      "market": "KOSPI",
+      "receipt_no": "20230925000302",
+      "recorded_dates": {
+        "t+1_date": null,
+        "t+2_date": null,
+        "t+5_date": null,
+        "t0_date": null
+      },
+      "stock_code": "450080",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2023-09-27",
+      "market": "KOSDAQ",
+      "receipt_no": "20230927000441",
+      "recorded_dates": {
+        "t+1_date": "2023-10-04",
+        "t+2_date": "2023-10-05",
+        "t+5_date": "2023-10-11",
+        "t0_date": "2023-09-27"
+      },
+      "stock_code": "253840",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-10-23",
+      "market": "KOSPI",
+      "receipt_no": "20231023000241",
+      "recorded_dates": {
+        "t+1_date": "2023-10-24",
+        "t+2_date": "2023-10-25",
+        "t+5_date": "2023-10-30",
+        "t0_date": "2023-10-23"
+      },
+      "stock_code": "006980",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-10-24",
+      "market": "KOSPI",
+      "receipt_no": "20231024000130",
+      "recorded_dates": {
+        "t+1_date": "2023-10-25",
+        "t+2_date": "2023-10-26",
+        "t+5_date": "2023-10-31",
+        "t0_date": "2023-10-24"
+      },
+      "stock_code": "316140",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-11-06",
+      "market": "KOSPI",
+      "receipt_no": "20231106000081",
+      "recorded_dates": {
+        "t+1_date": "2023-11-07",
+        "t+2_date": "2023-11-08",
+        "t+5_date": "2023-11-13",
+        "t0_date": "2023-11-06"
+      },
+      "stock_code": "020000",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-11-15",
+      "market": "KOSPI",
+      "receipt_no": "20231115000038",
+      "recorded_dates": {
+        "t+1_date": "2023-11-16",
+        "t+2_date": "2023-11-17",
+        "t+5_date": "2023-11-22",
+        "t0_date": "2023-11-15"
+      },
+      "stock_code": "139130",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2023"
+      ]
+    },
+    {
+      "event_date": "2023-11-17",
+      "market": "KOSDAQ",
+      "receipt_no": "20231117000074",
+      "recorded_dates": {
+        "t+1_date": "2024-03-14",
+        "t+2_date": "2024-03-15",
+        "t+5_date": "2024-03-20",
+        "t0_date": "2024-03-13"
+      },
+      "stock_code": "036220",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2023-12-15",
+      "market": "KOSDAQ",
+      "receipt_no": "20231215000155",
+      "recorded_dates": {
+        "t+1_date": "2023-12-18",
+        "t+2_date": "2023-12-19",
+        "t+5_date": "2023-12-22",
+        "t0_date": "2023-12-15"
+      },
+      "stock_code": "044340",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2023"
+      ]
+    },
+    {
+      "event_date": "2023-12-21",
+      "market": "KOSDAQ",
+      "receipt_no": "20231221000297",
+      "recorded_dates": {
+        "t+1_date": "2023-12-22",
+        "t+2_date": "2023-12-26",
+        "t+5_date": "2024-01-02",
+        "t0_date": "2023-12-21"
+      },
+      "stock_code": "177830",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2024-01-04",
+      "market": "KOSPI",
+      "receipt_no": "20240104000066",
+      "recorded_dates": {
+        "t+1_date": "2024-01-05",
+        "t+2_date": "2024-01-08",
+        "t+5_date": "2024-01-11",
+        "t0_date": "2024-01-04"
+      },
+      "stock_code": "120030",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-02-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20240222001704",
+      "recorded_dates": {
+        "t+1_date": "2024-02-23",
+        "t+2_date": "2024-02-26",
+        "t+5_date": "2024-02-29",
+        "t0_date": "2024-02-22"
+      },
+      "stock_code": "091120",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2024-02-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20240223001059",
+      "recorded_dates": {
+        "t+1_date": "2024-02-26",
+        "t+2_date": "2024-02-27",
+        "t+5_date": "2024-03-04",
+        "t0_date": "2024-02-23"
+      },
+      "stock_code": "020710",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2024-02-27",
+      "market": "KOSPI",
+      "receipt_no": "20240227002205",
+      "recorded_dates": {
+        "t+1_date": "2024-02-28",
+        "t+2_date": "2024-02-29",
+        "t+5_date": "2024-03-06",
+        "t0_date": "2024-02-27"
+      },
+      "stock_code": "017370",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-02-29",
+      "market": "KOSPI",
+      "receipt_no": "20240229000484",
+      "recorded_dates": {
+        "t+1_date": "2024-03-04",
+        "t+2_date": "2024-03-05",
+        "t+5_date": "2024-03-08",
+        "t0_date": "2024-02-29"
+      },
+      "stock_code": "012610",
+      "strata": [
+        "seeded_missing_time_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-04-26",
+      "market": "KOSDAQ",
+      "receipt_no": "20240426000168",
+      "recorded_dates": {
+        "t+1_date": "2024-04-29",
+        "t+2_date": "2024-04-30",
+        "t+5_date": "2024-05-07",
+        "t0_date": "2024-04-26"
+      },
+      "stock_code": "230360",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2024-04-26",
+      "market": "KOSPI",
+      "receipt_no": "20240426000496",
+      "recorded_dates": {
+        "t+1_date": "2024-04-29",
+        "t+2_date": "2024-04-30",
+        "t+5_date": "2024-05-07",
+        "t0_date": "2024-04-26"
+      },
+      "stock_code": "002030",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-05-03",
+      "market": "KOSDAQ",
+      "receipt_no": "20240503000423",
+      "recorded_dates": {
+        "t+1_date": "2024-05-07",
+        "t+2_date": "2024-05-08",
+        "t+5_date": "2024-05-13",
+        "t0_date": "2024-05-03"
+      },
+      "stock_code": "080220",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2024-05-14",
+      "market": "KOSDAQ",
+      "receipt_no": "20240514000741",
+      "recorded_dates": {
+        "t+1_date": "2024-05-16",
+        "t+2_date": "2024-05-17",
+        "t+5_date": "2024-05-22",
+        "t0_date": "2024-05-14"
+      },
+      "stock_code": "403870",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2024-05-31",
+      "market": "KOSDAQ",
+      "receipt_no": "20240531002323",
+      "recorded_dates": {
+        "t+1_date": null,
+        "t+2_date": null,
+        "t+5_date": null,
+        "t0_date": null
+      },
+      "stock_code": "376900",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2024-08-07",
+      "market": "KOSPI",
+      "receipt_no": "20240807000261",
+      "recorded_dates": {
+        "t+1_date": "2024-08-08",
+        "t+2_date": "2024-08-09",
+        "t+5_date": "2024-08-14",
+        "t0_date": "2024-08-07"
+      },
+      "stock_code": "086790",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2024-08-07",
+      "market": "KOSDAQ",
+      "receipt_no": "20240807900132",
+      "recorded_dates": {
+        "t+1_date": "2024-08-08",
+        "t+2_date": "2024-08-09",
+        "t+5_date": "2024-08-14",
+        "t0_date": "2024-08-07"
+      },
+      "stock_code": "088390",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2024-08-08",
+      "market": "KOSPI",
+      "receipt_no": "20240808000271",
+      "recorded_dates": {
+        "t+1_date": "2024-08-09",
+        "t+2_date": "2024-08-12",
+        "t+5_date": "2024-08-16",
+        "t0_date": "2024-08-08"
+      },
+      "stock_code": "033780",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2024-09-02",
+      "market": "KOSPI",
+      "receipt_no": "20240902000285",
+      "recorded_dates": {
+        "t+1_date": "2024-09-03",
+        "t+2_date": "2024-09-04",
+        "t+5_date": "2024-09-09",
+        "t0_date": "2024-09-02"
+      },
+      "stock_code": "064960",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-10-07",
+      "market": "KOSDAQ",
+      "receipt_no": "20241007000146",
+      "recorded_dates": {
+        "t+1_date": "2024-10-08",
+        "t+2_date": "2024-10-10",
+        "t+5_date": "2024-10-15",
+        "t0_date": "2024-10-07"
+      },
+      "stock_code": "183300",
+      "strata": [
+        "seeded_missing_time_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2024-10-08",
+      "market": "KOSPI",
+      "receipt_no": "20241008000324",
+      "recorded_dates": {
+        "t+1_date": "2024-10-10",
+        "t+2_date": "2024-10-11",
+        "t+5_date": "2024-10-16",
+        "t0_date": "2024-10-08"
+      },
+      "stock_code": "023150",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-10-14",
+      "market": "KOSDAQ",
+      "receipt_no": "20241014000234",
+      "recorded_dates": {
+        "t+1_date": "2024-10-15",
+        "t+2_date": "2024-10-16",
+        "t+5_date": "2024-10-21",
+        "t0_date": "2024-10-14"
+      },
+      "stock_code": "264450",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2024-10-25",
+      "market": "KOSPI",
+      "receipt_no": "20241025000162",
+      "recorded_dates": {
+        "t+1_date": "2024-10-28",
+        "t+2_date": "2024-10-29",
+        "t+5_date": "2024-11-01",
+        "t0_date": "2024-10-25"
+      },
+      "stock_code": "055550",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2024"
+      ]
+    },
+    {
+      "event_date": "2024-12-26",
+      "market": "KOSDAQ",
+      "receipt_no": "20241226000007",
+      "recorded_dates": {
+        "t+1_date": "2024-12-27",
+        "t+2_date": "2024-12-30",
+        "t+5_date": "2025-01-06",
+        "t0_date": "2024-12-26"
+      },
+      "stock_code": "259630",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2024"
+      ]
+    },
+    {
+      "event_date": "2025-01-10",
+      "market": "KOSPI",
+      "receipt_no": "20250110000191",
+      "recorded_dates": {
+        "t+1_date": "2025-01-13",
+        "t+2_date": "2025-01-14",
+        "t+5_date": "2025-01-17",
+        "t0_date": "2025-01-10"
+      },
+      "stock_code": "012610",
+      "strata": [
+        "seeded_missing_time_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-01-21",
+      "market": "KOSDAQ",
+      "receipt_no": "20250121000201",
+      "recorded_dates": {
+        "t+1_date": "2025-01-22",
+        "t+2_date": "2025-01-23",
+        "t+5_date": null,
+        "t0_date": "2025-01-21"
+      },
+      "stock_code": "238120",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-22",
+      "market": "KOSPI",
+      "receipt_no": "20250122000268",
+      "recorded_dates": {
+        "t+1_date": "2025-01-23",
+        "t+2_date": "2025-01-24",
+        "t+5_date": "2025-02-04",
+        "t0_date": "2025-01-22"
+      },
+      "stock_code": "007340",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-22",
+      "market": "KOSPI",
+      "receipt_no": "20250122000377",
+      "recorded_dates": {
+        "t+1_date": "2025-01-23",
+        "t+2_date": "2025-01-24",
+        "t+5_date": "2025-02-04",
+        "t0_date": "2025-01-22"
+      },
+      "stock_code": "185750",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20250122000435",
+      "recorded_dates": {
+        "t+1_date": "2025-01-23",
+        "t+2_date": "2025-01-24",
+        "t+5_date": null,
+        "t0_date": "2025-01-22"
+      },
+      "stock_code": "416180",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-22",
+      "market": "KOSPI",
+      "receipt_no": "20250122800505",
+      "recorded_dates": {
+        "t+1_date": "2025-01-23",
+        "t+2_date": "2025-01-24",
+        "t+5_date": "2025-02-04",
+        "t0_date": "2025-01-22"
+      },
+      "stock_code": "001630",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20250123000177",
+      "recorded_dates": {
+        "t+1_date": "2025-01-24",
+        "t+2_date": "2025-01-31",
+        "t+5_date": null,
+        "t0_date": "2025-01-23"
+      },
+      "stock_code": "046440",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20250123000227",
+      "recorded_dates": {
+        "t+1_date": "2025-01-24",
+        "t+2_date": "2025-01-31",
+        "t+5_date": "2025-02-05",
+        "t0_date": "2025-01-23"
+      },
+      "stock_code": "033290",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20250124000283",
+      "recorded_dates": {
+        "t+1_date": "2025-01-31",
+        "t+2_date": "2025-02-03",
+        "t+5_date": "2025-02-06",
+        "t0_date": "2025-01-24"
+      },
+      "stock_code": "020710",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-01-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20250124000823",
+      "recorded_dates": {
+        "t+1_date": "2025-01-31",
+        "t+2_date": "2025-02-03",
+        "t+5_date": "2025-02-06",
+        "t0_date": "2025-01-24"
+      },
+      "stock_code": "425420",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-02-04",
+      "market": "KOSPI",
+      "receipt_no": "20250204000177",
+      "recorded_dates": {
+        "t+1_date": "2025-02-05",
+        "t+2_date": "2025-02-06",
+        "t+5_date": "2025-02-11",
+        "t0_date": "2025-02-04"
+      },
+      "stock_code": "086790",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-02-06",
+      "market": "KOSPI",
+      "receipt_no": "20250206000430",
+      "recorded_dates": {
+        "t+1_date": "2025-02-07",
+        "t+2_date": "2025-02-10",
+        "t+5_date": "2025-02-13",
+        "t0_date": "2025-02-06"
+      },
+      "stock_code": "138930",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-03-10",
+      "market": "KOSDAQ",
+      "receipt_no": "20250310000295",
+      "recorded_dates": {
+        "t+1_date": "2025-03-11",
+        "t+2_date": "2025-03-12",
+        "t+5_date": "2025-03-17",
+        "t0_date": "2025-03-10"
+      },
+      "stock_code": "294570",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-03-28",
+      "market": "KOSDAQ",
+      "receipt_no": "20250328000986",
+      "recorded_dates": {
+        "t+1_date": "2025-03-31",
+        "t+2_date": "2025-04-01",
+        "t+5_date": "2025-04-04",
+        "t0_date": "2025-03-28"
+      },
+      "stock_code": "072020",
+      "strata": [
+        "seeded_missing_time_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-04-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20250423000231",
+      "recorded_dates": {
+        "t+1_date": "2025-04-24",
+        "t+2_date": "2025-04-25",
+        "t+5_date": "2025-04-30",
+        "t0_date": "2025-04-23"
+      },
+      "stock_code": "036620",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-05-12",
+      "market": "KOSDAQ",
+      "receipt_no": "20250512000544",
+      "recorded_dates": {
+        "t+1_date": "2025-05-13",
+        "t+2_date": "2025-05-14",
+        "t+5_date": "2025-05-19",
+        "t0_date": "2025-05-12"
+      },
+      "stock_code": "149980",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-07-03",
+      "market": "KOSPI",
+      "receipt_no": "20250703000255",
+      "recorded_dates": {
+        "t+1_date": "2025-07-04",
+        "t+2_date": "2025-07-07",
+        "t+5_date": "2025-07-10",
+        "t0_date": "2025-07-03"
+      },
+      "stock_code": "039490",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2025-07-30",
+      "market": "KOSPI",
+      "receipt_no": "20250730000149",
+      "recorded_dates": {
+        "t+1_date": "2025-07-31",
+        "t+2_date": "2025-08-01",
+        "t+5_date": "2025-08-06",
+        "t0_date": "2025-07-30"
+      },
+      "stock_code": "000100",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-08-05",
+      "market": "KOSPI",
+      "receipt_no": "20250805000272",
+      "recorded_dates": {
+        "t+1_date": "2025-08-06",
+        "t+2_date": "2025-08-07",
+        "t+5_date": "2025-08-12",
+        "t0_date": "2025-08-05"
+      },
+      "stock_code": "453340",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-08-25",
+      "market": "KOSDAQ",
+      "receipt_no": "20250825000087",
+      "recorded_dates": {
+        "t+1_date": "2025-08-26",
+        "t+2_date": "2025-08-27",
+        "t+5_date": "2025-09-01",
+        "t0_date": "2025-08-25"
+      },
+      "stock_code": "170790",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-09-05",
+      "market": "KOSPI",
+      "receipt_no": "20250905000112",
+      "recorded_dates": {
+        "t+1_date": "2025-09-08",
+        "t+2_date": "2025-09-09",
+        "t+5_date": "2025-09-12",
+        "t0_date": "2025-09-05"
+      },
+      "stock_code": "016740",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-09-26",
+      "market": "KOSDAQ",
+      "receipt_no": "20250926000147",
+      "recorded_dates": {
+        "t+1_date": "2025-09-29",
+        "t+2_date": "2025-09-30",
+        "t+5_date": "2025-10-10",
+        "t0_date": "2025-09-26"
+      },
+      "stock_code": "123040",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-10-01",
+      "market": "KOSDAQ",
+      "receipt_no": "20251001000526",
+      "recorded_dates": {
+        "t+1_date": "2025-10-02",
+        "t+2_date": "2025-10-10",
+        "t+5_date": null,
+        "t0_date": "2025-10-01"
+      },
+      "stock_code": "091700",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-10-01",
+      "market": "KOSDAQ",
+      "receipt_no": "20251001000618",
+      "recorded_dates": {
+        "t+1_date": "2025-10-02",
+        "t+2_date": "2025-10-10",
+        "t+5_date": null,
+        "t0_date": "2025-10-01"
+      },
+      "stock_code": "090850",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-10-01",
+      "market": "KOSDAQ",
+      "receipt_no": "20251001000759",
+      "recorded_dates": {
+        "t+1_date": "2025-10-02",
+        "t+2_date": "2025-10-10",
+        "t+5_date": "2025-10-15",
+        "t0_date": "2025-10-01"
+      },
+      "stock_code": "475580",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2025-10-28",
+      "market": "KOSPI",
+      "receipt_no": "20251028000149",
+      "recorded_dates": {
+        "t+1_date": "2025-10-29",
+        "t+2_date": "2025-10-30",
+        "t+5_date": "2025-11-04",
+        "t0_date": "2025-10-28"
+      },
+      "stock_code": "001560",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2025"
+      ]
+    },
+    {
+      "event_date": "2025-11-19",
+      "market": "KOSDAQ",
+      "receipt_no": "20251119000080",
+      "recorded_dates": {
+        "t+1_date": "2025-11-20",
+        "t+2_date": "2025-11-21",
+        "t+5_date": "2025-11-26",
+        "t0_date": "2025-11-19"
+      },
+      "stock_code": "189300",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-11-27",
+      "market": "KOSDAQ",
+      "receipt_no": "20251127000963",
+      "recorded_dates": {
+        "t+1_date": "2025-11-28",
+        "t+2_date": "2025-12-01",
+        "t+5_date": "2025-12-04",
+        "t0_date": "2025-11-27"
+      },
+      "stock_code": "305090",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2025"
+      ]
+    },
+    {
+      "event_date": "2025-12-18",
+      "market": "KOSDAQ",
+      "receipt_no": "20251218000269",
+      "recorded_dates": {
+        "t+1_date": "2025-12-19",
+        "t+2_date": "2025-12-22",
+        "t+5_date": "2025-12-26",
+        "t0_date": "2025-12-18"
+      },
+      "stock_code": "397810",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2026-01-05",
+      "market": "KOSPI",
+      "receipt_no": "20260105000037",
+      "recorded_dates": {
+        "t+1_date": "2026-01-06",
+        "t+2_date": "2026-01-07",
+        "t+5_date": "2026-01-12",
+        "t0_date": "2026-01-05"
+      },
+      "stock_code": "002310",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-01-19",
+      "market": "KOSPI",
+      "receipt_no": "20260119000195",
+      "recorded_dates": {
+        "t+1_date": "2026-01-20",
+        "t+2_date": "2026-01-21",
+        "t+5_date": "2026-01-26",
+        "t0_date": "2026-01-19"
+      },
+      "stock_code": "058730",
+      "strata": [
+        "seeded_missing_time_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-01-27",
+      "market": "KOSDAQ",
+      "receipt_no": "20260127000237",
+      "recorded_dates": {
+        "t+1_date": "2026-01-28",
+        "t+2_date": "2026-01-29",
+        "t+5_date": "2026-02-03",
+        "t0_date": "2026-01-27"
+      },
+      "stock_code": "083930",
+      "strata": [
+        "all_exact_close_15_30"
+      ]
+    },
+    {
+      "event_date": "2026-01-27",
+      "market": "KOSPI",
+      "receipt_no": "20260127000392",
+      "recorded_dates": {
+        "t+1_date": "2026-01-28",
+        "t+2_date": "2026-01-29",
+        "t+5_date": "2026-02-03",
+        "t0_date": "2026-01-27"
+      },
+      "stock_code": "005930",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-01-29",
+      "market": "KOSPI",
+      "receipt_no": "20260129000359",
+      "recorded_dates": {
+        "t+1_date": "2026-01-30",
+        "t+2_date": "2026-02-02",
+        "t+5_date": "2026-02-05",
+        "t0_date": "2026-01-29"
+      },
+      "stock_code": "066570",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-02-09",
+      "market": "KOSDAQ",
+      "receipt_no": "20260209000391",
+      "recorded_dates": {
+        "t+1_date": "2026-02-10",
+        "t+2_date": "2026-02-11",
+        "t+5_date": "2026-02-19",
+        "t0_date": "2026-02-09"
+      },
+      "stock_code": "450330",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-02-11",
+      "market": "KOSPI",
+      "receipt_no": "20260211000382",
+      "recorded_dates": {
+        "t+1_date": "2026-02-12",
+        "t+2_date": "2026-02-13",
+        "t+5_date": "2026-02-23",
+        "t0_date": "2026-02-11"
+      },
+      "stock_code": "126560",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-02-11",
+      "market": "KOSPI",
+      "receipt_no": "20260211001124",
+      "recorded_dates": {
+        "t+1_date": "2026-02-12",
+        "t+2_date": "2026-02-13",
+        "t+5_date": "2026-02-23",
+        "t0_date": "2026-02-11"
+      },
+      "stock_code": "078520",
+      "strata": [
+        "seeded_after_close_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-02-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20260223001863",
+      "recorded_dates": {
+        "t+1_date": "2026-02-24",
+        "t+2_date": "2026-02-25",
+        "t+5_date": "2026-03-03",
+        "t0_date": "2026-02-23"
+      },
+      "stock_code": "039840",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-05-26",
+      "market": "KOSDAQ",
+      "receipt_no": "20260526000279",
+      "recorded_dates": {
+        "t+1_date": "2026-05-27",
+        "t+2_date": "2026-05-28",
+        "t+5_date": "2026-06-02",
+        "t0_date": "2026-05-26"
+      },
+      "stock_code": "080010",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-06-04",
+      "market": "KOSDAQ",
+      "receipt_no": "20260604000344",
+      "recorded_dates": {
+        "t+1_date": "2026-06-05",
+        "t+2_date": "2026-06-08",
+        "t+5_date": "2026-06-11",
+        "t0_date": "2026-06-04"
+      },
+      "stock_code": "439580",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-06-08",
+      "market": "KOSPI",
+      "receipt_no": "20260608000094",
+      "recorded_dates": {
+        "t+1_date": "2026-06-09",
+        "t+2_date": "2026-06-10",
+        "t+5_date": "2026-06-15",
+        "t0_date": "2026-06-08"
+      },
+      "stock_code": "009460",
+      "strata": [
+        "seeded_preclose_admitted:KOSPI:2026"
+      ]
+    },
+    {
+      "event_date": "2026-06-09",
+      "market": "KOSDAQ",
+      "receipt_no": "20260609000097",
+      "recorded_dates": {
+        "t+1_date": "2026-06-10",
+        "t+2_date": "2026-06-11",
+        "t+5_date": "2026-06-16",
+        "t0_date": "2026-06-09"
+      },
+      "stock_code": "065510",
+      "strata": [
+        "seeded_preclose_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-06-11",
+      "market": "KOSDAQ",
+      "receipt_no": "20260611000454",
+      "recorded_dates": {
+        "t+1_date": "2026-06-12",
+        "t+2_date": "2026-06-15",
+        "t+5_date": "2026-06-18",
+        "t0_date": "2026-06-11"
+      },
+      "stock_code": "143240",
+      "strata": [
+        "seeded_after_close_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-06-17",
+      "market": "KOSDAQ",
+      "receipt_no": "20260617000379",
+      "recorded_dates": {
+        "t+1_date": "2026-06-18",
+        "t+2_date": "2026-06-19",
+        "t+5_date": "2026-06-24",
+        "t0_date": "2026-06-17"
+      },
+      "stock_code": "046390",
+      "strata": [
+        "seeded_missing_time_admitted:KOSDAQ:2026"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20260622000092",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "336570",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20260622000094",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "017250",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSPI",
+      "receipt_no": "20260622000157",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "446070",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSPI",
+      "receipt_no": "20260622000224",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "023150",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20260622000233",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "032850",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSPI",
+      "receipt_no": "20260622000235",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "001420",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSPI",
+      "receipt_no": "20260622000237",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "035150",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-22",
+      "market": "KOSDAQ",
+      "receipt_no": "20260622000324",
+      "recorded_dates": {
+        "t+1_date": "2026-06-23",
+        "t+2_date": "2026-06-24",
+        "t+5_date": "2026-06-29",
+        "t0_date": "2026-06-22"
+      },
+      "stock_code": "032850",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20260623000051",
+      "recorded_dates": {
+        "t+1_date": "2026-06-24",
+        "t+2_date": "2026-06-25",
+        "t+5_date": "2026-06-30",
+        "t0_date": "2026-06-23"
+      },
+      "stock_code": "177350",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-23",
+      "market": "KOSPI",
+      "receipt_no": "20260623000084",
+      "recorded_dates": {
+        "t+1_date": "2026-06-24",
+        "t+2_date": "2026-06-25",
+        "t+5_date": "2026-06-30",
+        "t0_date": "2026-06-23"
+      },
+      "stock_code": "012280",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-23",
+      "market": "KOSPI",
+      "receipt_no": "20260623000139",
+      "recorded_dates": {
+        "t+1_date": "2026-06-24",
+        "t+2_date": "2026-06-25",
+        "t+5_date": "2026-06-30",
+        "t0_date": "2026-06-23"
+      },
+      "stock_code": "139130",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-23",
+      "market": "KOSDAQ",
+      "receipt_no": "20260623000188",
+      "recorded_dates": {
+        "t+1_date": "2026-06-24",
+        "t+2_date": "2026-06-25",
+        "t+5_date": "2026-06-30",
+        "t0_date": "2026-06-23"
+      },
+      "stock_code": "036620",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSPI",
+      "receipt_no": "20260624000047",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "020120",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000088",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "282880",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000124",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "134060",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSPI",
+      "receipt_no": "20260624000152",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "020120",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000155",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "439090",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000185",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "060720",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000190",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "031510",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000191",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "058630",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000194",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "134060",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000198",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "458350",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000220",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "035200",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000284",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "439090",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000318",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "417840",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000372",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "473980",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    },
+    {
+      "event_date": "2026-06-24",
+      "market": "KOSDAQ",
+      "receipt_no": "20260624000491",
+      "recorded_dates": {
+        "t+1_date": "2026-06-25",
+        "t+2_date": "2026-06-26",
+        "t+5_date": "2026-07-01",
+        "t0_date": "2026-06-24"
+      },
+      "stock_code": "473980",
+      "strata": [
+        "all_m0_7_excluded"
+      ]
+    }
+  ],
+  "selection_rules": {
+    "all_exact_close_15_30": 11,
+    "all_m0_7_excluded": 46,
+    "rank": "sha256(seed|tag|market:year|receipt_no), ascending",
+    "seeded_after_close_admitted_per_market_year": 2,
+    "seeded_missing_time_admitted_per_market_year": 1,
+    "seeded_preclose_admitted_per_market_year": 4
+  },
+  "selection_sha256": "aa89e2580c81eb445ff1cbe068cfc6a3216a1c2533f6eb210a28062dbc0e4716",
+  "source_pins": [
+    {
+      "bytes": 2290753,
+      "path": "data/event_study_buyback.csv",
+      "sha256": "0eb9f0c29a75243c132f89ce60026e3d41f25a6609db270a10513706c8c21d27"
+    },
+    {
+      "bytes": 75707,
+      "path": "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
+      "sha256": "0c61572d3e128a82b0b7d79c236541d0f5940db7a4fe1d1dd3ae061fa0ee99e5"
+    },
+    {
+      "bytes": 1234338,
+      "path": "artifacts/m0_7/historical_data_readiness_v1.json",
+      "sha256": "7a502f663f7e0449f2e17701f655b4962c05ca6d8d87f9f486637f36b0819a3f"
+    }
+  ],
+  "status": "precommitted_before_authenticated_retrieval"
+}

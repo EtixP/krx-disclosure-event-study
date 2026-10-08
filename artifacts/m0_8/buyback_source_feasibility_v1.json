@@ -1,0 +1,381 @@
+{
+  "access": {
+    "all_six_core_approved": false,
+    "core_krx": [
+      {
+        "blocker_code": "auth_required:kospi_stock_daily",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "kospi_stock_daily",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:kosdaq_stock_daily",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "kosdaq_stock_daily",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:kospi_security_basic",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "kospi_security_basic",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:kosdaq_security_basic",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "kosdaq_security_basic",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:kospi_index_daily",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "kospi_index_daily",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:kosdaq_index_daily",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "kosdaq_index_daily",
+        "status": "AUTH_REQUIRED"
+      }
+    ],
+    "optional": [
+      {
+        "blocker_code": "auth_required:fsc_stock_price_crosscheck",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "fsc_stock_price_crosscheck",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:fsc_listed_security_crosscheck",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "fsc_listed_security_crosscheck",
+        "status": "AUTH_REQUIRED"
+      },
+      {
+        "blocker_code": "auth_required:open_dart_corporation_bridge",
+        "credential_present": false,
+        "service_approved": false,
+        "service_id": "open_dart_corporation_bridge",
+        "status": "AUTH_REQUIRED"
+      }
+    ]
+  },
+  "canary": {
+    "authenticated_observations": 0,
+    "census": {
+      "base_krx_requests_three_endpoint_families": 1173,
+      "hard_core_krx_request_cap_including_retries": 1800,
+      "market_date_pairs_including_event_and_recorded_window_dates": 391,
+      "second_version_requests_two_market_dates_three_endpoint_families": 6,
+      "unique_receipts": 141
+    },
+    "definition_sha256": "ac94f3b62045823e759389bac641199571c4c034e9a823a5fce2dfb45df2f3f6",
+    "file_sha256": "cb42e612ecb226a4b1e664722b86355e7d2e00d66039d4efc7fa48f42a3165d1",
+    "path": "docs/history/M0.8-canary-v1.json",
+    "request_budget": {
+      "diagnostic_cap": 360,
+      "hard_cap": 1800,
+      "optional_combined_cap": 600,
+      "primary": 1173,
+      "retry_cap": 261,
+      "second_versions": 6
+    },
+    "selection_sha256": "aa89e2580c81eb445ff1cbe068cfc6a3216a1c2533f6eb210a28062dbc0e4716",
+    "source_pins": [
+      {
+        "bytes": 2290753,
+        "path": "data/event_study_buyback.csv",
+        "sha256": "0eb9f0c29a75243c132f89ce60026e3d41f25a6609db270a10513706c8c21d27"
+      },
+      {
+        "bytes": 75707,
+        "path": "artifacts/baselines/pre_revision/inputs/buyback_filing_times.csv",
+        "sha256": "0c61572d3e128a82b0b7d79c236541d0f5940db7a4fe1d1dd3ae061fa0ee99e5"
+      },
+      {
+        "bytes": 1234338,
+        "path": "artifacts/m0_7/historical_data_readiness_v1.json",
+        "sha256": "7a502f663f7e0449f2e17701f655b4962c05ca6d8d87f9f486637f36b0819a3f"
+      }
+    ],
+    "unprobed_receipts": 141
+  },
+  "decisions": {
+    "overall_ml_gate": {
+      "remaining_m0_7_blockers_outside_scope": [
+        "missing_point_in_time_disclosure_evidence",
+        "cross_category_copy_conflict"
+      ],
+      "summary": "NO_GO"
+    },
+    "production": {
+      "blockers": [
+        "public_noncommercial_terms",
+        "no_retained_superseding_production_agreement"
+      ],
+      "summary": "NO_GO_LICENSE"
+    },
+    "research": {
+      "blockers": [
+        "AUTH_REQUIRED:kosdaq_index_daily",
+        "AUTH_REQUIRED:kosdaq_security_basic",
+        "AUTH_REQUIRED:kosdaq_stock_daily",
+        "AUTH_REQUIRED:kospi_index_daily",
+        "AUTH_REQUIRED:kospi_security_basic",
+        "AUTH_REQUIRED:kospi_stock_daily"
+      ],
+      "summary": "AUTH_REQUIRED"
+    }
+  },
+  "evidence": {
+    "categorical_mismatch_counts": {},
+    "documentation_bytes": "PENDING_LOCAL_CAPTURE",
+    "identity_bridge": "NOT_OBSERVED",
+    "local_raw_blobs": 0,
+    "local_response_envelopes": 0,
+    "offline_replays": 0,
+    "raw_outcome_schema": "NOT_OBSERVED",
+    "revision_comparison": "NOT_OBSERVED"
+  },
+  "full_cohort_projection": {
+    "classification": "projection_not_observation",
+    "conservative_market_date_pairs": 2444,
+    "conservative_three_family_requests": 7332,
+    "event_dates": 1163,
+    "exact_market_date_pairs": 2421,
+    "exact_three_family_requests": 7263,
+    "rows": 4846,
+    "stock_codes": 1020,
+    "window_dates": 1222
+  },
+  "generation": {
+    "authenticated_calls": 0,
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "scripts.assess_official_source_feasibility",
+      "--output",
+      "/tmp/m0_8_buyback_source_feasibility_v1.json"
+    ],
+    "database_used": false,
+    "network_used": false,
+    "python_executable": ".venv/bin/python",
+    "restricted_provider_values_in_artifact": 0
+  },
+  "generator_sources": [
+    {
+      "bytes": 7572,
+      "path": "scripts/assess_official_source_feasibility.py",
+      "sha256": "ff6b3c0e93f7f57a8ef0e1c474d25a15a790862740475c646ac06d73f7ae253c"
+    },
+    {
+      "bytes": 52214,
+      "path": "src/kdtb/data/official_source_feasibility.py",
+      "sha256": "5fa92b0e7edc447867f2e5fc66bd641a58a986ae67d21d876d3aa7eb18e92dfe"
+    },
+    {
+      "bytes": 36867,
+      "path": "scripts/audit_historical_data_readiness.py",
+      "sha256": "1993452b74a68cff1dba8db36d5bfdb9925e0bc97c4e79bf890611e5ac76d51c"
+    }
+  ],
+  "milestone": {
+    "next_bounded_action": "obtain all six KRX service approvals, then run the frozen canary under the 1800-call cap",
+    "reason": "all six KRX service approvals and an authenticated offline-replayable canary are required",
+    "status": "BLOCKED",
+    "verified": false
+  },
+  "schema_version": "m0.8_buyback_source_feasibility_v1",
+  "scope": "buyback official-source and production-license feasibility",
+  "source_contracts": [
+    {
+      "advertised_coverage": "2010 onward",
+      "authentication": "AUTH_KEY header; separate service approval required",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "32d89cd6053ed22de8ab04a39097d8a1410123f7deaf0505f63c1f4db7e87349",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://openapi.krx.co.kr/contents/OPP/INFO/service/OPPINFO004.cmd",
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_bydd_trd",
+      "endpoint_family": "stock_daily",
+      "license_class": "public noncommercial API terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "KRX_OPEN_API",
+      "request_limit": "10000 requests per key per day",
+      "service_id": "kospi_stock_daily",
+      "terms_url": "https://openapi.krx.co.kr/contents/OPP/INFO/OPPINFO002.jsp"
+    },
+    {
+      "advertised_coverage": "2010 onward",
+      "authentication": "AUTH_KEY header; separate service approval required",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "326fad0969e12214a61b134e49edaead1f39afc8cdd7bb3fccfe1769182d2213",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://openapi.krx.co.kr/contents/OPP/INFO/service/OPPINFO004.cmd",
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_bydd_trd",
+      "endpoint_family": "stock_daily",
+      "license_class": "public noncommercial API terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "KRX_OPEN_API",
+      "request_limit": "10000 requests per key per day",
+      "service_id": "kosdaq_stock_daily",
+      "terms_url": "https://openapi.krx.co.kr/contents/OPP/INFO/OPPINFO002.jsp"
+    },
+    {
+      "advertised_coverage": "2010 onward",
+      "authentication": "AUTH_KEY header; separate service approval required",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "f94a1da651d25a7ec3c8ec85536647bde9088fec88fdb60f06d32499347693a7",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://openapi.krx.co.kr/contents/OPP/INFO/service/OPPINFO004.cmd",
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info",
+      "endpoint_family": "security_basic",
+      "license_class": "public noncommercial API terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "KRX_OPEN_API",
+      "request_limit": "10000 requests per key per day",
+      "service_id": "kospi_security_basic",
+      "terms_url": "https://openapi.krx.co.kr/contents/OPP/INFO/OPPINFO002.jsp"
+    },
+    {
+      "advertised_coverage": "2010 onward",
+      "authentication": "AUTH_KEY header; separate service approval required",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "b0bbffcebe4e81fb034db5ce71587607c4259a4da3275cff8283c547b1e8270a",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://openapi.krx.co.kr/contents/OPP/INFO/service/OPPINFO004.cmd",
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_isu_base_info",
+      "endpoint_family": "security_basic",
+      "license_class": "public noncommercial API terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "KRX_OPEN_API",
+      "request_limit": "10000 requests per key per day",
+      "service_id": "kosdaq_security_basic",
+      "terms_url": "https://openapi.krx.co.kr/contents/OPP/INFO/OPPINFO002.jsp"
+    },
+    {
+      "advertised_coverage": "2010 onward",
+      "authentication": "AUTH_KEY header; separate service approval required",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "3f29787986cbc7c247aa5a03be4c5e1ed6ad701e551ba31b4ed05c0c1d1fbaf1",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://openapi.krx.co.kr/contents/OPP/INFO/service/OPPINFO004.cmd",
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/idx/kospi_dd_trd",
+      "endpoint_family": "index_daily",
+      "license_class": "public noncommercial API terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "KRX_OPEN_API",
+      "request_limit": "10000 requests per key per day",
+      "service_id": "kospi_index_daily",
+      "terms_url": "https://openapi.krx.co.kr/contents/OPP/INFO/OPPINFO002.jsp"
+    },
+    {
+      "advertised_coverage": "2010 onward",
+      "authentication": "AUTH_KEY header; separate service approval required",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "0ea0c4de70be3aeae4b99df4cf6c588536c3305b637cba71b5ab8e85af4c32d8",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://openapi.krx.co.kr/contents/OPP/INFO/service/OPPINFO004.cmd",
+      "endpoint": "https://data-dbg.krx.co.kr/svc/apis/idx/kosdaq_dd_trd",
+      "endpoint_family": "index_daily",
+      "license_class": "public noncommercial API terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "KRX_OPEN_API",
+      "request_limit": "10000 requests per key per day",
+      "service_id": "kosdaq_index_daily",
+      "terms_url": "https://openapi.krx.co.kr/contents/OPP/INFO/OPPINFO002.jsp"
+    },
+    {
+      "advertised_coverage": "official contract; empirical history unverified",
+      "authentication": "transient serviceKey query parameter",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "f621434c48215d079fdc47106100ce1913bdbe3013bb5f346304bd644027444d",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://www.data.go.kr/data/15094808/openapi.do",
+      "endpoint": "https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService",
+      "endpoint_family": "stock_daily_crosscheck",
+      "license_class": "posted noncommercial/no-modification terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "FSC_DATA_GO_KR",
+      "request_limit": "unknown",
+      "service_id": "fsc_stock_price_crosscheck",
+      "terms_url": "https://www.data.go.kr/data/15094808/openapi.do"
+    },
+    {
+      "advertised_coverage": "official contract; empirical history unverified",
+      "authentication": "transient serviceKey query parameter",
+      "commercial_use": "prohibited absent retained superseding agreement",
+      "contract_sha256": "ff6a1e76297321ee92a8c68bde02496d2a1784ee927276ce0e38fd21db0b33a5",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://www.data.go.kr/data/15094775/openapi.do",
+      "endpoint": "https://apis.data.go.kr/1160100/service/GetKrxListedInfoService",
+      "endpoint_family": "listed_security_crosscheck",
+      "license_class": "posted noncommercial/no-modification terms",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "FSC_DATA_GO_KR",
+      "request_limit": "unknown",
+      "service_id": "fsc_listed_security_crosscheck",
+      "terms_url": "https://www.data.go.kr/data/15094775/openapi.do"
+    },
+    {
+      "advertised_coverage": "current mapping with modification date",
+      "authentication": "transient crtfc_key query parameter",
+      "commercial_use": "unknown",
+      "contract_sha256": "d03858b003d83e2f2d3eff8c9c62287d2828c844909413d2a83b3dd4550b764d",
+      "documentation_evidence": {
+        "authenticated_provider_value": false,
+        "status": "pending_local_byte_capture"
+      },
+      "documentation_url": "https://opendart.fss.or.kr/guide/detail.do?apiGrpCd=DE001&apiId=AE00004",
+      "endpoint": "https://opendart.fss.or.kr/api/corpCode.xml",
+      "endpoint_family": "current_corporation_code",
+      "license_class": "official API contract; production rights unproved",
+      "method": "GET",
+      "observed_at_utc": "2026-10-03T00:00:00Z",
+      "provider": "OPEN_DART",
+      "request_limit": "unknown",
+      "service_id": "open_dart_corporation_bridge",
+      "terms_url": "https://opendart.fss.or.kr/guide/detail.do?apiGrpCd=DE001&apiId=AE00004"
+    }
+  ]
+}

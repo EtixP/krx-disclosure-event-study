@@ -1,41 +1,19 @@
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
 
-from kdtb.learning.features import FEATURE_NAMES
 from kdtb.learning.walk_forward_trainer import (
     make_folds,
     run_walk_forward,
 )
 
 
-def _synthetic_df(n_per_half: int, n_halves: int, edge: bool, seed: int = 0) -> pd.DataFrame:
-    """Build a synthetic mock-trade dataset spread across half-year folds.
+def _synthetic_df(
+    n_per_half: int, n_halves: int, edge: bool, seed: int = 0
+) -> pd.DataFrame:
+    from kdtb.learning.synthetic import synthetic_trades
 
-    If edge=True, feature 0 (market_is_kospi) predicts returns: KOSPI trades
-    are profitable, KOSDAQ trades lose. If edge=False, returns are pure noise.
-    """
-    rng = np.random.RandomState(seed)
-    rows = []
-    periods = []
-    start_year = 2022
-    for h in range(n_halves):
-        year = start_year + h // 2
-        month = 3 if h % 2 == 0 else 9  # H1 vs H2
-        for _ in range(n_per_half):
-            feats = rng.rand(len(FEATURE_NAMES))
-            feats[0] = 1.0 if rng.rand() > 0.5 else 0.0  # market_is_kospi
-            if edge:
-                base = 0.02 if feats[0] > 0.5 else -0.02
-            else:
-                base = 0.0
-            ret = base + rng.randn() * 0.004
-            rows.append(list(feats) + [f"{year}-{month:02d}-15", ret, int(ret > 0)])
-    cols = FEATURE_NAMES + ["event_date", "realized_net_return", "label"]
-    df = pd.DataFrame(rows, columns=cols)
-    df["event_date"] = pd.to_datetime(df["event_date"])
-    return df
+    return synthetic_trades(n_per_half, n_halves, edge=edge, seed=seed)
 
 
 def test_make_folds_chronological_halves():
@@ -78,5 +56,7 @@ def test_trainer_no_lookahead_train_strictly_precedes_test():
         test_fold = next(f[1] for f in folds if f[0] == fr.period)
         test_min = test_fold["event_date"].min()
         # reconstruct the train window: folds[0 .. k-2]
-        train = pd.concat([folds[j][1] for j in range(fr.fold_index - 1)], ignore_index=True)
+        train = pd.concat(
+            [folds[j][1] for j in range(fr.fold_index - 1)], ignore_index=True
+        )
         assert train["event_date"].max() < test_min

@@ -41,3 +41,19 @@ def test_committed_cost_revision_artifact_is_immutable_and_reconciles():
 def test_cost_revision_generator_refuses_to_overwrite_verified_artifact():
     with pytest.raises(ValueError, match="immutable"):
         require_nonhistorical_output(DEFAULT_OUTPUT)
+
+
+def test_current_cost_builder_records_executed_baseline_source():
+    from scripts.compare_cost_revision import build_comparison
+    from kdtb.research.baseline import _json_ready
+
+    current = _json_ready(
+        build_comparison(before_dir=PROJECT_ROOT / "artifacts/baselines/pre_revision")
+    )
+    sources = {row["path"]: row["sha256"] for row in current["generator_sources"]}
+    assert sources["src/kdtb/research/baseline.py"] == sha256_file(
+        PROJECT_ROOT / "src/kdtb/research/baseline.py"
+    )
+    recorded = json.loads(ARTIFACT.read_text())
+    for key in ("categories", "buyback_learner", "buyback_intraday", "tax_schedule"):
+        assert current[key] == recorded[key]

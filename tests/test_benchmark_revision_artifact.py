@@ -6,6 +6,11 @@ from pathlib import Path
 
 import pytest
 
+from tests.historical_artifact_assertions import (
+    assert_current_replay,
+    assert_historical_source_record,
+)
+
 from kdtb.data.benchmarks import BENCHMARK_CONTEXT_COLUMNS
 from kdtb.research.baseline import sha256_file, write_json
 from scripts.compare_benchmark_adjustment import build_comparison
@@ -19,7 +24,16 @@ def test_committed_benchmark_comparison_regenerates_and_reconciles(tmp_path):
     recorded = json.loads(ARTIFACT.read_text(encoding="utf-8"))
     regenerated = tmp_path / "comparison.json"
     write_json(regenerated, build_comparison())
-    assert json.loads(regenerated.read_text(encoding="utf-8")) == recorded
+    assert_current_replay(
+        PROJECT_ROOT, recorded, json.loads(regenerated.read_text(encoding="utf-8"))
+    )
+    current_sources = {
+        row["path"]: row["sha256"]
+        for row in json.loads(regenerated.read_text())["generator_sources"]
+    }
+    assert current_sources["src/kdtb/research/baseline.py"] == sha256_file(
+        PROJECT_ROOT / "src/kdtb/research/baseline.py"
+    )
 
     assert recorded["methodology"]["assignment"] == {
         "KOSDAQ": {"benchmark_symbol": "KOSDAQ", "pykrx_ticker_reference": "2001"},
@@ -28,9 +42,9 @@ def test_committed_benchmark_comparison_regenerates_and_reconciles(tmp_path):
     for category in recorded["categories"]:
         for metric in category["metrics"].values():
             assert metric["raw_unchanged_from_m0_2"] is True
-            assert metric["abnormal_net_pct"] - metric["current_raw_net_pct"] == pytest.approx(
-                metric["abnormal_minus_raw_pct_points"]
-            )
+            assert metric["abnormal_net_pct"] - metric[
+                "current_raw_net_pct"
+            ] == pytest.approx(metric["abnormal_minus_raw_pct_points"])
         assert category["walk_forward"]["scored_folds"] >= 4
 
     learner = recorded["buyback_learner"]
@@ -54,7 +68,10 @@ def test_committed_benchmark_comparison_regenerates_and_reconciles(tmp_path):
 
     for group in ("inputs", "generator_sources"):
         for record in recorded[group]:
-            assert sha256_file(PROJECT_ROOT / record["path"]) == record["sha256"]
+            if group == "generator_sources":
+                assert_historical_source_record(PROJECT_ROOT, record)
+            else:
+                assert sha256_file(PROJECT_ROOT / record["path"]) == record["sha256"]
 
 
 def test_benchmark_enrichment_preserves_immutable_m0_2_input_lexemes(tmp_path):
@@ -90,10 +107,6 @@ def test_benchmark_enrichment_preserves_immutable_m0_2_input_lexemes(tmp_path):
             )
             writer.writeheader()
             writer.writerows(
-                {
-                    column: row[column]
-                    for column in preserved_fields
-                }
-                for row in rows
+                {column: row[column] for column in preserved_fields} for row in rows
             )
         assert sha256_file(projected) == record["sha256"], record["path"]

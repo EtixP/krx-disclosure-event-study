@@ -18,6 +18,7 @@ logs/
 data/raw/
 data/cache/
 data/backups/
+local_evidence/
 data/*.csv
 data/*.log
 # ...but the derived event-study results are the research deliverable: they
