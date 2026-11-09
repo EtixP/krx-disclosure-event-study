@@ -20,6 +20,7 @@ assumptions rather than statutory-history claims. Slippage is quoted in basis
 points *per side*. Costs use the same notional on both sides, matching the
 project's pre-existing return-drag approximation.
 """
+
 from __future__ import annotations
 
 import math
@@ -158,9 +159,7 @@ class CostModel(BaseModel):
 
     commission_per_side: float = Field(default=DEFAULT_COMMISSION_PER_SIDE, ge=0)
     vat_on_commission: float = Field(default=DEFAULT_VAT_ON_COMMISSION, ge=0)
-    slippage_bps_per_side: float = Field(
-        default=DEFAULT_SLIPPAGE_BPS_PER_SIDE, ge=0
-    )
+    slippage_bps_per_side: float = Field(default=DEFAULT_SLIPPAGE_BPS_PER_SIDE, ge=0)
 
     def roundtrip_breakdown(
         self,
@@ -216,7 +215,9 @@ class CostModel(BaseModel):
         bought = _as_date(buy_date, field="buy_date")
         _market(market)
         if bought < SUPPORTED_START_DATE or bought > SUPPORTED_END_DATE:
-            raise ValueError("buy_date is outside the model's 2021-2026 supported period")
+            raise ValueError(
+                "buy_date is outside the model's 2021-2026 supported period"
+            )
         commission = notional * self.commission_per_side
         return (
             commission
@@ -274,12 +275,8 @@ class CostModel(BaseModel):
         """
 
         return [
-            self.roundtrip_cost(
-                1.0, buy_date=bought, sell_date=sold, market=market
-            )
-            for bought, sold, market in zip(
-                buy_dates, sell_dates, markets, strict=True
-            )
+            self.roundtrip_cost(1.0, buy_date=bought, sell_date=sold, market=market)
+            for bought, sold, market in zip(buy_dates, sell_dates, markets, strict=True)
         ]
 
     def net_return(

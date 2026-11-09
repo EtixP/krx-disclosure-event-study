@@ -1,0 +1,235 @@
+{
+  "files": [
+    {
+      "source": "LICENSE",
+      "source_sha256": "26cf01e81303c828d79b95851f921839d57168242888500b22b2472e6dcef518",
+      "target": "LICENSE",
+      "target_sha256": "26cf01e81303c828d79b95851f921839d57168242888500b22b2472e6dcef518",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/__init__.py",
+      "source_sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+      "target": "src/kdtb/__init__.py",
+      "target_sha256": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/backtest/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target": "src/kdtb/backtest/__init__.py",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/backtest/cost_model.py",
+      "source_sha256": "0953db78021ad90bf09f413b71e5631d954aa56e87c0fc3b7a946cda7eca67a3",
+      "target": "src/kdtb/backtest/cost_model.py",
+      "target_sha256": "e94a8a131eedc69fdc7dc082465227e826eee5d2ee8d19f5b9a03b37efff560f",
+      "transformation": "format_only_same_ast"
+    },
+    {
+      "source": "src/kdtb/data/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target": "src/kdtb/data/__init__.py",
+      "target_sha256": "f65c3d3f6b69d49f941bbc3d3c7041671d2887efafab8a33e71ebc592a87cb5d",
+      "transformation": "scoped_package_initializer"
+    },
+    {
+      "definitions": [
+        {
+          "name": "extract_text_from_document_zip",
+          "source": "src/kdtb/data/dart_client.py",
+          "source_sha256": "8297841e210ce13a45620e90784a15d0ded730a5846121916e59623a446f7c83"
+        },
+        {
+          "name": "decode_report_relations_html",
+          "source": "src/kdtb/data/dart_client.py",
+          "source_sha256": "8297841e210ce13a45620e90784a15d0ded730a5846121916e59623a446f7c83"
+        },
+        {
+          "name": "_ReportRelationParser",
+          "source": "src/kdtb/data/dart_client.py",
+          "source_sha256": "8297841e210ce13a45620e90784a15d0ded730a5846121916e59623a446f7c83"
+        },
+        {
+          "name": "parse_report_relations_html",
+          "source": "src/kdtb/data/dart_client.py",
+          "source_sha256": "8297841e210ce13a45620e90784a15d0ded730a5846121916e59623a446f7c83"
+        }
+      ],
+      "target": "src/kdtb/data/dart_documents.py",
+      "target_sha256": "ca90654137b5f27451134a0fd3f9019f074464797f706785641a500d6fff2528",
+      "transformation": "exact_ast_extraction"
+    },
+    {
+      "source": "src/kdtb/events/__init__.py",
+      "source_sha256": "c59eaa995f9b78c7b3ca95e931dfe53967e8a6d493bb60e7e61f9cddbf60969d",
+      "target": "src/kdtb/events/__init__.py",
+      "target_sha256": "c59eaa995f9b78c7b3ca95e931dfe53967e8a6d493bb60e7e61f9cddbf60969d",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/events/chronology.py",
+      "source_sha256": "a3d6769a21bd28cd488a770f1c0568949a5109da269dc97772269ae427dab286",
+      "target": "src/kdtb/events/chronology.py",
+      "target_sha256": "a3d6769a21bd28cd488a770f1c0568949a5109da269dc97772269ae427dab286",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/events/normalizer.py",
+      "source_sha256": "78976376752ace4cfb7153792eff4197c483f82a504e252fbf68b4bd96a937e0",
+      "target": "src/kdtb/events/normalizer.py",
+      "target_sha256": "78976376752ace4cfb7153792eff4197c483f82a504e252fbf68b4bd96a937e0",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/learning/__init__.py",
+      "source_sha256": "1419ba557dfcf388c8ede5559c287c30f5b0a27991b3d8fa00e1999aed7707c8",
+      "target": "src/kdtb/learning/__init__.py",
+      "target_sha256": "8a218a62f71e3894b1ecca53104d4eea239d4e2fa2eda208e103c2327152417d",
+      "transformation": "scoped_package_initializer"
+    },
+    {
+      "source": "src/kdtb/learning/buyback_evaluation.py",
+      "source_sha256": "69be9b10e474f1eff84ba3a3d824a5c095f7d39f5e55ba14e32eacbf8a1e1b6b",
+      "target": "src/kdtb/learning/buyback_evaluation.py",
+      "target_sha256": "69be9b10e474f1eff84ba3a3d824a5c095f7d39f5e55ba14e32eacbf8a1e1b6b",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/learning/buyback_features.py",
+      "source_sha256": "d2f8d38b1b65b1b160007e8850bc9c9bbf7a32afd68fdfe1088cb12d10b7c11d",
+      "target": "src/kdtb/learning/buyback_features.py",
+      "target_sha256": "42d65121a0df767d0cd0800f0434a5b83b1a2e6f7a32df66806bf55b2f28a92e",
+      "transformation": "relocated_imports_only"
+    },
+    {
+      "source": "src/kdtb/schemas/__init__.py",
+      "source_sha256": "9360dad019af3fed3585defbfa1295c856600b8dec366617333767f1cb03f53d",
+      "target": "src/kdtb/schemas/__init__.py",
+      "target_sha256": "20903ad518818fe9834b49a0a0f9bd0e258fb2a6b7ec62225a1280a42b2ac6c9",
+      "transformation": "scoped_package_initializer"
+    },
+    {
+      "source": "src/kdtb/schemas/disclosure.py",
+      "source_sha256": "d47175edc9be494bbd010ffe711573dc1371a02ca426247fbe273ea542e50233",
+      "target": "src/kdtb/schemas/disclosure.py",
+      "target_sha256": "d47175edc9be494bbd010ffe711573dc1371a02ca426247fbe273ea542e50233",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "src/kdtb/schemas/economic_event.py",
+      "source_sha256": "6eb38534c9bfad79c1c4ee03d709ee9d0db9f1c6b71325349b6ea705114aee45",
+      "target": "src/kdtb/schemas/economic_event.py",
+      "target_sha256": "6eb38534c9bfad79c1c4ee03d709ee9d0db9f1c6b71325349b6ea705114aee45",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "definitions": [
+        {
+          "name": "require_utc",
+          "source": "src/kdtb/schemas/experiment.py",
+          "source_sha256": "a04e2f06e3028f58b8f99472eb749e695c4c52a900f7e682a9eac31a6c65687a"
+        },
+        {
+          "name": "TradingSession",
+          "source": "src/kdtb/schemas/forward_outcome.py",
+          "source_sha256": "1183ea40f74ebb2f2ac9e3e8947a84167916b2ae0a5023f683c545a982b15052"
+        }
+      ],
+      "target": "src/kdtb/schemas/session.py",
+      "target_sha256": "fa5462d474b8a479f7a11ddde9590dbb3682e453156868daaaf4438d8af1fa9a",
+      "transformation": "exact_ast_extraction"
+    },
+    {
+      "source": "tests/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target": "tests/__init__.py",
+      "target_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "tests/fixtures/dart_attachment_correction_20260713000496.html",
+      "source_sha256": "f38e81c52796906f44b7ccb4de465ab8c034df4cb0fb1143fb5b849004280b17",
+      "target": "tests/fixtures/dart_attachment_correction_20260713000496.html",
+      "target_sha256": "f38e81c52796906f44b7ccb4de465ab8c034df4cb0fb1143fb5b849004280b17",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "tests/test_buyback_evaluation.py",
+      "source_sha256": "bcd660bac82b91e898f258fc9fdee8650de89251224a5229febbf8d42007dc87",
+      "target": "tests/test_buyback_evaluation.py",
+      "target_sha256": "bcd660bac82b91e898f258fc9fdee8650de89251224a5229febbf8d42007dc87",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "source": "tests/test_buyback_features.py",
+      "source_sha256": "6832c07b7272407380a0730744871ae95c05ba0f464bf2179a1f50c369c9e9cb",
+      "target": "tests/test_buyback_features.py",
+      "target_sha256": "2ce6971592c8bb568310101ea654688079d3060102033d19a34a6016633a8918",
+      "transformation": "relocated_imports_only"
+    },
+    {
+      "source": "tests/test_cost_model.py",
+      "source_sha256": "9d237a986813250400ada960123d33136503ddff83073b13a1007775365784a3",
+      "target": "tests/test_cost_model.py",
+      "target_sha256": "9d237a986813250400ada960123d33136503ddff83073b13a1007775365784a3",
+      "transformation": "byte_identical_copy"
+    },
+    {
+      "definitions": [
+        {
+          "name": "test_parse_report_relations_html",
+          "source": "tests/test_dart_client.py",
+          "source_sha256": "ea516bd004b99cfebaea9bb5d180c5418f87010d3958036423e6e977bc2b97b5"
+        },
+        {
+          "name": "test_parse_captured_attachment_correction_bridges_att_to_parent_family",
+          "source": "tests/test_dart_client.py",
+          "source_sha256": "ea516bd004b99cfebaea9bb5d180c5418f87010d3958036423e6e977bc2b97b5"
+        },
+        {
+          "name": "test_parse_report_relations_rejects_non_viewer_response",
+          "source": "tests/test_dart_client.py",
+          "source_sha256": "ea516bd004b99cfebaea9bb5d180c5418f87010d3958036423e6e977bc2b97b5"
+        }
+      ],
+      "target": "tests/test_dart_relationships.py",
+      "target_sha256": "87886e7c33ce59b48ad51cb2a4a2883ce6f539777b99704a0fda2c98bac66aa4",
+      "transformation": "exact_ast_extraction"
+    },
+    {
+      "source": "tests/test_document_fetcher.py",
+      "source_sha256": "74cc6bf6f1e7848c8a753045ca84b4f4e028da9115dfd1fc9a431d15dd442d4c",
+      "target": "tests/test_document_fetcher.py",
+      "target_sha256": "2213a9cc30b147b487f635fc7014e16d373e608dfbe13109695ad8ad6187ca7b",
+      "transformation": "relocated_imports_only"
+    },
+    {
+      "source": "tests/test_event_normalizer.py",
+      "source_sha256": "a820e32c398d6087a0abeec6124c20990c69dd37c9cb62f637760937551675c1",
+      "target": "tests/test_event_normalizer.py",
+      "target_sha256": "9132654631674dee2008817c42c61e2f2b6be5b1396a98324eb1242fd351b0c1",
+      "transformation": "relocated_imports_only"
+    }
+  ],
+  "notes": [
+    "Latest working files were selected; the base commit does not contain all uncommitted source versions.",
+    "Original checkout, datasets, evidence and deferred components remain unchanged there; none is copied or admitted as market data.",
+    "Cost-model formatting only was approved after inspecting the Black diff; the full module AST is unchanged.",
+    "Generated project metadata, handoff documentation and ignore rules implement the new paper-trading scope.",
+    "Excluded original research tests/data are not claimed as part of this focused branch."
+  ],
+  "original_preservation_guard": {
+    "file_count": 699,
+    "manifest_sha256": "bc93824a1f06af468e67826f62273d7a588cd89060d64862b8165ed1e94b3e6c"
+  },
+  "purpose": "Selected source provenance for the focused paper-trading branch, not data admission or a full backup.",
+  "snapshot_date_client": "2026-11-08",
+  "source_base_commit": "d59b56a0fda412c038eb359ca6d6149fe70c23e5",
+  "source_branch": "ML_Design",
+  "source_checkout": "/Users/jsp2022310/krx-disclosure-event-study",
+  "source_status_sha256": "dfc41e11a5e4605cc3664243377d6a79ea5773fd5f7c94ece946223f1f1b9c69",
+  "source_worktree_was_dirty": true
+}

@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from kdtb.data.dart_client import parse_report_relations_html
+from kdtb.data.dart_documents import parse_report_relations_html
 from kdtb.events.normalizer import (
     classify_event_action,
     normalize_disclosures,

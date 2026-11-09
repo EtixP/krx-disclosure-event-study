@@ -3,7 +3,7 @@ from __future__ import annotations
 import io
 import zipfile
 
-from kdtb.data.dart_client import extract_text_from_document_zip
+from kdtb.data.dart_documents import extract_text_from_document_zip
 
 
 def _make_zip(name: str, content: str, encoding: str = "utf-8") -> bytes:

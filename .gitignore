@@ -1,36 +1,30 @@
-# Secrets and local config
+# Credentials and private local settings
 .env
 .env.*
-!.env.example
 config/local.yaml
 config/secrets.yaml
 
-# Databases
+# Local datasets, evidence and simulation output
+/data/
+/local_evidence/
+/artifacts/
+/reports/
+/logs/
 *.db
-*.sqlite
-*.sqlite3
 *.db-shm
 *.db-wal
 *.db-journal
+*.sqlite
+*.sqlite3
+*.parquet
+*.pkl
+*.joblib
 
-# Logs and raw data
-logs/
-data/raw/
-data/cache/
-data/backups/
-local_evidence/
-data/*.csv
-data/*.log
-# ...but the derived event-study results are the research deliverable: they
-# let a reader reproduce the findings table without a 5-year DART re-ingest.
-!data/event_study_*.csv
-# M0.3 pins normalized benchmark closes needed to regenerate adjusted results.
-!data/benchmark_indices.csv
-
-# Python
+# Python environments, caches and builds
+.venv/
+venv/
 __pycache__/
 *.py[cod]
-*$py.class
 *.egg-info/
 .pytest_cache/
 .mypy_cache/
@@ -40,13 +34,15 @@ htmlcov/
 build/
 dist/
 
-# Virtual environments
-.venv/
-venv/
-env/
-
-# OS / editor
+# Local editor files
 .DS_Store
 .idea/
 .vscode/
 *.swp
+
+# Local agent/project-memory files (also protected by the inherited hook)
+/AGENTS.md
+/CLAUDE.md
+/CURRENT_STATE.md
+/IMPLEMENTATION_HISTORY.md
+/ROADMAP.md
